@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_user_information_addresses",
+  "info": {
+    "displayName": "address",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "line1": {
+      "type": "string",
+      "required": true
+    },
+    "line2": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "zipCode": {
+      "type": "string",
+      "required": true
+    },
+    "country": {
+      "type": "string",
+      "required": true
+    },
+    "currentLat": {
+      "type": "float",
+      "required": true
+    },
+    "currentLng": {
+      "type": "float",
+      "required": true
+    },
+    "default": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

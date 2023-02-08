@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ratings",
+  "info": {
+    "singularName": "rating",
+    "pluralName": "ratings",
+    "displayName": "rating",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "private": true,
+      "inversedBy": "ratings"
+    },
+    "itemId": {
+      "type": "string",
+      "required": true
+    },
+    "stars": {
+      "type": "decimal",
+      "required": true,
+      "default": 1
+    },
+    "comment": {
+      "type": "text"
+    }
+  }
+}

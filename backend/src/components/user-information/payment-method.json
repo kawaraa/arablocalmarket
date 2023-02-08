@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_user_information_payment_methods",
+  "info": {
+    "displayName": "paymentMethod"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "in-person",
+        "bank-transfer",
+        "online"
+      ],
+      "default": "in-person",
+      "required": true
+    },
+    "methods": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  }
+}

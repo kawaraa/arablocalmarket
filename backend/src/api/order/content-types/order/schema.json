@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "orders"
+    },
+    "addressId": {
+      "type": "string",
+      "required": true
+    },
+    "paymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "in-person",
+        "bank-transfer",
+        "online"
+      ],
+      "default": "in-person",
+      "required": true
+    },
+    "discount": {
+      "type": "decimal",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "note": {
+      "type": "text"
+    },
+    "total": {
+      "type": "decimal",
+      "default": 0,
+      "required": true,
+      "min": 0
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "PENDING",
+        "PAID",
+        "FAIL",
+        "CANCELED",
+        "SENT",
+        "DELIVERED",
+        "RETURNED"
+      ],
+      "required": true,
+      "default": "PENDING"
+    },
+    "lineItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.line-item",
+      "required": true,
+      "min": 1
+    }
+  }
+}

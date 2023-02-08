@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_user_information_cart_items",
+  "info": {
+    "displayName": "cartItem",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "storeId": {
+      "type": "string",
+      "required": true
+    },
+    "productNumber": {
+      "type": "string",
+      "required": true
+    },
+    "barcode": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "default": 1
+    }
+  }
+}

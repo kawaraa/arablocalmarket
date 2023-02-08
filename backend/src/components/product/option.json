@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_product_options",
+  "info": {
+    "displayName": "option",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "minLength": 1,
+      "maxLength": 10
+    },
+    "value": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "minLength": 1,
+      "maxLength": 20
+    }
+  }
+}

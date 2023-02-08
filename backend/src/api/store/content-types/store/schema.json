@@ -1,0 +1,127 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stores",
+  "info": {
+    "singularName": "store",
+    "pluralName": "stores",
+    "displayName": "store",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "about": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "OPEN",
+        "CLOSED"
+      ],
+      "default": "CLOSED",
+      "required": true
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "private": true
+    },
+    "employees": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "private": true,
+      "inversedBy": "stores"
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "user-information.address",
+      "required": true
+    },
+    "cocNumber": {
+      "type": "string",
+      "unique": false,
+      "private": true
+    },
+    "vatNumber": {
+      "type": "string",
+      "private": true
+    },
+    "stripeId": {
+      "type": "string",
+      "unique": true,
+      "private": true
+    },
+    "stripeSubscriptionId": {
+      "type": "string",
+      "unique": true,
+      "private": true
+    },
+    "subscriptionStatus": {
+      "type": "enumeration",
+      "enum": [
+        "TRIAL",
+        "ACTIVE",
+        "CANCELED",
+        "INCOMPLETE",
+        "EXPIRED",
+        "UNPAID"
+      ],
+      "default": "TRIAL",
+      "required": true,
+      "private": true
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "USD-$",
+        "EUR-€",
+        "GBP-£",
+        "AUD-$",
+        "CAD-$",
+        "CHF-CHF",
+        "TRY-₺"
+      ],
+      "required": true,
+      "default": "USD-$"
+    },
+    "openingHours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-information.opening-hours",
+      "max": 7,
+      "min": 0
+    },
+    "shippingRate": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "payments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-information.payment-method",
+      "required": true,
+      "min": 1
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
