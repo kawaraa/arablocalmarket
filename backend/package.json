@@ -1,24 +1,24 @@
 {
-  "name": "backend",
-  "private": true,
+  "name": "alm-backend",
   "version": "0.1.0",
-  "description": "A Strapi application",
+  "private": true,
+  "description": "ALM backend application",
+  "author": {
+    "name": "ALM developer"
+  },
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
     "@strapi/strapi": "4.6.0",
     "@strapi/plugin-users-permissions": "4.6.0",
     "@strapi/plugin-i18n": "4.6.0",
     "mysql": "2.18.1"
   },
-  "author": {
-    "name": "A Strapi developer"
-  },
+  "devDependencies": {},
   "strapi": {
     "uuid": "12957037-1bda-4aa7-988a-759834319665"
   },

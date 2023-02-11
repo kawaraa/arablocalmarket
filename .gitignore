@@ -2,6 +2,7 @@
 
 # environment variables file
 .env
+.env*.local
 google-storage.json
 variable.json
 
@@ -9,6 +10,7 @@ variable.json
 build
 .next
 dist
+out
 */bundle.*
 
 # OS X
@@ -59,9 +61,8 @@ $RECYCLE.BIN/
 *.pid
 *.pid.*
 
-# Logs and databases
-.tmp
-*.log
+# databases
+
 *.sql
 *.sqlite
 *.sqlite3
@@ -73,17 +74,20 @@ ssl
 nbproject
 public/uploads/*
 !public/uploads/.gitkeep
+*.pem
 
-# Node.js & Dependency directories
+# Node.js, Dependency directories & Logs
 lib-cov
 lcov.info
 pids
 logs
+.tmp
+*.log*
 results
 node_modules
 .node_history
 bower_components
-.pnp
+.pnp*
 .npm
 .yarn-integrity
 jspm_packages/
@@ -98,6 +102,9 @@ license.txt
 exports
 *.cache
 .strapi-updater.json
+
+# vercel
+.vercel
 
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt

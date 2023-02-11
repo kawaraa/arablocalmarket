@@ -1,0 +1,23 @@
+{
+  "name": "alm-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ALM frontend application",
+  "author": {
+    "name": "ALM developer"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "next": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "eslint-config-next": "^13.1.6",
+    "next": "^13.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {}
+}
