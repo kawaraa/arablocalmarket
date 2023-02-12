@@ -11,7 +11,11 @@ export default function WorkStores() {
     <div>
       <h1>Hello from work stores page!</h1>
       <p>Here show the stores I work at.</p>
-      <Store />
+      <div className="flex">
+        <Store />
+        <Store />
+        <Store />
+      </div>
     </div>
   );
 }
