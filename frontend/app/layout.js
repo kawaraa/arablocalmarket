@@ -1,4 +1,4 @@
-import Navigation from "./navigation";
+import Navigation from "./(component)/navigation";
 import "./global.css";
 
 // https://www.datocms.com/blog/dealing-with-nextjs-seo

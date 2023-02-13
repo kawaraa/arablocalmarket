@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import Store from "./store";
+import Store from "../(component)/store";
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Stores Nearby - ALM" };

@@ -1,4 +1,5 @@
 "use client";
+import OrderList from "../(component)/order-list";
 
 export default function Orders(props) {
   console.log("Orders: >>>", props);
@@ -8,16 +9,17 @@ export default function Orders(props) {
     document.title = "Orders - ALM";
   }, []);
 
+  // Todo: Use the search query to read the order ID.
+  const orderId = "";
+
   return (
     <div>
       <h1>Orders!</h1>
-      <ul>
-        {orders.map((order) => (
-          <li>
-            <h3>{order.items.length}</h3>
-          </li>
-        ))}
-      </ul>
+
+      <section>
+        <h3>Store 1 name</h3>
+        <OrderList orders={orders} openedOrderId={orderId} />
+      </section>
     </div>
   );
 }
