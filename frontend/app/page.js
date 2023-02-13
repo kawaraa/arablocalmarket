@@ -1,9 +1,26 @@
+import Button from "./(component)/button";
+import Dropdown from "./(component)/dropdown";
+import Modal from "./(component)/modal";
+import Select from "./(component)/select";
+import SelectList from "./(component)/select-list";
+import Cart from "./(component)/cart";
+import Switch from "./(component)/switch";
+
 export default function LandingPage() {
   return (
     <div>
       <h1>Hello from Home and landing page!</h1>
-
-      <div className="dark:bg-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl">
+      {/* 
+      <Dropdown />
+      <SelectList />
+      <Select />
+      <Modal />
+      <Cart />
+      
+      <Switch />
+      <Button />
+    */}
+      <div className="w-3/4 m-auto dark:bg-d-c-bg dark:text-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl dark:shadow-none">
         <div>
           <span className="inline-flex items-center justify-center p-2 bg-[#6366f1] rounded-md shadow-lg">
             <svg
@@ -21,7 +38,7 @@ export default function LandingPage() {
             </svg>
           </span>
         </div>
-        <h3 className="text-l-h dark:text-d-h mt-5 text-base font-medium tracking-tight">
+        <h3 className="text-l-h dark:text-d-tc mt-5 text-base font-medium tracking-tight">
           Writes Upside-Down
         </h3>
         <p className="mt-2 text-sm">
@@ -29,6 +46,31 @@ export default function LandingPage() {
           in outer space.
         </p>
       </div>
+
+      {/* <div class="flex -space-x-1 overflow-hidden">
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+          src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+          alt=""
+        />
+        <img
+          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          alt=""
+        />
+      </div> */}
+
+      {/* <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
@@ -64,8 +106,7 @@ export default function LandingPage() {
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p> */}
     </div>
   );
 }

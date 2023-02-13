@@ -1,41 +1,26 @@
 tailwind.config = {
   darkMode: "class",
   theme: {
-    // screens: {
-    //   sm: "480px",
-    //   md: "768px",
-    //   lg: "976px",
-    //   xl: "1440px",
-    // },
     colors: {
       "l-bg": "#fff",
-      "l-t": "#475569",
-      "l-h": "#0f172a",
-      "d-bg": "#0f172a", // 31, 41, 55: #1f2937
-      "d-c": "#1e293b",
-      "d-t": "#cbd5e1",
-      "d-h": "#fff",
-      blue: "#1fb6ff",
-      pink: "#ff49db",
-      orange: "#ff7849",
-      green: "#13ce66",
-      "gray-dark": "#273444",
-      gray: "#8492a6",
-      "gray-light": "#d3dce6",
+      "l-c-bg": "red",
+      "l-tc": "#0f172a",
+      "l-c": "#475569",
+      "l-h": "#0000001a",
+      "l-b": "#d1d5db",
+      "d-bg": "#0f172a", // #0f172a - #1f2937 - #0f172a
+      "d-c-bg": "#233045", // #1e293b - #212f54
+      "d-tc": "#fff",
+      "d-c": "#cbd5e1",
+      "d-h": "#0000001a",
+      "d-b": "#d1d5db",
+      "p-c": "#f0fccc", // #ebf3d2
     },
     fontFamily: {
-      sans: ["Graphik", "sans-serif"],
-      serif: ["Merriweather", "serif"],
+      // sans: ["Graphik", "sans-serif"],
+      // serif: ["Merriweather", "serif"],
+      // font1: "Inter var,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji",
     },
-    // extend: {
-    //   spacing: {
-    //     128: "32rem",
-    //     144: "36rem",
-    //   },
-    //   borderRadius: {
-    //     "4xl": "2rem",
-    //   },
-    // },
   },
 };
 

@@ -18,7 +18,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className="bg-l-bg text-l-t dark:bg-d-bg dark:text-d-t">
         <main>
-          <Navigation />
+          <header>
+            <Navigation />
+          </header>
           {children}
         </main>
         <div

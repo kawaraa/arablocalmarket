@@ -13,12 +13,11 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/strapi": "4.6.0",
-    "@strapi/plugin-users-permissions": "4.6.0",
-    "@strapi/plugin-i18n": "4.6.0",
-    "mysql": "2.18.1"
+    "@strapi/plugin-i18n": "4.6.1",
+    "@strapi/plugin-users-permissions": "4.6.1",
+    "@strapi/strapi": "4.6.1",
+    "mysql2": "^3.1.2"
   },
-  "devDependencies": {},
   "strapi": {
     "uuid": "12957037-1bda-4aa7-988a-759834319665"
   },
