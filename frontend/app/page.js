@@ -5,26 +5,27 @@ import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";
 import Cart from "./(component)/cart";
 import Switch from "./(component)/switch";
+import Tooltip from "./(component)/tooltip";
+import Breadcrumb from "./(component)/breadcrumb";
 
 export default function LandingPage() {
   return (
     <div>
-      <h1>Hello from Home and landing page!</h1>
+      <h1 className="mb-64">Hello from Home and landing page!</h1>
       {/* 
       <Dropdown />
       <SelectList />
       <Select />
       <Modal />
       <Cart />
-      
       <Switch />
-      <Button />
     */}
-      <div className="w-3/4 m-auto dark:bg-d-c-bg dark:text-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl dark:shadow-none">
+
+      {/* <div className="w-3/4 m-auto dark:bg-d-c-bg dark:text-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl dark:shadow-none">
         <div>
-          <span className="inline-flex items-center justify-center p-2 bg-[#6366f1] rounded-md shadow-lg">
+          <span className="inline-flex items-center justify-center p-2 bg-ico-bg rounded-md shadow-lg">
             <svg
-              className="h-6 w-6 text-[#fff]"
+              className="h-6 w-6 text-ico-c"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -45,7 +46,7 @@ export default function LandingPage() {
           The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works
           in outer space.
         </p>
-      </div>
+      </div> */}
 
       {/* <div class="flex -space-x-1 overflow-hidden">
         <img

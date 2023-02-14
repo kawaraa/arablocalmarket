@@ -1,21 +1,26 @@
 "use client";
 import icons from "./icons";
+import Loader from "./loader";
 
-export default function Button({ type, icon, text, handler, cls }) {
+export default function Button({
+  type = "button",
+  prefix = "",
+  content = "",
+  handler = null,
+  loading = false,
+  disabled = false,
+  cls = "",
+}) {
+  let c = `transition inline-flex items-center justify-center bg-d-bg text-d-tc dark:bg-p-c dark:text-l-tc rounded-md px-3 md:px-4 py-1 md:py-2 text-sm font-medium shadow-md disabled:opacity-75 disabled:cursor-no-drop `;
+  if (loading) c += "cursor-progress ";
+  if (!disabled) c += "hover:bg-ico-bg dark:hover:bg-l-bg hover:text-ico-c ";
+  c += cls;
+
   return (
-    <button
-      type={type}
-      onClick={handler}
-      className={`transition inline-flex items-center bg-d-c-bg text-l-c hover:bg-l-h border border-l-b dark:bg-p-c dark:text-l-c dark:border-d-b rounded-md px-4 py-2 text-sm font-medium shadow-sm  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${cls}`}>
-      {icons[icon] || icon}
-      {text}
+    <button className={c} type={type} onClick={handler} disabled={disabled}>
+      {icons[prefix] || prefix}
+      {content}
+      {loading && <Loader size="4" />}
     </button>
   );
 }
-Button.defaultProps = {
-  type: "button",
-  icon: "",
-  text: "OK",
-  cls: "",
-  onClick: null,
-};

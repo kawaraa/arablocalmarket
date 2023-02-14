@@ -1,3 +1,4 @@
+import Breadcrumb from "./(component)/breadcrumb";
 import Navigation from "./(component)/navigation";
 import "./global.css";
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         <main>
           <header>
             <Navigation />
+            {/* <Breadcrumb /> */}
           </header>
           {children}
         </main>

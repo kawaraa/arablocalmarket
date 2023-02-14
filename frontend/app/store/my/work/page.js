@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import Store from "../../store";
+import Store from "../../../(component)/store";
 
 export default function WorkStores() {
   useEffect(() => {

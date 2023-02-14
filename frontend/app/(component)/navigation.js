@@ -48,11 +48,11 @@ export default function Navigation(props) {
       </button>
 
       <div className="flex flex-shrink-0 items-center">
-        <img
+        {/* <img
           className="block h-8 w-auto"
           src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
           alt="Arab Local Market Logo"
-        />
+        /> */}
       </div>
 
       <ul className={"overflow-hidden flex space-x-4 h-0 md:h-auto md:ml-6" + (showMenu ? "h-auto" : "")}>
