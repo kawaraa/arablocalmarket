@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Cart from "./cart";
+import OptionXIcon from "./option-x-icon";
 
 export default function Navigation(props) {
   const [themeMode, setThemeMode] = useState("auto");
@@ -38,31 +39,22 @@ export default function Navigation(props) {
   }, []);
 
   return (
-    <nav className="flex h-16 items-center bg-l-bg dark:bg-d-bg">
-      <button
-        type="button"
-        className="flex items-center md:hidden items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-        aria-controls="mobile-menu"
-        aria-expanded="false">
-        {/* <!-- Mobile menu button--> */}
-        <span className="sr-only">Open main menu</span>
-      </button>
+    <nav className="flex h-14 md:h-16 px-3 md:px-5 items-center bg-l-bg dark:bg-d-c-bg text-l-c dark:text-d-c shadow-md">
+      <OptionXIcon mobileOnly={true} onChange={(active) => console.log("Menu active: ", active)} />
 
-      <div className="flex flex-shrink-0 items-center">
-        {/* <img
-          className="block h-8 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-          alt="Arab Local Market Logo"
-        /> */}
-      </div>
+      <Link className="flex flex-shrink-0 items-center text-xl font-bold" href="/">
+        {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
+        <span className="text-[#1fb6ff]">A</span>
+        <span className="text-[#ff49db]">L</span>
+        <span className="text-[#13ce66]">M</span>
+      </Link>
 
       <ul className={"overflow-hidden flex space-x-4 h-0 md:h-auto md:ml-6" + (showMenu ? "h-auto" : "")}>
         {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
 
         <NavLink text={"Find a store"} path={"/store"} />
         <NavLink text="My stores" path="/store/my" />
-        <NavLink text="Who we are" path="/about" />
-        <NavLink text="Contact" path="/contact" />
+
         <div className="hidden md:block">
           <div className="block mr-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
         </div>
@@ -85,7 +77,7 @@ export default function Navigation(props) {
       <div className="flex-auto flex items-center justify-end px-2 md:px-6 lg:px-8">
         <button
           type="button"
-          className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          className="rounded-full bg-gray-800 p-1 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <span className="sr-only">View notifications</span>
           {/* <!-- Heroicon name: outline/bell --> */}
           <svg
@@ -143,7 +135,7 @@ export default function Navigation(props) {
             {/* <!-- Active: "/bg-gray-100", Not Active: "" --> */}
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700"
+              className="block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
               id="user-menu-item-0">
@@ -151,7 +143,7 @@ export default function Navigation(props) {
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700"
+              className="block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
               id="user-menu-item-1">
@@ -159,7 +151,7 @@ export default function Navigation(props) {
             </a>
             <a
               href="#"
-              className="block px-4 py-2 text-sm text-gray-700"
+              className="block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
               id="user-menu-item-2">
@@ -175,7 +167,7 @@ export default function Navigation(props) {
 function NavLink({ text, path }) {
   // if the path is "/" then this is useful aria-current="page"
   return (
-    <li className="bg-gray-900 text-white rounded-md text-sm font-medium">
+    <li className="text-l-c dark:text-d-c text-sm font-medium">
       <Link href={path} className="block px-3 py-2">
         {text}
       </Link>

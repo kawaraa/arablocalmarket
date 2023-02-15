@@ -1,5 +1,5 @@
 const lightBackground = "#fff";
-const darkBackground = "#0f172a"; // #0f172a - #1f2937 - #0f172a
+const darkBackground = "#0f172a"; // #121212 #0f172a  #1f2937
 const primeColor = "#ebf9c8"; // #ebf3d2 #f0fccc #ebf9c8 #d9ed7f #d9edc0 #6366f1 #b26cfc
 tailwind.config = {
   darkMode: "class",
@@ -8,11 +8,11 @@ tailwind.config = {
       "l-bg": lightBackground, // Light Background
       "l-c-bg": lightBackground, // Light Card Background
       "l-tc": darkBackground, // Light Title color
-      "l-c": "#475569", // Light Color
+      "l-c": "#4b5563", // Light Color #475569
       "l-h": "#0000001a", // Light Hover
       "l-b": "#d1d5db", // Light Border
       "d-bg": darkBackground, // Dark Background
-      "d-c-bg": "#233045", // Dark Card Background // #1e293b - #212f54
+      "d-c-bg": "#233045", // Dark Card Background // #1e293b #212f54 #233045
       "d-tc": lightBackground, // Dark Title Color
       "d-c": "#cbd5e1", // Dark Color
       "d-h": "#0000001a", // Dark Hover
@@ -20,6 +20,7 @@ tailwind.config = {
       "ico-bg": primeColor, // Button Background
       "ico-c": darkBackground, // Button Color
       "p-c": primeColor, // Prime Color
+      "lk-c": "#1fb6ff",
       // blue: "#1fb6ff",
       // pink: "#ff49db",
       // orange: "#ff7849",

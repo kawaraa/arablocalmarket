@@ -7,12 +7,23 @@ import Switch from "./(component)/switch";
 import Tooltip from "./(component)/tooltip";
 import Breadcrumb from "./(component)/breadcrumb";
 import ContextMenu from "./(component)/context-menu";
+import Footer from "./(component)/footer";
 
 export default function LandingPage() {
   return (
     <div className="relative">
-      <h1 className="mb-64">Hello from Home and landing page!</h1>
+      {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
 
+      <div className="z-[-1] relative top-0 left-0 px-10 pt-10 w-full h-[95vh]">
+        {/* <img src="/alm-icon.svg" alt="" className="block w-full" /> */}
+        <div className="absolute top-0 left-0 w-full">
+          <h1 className="text-5xl mt-44 mb-10 text-center">Arab Local Market</h1>
+          <p className="text-xl text-center">Welcome to the first Arabic Local Stores platform</p>
+          <p className="text-md text-center">We are here to help you grow your business</p>
+        </div>
+      </div>
+
+      {/* <div className="absolute top-0 h-[325px] w-full bg-gradient-to-b from-p-c to-l-bg"></div> */}
       {/* 
       <SelectList />
       <Select />
@@ -67,7 +78,6 @@ export default function LandingPage() {
           alt=""
         />
       </div> */}
-      {/* <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
@@ -90,20 +100,7 @@ export default function LandingPage() {
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p> */}
+      <Footer />
     </div>
   );
 }
