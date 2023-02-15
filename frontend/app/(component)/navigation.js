@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Cart from "./cart";
 
 export default function Navigation(props) {
   const [themeMode, setThemeMode] = useState("auto");
@@ -78,6 +79,8 @@ export default function Navigation(props) {
         <option value="en">EN</option>
         <option value="ar">AR</option>
       </select>
+
+      <Cart />
 
       <div className="flex-auto flex items-center justify-end px-2 md:px-6 lg:px-8">
         <button

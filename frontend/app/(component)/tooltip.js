@@ -46,7 +46,7 @@ export default function Tooltip({ children, size, position }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative inline-flex">
       <button
         type="button"
         onMouseEnter={() => setTooltipOpen(true)}
@@ -56,18 +56,17 @@ export default function Tooltip({ children, size, position }) {
         aria-expanded={tooltipOpen}>
         {icons.exclamationMark}
       </button>
-      <div className={`z-10 absolute ${positionOuterClasses(position)}`}>
-        <Transition
-          tag="div"
-          open={tooltipOpen}
-          base={`rounded overflow-hidden transition ease-out duration-200 bg-l-bg dark:bg-d-c-bg dark:text-d-c border border-[#e2e8f0] shadow-lg ${sizeClasses(
-            size
-          )} ${positionInnerClasses(position)}`}
-          enter=" transform opacity-100 -translate-y-2"
-          exit="opacity-0 translate-y-0">
-          {children}
-        </Transition>
-      </div>
+
+      <Transition
+        tag="div"
+        open={tooltipOpen}
+        base={`rounded overflow-hidden transition ease-in-out duration-200 bg-l-bg dark:bg-d-c-bg dark:text-d-c border border-d-c shadow-lg 
+          z-10 absolute ${positionOuterClasses(position)}
+          ${sizeClasses(size)} ${positionInnerClasses(position)}`}
+        enter=" transform opacity-100 -translate-y-2"
+        exit="opacity-0 translate-y-0">
+        {children}
+      </Transition>
     </div>
   );
 }

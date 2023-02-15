@@ -1,12 +1,36 @@
 export default {
   avatar: (
-    <svg viewBox="64 64 896 896" focusable="false" fill="currentColor" role="img" aria-label="User Avatar">
+    <svg
+      className="pointer-events-none w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="64 64 896 896"
+      focusable="false"
+      fill="currentColor"
+      role="img"
+      aria-label="User Avatar">
       <path d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path>
+    </svg>
+  ),
+  cart: (
+    <svg
+      className="pointer-events-none w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      role="img"
+      aria-label="Shipping Cart">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+      />
     </svg>
   ),
   edit: (
     <svg
-      className="-ml-1 mr-2 h-5 w-5 text-l-c dark:text-d-c"
+      className="pointer-events-none w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -20,7 +44,7 @@ export default {
 
   link: (
     <svg
-      className="-ml-1 mr-2 h-5 w-5 text-l-c dark:text-d-c"
+      className="pointer-events-none w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -33,7 +57,7 @@ export default {
 
   checkMark: (
     <svg
-      className="-ml-1 mr-2 h-5 w-5"
+      className="pointer-events-none w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -49,7 +73,7 @@ export default {
 
   powerOff: (
     <svg
-      className="-ml-1 mr-2 h-5 w-5"
+      className="pointer-events-none w-full h-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="64 64 896 896"
       focusable="false"
@@ -60,13 +84,39 @@ export default {
   ),
 
   download: (
-    <svg viewBox="64 64 896 896" fill="currentColor" focusable="false" aria-hidden="true">
+    <svg
+      className="pointer-events-none w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="64 64 896 896"
+      fill="currentColor"
+      focusable="false"
+      aria-hidden="true">
       <path d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
     </svg>
   ),
   exclamationMark: (
-    <svg className="" viewBox="0 0 16 16" fill="currentColor" focusable="false" ria-hidden="true">
+    <svg
+      className="pointer-events-none w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      focusable="false"
+      ria-hidden="true">
       <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+    </svg>
+  ),
+  chevronDown: (
+    <svg
+      className="pointer-events-none w-full h-full"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      aria-hidden="true">
+      <path
+        fill-rule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+        clip-rule="evenodd"
+      />
     </svg>
   ),
 };

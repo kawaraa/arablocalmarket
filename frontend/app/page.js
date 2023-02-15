@@ -3,24 +3,22 @@ import Dropdown from "./(component)/dropdown";
 import Modal from "./(component)/modal";
 import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";
-import Cart from "./(component)/cart";
 import Switch from "./(component)/switch";
 import Tooltip from "./(component)/tooltip";
 import Breadcrumb from "./(component)/breadcrumb";
+import ContextMenu from "./(component)/context-menu";
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="relative">
       <h1 className="mb-64">Hello from Home and landing page!</h1>
+
       {/* 
-      <Dropdown />
       <SelectList />
       <Select />
       <Modal />
-      <Cart />
       <Switch />
     */}
-
       {/* <div className="w-3/4 m-auto dark:bg-d-c-bg dark:text-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl dark:shadow-none">
         <div>
           <span className="inline-flex items-center justify-center p-2 bg-ico-bg rounded-md shadow-lg">
@@ -47,7 +45,6 @@ export default function LandingPage() {
           in outer space.
         </p>
       </div> */}
-
       {/* <div class="flex -space-x-1 overflow-hidden">
         <img
           class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
@@ -70,7 +67,6 @@ export default function LandingPage() {
           alt=""
         />
       </div> */}
-
       {/* <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
       <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>

@@ -4,7 +4,7 @@ import Loader from "./loader";
 
 export default function Button({
   type = "button",
-  prefix = "",
+  icon = "", // This is a suffix
   content = "",
   handler = null,
   loading = false,
@@ -18,9 +18,8 @@ export default function Button({
 
   return (
     <button className={c} type={type} onClick={handler} disabled={disabled}>
-      {icons[prefix] || prefix}
       {content}
-      {loading && <Loader size="4" />}
+      {loading ? <Loader size="4" /> : <span className="max-w-4"> {icons[icon] || icon}</span>}
     </button>
   );
 }
