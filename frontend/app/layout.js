@@ -1,5 +1,5 @@
 import Breadcrumb from "./(component)/breadcrumb";
-import Navigation from "./(component)/navigation";
+import Navigation from "./(layout)/navigation";
 import "./global.css";
 
 // https://www.datocms.com/blog/dealing-with-nextjs-seo

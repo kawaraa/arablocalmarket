@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 
 export default function Cart(props) {
   console.log("Cart: >>>", props);

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Transition from "./transitions";
+import Transition from "../../(layout)/transitions";
 import icons from "./icons";
 
 export default function Tooltip({ children, size, position }) {

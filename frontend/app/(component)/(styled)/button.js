@@ -1,6 +1,6 @@
 "use client";
-import icons from "./icons";
-import Loader from "./loader";
+import icons from "../(styled)/icons";
+import Loader from "../../(layout)/loader";
 
 export default function Button({
   type = "button",

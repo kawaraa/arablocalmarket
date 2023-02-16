@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import icons from "./icons";
-import Transition from "./transitions";
+import icons from "../(component)/(styled)/icons";
+import Transition from "../(layout)/transitions";
 
 export default function Dropdown({ children, event = "hover", btnText = "", icon = "" }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);

@@ -1,13 +1,13 @@
-import Button from "./(component)/button";
+import Button from "./(component)/(styled)/button";
 import Dropdown from "./(component)/dropdown";
 import Modal from "./(component)/modal";
 import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";
 import Switch from "./(component)/switch";
-import Tooltip from "./(component)/tooltip";
+import Tooltip from "./(component)/(styled)/tooltip";
 import Breadcrumb from "./(component)/breadcrumb";
 import ContextMenu from "./(component)/context-menu";
-import Footer from "./(component)/footer";
+import Footer from "./(layout)/footer";
 
 export default function LandingPage() {
   return (
@@ -17,9 +17,26 @@ export default function LandingPage() {
       <div className="z-[-1] relative top-0 left-0 px-10 pt-10 w-full h-[95vh]">
         {/* <img src="/alm-icon.svg" alt="" className="block w-full" /> */}
         <div className="absolute top-0 left-0 w-full">
-          <h1 className="text-5xl mt-44 mb-10 text-center">Arab Local Market</h1>
+          <h1 className="text-5xl mt-44 mb-10 text-center">
+            Arab Local Market{" "}
+            <span className="sr-only">
+              Arabic Stores Supermarkets near you Halal food around the world Create your store and start
+              selling Halal food products online locally
+            </span>
+          </h1>
           <p className="text-xl text-center">Welcome to the first Arabic Local Stores platform</p>
-          <p className="text-md text-center">We are here to help you grow your business</p>
+
+          <h2 className="text-5xl mt-44 mb-10 text-center">
+            Find an Arabic Stores and Supermarkets near you
+          </h2>
+          <p className="text-md text-center">
+            Todo: Turn on the location Or Select your area. list of country where the user can select the
+            country, the province, the city, the neighborhood and maybe the street
+          </p>
+          <p className="text-md text-center">
+            Are you a store owner? then please feel free to contact us, we are here to help you grow your
+            business
+          </p>
         </div>
       </div>
 
