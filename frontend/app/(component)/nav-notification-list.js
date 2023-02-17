@@ -1,15 +1,21 @@
 "use client";
+import Dropdown from "./(styled)/dropdown";
 import icons from "./(styled)/icons";
 
 export default function NavNotificationList() {
   return (
-    <div className="relative">
-      <button
-        type="button"
-        className="transition mx-2 w-6 rounded-full text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
-        <span className="sr-only">View notifications</span>
-        {icons.bell}
-      </button>
-    </div>
+    <Dropdown icon="bell" wrapperCls="mx-2" cls="!rounded-full" label="View notifications">
+      <li>Option</li>
+
+      <a href="#" className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="user-menu-item-0">
+        Your Profile
+      </a>
+      <a href="#" className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="user-menu-item-1">
+        Settings
+      </a>
+      <a href="#" className="block px-4 py-2 text-sm" role="menuitem" tabIndex="-1" id="user-menu-item-2">
+        Sign out
+      </a>
+    </Dropdown>
   );
 }

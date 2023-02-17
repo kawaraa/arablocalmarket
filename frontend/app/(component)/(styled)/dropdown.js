@@ -1,10 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import icons from "../(component)/(styled)/icons";
-import Transition from "../(layout)/transitions";
+import icons from "./icons";
+import Transition from "../../(layout)/transitions";
 
-export default function Dropdown({ children, event = "hover", btnText = "", icon = "" }) {
+export default function Dropdown({
+  children,
+  event = "hover",
+  btnContent = "",
+  icon = "",
+  iconSize = "25",
+  wrapperCls = "",
+  cls = "",
+}) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const btnProps = {};
 
@@ -15,16 +23,20 @@ export default function Dropdown({ children, event = "hover", btnText = "", icon
   }
 
   return (
-    <div className="group relative inline-block">
+    <div className={`relative inline-block ${wrapperCls}`}>
       <button
         type="button"
         {...btnProps}
-        className="inline-flex w-full justify-end rounded-md"
-        aria-expanded="true"
-        aria-haspopup="true">
-        {btnText}
-        <span className="inline-block max-w-[25px]">{icons[icon] || icon}</span>
+        className={`overflow-hidden flex w-full items-center justify-end rounded-md text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc ${cls}`}
+        aria-expanded={tooltipOpen}
+        aria-haspopup="menu"
+        aria-label="Open user menu">
+        {btnContent}
+        <span className={`max-w-[${iconSize}px]`}>
+          {typeof icon === "string" ? icons[icon] || icon : icon}
+        </span>
       </button>
+
       <Transition
         tag="ul"
         open={tooltipOpen}

@@ -1,5 +1,5 @@
 import Button from "./(component)/(styled)/button";
-import Dropdown from "./(component)/dropdown";
+import Dropdown from "./(component)/(styled)/dropdown";
 import Modal from "./(component)/modal";
 import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";

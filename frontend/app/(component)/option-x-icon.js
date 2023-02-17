@@ -23,7 +23,7 @@ export default function OptionXIcon({ onChange, mobileOnly, cls = "", barsCls = 
       onClick={handleToggle}
       aria-controls="mobile-menu"
       aria-expanded="false"
-      aria-haspopup="true">
+      aria-haspopup="menu">
       <div
         className={`${barCls} group-[.group]:-rotate-45 group-[.group]:-translate-x-[1px] group-[.group]:translate-y-[9px]`}></div>
       <div className={`${barCls} group-[.group]:opacity-0`}></div>
