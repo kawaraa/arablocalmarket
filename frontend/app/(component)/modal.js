@@ -16,13 +16,12 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
         aria-modal="true"
         onClick={onCancel}></div>
 
-      {/* flex justify-center items-end md:items-center */}
       <Transition
         tag="section"
-        base="z9 fixed left-5 bottom-10 right-5 overflow-hidden p-4 rounded-lg bg-l-bg md:max-w-xl md:left-[50%] md:bottom-[50%] md:right-initial md:translate-x-[-50%] md:translate-y-[50%] "
+        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-l-bg md:min-w-[550px] md:max-w-xl md:left-[50%] md:bottom-[50%] md:translate-x-[-50%] md:translate-y-[50%]"
         enter="opacity-100 translate-y-0 md:scale-100"
-        exit="opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-        time="300"
+        exit="opacity-0 translate-y-4 md:translate-y-0 md:scale-75"
+        time="200"
         open={open}>
         <CloseButton icon="close" handler={onCancel} cls="absolute top-5 right-5" />
 
