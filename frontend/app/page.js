@@ -1,6 +1,5 @@
 import Button from "./(component)/(styled)/button";
 import Dropdown from "./(component)/(styled)/dropdown";
-import Modal from "./(component)/modal";
 import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";
 import Switch from "./(component)/switch";
@@ -12,35 +11,34 @@ import Footer from "./(layout)/footer";
 export default function LandingPage() {
   return (
     <div className="relative">
-      {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
-
-      <div className="z-[-1] relative top-0 left-0 px-10 pt-10 w-full h-[95vh]">
+      <div className="absolute -top-16 h-[400px] w-full bg-gradient-to-b from-p-c to-l-bg">
         {/* <img src="/alm-icon.svg" alt="" className="block w-full" /> */}
-        <div className="absolute top-0 left-0 w-full">
-          <h1 className="text-5xl mt-44 mb-10 text-center">
-            Arab Local Market{" "}
-            <span className="sr-only">
-              Arabic Stores Supermarkets near you Halal food around the world Create your store and start
-              selling Halal food products online locally
-            </span>
-          </h1>
-          <p className="text-xl text-center">Welcome to the first Arabic Local Stores platform</p>
-
-          <h2 className="text-5xl mt-44 mb-10 text-center">
-            Find an Arabic Stores and Supermarkets near you
-          </h2>
-          <p className="text-md text-center">
-            Todo: Turn on the location Or Select your area. list of country where the user can select the
-            country, the province, the city, the neighborhood and maybe the street
-          </p>
-          <p className="text-md text-center">
-            Are you a store owner? then please feel free to contact us, we are here to help you grow your
-            business
-          </p>
-        </div>
       </div>
 
-      {/* <div className="absolute top-0 h-[325px] w-full bg-gradient-to-b from-p-c to-l-bg"></div> */}
+      {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
+
+      <section className="relative top-0 px-4 pt-10 w-full ">
+        {/* <div className="absolute top-0 left-0 w-full"> */}
+        <h1 className="text-4xl md:text-5xl mt-44 mb-8 text-center">
+          Arab Local Market{" "}
+          <span className="sr-only">
+            Arabic Stores Supermarkets near you Halal food around the world Create your store and start
+            selling Halal food products online locally
+          </span>
+        </h1>
+        <p className="text-xl text-center">Welcome to the first Arabic Local Stores platform</p>
+
+        <h2 className="text-2xl mt-44 mb-10 text-center">Find an Arabic Stores and Supermarkets near you</h2>
+        <p className="text-md text-center">
+          Todo: Turn on the location Or Select your area. list of country where the user can select the
+          country, the province, the city, the neighborhood and maybe the street
+        </p>
+        <p className="text-md text-center">
+          Are you a store owner? then please feel free to contact us, we are here to help you grow your
+          business
+        </p>
+      </section>
+
       {/* 
       <SelectList />
       <Select />

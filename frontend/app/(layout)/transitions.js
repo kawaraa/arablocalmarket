@@ -1,16 +1,25 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function Transition({ base = "", enter = "", exit = "", time = "100", open, ...props }) {
-  const [cls, setCls] = useState("");
+export default function Transition({ base = "", enter = "", exit = "", time = "300", open, ...props }) {
+  const [active, setActive] = useState(open);
+  const [cls, setCls] = useState(enter);
+  const newProps = props.wrapperProps || {};
 
   useEffect(() => {
-    setCls(open ? enter : exit);
+    if (open) {
+      setActive(open);
+      setTimeout(() => setCls(enter), 10);
+    } else {
+      setCls(exit);
+      setTimeout(() => setActive(open), +time);
+    }
   }, [open]);
 
+  if (!active) return null;
   return (
-    <props.tag className={`transition-all duration-${time} ${base} ${enter} ${cls}`}>
-      {open && props.children}
+    <props.tag {...newProps} className={`transition-all duration-${time} ease-in-out ${base} ${cls}`}>
+      {props.children}
     </props.tag>
   );
 }

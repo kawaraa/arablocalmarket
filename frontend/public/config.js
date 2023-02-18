@@ -1,4 +1,4 @@
-// #0f172a  #233045 #212f54
+// #0f172a  #233045 // button from green style #212f54
 const lightBackground = "#fff";
 const darkBackground = "#121212";
 const primeColor = "#ebf9c8"; // #ebf3d2 #f0fccc #ebf9c8 #d9ed7f #d9edc0 #6366f1 #b26cfc
@@ -22,10 +22,11 @@ tailwind.config = {
       "ico-c": darkBackground, // Button Color
       "p-c": primeColor, // Prime Color
       "lk-c": "#1fb6ff",
-      blue: "#1fb6ff",
-      red: "#ff4995", // #ff49db
-      orange: "#ff7849",
-      green: "#13ce66",
+      blur: "#00000066",
+      blue: "#d7e8fb", // #d7e8fb #1fb6ff
+      red: "#fcdcdc", // #fcdcdc #ff49db #ff4995
+      orange: "#fde3c2", // #fde3c2 #ff7849
+      green: "#ebf9c8", // #13ce66
       // "gray-dark": "#273444",
       // gray: "#8492a6",
       // "gray-light": "#d3dce6",

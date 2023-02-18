@@ -19,7 +19,8 @@ export default function Breadcrumb({ items = [], separator = "/", cls = "" }) {
 
   const lastItem = newItems.length - 1;
   return (
-    <ol className={`flex items-center bg-l-bg dark:bg-d-bg py-2 px-4 sm:px-6 lg:px-8 shadow ${cls}`}>
+    <ol
+      className={`flex items-center bg-l-bg dark:bg-d-bg py-2 px-4 sm:px-6 lg:px-8 border-b-[0.5px] border-l-c ${cls}`}>
       {newItems.map((item, i) => (
         <li key={i} className={`text-l-c dark:text-d-c ${item.cls || ""}`}>
           {item.path ? (
