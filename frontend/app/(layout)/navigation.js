@@ -4,46 +4,55 @@ import { useEffect, useState } from "react";
 import data from "./navigation.json";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
-import Cart from "../(component)/cart";
 import Avatar from "../(component)/(styled)/avatar";
-const { navLinks } = data;
+import icons from "../(component)/(styled)/icons";
+const { languageOptions, themeOptions, navLinks, userLinks, dir, themeModeIconsMap } = data;
 
+// localStorage.cart.items.
+const cart = { items: [] };
 const user = "null";
-const lang = "en";
+const notifications = [{ title: { en: "", ar: "" }, description: { en: "", ar: "" }, path: "1" }];
 
 export default function Navigation(props) {
   const [themeMode, setThemeMode] = useState("auto");
-  const [language, setLanguage] = useState("en");
+  const [lang, setLang] = useState("en");
   const [cls, setCls] = useState("top-0");
   const [showMenu, setShowMenu] = useState(false);
+  // const lang = window.localStorage.lang || "en";
   const activeMenuCls = `left-[0]`;
 
   const changeThemeMode = (mode) => {
+    document.documentElement.classList.remove("dark", "light", "auto");
+
     if (mode === "auto") {
       localStorage.removeItem("themeMode");
-      document.documentElement.className = "";
+      document.documentElement.classList.add("auto");
     } else {
       localStorage.setItem("themeMode", mode);
-      document.documentElement.className = mode;
+      document.documentElement.classList.add(mode);
     }
-
     setThemeMode(mode);
   };
 
   const changeLanguage = (lang) => {
     localStorage.setItem("lang", lang);
     document.documentElement.setAttribute("lang", lang);
-    setLanguage(lang);
+    document.documentElement.classList.remove("en", "ar");
+    document.documentElement.classList.add(lang);
+
+    setLang(lang);
   };
 
   useEffect(() => {
-    const dark = !("themeMode" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     if (localStorage.themeMode === "dark" || dark) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
 
-    setThemeMode(localStorage.themeMode);
-    setLanguage(localStorage.lang || "en");
+    document.documentElement.classList.add(localStorage.lang || "en");
+
+    if (localStorage.themeMode) setThemeMode(localStorage.themeMode);
+    if (localStorage.lang) setLang(localStorage.lang);
 
     let previousYOffset = window.pageYOffset;
     function scrollHandler() {
@@ -79,6 +88,22 @@ export default function Navigation(props) {
         className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
           showMenu && activeMenuCls
         }`}>
+        <li className="text-right">
+          <div className="relative w-6 md:w-8 ml-0.5 mr-2 md:mx-4 rounded-md">
+            {icons[themeModeIconsMap[themeMode]]}
+            <select
+              value={themeMode}
+              onChange={(e) => changeThemeMode(e.target.value)}
+              style={{ background: "none", color: "transparent" }}
+              className="absolute inset-0 w-full cursor-pointer">
+              {languageOptions.map((opt, i) => (
+                <option key={i} value={opt.value}>
+                  {opt.text[lang]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </li>
         {navLinks.slice(0, 1).map((link, i) => (
           <li
             key={i}
@@ -102,26 +127,27 @@ export default function Navigation(props) {
       </ul>
 
       <div className="flex items-center justify-end flex-auto">
-        <select
-          value={themeMode}
-          onChange={(e) => changeThemeMode(e.target.value)}
-          style={{ background: "none" }}
-          className="rounded-md text-sm cursor-pointer text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
-          <option value="auto">Auto</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-        </select>
+        <div className="relative w-6 md:w-8 ml-0.5 mr-2 md:mx-4 rounded-md">
+          <img src={`${lang}.png`} className="w-full" />
+          <select
+            value={lang}
+            onChange={(e) => changeLanguage(e.target.value)}
+            style={{ background: "none", color: "transparent" }}
+            className="absolute inset-0 w-full cursor-pointer">
+            {themeOptions.map((opt, i) => (
+              <option key={i} value={opt.value}>
+                {opt.text[lang]}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <select
-          value={language}
-          onChange={(e) => changeLanguage(e.target.value)}
-          style={{ background: "none" }}
-          className="mx-4 rounded-md text-sm cursor-pointer text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
-          <option value="en">EN</option>
-          <option value="ar">AR</option>
-        </select>
-
-        <Cart numberOfItems="10" cls="mr=2" />
+        <Link href="/cart" className="relative flex md:mr-2">
+          <span className="transition w-6 md:w-7 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
+            {icons.cart}
+          </span>
+          <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 0}</span>
+        </Link>
 
         <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
 
@@ -130,41 +156,35 @@ export default function Navigation(props) {
             <Dropdown
               event="click"
               icon="bell"
-              wrapperCls="mx-2"
+              iconCls="w-6 md:w-8"
+              wrapperCls="ml-2"
               cls="!rounded-full"
               label="View notifications">
-              <li className="">
-                <a href="/settings" tabIndex="0" className="block px-4 py-2 text-sm">
-                  Settings
-                </a>
-              </li>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm"
-                role="menuitem"
-                tabIndex="-1"
-                id="user-menu-item-2">
-                Sign out
-              </a>
+              {notifications.map((note, i) => (
+                <li key={i} className={dir}>
+                  <a
+                    className="transition block px-4 py-2 text-sm hover:bg-d-c-bg hover:text-d-c dark:hover:bg-p-c dark:hover:text-l-c"
+                    href={"/order/" + note.path}>
+                    {note.description[lang]}
+                  </a>
+                </li>
+              ))}
             </Dropdown>
             <Dropdown
               event="click"
               btnContent={<Avatar initial="a" />}
               wrapperCls="ml-4"
-              cls="!rounded-full shadow-md">
-              <li className="">
-                <a
-                  href="/settings"
-                  tabIndex="0"
-                  className="block px-4 py-2 text-sm hover:bg-d-c-bg hover:text-d-c dark:hover:bg-p-c dark:hover:text-l-c">
-                  Settings
-                </a>
-              </li>
-              <li className="">
-                <a href="/logout" tabIndex="0" className="block px-4 py-2 text-sm">
-                  Logout
-                </a>
-              </li>
+              cls="!rounded-full shadow-md"
+              label="View user menu">
+              {userLinks.map((link, i) => (
+                <li key={i} className={dir}>
+                  <a
+                    className="transition block px-4 py-2 text-sm hover:bg-d-c-bg hover:text-d-c dark:hover:bg-p-c dark:hover:text-l-c"
+                    href={link.path}>
+                    {link.text[lang]}
+                  </a>
+                </li>
+              ))}
             </Dropdown>
           </>
         ) : (
@@ -172,7 +192,7 @@ export default function Navigation(props) {
             <Link
               key={i}
               href={link.path}
-              className={`transition block px-3 py-2 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc text-sm font-medium ${
+              className={`transition block px-3 py-2 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc text-sm font-medium ${dir} ${
                 link.cls || ""
               }`}>
               {link.text[lang]}

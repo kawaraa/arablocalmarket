@@ -1,4 +1,15 @@
 {
+  "dir": "group-[.ar]:text-right",
+  "themeModeIconsMap": { "auto": "circleHalf", "dark": "brightness", "light": "moon" },
+  "languageOptions": [
+    { "text": { "en": "Auto", "ar": "افتراضي" }, "value": "auto" },
+    { "text": { "en": "Light", "ar": "فاتح" }, "value": "light" },
+    { "text": { "en": "Dark", "ar": "داكن" }, "value": "dark" }
+  ],
+  "themeOptions": [
+    { "text": { "en": "EN", "ar": "الإنجليزية" }, "value": "en" },
+    { "text": { "en": "AR", "ar": "العربية" }, "value": "ar" }
+  ],
   "navLinks": [
     { "text": { "en": "Find a store", "ar": "ابحث عن متجر" }, "path": "/store" },
     { "text": { "en": "My stores", "ar": "متاجري" }, "path": "/store/my" },
@@ -6,7 +17,11 @@
     {
       "text": { "en": "Join", "ar": "انضم" },
       "path": "/join",
-      "cls": "bg-d-bg text-d-tc dark:bg-p-c dark:text-l-c rounded-lg hover:bg-p-c dark:hover:bg-[#ebf9c8e6] hover:text-l-c dark:hover:text-l-c"
+      "cls": "bg-d-c-bg text-l-bg dark:bg-p-c dark:text-l-c rounded-lg hover:bg-p-c dark:hover:bg-[#ebf9c8e6] hover:text-l-c dark:hover:text-l-c"
     }
+  ],
+  "userLinks": [
+    { "text": { "en": "Settings", "ar": "إعدادات" }, "path": "/settings" },
+    { "text": { "en": "Logout", "ar": "تسجيل خروج" }, "path": "/logout" }
   ]
 }

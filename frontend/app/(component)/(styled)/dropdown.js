@@ -6,10 +6,11 @@ import Transition from "../../(layout)/transitions";
 
 export default function Dropdown({
   children,
+  label = "user menu",
   event = "hover",
   btnContent = "",
   icon = "",
-  iconSize = "25",
+  iconCls = "",
   wrapperCls = "",
   cls = "",
 }) {
@@ -38,13 +39,12 @@ export default function Dropdown({
       <button
         type="button"
         className={`overflow-hidden flex w-full items-center justify-end rounded-md text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc ${cls}`}
+        title={label}
+        aria-label={label}
         aria-expanded={active}
-        aria-haspopup="menu"
-        aria-label="Open user menu">
+        aria-haspopup="menu">
         {btnContent}
-        <span className={`max-w-[${iconSize}px]`}>
-          {typeof icon === "string" ? icons[icon] || icon : icon}
-        </span>
+        <span className={`${iconCls}`}>{typeof icon === "string" ? icons[icon] || icon : icon}</span>
       </button>
 
       <Transition

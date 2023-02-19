@@ -11,9 +11,6 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
     <>
       <div
         className={`z9 fixed inset-0 h-0 p-0 bg-blur opacity-0 transition-opacity ${cls}`}
-        aria-labelledby="modal-title"
-        role="dialog"
-        aria-modal="true"
         onClick={onCancel}></div>
 
       <Transition
@@ -22,8 +19,14 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
         enter="opacity-100 translate-y-0 md:scale-100"
         exit="opacity-0 translate-y-4 md:translate-y-0 md:scale-75"
         time="200"
-        open={open}>
-        <CloseButton icon="close" handler={onCancel} cls="absolute top-5 right-5" />
+        open={open}
+        wrapperProps={{ "aria-label": `${title} modal window`, role: "dialog", "aria-modal": "true" }}>
+        <CloseButton
+          icon="close"
+          handler={onCancel}
+          label="Cancel and close the modal window"
+          cls="absolute top-5 right-5"
+        />
 
         <div className="block bg-l-bg pb-4 md:flex justify-start">
           <div className="h-12 w-12 shrink-0 p-3 mx-auto mt-1 md:mr-2 rounded-full bg-red text-[#ff4995]">

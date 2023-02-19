@@ -5,7 +5,7 @@ import "./global.css";
 // https://www.datocms.com/blog/dealing-with-nextjs-seo
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="auto">
+    <html lang="en" className="group auto">
       <head>
         <title>Arab Local Market</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
