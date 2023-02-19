@@ -3,15 +3,14 @@ import Dropdown from "./(component)/(styled)/dropdown";
 import Select from "./(component)/select";
 import SelectList from "./(component)/select-list";
 import Switch from "./(component)/switch";
-import Tooltip from "./(component)/(styled)/tooltip";
 import Breadcrumb from "./(component)/breadcrumb";
 import ContextMenu from "./(component)/context-menu";
 import Footer from "./(layout)/footer";
 
 export default function LandingPage() {
   return (
-    <div className="relative">
-      <div className="absolute -top-16 h-[400px] w-full bg-gradient-to-b from-p-c to-l-bg">
+    <div className="">
+      <div className="absolute -top-16 left-0 right-0 h-[400px] w-full bg-gradient-to-b from-p-c to-l-bg">
         {/* <img src="/alm-icon.svg" alt="" className="block w-full" /> */}
       </div>
 

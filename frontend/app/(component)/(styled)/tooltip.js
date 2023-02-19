@@ -3,7 +3,7 @@ import { useState } from "react";
 import Transition from "../../(layout)/transitions";
 import icons from "./icons";
 
-export default function Tooltip({ children, size, position }) {
+export default function Tooltip({ children, description = "", size, position }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const positionOuterClasses = (position) => {
@@ -45,28 +45,31 @@ export default function Tooltip({ children, size, position }) {
     }
   };
 
+  // Plain HTML tooltip: <a href="#"  title="Hooray!, this text will show up" role="tooltip">Hover over me</a>
   return (
-    <div className="relative inline-flex">
-      <button
-        type="button"
-        onMouseEnter={() => setTooltipOpen(true)}
-        onMouseLeave={() => setTooltipOpen(false)}
-        className="block w-4 h-4 text-l-tc dark:text-d-tc cursor-help"
-        aria-haspopup="true"
-        aria-expanded={tooltipOpen}>
-        {icons.exclamationMark}
-      </button>
+    <a
+      className="relative inline-flex"
+      href="#"
+      title={description}
+      role="tooltip"
+      aria-haspopup="true"
+      aria-expanded={tooltipOpen}
+      onClick={(e) => e.preventDefault() + setTooltipOpen(!tooltipOpen)}
+      onMouseEnter={() => setTooltipOpen(true)}
+      onMouseLeave={() => setTooltipOpen(false)}>
+      <span className="block w-4 h-4 text-l-tc dark:text-d-tc cursor-help">{icons.exclamationMark}</span>
 
       <Transition
         tag="div"
         open={tooltipOpen}
-        base={`rounded overflow-hidden transition ease-in-out duration-200 bg-l-bg dark:bg-d-c-bg dark:text-d-c border border-d-c shadow-lg 
-          z-10 absolute ${positionOuterClasses(position)}
-          ${sizeClasses(size)} ${positionInnerClasses(position)}`}
-        enter=" transform opacity-100 -translate-y-2"
-        exit="opacity-0 translate-y-0">
-        {children}
+        base={`absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg dark:text-d-c border border-d-c shadow-lg 
+          ${positionOuterClasses(position)} 
+          ${sizeClasses(size)}`}
+        enter={`opacity-100 ${positionInnerClasses(position)}`}
+        exit="m-0 opacity-0 translate-y-0"
+        time="100">
+        {description || children}
       </Transition>
-    </div>
+    </a>
   );
 }

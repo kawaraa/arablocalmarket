@@ -17,14 +17,11 @@ export default function RootLayout({ children }) {
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="/config.js"></script>
       </head>
-      <body className="pt-14 md:pt-16 bg-l-bg text-l-t dark:bg-d-bg dark:text-d-t">
-        <main className="relative">
-          <header>
-            <Navigation />
-            <Breadcrumb />
-          </header>
-          {children}
-        </main>
+      <body className="relative pt-14 md:pt-16 bg-l-bg text-l-t dark:bg-d-bg dark:text-d-t">
+        <header>
+          <Navigation />
+        </header>
+        <main className="px-3 md:px-8">{children}</main>
         <div
           id="loading-screen-wrapper"
           className="z10 flex justify-center items-center fixed inset-0 bg-[#ffffffdc]">

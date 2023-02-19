@@ -76,7 +76,7 @@ export default function Navigation(props) {
           showMenu && "w-[100%] opacity-100"
         }`}></idv>
       <ul
-        className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
+        className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
           showMenu && activeMenuCls
         }`}>
         {navLinks.slice(0, 1).map((link, i) => (

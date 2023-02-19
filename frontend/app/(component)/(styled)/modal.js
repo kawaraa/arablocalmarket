@@ -1,8 +1,8 @@
 "use client";
-import Transition from "../(layout)/transitions";
-import Button from "./(styled)/button";
-import CloseButton from "./(styled)/close-button";
-import icons from "./(styled)/icons";
+import Transition from "../../(layout)/transitions";
+import Button from "./button";
+import CloseButton from "./close-button";
+import icons from "./icons";
 
 export default function Modal({ children, title = "Warning", okBtn = "Ok", open, onCancel, onApprove }) {
   const cls = open ? "h-full p-4 opacity-100" : "";
@@ -18,7 +18,7 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
 
       <Transition
         tag="section"
-        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-l-bg md:min-w-[550px] md:max-w-xl md:left-[50%] md:bottom-[50%] md:translate-x-[-50%] md:translate-y-[50%]"
+        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-l-bg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
         enter="opacity-100 translate-y-0 md:scale-100"
         exit="opacity-0 translate-y-4 md:translate-y-0 md:scale-75"
         time="200"
@@ -29,7 +29,7 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
           <div className="h-12 w-12 shrink-0 p-3 mx-auto mt-1 md:mr-2 rounded-full bg-red text-[#ff4995]">
             {icons.warningTriangular}
           </div>
-          <div className="mt-3 text-sm text-center text-l-c md:text-left">
+          <div className="flex-auto mt-3 text-sm text-center text-l-c md:text-left">
             <h2 className="mb-1 text-lg text-l-tc">{title}</h2>
             {children}
           </div>

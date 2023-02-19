@@ -11,7 +11,11 @@ export default function Button({ children, type = "button", icon, handler, loadi
   return (
     <button className={c} type={type} onClick={handler} disabled={disabled}>
       {children}
-      {loading ? <Loader size="4" /> : <span className="max-w-4"> {(icon && icons[icon]) || icon}</span>}
+      {loading ? (
+        <Loader size="4" />
+      ) : (
+        <span className="max-w-4"> {(typeof icon === "string" && icons[icon]) || icon}</span>
+      )}
     </button>
   );
 }
