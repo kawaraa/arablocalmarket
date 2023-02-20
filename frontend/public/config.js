@@ -40,7 +40,8 @@ tailwind.config = {
 };
 
 function setLoading(loading) {
-  const elements = document.body.children;
+  const elements = document.body?.children;
+
   if (loading) {
     elements[0].style.opacity = "0";
     elements[1].style.display = "flex";
@@ -49,5 +50,3 @@ function setLoading(loading) {
     elements[1].style.display = "none";
   }
 }
-
-setLoading(false);

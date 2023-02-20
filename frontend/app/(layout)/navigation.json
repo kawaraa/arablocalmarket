@@ -17,7 +17,7 @@
     {
       "text": { "en": "Join", "ar": "انضم" },
       "path": "/join",
-      "cls": "bg-d-c-bg text-l-bg dark:bg-p-c dark:text-l-c rounded-lg hover:bg-p-c dark:hover:bg-[#ebf9c8e6] hover:text-l-c dark:hover:text-l-c"
+      "cls": "bg-d-c-bg text-d-tc dark:bg-p-c dark:text-l-c rounded-lg hover:bg-p-c dark:hover:bg-[#ebf9c8e6] hover:text-l-c dark:hover:text-l-c"
     }
   ],
   "userLinks": [

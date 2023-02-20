@@ -1,0 +1,18 @@
+{
+  "test": { "en": "", "ar": "" },
+  "h1": {
+    "text": { "en": "Arab Local Market", "ar": "السوق المحلي العربي" },
+    "hidden": {
+      "en": "Arabic Stores Supermarkets near you Halal food around the world Create your store and start selling Halal food products online locally.",
+      "ar": ".المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا"
+    }
+  },
+  "h1P": {
+    "en": "Welcome to the first Arabic Local Stores platform",
+    "ar": ".مرحبًا بكم في أول منصة متاجر محلية عربية"
+  },
+  "h2": {
+    "en": "Find an Arabic Stores and Supermarkets near you.",
+    "ar": "ابحث عن متاجر ومحلات سوبر ماركت عربية بالقرب منك"
+  }
+}

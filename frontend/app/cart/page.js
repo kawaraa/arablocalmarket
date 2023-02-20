@@ -1,8 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppSessionContext } from "../app-session-context";
 
 export default function Cart(props) {
   console.log("Cart: >>>", props);
+
+  const { loading, setLoading, lang, updateLang, themeMode, updateThemeMode, user } =
+    useContext(AppSessionContext);
 
   useEffect(() => {
     document.title = "Shipping Cart - ALM";

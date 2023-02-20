@@ -1,60 +1,24 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import data from "./navigation.json";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
 import icons from "../(component)/(styled)/icons";
+import { AppSessionContext } from "../app-session-context";
 const { languageOptions, themeOptions, navLinks, userLinks, dir, themeModeIconsMap } = data;
 
-// localStorage.cart.items.
-const cart = { items: [] };
-const user = "null";
-const notifications = [{ title: { en: "", ar: "" }, description: { en: "", ar: "" }, path: "1" }];
-
-export default function Navigation(props) {
-  const [themeMode, setThemeMode] = useState("auto");
-  const [lang, setLang] = useState("en");
+export default function Navigation() {
   const [cls, setCls] = useState("top-0");
   const [showMenu, setShowMenu] = useState(false);
-  // const lang = window.localStorage.lang || "en";
-  const activeMenuCls = `left-[0]`;
 
-  const changeThemeMode = (mode) => {
-    document.documentElement.classList.remove("dark", "light", "auto");
-
-    if (mode === "auto") {
-      localStorage.removeItem("themeMode");
-      document.documentElement.classList.add("auto");
-    } else {
-      localStorage.setItem("themeMode", mode);
-      document.documentElement.classList.add(mode);
-    }
-    setThemeMode(mode);
-  };
-
-  const changeLanguage = (lang) => {
-    localStorage.setItem("lang", lang);
-    document.documentElement.setAttribute("lang", lang);
-    document.documentElement.classList.remove("en", "ar");
-    document.documentElement.classList.add(lang);
-
-    setLang(lang);
-  };
+  const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
+    useContext(AppSessionContext);
 
   useEffect(() => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
-    if (localStorage.themeMode === "dark" || dark) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-
-    document.documentElement.classList.add(localStorage.lang || "en");
-
-    if (localStorage.themeMode) setThemeMode(localStorage.themeMode);
-    if (localStorage.lang) setLang(localStorage.lang);
-
     let previousYOffset = window.pageYOffset;
+
     function scrollHandler() {
       if (previousYOffset > window.pageYOffset) setCls("top-0");
       else setCls("-top-14 md:-top-16");
@@ -86,14 +50,14 @@ export default function Navigation(props) {
         }`}></idv>
       <ul
         className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
-          showMenu && activeMenuCls
+          showMenu && "left-[0]"
         }`}>
         <li className="absolute top-3 right-3 text-l-c hover:text-l-tc dark:text-p-c dark:hover:text-d-tc transition md:static md:ml-1">
           <div className="relative w-7  rounded-md">
             {icons[themeModeIconsMap[themeMode]]}
             <select
               value={themeMode}
-              onChange={(e) => changeThemeMode(e.target.value)}
+              onChange={(e) => updateThemeMode(e.target.value)}
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full cursor-pointer">
               {languageOptions.map((opt, i) => (
@@ -132,7 +96,7 @@ export default function Navigation(props) {
           <img src={`${lang}.png`} className="w-full" />
           <select
             value={lang}
-            onChange={(e) => changeLanguage(e.target.value)}
+            onChange={(e) => updateLang(e.target.value)}
             style={{ background: "none", color: "transparent" }}
             className="absolute inset-0 w-full cursor-pointer">
             {themeOptions.map((opt, i) => (
