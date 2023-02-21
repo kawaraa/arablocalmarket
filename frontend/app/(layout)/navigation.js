@@ -37,13 +37,14 @@ export default function Navigation() {
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z8 mr-3 md:hidden" />
 
       <Link
-        className="flex flex-shrink-0 items-center text-md uppercase font-bold"
+        className="flex flex-shrink-0 items-center text-md uppercase text-l-c font-bold"
         href="/"
         title="Arab Local Market Slogan (ALM)">
         {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
-        <span className="text-blue">A</span>
+        {/* <span className="text-blue">A</span>
         <span className="text-red">L</span>
-        <span className="text-green">M</span>
+        <span className="text-green">M</span> */}
+        A L M
       </Link>
 
       <idv

@@ -8,11 +8,23 @@
     }
   },
   "h1P": {
-    "en": "Welcome to the first Arabic Local Stores platform",
-    "ar": ".مرحبًا بكم في أول منصة متاجر محلية عربية"
+    "en": "Welcome to the first Arabic Local Stores platform where you can look for Arabic stores or supermarkets nearby.",
+    "ar": "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة."
   },
   "h2": {
-    "en": "Find an Arabic Stores and Supermarkets near you.",
-    "ar": "ابحث عن متاجر ومحلات سوبر ماركت عربية بالقرب منك"
+    "en": "Find an Arabic Store and Supermarket near you.",
+    "ar": "ابحث عن متجر عربي وسوبر ماركت بالقرب منك."
+  },
+  "h3": {
+    "en": "Are you a store owner and you want to create a store to list your products? then you are in the right place.",
+    "ar": "هل أنت صاحب متجر وتريد إنشاء متجر لعرض منتجاتك؟ فأنت في المكان المناسب."
+  },
+  "h3Link": {
+    "en": "Create a store",
+    "ar": "أنشئ متجرًا"
+  },
+  "h3P": {
+    "en": "We are here to help you grow and manage your business and make it easy and fun.",
+    "ar": "نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة."
   }
 }

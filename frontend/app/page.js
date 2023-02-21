@@ -10,6 +10,7 @@ import ContextMenu from "./(component)/context-menu";
 import Footer from "./(layout)/footer";
 import content from "./page.json";
 import icons from "./(component)/(styled)/icons";
+import Link from "next/link";
 
 export default function LandingPage(props) {
   const headersList = headers();
@@ -24,22 +25,34 @@ export default function LandingPage(props) {
 
         {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
 
-        <section className="relative top-0 px-4 pt-10 w-full ">
+        <section dir="auto" className="relative top-0 px-4 pt-10 w-full ">
           {/* <div className="absolute top-0 left-0 w-full"> */}
-          <h1 className="text-4xl md:text-5xl mt-0 mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl mt-0 mb-5 text-center">
             {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
           </h1>
-          <p className="text-xl text-center">{content.h1P[lang]}</p>
+          <p className="text-md text-center">{content.h1P[lang]}</p>
 
-          <h2 className="text-2xl mt-10 mb-10 text-center">{content.h2[lang]}</h2>
-          <p className="text-md text-center">
+          <h2 className="text-xl mt-8 mb-3 text-center">{content.h2[lang]}</h2>
+          <div className="text-center">
+            <Link href="/store" className="inline-flex w-10 animate-bounce">
+              {icons.arrowDownInCircle}
+            </Link>
+          </div>
+
+          <h3 className="text-md mt-2 mb-3 text-center lazy-load">{content.h3[lang]}</h3>
+          <div className="text-center ">
+            <Link
+              href="/join"
+              className="bg-d-bg text-l-bg py-1 px-3 inline-flex rounded-full duration-200 hover:opacity-50  hover:shadow-xl ">
+              {content.h3Link[lang]}
+            </Link>
+          </div>
+          <p className="text-sm mt-2 text-center">{content.h3P[lang]}</p>
+
+          {/* <p className="text-md text-center">
             Todo: Turn on the location Or Select your area. list of country where the user can select the
             country, the province, the city, the neighborhood and maybe the street
-          </p>
-          <p className="text-md text-center">
-            Are you a store owner? then please feel free to contact us, we are here to help you grow your
-            business
-          </p>
+          </p> */}
         </section>
       </div>
       <div className="mt-[100vh]">
