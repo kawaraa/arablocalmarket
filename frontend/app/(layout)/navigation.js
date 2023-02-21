@@ -15,6 +15,7 @@ export default function Navigation() {
 
   const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
     useContext(AppSessionContext);
+  const loginLink = navLinks[navLinks.length - 1];
 
   useEffect(() => {
     let previousYOffset = window.pageYOffset;
@@ -120,17 +121,16 @@ export default function Navigation() {
           <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 0}</span>
         </Link> */}
 
-        <Link href="/cart" className="relative flex md:mr-2">
+        <Link href="/cart" className="relative flex mr-2">
           <span className="transition w-6 md:w-7 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
             {icons.cart}
           </span>
           <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 0}</span>
         </Link>
 
-        <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
-
         {user ? (
           <>
+            <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Dropdown
               event="click"
               icon="bell"
@@ -166,16 +166,11 @@ export default function Navigation() {
             </Dropdown>
           </>
         ) : (
-          navLinks.slice(2).map((link, i) => (
-            <Link
-              key={i}
-              href={link.path}
-              className={`transition block px-3 py-2 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc text-sm font-medium ${dir} ${
-                link.cls || ""
-              }`}>
-              {link.text[lang]}
-            </Link>
-          ))
+          <Link
+            href={loginLink.path}
+            className={`transition block px-3 py-2 ml-3 text-l-bg dark:text-d-c text-sm font-medium bg-d-c-bg dark:bg-p-c dark:text-l-c rounded-lg hover:opacity-50`}>
+            {loginLink.text[lang]}
+          </Link>
         )}
       </div>
     </nav>

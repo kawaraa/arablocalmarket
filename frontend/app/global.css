@@ -60,19 +60,34 @@ body.dark {
 .p-g-bg {
   background: radial-gradient(var(--into-bg), var(--light-background));
 }
-.lazy-load {
-  animation: lazy 1s ease-in 2s 1 reverse;
-  animation-name: lazy;
-  animation-duration: 1s;
-  animation-timing-function: ease-in;
-  animation-delay: 1s;
-  animation-iteration-count: 1;
-  animation-direction: reverse;
-  /* animation-fill-mode: backwards; */
-  /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+
+/* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+.lazy-c {
+  animation: lazy-c 0.5s ease-in 0.3s 1 reverse backwards;
 }
-@keyframes lazy {
+.lazy-r {
+  transform-origin: top right;
+  animation: lazy-r 0.5s ease-in 0.3s 1 reverse backwards;
+}
+.lazy-l {
+  transform-origin: top left;
+  animation: lazy-l 0.5s ease-in 0.3s 1 reverse backwards;
+}
+@keyframes lazy-c {
   100% {
-    transform: translate(5%, 50%);
+    opacity: 0;
+    transform: translate(0, 50%);
+  }
+}
+@keyframes lazy-r {
+  100% {
+    opacity: 0;
+    transform: rotate(-10deg) translate(5%, 80%);
+  }
+}
+@keyframes lazy-l {
+  100% {
+    opacity: 0;
+    transform: rotate(10deg) translate(-5%, 50%);
   }
 }
