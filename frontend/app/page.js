@@ -9,6 +9,7 @@ import Breadcrumb from "./(component)/breadcrumb";
 import ContextMenu from "./(component)/context-menu";
 import Footer from "./(layout)/footer";
 import content from "./page.json";
+import icons from "./(component)/(styled)/icons";
 
 export default function LandingPage(props) {
   const headersList = headers();
@@ -16,106 +17,55 @@ export default function LandingPage(props) {
 
   return (
     <div className="">
-      <div className="absolute -top-16 left-0 right-0 h-[400px] w-full bg-gradient-to-b from-p-c to-l-bg">
-        {/* <img src="/alm-icon.svg" alt="" className="block w-full" /> */}
-      </div>
-
-      {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
-
-      <section className="relative top-0 px-4 pt-10 w-full ">
-        {/* <div className="absolute top-0 left-0 w-full"> */}
-        <h1 className="text-4xl md:text-5xl mt-44 mb-8 text-center">
-          {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
-        </h1>
-        <p className="text-xl text-center">{content.h1P[lang]}</p>
-
-        <h2 className="text-2xl mt-44 mb-10 text-center">{content.h2[lang]}</h2>
-        <p className="text-md text-center">
-          Todo: Turn on the location Or Select your area. list of country where the user can select the
-          country, the province, the city, the neighborhood and maybe the street
-        </p>
-        <p className="text-md text-center">
-          Are you a store owner? then please feel free to contact us, we are here to help you grow your
-          business
-        </p>
-      </section>
-
-      {/* 
-      <SelectList />
-      <Select />
-      <Modal />
-      <Switch />
-    */}
-      {/* <div className="w-3/4 m-auto dark:bg-d-c-bg dark:text-d-c rounded-lg px-6 py-8 ring-1 ring-l-h/5 shadow-xl dark:shadow-none">
-        <div>
-          <span className="inline-flex items-center justify-center p-2 bg-ico-bg rounded-md shadow-lg">
-            <svg
-              className="h-6 w-6 text-ico-c"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-            </svg>
-          </span>
+      <div className="absolute inset-0 h-[100vh] w-full p-g-bg">
+        <div className="h-32 flex justify-center mt-24 mx-3 py-5 rounded-xl bg-d-c-bg">
+          <img src="/logo-with-letters.svg" />
         </div>
-        <h3 className="text-l-h dark:text-d-tc mt-5 text-base font-medium tracking-tight">
-          Writes Upside-Down
-        </h3>
-        <p className="mt-2 text-sm">
-          The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even works
-          in outer space.
-        </p>
-      </div> */}
-      {/* <div class="flex -space-x-1 overflow-hidden">
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-          src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-        />
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-          src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-        />
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
-          alt=""
-        />
-        <img
-          class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-        />
-      </div> */}
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
-      <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+
+        {/* <h1 className="mb-64">Hello from Home and landing page!</h1> */}
+
+        <section className="relative top-0 px-4 pt-10 w-full ">
+          {/* <div className="absolute top-0 left-0 w-full"> */}
+          <h1 className="text-4xl md:text-5xl mt-0 mb-8 text-center">
+            {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
+          </h1>
+          <p className="text-xl text-center">{content.h1P[lang]}</p>
+
+          <h2 className="text-2xl mt-10 mb-10 text-center">{content.h2[lang]}</h2>
+          <p className="text-md text-center">
+            Todo: Turn on the location Or Select your area. list of country where the user can select the
+            country, the province, the city, the neighborhood and maybe the street
+          </p>
+          <p className="text-md text-center">
+            Are you a store owner? then please feel free to contact us, we are here to help you grow your
+            business
+          </p>
+        </section>
+      </div>
+      <div className="mt-[100vh]">
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+        <p>fhfnbwog gwgiw wgiowg gwgwgw gwgiwwg wg w3gw gwgiweg weg wegw gh wrapperfwe g wrh</p>
+      </div>
       <Footer />
     </div>
   );

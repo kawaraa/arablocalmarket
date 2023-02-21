@@ -20,7 +20,7 @@ export default function Navigation() {
     let previousYOffset = window.pageYOffset;
 
     function scrollHandler() {
-      if (previousYOffset > window.pageYOffset) setCls("top-0");
+      if (previousYOffset > window.pageYOffset) setCls("top-0 bg-l-bg dark:bg-d-c-bg text-l-c dark:text-d-c");
       else setCls("-top-14 md:-top-16");
       previousYOffset = window.pageYOffset;
     }
@@ -33,10 +33,13 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`z7 transition-top duration-300 ease-in-out fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center bg-l-bg dark:bg-d-c-bg text-l-c dark:text-d-c shadow-md ${cls}`}>
+      className={`z7 transition-top duration-300 ease-in-out fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center  ${cls}`}>
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z8 mr-3 md:hidden" />
 
-      <Link className="flex flex-shrink-0 items-center text-xl font-bold" href="/">
+      <Link
+        className="flex flex-shrink-0 items-center text-md uppercase font-bold"
+        href="/"
+        title="Arab Local Market Slogan (ALM)">
         {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
         <span className="text-blue">A</span>
         <span className="text-red">L</span>
@@ -48,12 +51,29 @@ export default function Navigation() {
         className={`z7 transition duration-300 block md:hidden fixed inset-0 bg-blur w-0 opacity-0 ${
           showMenu && "w-[100%] opacity-100"
         }`}></idv>
+
       <ul
         className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
           showMenu && "left-[0]"
         }`}>
+        <li className="absolute top-3 right-14 text-l-c hover:text-l-tc dark:text-p-c dark:hover:text-d-tc transition md:static md:ml-1">
+          <div className="relative w-7 rounded-md">
+            <img src={`${lang}.png`} className="w-full" />
+            <select
+              value={lang}
+              onChange={(e) => updateLang(e.target.value)}
+              style={{ background: "none", color: "transparent" }}
+              className="absolute inset-0 w-full cursor-pointer">
+              {themeOptions.map((opt, i) => (
+                <option key={i} value={opt.value}>
+                  {opt.text[lang]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </li>
         <li className="absolute top-3 right-3 text-l-c hover:text-l-tc dark:text-p-c dark:hover:text-d-tc transition md:static md:ml-1">
-          <div className="relative w-7  rounded-md">
+          <div className="relative w-7 ">
             {icons[themeModeIconsMap[themeMode]]}
             <select
               value={themeMode}
@@ -92,20 +112,12 @@ export default function Navigation() {
       </ul>
 
       <div className="flex items-center justify-end flex-auto">
-        <div className="relative w-6 md:w-8 ml-0.5 mr-2 md:mx-4 rounded-md">
-          <img src={`${lang}.png`} className="w-full" />
-          <select
-            value={lang}
-            onChange={(e) => updateLang(e.target.value)}
-            style={{ background: "none", color: "transparent" }}
-            className="absolute inset-0 w-full cursor-pointer">
-            {themeOptions.map((opt, i) => (
-              <option key={i} value={opt.value}>
-                {opt.text[lang]}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* <Link href="/cart" className="relative flex md:mr-2">
+          <span className="transition w-6 md:w-7 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
+            {icons.location}
+          </span>
+          <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 0}</span>
+        </Link> */}
 
         <Link href="/cart" className="relative flex md:mr-2">
           <span className="transition w-6 md:w-7 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">

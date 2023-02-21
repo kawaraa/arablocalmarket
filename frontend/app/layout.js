@@ -16,7 +16,8 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content="https://mydomain.com/"/>
         <meta property="og:type" content="website"/> */}
         {/* <script src="/loading-screen.js" defer></script> */}
-        <script src="https://cdn.tailwindcss.com"></script>
+        {/* <script src="https://cdn.tailwindcss.com"></script> */}
+        <script src="/tailwind-css-script.js"></script>
         <script src="/config.js"></script>
       </head>
       <body className="relative">

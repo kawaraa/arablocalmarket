@@ -1,9 +1,9 @@
 export default {
   avatar: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="m95.84,81.49a49.61,46.87 0 0 0 -10.69,-15.1a49.83,47.07 0 0 0 -15.85,-10.01c-0.05,0 -0.11,0 -0.16,-0.18c8.26,-5.62 13.64,-14.75 13.64,-25.11c0,-17.21 -14.72,-31.08 -32.9,-31.08s-32.9,13.87 -32.9,31.08c0,10.36 5.37,19.49 13.64,25.11c-0.05,0.18 -0.11,0.18 -0.16,0.18c-5.94,2.28 -11.28,5.8 -15.85,10.01a49.83,47.07 0 0 0 -10.69,15.1a49.31,46.58 0 0 0 -3.91,17.21a1.06,1 0 0 0 1.06,1.05l7.96,0c0.58,0 1.05,-0.53 1.06,-1.05c0.27,-9.66 4.38,-18.62 11.65,-25.46c7.52,-7.2 17.51,-11.06 28.15,-11.06s20.63,3.86 28.15,11.06c7.27,6.85 11.38,15.81 11.65,25.46c0.01,0.7 0.48,1.05 1.06,1.05l7.96,0a1.06,1 0 0 0 1.06,-1.05c-0.13,-5.97 -1.45,-11.77 -3.91,-17.21zm-45.96,-28.8c-6.09,0 -11.82,-2.28 -16.13,-6.32s-6.69,-9.48 -6.69,-15.28c0,-5.8 2.37,-11.24 6.69,-15.28s10.04,-6.32 16.13,-6.32s11.82,2.28 16.13,6.32s6.69,9.48 6.69,15.28c0,5.8 -2.37,11.24 -6.69,15.28s-10.04,6.32 -16.13,6.32z" />
@@ -11,9 +11,9 @@ export default {
   ),
   avatar1: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="10 14 100 100"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="m90,69.58l0,10.42l-79.75,0l0,-10.38a49.78,51.84 0 0 1 39.87,-20.76c16.32,0 30.77,8.13 39.87,20.73zm-26.58,-41.49a13.29,13.84 0 1 1 -26.58,0a13.29,13.84 0 0 1 26.58,0z" />
@@ -21,9 +21,9 @@ export default {
   ),
   cart: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
       fill="none"
       strokeWidth="2"
       stroke="currentColor"
@@ -37,9 +37,9 @@ export default {
   ),
   bell: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
       fill="none"
       strokeWidth="1.8"
       stroke="currentColor"
@@ -51,11 +51,32 @@ export default {
       />
     </svg>
   ),
+  search: (
+    // <svg
+    //   xmlns="http://www.w3.org/2000/svg"
+    //   viewBox="0 0 24 24"
+    //   className="pointer-events-none w-full"
+    //   fill="none"
+    //   strokeWidth="1"
+    //   stroke="currentColor"
+    //   aria-hidden="true">
+    //   <path d="M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z" />
+    // </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1024 1024"
+      className="pointer-events-none w-full"
+      fill="currentColor"
+      strokeWidth="100"
+      aria-hidden="true">
+      <path d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704z" />
+    </svg>
+  ),
   moon: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M17.293 13.293A8 8 0 016.707 2.707a8.002 8.002 0 1010.586 10.586z" />
@@ -63,9 +84,9 @@ export default {
   ),
   brightness: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <circle cx="10" cy="10" r="4" />
@@ -78,9 +99,9 @@ export default {
   ),
   circleHalf: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path fillRule="evenodd" d="M10 17V3a7 7 0 000 14zm0 1a8 8 0 100-16 8 8 0 000 16z" clipRule="evenodd" />
@@ -88,9 +109,9 @@ export default {
   ),
   edit: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
@@ -98,9 +119,9 @@ export default {
   ),
   link: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.667l3-3z" />
@@ -109,9 +130,9 @@ export default {
   ),
   options: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
+      className="pointer-events-none w-full"
       viewBox="0 0 100 100"
       strokeWidth="10"
       stroke="currentColor"
@@ -121,9 +142,9 @@ export default {
   ),
   close: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
+      className="pointer-events-none w-full"
       fill="none"
       strokeWidth="1"
       stroke="currentColor"
@@ -133,9 +154,9 @@ export default {
   ),
   checkMark: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path
@@ -147,9 +168,9 @@ export default {
   ),
   powerOff: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="64 64 896 896"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M705.6 124.9a8 8 0 00-11.6 7.2v64.2c0 5.5 2.9 10.6 7.5 13.6a352.2 352.2 0 0162.2 49.8c32.7 32.8 58.4 70.9 76.3 113.3a355 355 0 0127.9 138.7c0 48.1-9.4 94.8-27.9 138.7a355.92 355.92 0 01-76.3 113.3 353.06 353.06 0 01-113.2 76.4c-43.8 18.6-90.5 28-138.5 28s-94.7-9.4-138.5-28a353.06 353.06 0 01-113.2-76.4A355.92 355.92 0 01184 650.4a355 355 0 01-27.9-138.7c0-48.1 9.4-94.8 27.9-138.7 17.9-42.4 43.6-80.5 76.3-113.3 19-19 39.8-35.6 62.2-49.8 4.7-2.9 7.5-8.1 7.5-13.6V132c0-6-6.3-9.8-11.6-7.2C178.5 195.2 82 339.3 80 506.3 77.2 745.1 272.5 943.5 511.2 944c239 .5 432.8-193.3 432.8-432.4 0-169.2-97-315.7-238.4-386.7zM480 560h64c4.4 0 8-3.6 8-8V88c0-4.4-3.6-8-8-8h-64c-4.4 0-8 3.6-8 8v464c0 4.4 3.6 8 8 8z"></path>
@@ -157,9 +178,9 @@ export default {
   ),
   download: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="64 64 896 896"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M505.7 661a8 8 0 0012.6 0l112-141.7c4.1-5.2.4-12.9-6.3-12.9h-74.1V168c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v338.3H400c-6.7 0-10.4 7.7-6.3 12.9l112 141.8zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
@@ -167,9 +188,9 @@ export default {
   ),
   exclamationMark: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 16 16"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
@@ -177,9 +198,9 @@ export default {
   ),
   warningTriangular: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
       fill="none"
       strokeWidth="1.5"
       stroke="currentColor"
@@ -193,9 +214,9 @@ export default {
   ),
   chevronDown: (
     <svg
-      className="pointer-events-none w-full"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
       fill="currentColor"
       aria-hidden="true">
       <path
@@ -205,4 +226,14 @@ export default {
       />
     </svg>
   ),
+  location: (
+    <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+      <g>
+        <path d="M800 416a288 288 0 1 0-576 0c0 118.144 94.528 272.128 288 456.576C705.472 688.128 800 534.144 800 416zM512 960C277.312 746.688 160 565.312 160 416a352 352 0 0 1 704 0c0 149.312-117.312 330.688-352 544z" />
+        <path d="M512 512a96 96 0 1 0 0-192 96 96 0 0 0 0 192zm0 64a160 160 0 1 1 0-320 160 160 0 0 1 0 320z" />
+      </g>
+    </svg>
+  ),
+  logo: <></>,
+  logoWithLetters: <></>,
 };
