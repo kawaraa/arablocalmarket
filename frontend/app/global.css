@@ -57,8 +57,8 @@ body.dark {
 .z10 {
   z-index: 10;
 }
-.p-g-bg {
-  background: radial-gradient(var(--into-bg), var(--light-background));
+.hp-bg {
+  background: radial-gradient(#b8f5d9, #ffffff);
 }
 
 /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
@@ -90,4 +90,10 @@ body.dark {
     opacity: 0;
     transform: rotate(10deg) translate(-5%, 50%);
   }
+}
+
+.leaflet-pane,
+.leaflet-bottom.leaflet-right,
+.leaflet-control {
+  z-index: auto !important;
 }

@@ -2,9 +2,9 @@
 import { useState } from "react";
 
 export default function OptionXIcon({ onChange, open = false, cls = "", barsCls = "" }) {
-  const [hover, setHover] = useState("bg-l-c dark:bg-d-c");
+  const [hover, setHover] = useState(false);
 
-  const hCls = hover ? "bg-l-tc dark:bg-d-tc" : "bg-l-c dark:bg-d-c";
+  const hCls = hover ? "bg-dbg dark:bg-dt" : "bg-t dark:bg-dt";
   const barCls = `relative w-[25px] h-[2px] my-[5px] rounded-full duration-200 ease-in-out ${hCls} ${barsCls}`;
 
   return (

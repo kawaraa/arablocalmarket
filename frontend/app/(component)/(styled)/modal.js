@@ -4,20 +4,28 @@ import Button from "./button";
 import CloseButton from "./close-button";
 import icons from "./icons";
 
-export default function Modal({ children, title = "Warning", okBtn = "Ok", open, onCancel, onApprove }) {
+export default function Modal({
+  children,
+  title = "Warning",
+  okBtn = "Ok",
+  open,
+  loading,
+  onCancel,
+  onApprove,
+}) {
   const cls = open ? "h-full p-4 opacity-100" : "";
 
   return (
     <>
       <div
-        className={`z9 fixed inset-0 h-0 p-0 bg-blur opacity-0 transition-opacity ${cls}`}
+        className={`z9 fixed inset-0 h-0 p-0 bg-blur opacity-0 transition-opacity duration-200 ${cls}`}
         onClick={onCancel}></div>
 
       <Transition
         tag="section"
-        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-l-bg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
-        enter="opacity-100 translate-y-0 md:scale-100"
-        exit="opacity-0 translate-y-4 md:translate-y-0 md:scale-75"
+        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
+        enter="opacity-100 md:scale-100"
+        exit="opacity-0 translate-y-4 md:scale-75"
         time="200"
         open={open}
         wrapperProps={{ "aria-label": `${title} modal window`, role: "dialog", "aria-modal": "true" }}>
@@ -38,7 +46,7 @@ export default function Modal({ children, title = "Warning", okBtn = "Ok", open,
           </div>
         </div>
         <div className="pt-3 flex justify-end">
-          <Button handler={onApprove} cls="w-full md:w-auto justify-center py-2">
+          <Button handler={onApprove} loading={loading} cls="w-full md:w-auto justify-center py-2">
             {okBtn}
           </Button>
         </div>

@@ -6,7 +6,7 @@ import "./global.css";
 // https://www.datocms.com/blog/dealing-with-nextjs-seo
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="group auto">
+    <html lang="en" className="scroll-smooth group auto">
       <head>
         <title>Arab Local Market</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <script src="/config.js"></script>
       </head>
       <body className="relative">
-        <div className="pt-14 md:pt-16 bg-l-bg text-l-t dark:bg-d-bg dark:text-d-t opacity-0">
+        <div className="pt-14 md:pt-16 bg-bg dark:bg-dbg text-t dark:text-dt opacity-0">
           <AppSessionContextProvider>
             <header>
               <Navigation />

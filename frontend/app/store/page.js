@@ -1,7 +1,8 @@
 import { headers } from "next/headers";
+import Link from "next/link";
 import Store from "../(component)/store";
 
-// import Button from "./(component)/(styled)/button";
+import Button from "../(component)/(styled)/button";
 // import Dropdown from "../(component)/(styled)/dropdown";
 // import Select from "../(component)/select";
 // import SelectList from "../(component)/select-list";
@@ -9,6 +10,7 @@ import Store from "../(component)/store";
 // import Breadcrumb from "../(component)/breadcrumb";
 import Card from "../(component)/card";
 import icons from "../(component)/(styled)/icons";
+import SearchBox from "../(component)/search-box";
 // import ContextMenu from "../(component)/context-menu";
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
@@ -26,18 +28,7 @@ export default function StoresNearby() {
 
   return (
     <>
-      <form className="relative w-full mt-3 mb-5 flex justify-end">
-        <label htmlFor="store-search" className="absolute top-1.5 right-1 w-5 text-black ">
-          {icons.search}
-        </label>
-        <input
-          type="text"
-          id="store-search"
-          placeholder="Search for a store"
-          className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg focus:outline-none border border-d-b focus:shadow-lg"
-          tabIndex="0"
-        />
-      </form>
+      <SearchBox />
 
       <h1>Hello from stores nearby page!</h1>
       <div>

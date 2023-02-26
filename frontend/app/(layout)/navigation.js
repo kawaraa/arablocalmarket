@@ -21,8 +21,9 @@ export default function Navigation() {
     let previousYOffset = window.pageYOffset;
 
     function scrollHandler() {
-      if (previousYOffset > window.pageYOffset) setCls("top-0 bg-l-bg dark:bg-d-c-bg text-l-c dark:text-d-c");
+      if (previousYOffset > window.pageYOffset) setCls("top-0 bg-bg dark:bg-dcbg shadow-md");
       else setCls("-top-14 md:-top-16");
+
       previousYOffset = window.pageYOffset;
     }
 
@@ -34,11 +35,11 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`z7 transition-top duration-300 ease-in-out fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center  ${cls}`}>
+      className={`z7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center text-t dark:text-dt transition-top duration-300 ease-in-out ${cls}`}>
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z8 mr-3 md:hidden" />
 
       <Link
-        className="flex flex-shrink-0 items-center text-md uppercase text-l-c font-bold"
+        className="flex flex-shrink-0 items-center text-md uppercase text-t font-bold"
         href="/"
         title="Arab Local Market Slogan (ALM)">
         {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
@@ -50,15 +51,15 @@ export default function Navigation() {
 
       <idv
         onClick={() => setShowMenu(!showMenu)}
-        className={`z7 transition duration-300 block md:hidden fixed inset-0 bg-blur w-0 opacity-0 ${
+        className={`z7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition duration-300 ${
           showMenu && "w-[100%] opacity-100"
         }`}></idv>
 
       <ul
-        className={`z7 transition-all absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-l-bg shadow-md dark:bg-d-c-bg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none ${
+        className={`z7 absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all ${
           showMenu && "left-[0]"
         }`}>
-        <li className="absolute top-3 right-14 text-l-c hover:text-l-tc dark:text-p-c dark:hover:text-d-tc transition md:static md:ml-1">
+        <li className="absolute top-3 right-14 text-t hover:text-lt dark:text-pc dark:hover:text-dt transition md:static md:ml-1">
           <div className="relative w-7 rounded-md">
             <img src={`${lang}.png`} className="w-full" />
             <select
@@ -74,7 +75,7 @@ export default function Navigation() {
             </select>
           </div>
         </li>
-        <li className="absolute top-3 right-3 text-l-c hover:text-l-tc dark:text-p-c dark:hover:text-d-tc transition md:static md:ml-1">
+        <li className="absolute top-3 right-3 text-t hover:text-lt dark:text-pc dark:hover:text-dt transition md:static md:ml-1">
           <div className="relative w-7 ">
             {icons[themeModeIconsMap[themeMode]]}
             <select
@@ -95,7 +96,7 @@ export default function Navigation() {
           <li
             key={i}
             onClick={() => setShowMenu(!showMenu)}
-            className="transition text-l-c hover:bg-d-c-bg hover:text-d-c dark:text-d-c dark:hover:text-d-tc md:hover:bg-[transparent] md:hover:text-l-tc text-sm font-medium">
+            className="transition text-t hover:bg-dcbg hover:text-dt dark:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
             <Link href={link.path} className="block px-3 py-2">
               {link.text[lang]}
             </Link>
@@ -105,7 +106,7 @@ export default function Navigation() {
         {user && "user has a store" && (
           <li
             onClick={() => setShowMenu(!showMenu)}
-            className="transition text-l-c hover:bg-d-c-bg hover:text-d-c dark:text-d-c dark:hover:text-d-tc md:hover:bg-[transparent] md:hover:text-l-tc text-sm font-medium">
+            className="transition text-l-c hover:bg-dbg hover:text-dt dark:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
             <Link href={navLinks[1].path} className="block px-3 py-2">
               {navLinks[1].text[lang]}
             </Link>
@@ -122,10 +123,10 @@ export default function Navigation() {
         </Link> */}
 
         <Link href="/cart" className="relative flex mr-2">
-          <span className="transition w-6 md:w-7 text-l-c dark:text-d-c hover:text-l-tc dark:hover:text-d-tc">
+          <span className="transition w-6 md:w-7 text-t dark:text-dt hover:text-lt dark:hover:text-dbg">
             {icons.cart}
           </span>
-          <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 0}</span>
+          <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 10}</span>
         </Link>
 
         {user ? (
@@ -141,7 +142,7 @@ export default function Navigation() {
               {notifications.map((note, i) => (
                 <li key={i} className={dir}>
                   <a
-                    className="transition block px-4 py-2 text-sm hover:bg-d-c-bg hover:text-d-c dark:hover:bg-p-c dark:hover:text-l-c"
+                    className="transition block px-4 py-2 text-sm hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t"
                     href={"/order/" + note.path}>
                     {note.description[lang]}
                   </a>
@@ -157,7 +158,7 @@ export default function Navigation() {
               {userLinks.map((link, i) => (
                 <li key={i} className={dir}>
                   <a
-                    className="transition block px-4 py-2 text-sm hover:bg-d-c-bg hover:text-d-c dark:hover:bg-p-c dark:hover:text-l-c"
+                    className="block px-4 py-2 text-sm hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t transition"
                     href={link.path}>
                     {link.text[lang]}
                   </a>
@@ -168,7 +169,7 @@ export default function Navigation() {
         ) : (
           <Link
             href={loginLink.path}
-            className={`transition block px-3 py-2 ml-3 text-l-bg dark:text-d-c text-sm font-medium bg-d-c-bg dark:bg-p-c dark:text-l-c rounded-lg hover:opacity-50`}>
+            className="block px-3 py-2 ml-3 text-sm bg-dbg text-dt font-medium dark:text-dt dark:bg-pc dark:text-t rounded-lg border hover:border-p-c transition">
             {loginLink.text[lang]}
           </Link>
         )}

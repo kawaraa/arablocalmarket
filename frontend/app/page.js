@@ -1,16 +1,9 @@
 import { headers } from "next/headers";
 import Cookies from "./(service)/cookies";
-import Button from "./(component)/(styled)/button";
-import Dropdown from "./(component)/(styled)/dropdown";
-import Select from "./(component)/select";
-import SelectList from "./(component)/select-list";
-import Switch from "./(component)/switch";
-import Breadcrumb from "./(component)/breadcrumb";
-import ContextMenu from "./(component)/context-menu";
+import Link from "next/link";
 import Footer from "./(layout)/footer";
 import content from "./page.json";
 import icons from "./(component)/(styled)/icons";
-import Link from "next/link";
 
 export default function LandingPage(props) {
   const headersList = headers();
@@ -18,39 +11,50 @@ export default function LandingPage(props) {
 
   return (
     <>
-      <section className="absolute inset-0 h-[100vh] w-full p-g-bg">
-        <div className="h-32 flex justify-center mt-24 mx-3 py-5 rounded-xl bg-d-c-bg lazy-c">
-          <img src="/logo-with-letters.svg" />
+      <section className="absolute inset-0 h-[100vh] w-full bg-hpbg dark:bg-dbg border-b border-b-2 border-b-bc">
+        <div className="relative w-full flex justify-center mt-24 md:mt-16 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c">
+          <img src="/img/a.png" className="w-full" />
+          <div className="absolute top-0 left-0 right-0 w-ful h-full text-t dark:bg-[#0000001a]">
+            {/* text-gradient-to-b from-pc to-c */}
+            <h1 className="absolute top-5 left-3 text-2xl md:text-4xl mt-0 mb-5 text-center font-bold lazy-c">
+              {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
+            </h1>
+
+            <p className="absolute bottom-10 px-3 opacity-0">
+              Look for a nearby store or supermarket, Select and add the products you need to the cart, Select
+              the payment method you like, checkout and let the store deliver you order to you.
+            </p>
+          </div>
         </div>
 
-        <article dir="auto" className="relative top-0 px-4 pt-10 w-full">
-          <h1 className="text-4xl md:text-5xl mt-0 mb-5 text-center lazy-c">
-            {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
-          </h1>
-          <p className="text-md text-center lazy-c">{content.h1P[lang]}</p>
+        <article dir="auto" className="relative text-center top-0 px-4 pt-6 md:pt-3 w-full">
+          <p className="text-md text-center font-medium lazy-c">{content.h1P[lang]}</p>
 
-          <h2 className="text-xl mt-8 mb-3 text-center lazy-c">{content.h2[lang]}</h2>
-          <div className="text-center lazy-c">
-            <Link href="/store" className="inline-flex w-10 animate-bounce">
-              {icons.arrowDownInCircle}
-            </Link>
-          </div>
+          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-c">{content.h2[lang]}</h2>
 
-          <h3 className="text-md mt-2 mb-3 text-center lazy-c">{content.h3[lang]}</h3>
-          <div className="text-center lazy-c">
-            <Link
-              href="/join"
-              className="bg-d-bg text-l-bg py-1 px-3 inline-flex rounded-full duration-200 hover:opacity-50  hover:shadow-xl ">
-              {content.h3Link[lang]}
-            </Link>
-          </div>
-          <p className="text-sm mt-2 text-center lazy-c">{content.h3P[lang]}</p>
+          <Link href="/store" className="bg-dbg text-dt py-2 px-3 mb-10 rounded-full hover:opacity-50 lazy-c">
+            Find a store to order from
+          </Link>
+
+          <a href="#section2" className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
+            {icons.arrowDownInCircle}
+          </a>
         </article>
       </section>
-      <section className="mt-[100vh]">
-        <h4>Hello from landing page second section</h4>
+
+      <section id="section2" className="mt-[100vh] text-center">
+        <h3 className="text-lg mt-5 mb-3 font-bold lazy-c">{content.h3[lang]}</h3>
+        <p className="text-lg my-5 mb-3 lazy-c">{content.h3P[lang]}</p>
+
+        <Link
+          href="/join"
+          className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-c">
+          {content.h3Link[lang]}
+        </Link>
+
+        {/* <h4>Hello from landing page second section</h4>
         <p>Here we will show you what the app can do for you, the App features and how to use it.</p>
-        <p>Some images, GIFTs and videos </p>
+        <p>Some images, GIFTs and videos </p> */}
       </section>
       <Footer />
     </>

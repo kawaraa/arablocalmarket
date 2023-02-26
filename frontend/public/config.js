@@ -1,36 +1,36 @@
-// #0f172a  #233045 // button from green style #212f54
-// The light app colors: #d7e8fb, #fcdcdc, #ebf9c8, #fde3c2, btn:#162f54
-const lightBackground = "#fff";
-const darkBackground = "#121212";
-const primeColor = "#9bface"; // #ebf3d2 #f0fccc #ebf9c8 #d9ed7f #d9edc0 #6366f1 #b26cfc
+// Error bg: #fde3c2, Color: red
 tailwind.config = {
   darkMode: "class",
   theme: {
     colors: {
-      "l-bg": lightBackground, // Light Background
-      "l-c-bg": "#f9fafb", // Light Card Background
-      "l-tc": darkBackground, // Light Title color
-      "l-c": "#4b5563", // Light Color #65758a #4b5563 #475569
-      "l-h": "#0000001a", // Light Hover
-      "l-b": "#d1d5db", // Light Border
-      "d-bg": darkBackground, // Dark Background
-      "d-c-bg": "#233142", // Dark Card Background
-      "d-tc": lightBackground, // Dark Title Color
-      "d-c": "#8d9bad", // Dark Color #cbd5e1
-      "d-h": "#0000001a", // Dark Hover
-      "d-b": "#d1d5db", // Dark Border
-      "ico-bg": primeColor, // Button Background
-      "ico-c": darkBackground, // Button Color
-      "p-c": primeColor, // Prime Color
-      "lk-c": "#1fb6ff",
+      hpbg: "radial-gradient(#b8f5d9, #ffffff)",
+      pc: "#9bface", // Primary Color
+      pc1: "#ebf9c8", // Primary Color
+      pc2: "#d7e8fb", // Primary Color
+      pc3: "#fcdcdc", // Primary Color
+      pc4: "#fde3c2", // Primary Color
+      bg: "#ffffff", // Background & Dark Title Color
+      cbg: "#ffffff1a", // Card Background
+      t: "#666666", // Light Color
+      bc: "#0000001a", // Border Color & Hover effect
+      bf: "#9aa0a6", // Border focus color
+
+      lbg: "#f9fafb", // Light Background
+      lt: "#4b5563", // Light Title color
+
+      dbg: "#121212", // Dark Background
+      dcbg: "#272727", // Dark card Background
+      dt: "#ffffffbf", // Dark Color
+
+      // "ico-bg": "#9bface", // Icon & Button Background
+      // "ico-c": "#121212", // Icon & Button Color
+
+      red: "#ff6446",
+      green: "#14d263",
+      blue: "#4696ff",
+      orange: "#ffa500",
+      violet: "#b26cfc",
       blur: "#00000066",
-      blue: "#1fb6ff",
-      red: "#ff4995",
-      orange: "#ff7849",
-      green: "#13ce66",
-      // "gray-dark": "#273444",
-      // gray: "#8492a6",
-      // "gray-light": "#d3dce6",
     },
     fontFamily: {
       // sans: ["Graphik", "sans-serif"],

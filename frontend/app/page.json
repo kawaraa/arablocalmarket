@@ -16,15 +16,15 @@
     "ar": "ابحث عن متجر عربي وسوبر ماركت بالقرب منك."
   },
   "h3": {
-    "en": "Are you a store owner and you want to create a store to list your products? then you are in the right place.",
-    "ar": "هل أنت صاحب متجر وتريد إنشاء متجر لعرض منتجاتك؟ فأنت في المكان المناسب."
+    "en": "Are you a store owner and you want to create a store to list your products?",
+    "ar": "هل أنت صاحب متجر وتريد إنشاء متجر لعرض منتجاتك؟"
+  },
+  "h3P": {
+    "en": "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
+    "ar": "فأنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة."
   },
   "h3Link": {
     "en": "Create a store",
     "ar": "أنشئ متجرًا"
-  },
-  "h3P": {
-    "en": "We are here to help you grow and manage your business and make it easy and fun.",
-    "ar": "نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة."
   }
 }
