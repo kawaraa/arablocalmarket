@@ -23,12 +23,14 @@ export const metadata = { title: "Stores Nearby - ALM" };
 
 export default function StoresNearby() {
   const headersList = headers();
-  // const referer = headersList.get('referer');
+  // const en = headersList.get('en');
+  // const id = headersList.get('ip-address');
+  // const coordinates = headersList.get('coordinates');
   // console.log(headersList);
 
   return (
     <>
-      <StoreSearch />
+      <StoreSearch coordinates={[41.0247, 28.9252]} />
 
       <h1>Hello from stores nearby page!</h1>
       <div>

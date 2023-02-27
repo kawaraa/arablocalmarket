@@ -91,9 +91,3 @@ body.dark {
     transform: rotate(10deg) translate(-5%, 50%);
   }
 }
-
-.leaflet-pane,
-.leaflet-bottom.leaflet-right,
-.leaflet-control {
-  z-index: auto !important;
-}

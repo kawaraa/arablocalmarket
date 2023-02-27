@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 import icons from "./(styled)/icons";
 import SearchBox from "./search-box";
+import Loader from "../(layout)/loader";
 
-export default function Map({ coordinates, onLocate, requestUserLocation }) {
+export default function Map({ coordinates, onLocate, requestUserLocation, onError }) {
   const [search, setSearch] = useState("");
   const [permissionGranted, setPermissionGranted] = useState(false);
+  const [requestingLocation, setRequestingLocation] = useState(false);
 
   const handleAddressSearch = async () => {
     const q = search.trim();
@@ -37,67 +39,70 @@ export default function Map({ coordinates, onLocate, requestUserLocation }) {
     const attribution = "&copy; OpenStreetMap contributors";
 
     if ((Map && !Map.newMap) || !Map.newMap._mapPane) {
-      Map.newMap = Map.map("map").setView(coordinates, 13);
+      Map.newMap = Map.map("map").setView(coordinates, 6);
     }
 
     // Add the base map tiles (OpenStreetMap)
     L.tileLayer(OpenStreetMapTileUrl, { attribution }).addTo(Map.newMap);
 
     // Add a marker to the map at the user's selected location
-    Map.newMap.marker = L.marker([41.0247, 28.9252]).addTo(Map.newMap);
+    Map.newMap.marker = L.marker(coordinates).addTo(Map.newMap);
 
     Map.newMap.on("click", (e) => {
       onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
     });
 
-    document?.querySelector(".leaflet-control-attribution.leaflet-control")?.remove();
+    onLocationPermissionAsk();
   };
 
   const onLocationPermissionAsk = () => {
     if (window.L.newMap && requestUserLocation) {
+      setRequestingLocation(true);
+
       window.L.newMap.addEventListener("locationfound", (e) => {
         console.log("locationfound: ", e);
-        // onLocate({ lat: (+e.lat).toFixed(6), lng: (+e.lng).toFixed(6) });
+        onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
         setPermissionGranted(true);
+        setRequestingLocation(false);
       });
 
       window.L.newMap.addEventListener("locationerror", (e) => {
-        console.log("locationerror: ", e);
-        // Show Error message.
+        if (onError) onError();
         setPermissionGranted(false);
+        setRequestingLocation(false);
       });
 
-      window.L.newMap.locate({ enableHighAccuracy: true, setView: true });
+      window.L.newMap.locate({ enableHighAccuracy: true });
     }
   };
 
   useEffect(() => {
     if (window.L?.newMap?.marker && coordinates) {
       window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
+      window.L.newMap.setView([coordinates[0], coordinates[1]], 13);
     }
   }, [coordinates]);
 
   useEffect(() => {
     if (window.L) {
       initializeMap(window.L);
-      onLocationPermissionAsk();
       return () => window.L.newMap.remove();
     }
   }, []);
 
   return (
-    <>
+    <div className="relative">
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
-      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+      <link rel="stylesheet" href="/leaflet/leaflet.css" />
 
-      <div className="relative">
-        <SearchBox
-          label="Search for a location"
-          onSearch={setSearch}
-          search={search}
-          onFinish={handleAddressSearch}
-        />
+      <SearchBox
+        label="Search for a location"
+        onSearch={setSearch}
+        search={search}
+        onFinish={handleAddressSearch}
+      />
 
+      <div className="relative overflow-hidden rounded-lg">
         <div id="map" className="w-full h-64 rounded-lg"></div>
 
         {requestUserLocation && (
@@ -109,12 +114,16 @@ export default function Map({ coordinates, onLocate, requestUserLocation }) {
               id="my-location"
               className="peer absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
             />
-            <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer">
+            <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer ">
               {icons.location}
             </label>
           </div>
         )}
+
+        {requestingLocation && (
+          <Loader size="40" wrapperCls="z9 absolute inset-0 !m-0 bg-blur" cls="text-dt" />
+        )}
       </div>
-    </>
+    </div>
   );
 }

@@ -5,13 +5,13 @@ import Modal from "./(styled)/modal";
 import LeafletMap from "./leaflet-map";
 import SearchBox from "./search-box";
 
-export default function StoreSearch({}) {
+export default function StoreSearch({ coordinates = [0, 0] }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [showFilter, setShowFilter] = useState(true);
-  const [position, setPosition] = useState([41.0247, 28.9252]);
+  const [showFilter, setShowFilter] = useState(false);
+  const [position, setPosition] = useState(coordinates);
   const [range, setRange] = useState("0.5");
   const [search, setSearch] = useState("");
 
@@ -46,6 +46,7 @@ export default function StoreSearch({}) {
             coordinates={position}
             onLocate={({ lat, lng }) => setPosition([lat, lng])}
             requestUserLocation={true}
+            onError={() => alert("Could not access your location, please turn your location on.")}
           />
         </div>
       </Modal>
