@@ -4,15 +4,7 @@ import Button from "./button";
 import CloseButton from "./close-button";
 import icons from "./icons";
 
-export default function Modal({
-  children,
-  title = "Warning",
-  okBtn = "Ok",
-  open,
-  loading,
-  onCancel,
-  onApprove,
-}) {
+export default function Modal({ children, title, okBtn, open, loading, onCancel, onApprove }) {
   const cls = open ? "h-full p-4 opacity-100" : "";
 
   return (
@@ -23,7 +15,7 @@ export default function Modal({
 
       <Transition
         tag="section"
-        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
+        base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="200"

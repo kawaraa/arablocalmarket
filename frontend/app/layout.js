@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <script src="/config.js"></script>
       </head>
       <body className="relative">
-        <div className="pt-14 md:pt-16 bg-bg dark:bg-dbg text-t dark:text-dt opacity-0">
+        <div className="min-h-[100vh] pt-14 md:pt-16 bg-bg dark:bg-dbg text-t dark:text-dt opacity-0">
           <AppSessionContextProvider>
             <header>
               <Navigation />

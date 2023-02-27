@@ -92,7 +92,7 @@
   height: 0;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  z-index: auto;
+  z-index: 7;
 }
 /* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
 .leaflet-overlay-pane svg {
@@ -100,33 +100,33 @@
 }
 
 .leaflet-pane {
-  z-index: auto;
+  z-index: 2;
 }
 
 .leaflet-tile-pane {
-  z-index: auto;
+  z-index: 1;
 }
 .leaflet-overlay-pane {
-  z-index: auto;
+  z-index: 2;
 }
 .leaflet-shadow-pane {
-  z-index: auto;
+  z-index: 3;
 }
 .leaflet-marker-pane {
-  z-index: auto;
+  z-index: 4;
 }
 .leaflet-tooltip-pane {
-  z-index: auto;
+  z-index: 5;
 }
 .leaflet-popup-pane {
-  z-index: auto;
+  z-index: 6;
 }
 
 .leaflet-map-pane canvas {
-  z-index: auto;
+  z-index: 0;
 }
 .leaflet-map-pane svg {
-  z-index: auto;
+  z-index: 1;
 }
 
 .leaflet-vml-shape {
@@ -143,14 +143,14 @@
 
 .leaflet-control {
   position: relative;
-  z-index: auto;
+  z-index: 7;
   pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
   pointer-events: auto;
 }
 .leaflet-top,
 .leaflet-bottom {
   position: absolute;
-  z-index: auto;
+  z-index: 8;
   pointer-events: none;
 }
 .leaflet-top {
@@ -665,12 +665,6 @@ svg.leaflet-image-layer.leaflet-interactive path {
   }
 }
 
-/* Custom Style */
-.leaflet-pane,
-.leaflet-bottom.leaflet-right,
-.leaflet-control {
-  z-index: auto;
-}
 .leaflet-control-attribution.leaflet-control {
   display: none;
 }

@@ -3,7 +3,7 @@
 export default function AAA({ a }) {
   console.log("AAA: >>>", a);
 
-  return <div></div>;
+  return <div>input</div>;
 }
 
 {

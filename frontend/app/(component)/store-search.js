@@ -3,7 +3,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Modal from "./(styled)/modal";
 import LeafletMap from "./leaflet-map";
-import SearchBox from "./search-box";
+import SearchBox from "./(styled)/search-box";
 
 export default function StoreSearch({ coordinates = [0, 0] }) {
   const router = useRouter();
@@ -41,12 +41,29 @@ export default function StoreSearch({ coordinates = [0, 0] }) {
         open={showFilter}
         onApprove={handleSearch}
         onCancel={() => setShowFilter(false)}>
-        <div>
+        <div className="text-left">
           <LeafletMap
             coordinates={position}
             onLocate={({ lat, lng }) => setPosition([lat, lng])}
             requestUserLocation={true}
             onError={() => alert("Could not access your location, please turn your location on.")}
+          />
+
+          <label
+            htmlFor="default-range"
+            dir="auto"
+            className="block mt-2 mb-1 text-sm text-t font-medium dark:text-dt">
+            Location range: {range} KM
+          </label>
+          <input
+            id="default-range"
+            type="range"
+            min="0.1"
+            max="10"
+            step="0.1"
+            value={range}
+            onChange={(e) => setRange(e.target.value)}
+            className="w-full h-1 md:h-2 bg-bc rounded-lg appearance-none cursor-pointer dark:bg-t"
           />
         </div>
       </Modal>

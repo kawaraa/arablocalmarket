@@ -16,7 +16,7 @@ export default function LandingPage(props) {
           <img src="/img/a.png" className="w-full" />
           <div className="absolute top-0 left-0 right-0 w-ful h-full text-t dark:bg-[#0000001a]">
             {/* text-gradient-to-b from-pc to-c */}
-            <h1 className="absolute top-5 left-3 text-2xl md:text-4xl mt-0 mb-5 text-center font-bold lazy-c">
+            <h1 className="absolute top-5 left-3 text-2xl md:text-4xl mt-0 mb-5 text-center font-bold lazy-l">
               {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
             </h1>
 
@@ -28,11 +28,13 @@ export default function LandingPage(props) {
         </div>
 
         <article dir="auto" className="relative text-center top-0 px-4 pt-6 md:pt-3 w-full">
-          <p className="text-md text-center font-medium lazy-c">{content.h1P[lang]}</p>
+          <p className="text-md text-center font-medium lazy-r">{content.h1P[lang]}</p>
 
-          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-c">{content.h2[lang]}</h2>
+          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-l">{content.h2[lang]}</h2>
 
-          <Link href="/store" className="bg-dbg text-dt py-2 px-3 mb-10 rounded-full hover:opacity-50 lazy-c">
+          <Link
+            href="/store"
+            className="inline-block bg-dbg text-dt py-2 px-3 mb-10 rounded-full hover:opacity-50 lazy-c">
             Find a store to order from
           </Link>
 

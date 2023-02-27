@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
 import icons from "./(styled)/icons";
-import SearchBox from "./search-box";
+import SearchBox from "./(styled)/search-box";
 import Loader from "../(layout)/loader";
 
 export default function Map({ coordinates, onLocate, requestUserLocation, onError }) {
@@ -11,9 +11,10 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
 
   const handleAddressSearch = async () => {
     const q = search.trim();
-    if (!q) throw new Error("Please enter a location.");
 
     try {
+      if (!q) throw new Error("Please enter a location.");
+
       const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2`;
       const response = await fetch(url);
 
@@ -78,15 +79,19 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
 
   useEffect(() => {
     if (window.L?.newMap?.marker && coordinates) {
-      window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
       window.L.newMap.setView([coordinates[0], coordinates[1]], 13);
+      window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
     }
   }, [coordinates]);
 
   useEffect(() => {
     if (window.L) {
       initializeMap(window.L);
-      return () => window.L.newMap.remove();
+
+      return () => {
+        window.L.newMap.remove();
+        delete window.L.newMap;
+      };
     }
   }, []);
 
@@ -106,7 +111,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
         <div id="map" className="w-full h-64 rounded-lg"></div>
 
         {requestUserLocation && (
-          <div className="absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
+          <div className="z9 absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
             <input
               type="checkbox"
               checked={permissionGranted}

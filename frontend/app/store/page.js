@@ -21,13 +21,13 @@ export const metadata = { title: "Stores Nearby - ALM" };
 // Todo: If it's possible, change the html className based on the IP address.
 // Todo: Let the user select his location manually and save it if the location is inactive.
 
-export default function StoresNearby() {
+export default function StoresNearby(p) {
   const headersList = headers();
   // const en = headersList.get('en');
   // const id = headersList.get('ip-address');
   // const coordinates = headersList.get('coordinates');
   // console.log(headersList);
-
+  console.log(p);
   return (
     <>
       <StoreSearch coordinates={[41.0247, 28.9252]} />
@@ -43,7 +43,7 @@ export default function StoresNearby() {
       </div>
 
       <p>Here show all the stores that near you.</p>
-      <div className="flex min-h-[100vh]">
+      <div className="flex ">
         <Store />
         <Store />
         <Store />

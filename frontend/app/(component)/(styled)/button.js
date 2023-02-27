@@ -8,14 +8,14 @@ export default function Button({
   handler,
   loading,
   disabled,
-  label = "",
+  label,
   cls = "",
   icon,
   iconCls = "",
 }) {
-  let c = `inline-flex justify-center px-3 py-1 text-sm bg-d-c-bg text-l-c-bg dark:bg-p-c dark:text-d-tc rounded-md md:px-4 md:py-2 font-medium shadow-md disabled:opacity-75 disabled:cursor-no-drop transition-all `;
+  let c = `inline-flex justify-center px-3 py-1 text-sm bg-dbg dark:bg-pc text-dt dark:text-dt rounded-md md:px-4 md:py-2 font-medium shadow-md disabled:opacity-60 disabled:cursor-no-drop transition-all `;
   if (loading) c += "cursor-progress ";
-  if (!disabled) c += "border hover:border-p-c ";
+  if (!disabled) c += "border border-bc hover:border-bf hover:bg-pc hover:text-t ";
   c += cls;
 
   return (

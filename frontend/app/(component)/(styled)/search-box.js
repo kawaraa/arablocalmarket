@@ -1,5 +1,5 @@
 "use client";
-import icons from "./(styled)/icons";
+import icons from "./icons";
 
 export default function SearchBox({ label, onSearch, search, onShowFilter, onFinish }) {
   const id = label.replace(/\s/gim, "_");
@@ -15,7 +15,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
         <button
           type="button"
           onClick={() => onShowFilter(true)}
-          className="w-8 p-1 text-t hover:text-lt transition"
+          className="w-8 p-1 text-t dark:text-dt hover:!text-pc transition"
           title="Show search filter"
           aria-label="Search filter"
           aria-expanded="true"
@@ -31,7 +31,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
         name="search"
         autoComplete="search"
         placeholder={label}
-        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg focus:outline-none border border-bc hover:border-bf focus:shadow-lg"
+        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg inp"
         id={id}
         tabIndex="0"
       />
