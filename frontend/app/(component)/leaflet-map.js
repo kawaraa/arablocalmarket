@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
 import icons from "./(styled)/icons";
+import SearchBox from "./search-box";
 
-export default function Map({ coordinates, onLocate, permissionGranted, onLocationPermissionAsk }) {
+export default function Map({ coordinates, onLocate, requestUserLocation }) {
   const [search, setSearch] = useState("");
+  const [permissionGranted, setPermissionGranted] = useState(false);
 
-  const handleAddressSearch = async (e) => {
-    e.preventDefault();
-    if (!search) throw new Error("Please enter a location.");
+  const handleAddressSearch = async () => {
+    const q = search.trim();
+    if (!q) throw new Error("Please enter a location.");
 
     try {
-      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(search)}&format=jsonv2`;
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2`;
       const response = await fetch(url);
 
       if (!response.ok) throw new Error("No results found.");
@@ -51,6 +53,24 @@ export default function Map({ coordinates, onLocate, permissionGranted, onLocati
     document?.querySelector(".leaflet-control-attribution.leaflet-control")?.remove();
   };
 
+  const onLocationPermissionAsk = () => {
+    if (window.L.newMap && requestUserLocation) {
+      window.L.newMap.addEventListener("locationfound", (e) => {
+        console.log("locationfound: ", e);
+        // onLocate({ lat: (+e.lat).toFixed(6), lng: (+e.lng).toFixed(6) });
+        setPermissionGranted(true);
+      });
+
+      window.L.newMap.addEventListener("locationerror", (e) => {
+        console.log("locationerror: ", e);
+        // Show Error message.
+        setPermissionGranted(false);
+      });
+
+      window.L.newMap.locate({ enableHighAccuracy: true, setView: true });
+    }
+  };
+
   useEffect(() => {
     if (window.L?.newMap?.marker && coordinates) {
       window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
@@ -60,6 +80,7 @@ export default function Map({ coordinates, onLocate, permissionGranted, onLocati
   useEffect(() => {
     if (window.L) {
       initializeMap(window.L);
+      onLocationPermissionAsk();
       return () => window.L.newMap.remove();
     }
   }, []);
@@ -69,25 +90,31 @@ export default function Map({ coordinates, onLocate, permissionGranted, onLocati
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-      <form onSubmit={handleAddressSearch} className="relative">
-        <input type="text" name="address" value={search} onChange={(e) => setSearch(e.target.value.trim())} />
-        <button type="submit">Search</button>
+      <div className="relative">
+        <SearchBox
+          label="Search for a location"
+          onSearch={setSearch}
+          search={search}
+          onFinish={handleAddressSearch}
+        />
 
         <div id="map" className="w-full h-64 rounded-lg"></div>
 
-        <div className="absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
-          <input
-            type="checkbox"
-            checked={permissionGranted}
-            onChange={onLocationPermissionAsk}
-            id="my-location"
-            className="peer absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
-          />
-          <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer">
-            {icons.location}
-          </label>
-        </div>
-      </form>
+        {requestUserLocation && (
+          <div className="absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
+            <input
+              type="checkbox"
+              checked={permissionGranted}
+              onChange={onLocationPermissionAsk}
+              id="my-location"
+              className="peer absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
+            />
+            <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer">
+              {icons.location}
+            </label>
+          </div>
+        )}
+      </div>
     </>
   );
 }

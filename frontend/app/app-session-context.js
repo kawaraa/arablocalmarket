@@ -149,7 +149,7 @@ export default function AppSessionContextProvider({ children }) {
     notifications,
     // location,
     // setLocation,
-    // requestNotificationPermission,
+    requestNotificationPermission,
 
     // worker,
     // setWorker,

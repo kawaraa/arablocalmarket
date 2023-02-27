@@ -10,7 +10,7 @@ import Button from "../(component)/(styled)/button";
 // import Breadcrumb from "../(component)/breadcrumb";
 import Card from "../(component)/card";
 import icons from "../(component)/(styled)/icons";
-import SearchBox from "../(component)/search-box";
+import StoreSearch from "../(component)/store-search";
 // import ContextMenu from "../(component)/context-menu";
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
@@ -28,7 +28,7 @@ export default function StoresNearby() {
 
   return (
     <>
-      <SearchBox />
+      <StoreSearch />
 
       <h1>Hello from stores nearby page!</h1>
       <div>
