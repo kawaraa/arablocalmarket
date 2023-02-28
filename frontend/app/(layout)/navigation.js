@@ -62,6 +62,7 @@ export default function Navigation() {
         <li className="absolute top-3 right-14 text-t hover:text-lt dark:text-pc dark:hover:text-dt transition md:static md:ml-1">
           <div className="relative w-7 rounded-md">
             <img src={`${lang}.png`} className="w-full" />
+
             <select
               value={lang}
               onChange={(e) => updateLang(e.target.value)}

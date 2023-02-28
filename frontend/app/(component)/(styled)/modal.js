@@ -1,10 +1,10 @@
 "use client";
 import Transition from "../../(layout)/transitions";
 import Button from "./button";
-import CloseButton from "./close-button";
+import CloseButton from "./icon-button";
 import icons from "./icons";
 
-export default function Modal({ children, title, okBtn, open, loading, onCancel, onApprove }) {
+export default function Modal({ children, title, okBtn, open, loading, onCancel, onApprove, icon }) {
   const cls = open ? "h-full p-4 opacity-100" : "";
 
   return (
@@ -29,18 +29,25 @@ export default function Modal({ children, title, okBtn, open, loading, onCancel,
         />
 
         <div className="block bg-l-bg pb-4 md:flex justify-start">
-          <div className="h-12 w-12 shrink-0 p-3 mx-auto mt-1 md:mr-2 rounded-full bg-red text-[#ff4995]">
-            {icons.warningTriangular}
+          <div
+            className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 md:mr-2 rounded-full ${
+              icon === "warning" ? "bg-lb text-red" : "bg-pc text-t"
+            }`}>
+            {(typeof icon === "string" && icons[icon]) || icon}
           </div>
           <div className="flex-auto mt-3 text-sm text-center text-l-c md:text-left">
             <h2 className="mb-1 text-lg text-l-tc">{title}</h2>
             {children}
           </div>
         </div>
+
         <div className="pt-3 flex justify-end">
-          <Button handler={onApprove} loading={loading} cls="w-full md:w-auto justify-center py-2">
-            {okBtn}
-          </Button>
+          <Button
+            text={okBtn}
+            handler={onApprove}
+            loading={loading}
+            cls="w-full md:w-auto justify-center py-2"
+          />
         </div>
       </Transition>
     </>

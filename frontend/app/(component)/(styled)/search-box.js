@@ -31,7 +31,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
         name="search"
         autoComplete="search"
         placeholder={label}
-        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg inp"
+        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg cd_hr duration-200"
         id={id}
         tabIndex="0"
       />

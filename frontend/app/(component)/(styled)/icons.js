@@ -211,7 +211,7 @@ export default {
       <path d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
     </svg>
   ),
-  warningTriangular: (
+  warning: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -294,6 +294,17 @@ export default {
         clipRule="evenodd"
         d="M15 10.5A3.502 3.502 0 0 0 18.355 8H21a1 1 0 1 0 0-2h-2.645a3.502 3.502 0 0 0-6.71 0H3a1 1 0 0 0 0 2h8.645A3.502 3.502 0 0 0 15 10.5zM3 16a1 1 0 1 0 0 2h2.145a3.502 3.502 0 0 0 6.71 0H21a1 1 0 1 0 0-2h-9.145a3.502 3.502 0 0 0-6.71 0H3z"
       />
+    </svg>
+  ),
+  heart: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 32 32"
+      className="pointer-events-none w-full"
+      strokeWidth="2"
+      stroke="currentColor"
+      aria-hidden="true">
+      <path d="M29.5,4.5C27.8,2.3,25.3,1,22.7,1c-2.6,0-5.1,1.3-6.7,3.5C14.4,2.3,11.9,1,9.3,1C6.7,1,4.2,2.3,2.5,4.5 c-1.9,2.6-2,6.4-0.3,9.3c0,0,0,0.1,0.1,0.1l12.9,16.6c0.2,0.3,0.5,0.4,0.8,0.4s0.6-0.1,0.8-0.4L29.7,14c0,0,0-0.1,0.1-0.1 C31.5,11,31.4,7.1,29.5,4.5z"></path>
     </svg>
   ),
   logo: <></>,

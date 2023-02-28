@@ -23,20 +23,20 @@
 }
 
 /* Buttons */
-.inp {
+.cd_hr {
   border: 1px solid #0000001a;
 }
-.dark .inp {
+.dark .cd_hr {
   border-color: #666666;
 }
-.inp:hover,
-.inp:focus {
+.cd_hr:hover,
+.cd_hr:focus {
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
-.dark .inp:hover,
-.dark .inp:focus {
+.dark .cd_hr:hover,
+.dark .cd_hr:focus {
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px #ffffff1a, 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }

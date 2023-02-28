@@ -1,15 +1,7 @@
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import Link from "next/link";
+import StarRating from "../(component)/(styled)/start-rating";
 import Store from "../(component)/store";
-
-import Button from "../(component)/(styled)/button";
-// import Dropdown from "../(component)/(styled)/dropdown";
-// import Select from "../(component)/select";
-// import SelectList from "../(component)/select-list";
-// import Switch from "../(component)/switch";
-// import Breadcrumb from "../(component)/breadcrumb";
-import Card from "../(component)/card";
-import icons from "../(component)/(styled)/icons";
 import StoreSearch from "../(component)/store-search";
 // import ContextMenu from "../(component)/context-menu";
 
@@ -22,15 +14,21 @@ export const metadata = { title: "Stores Nearby - ALM" };
 // Todo: Let the user select his location manually and save it if the location is inactive.
 
 export default function StoresNearby(p) {
-  const headersList = headers();
+  // const headersList = headers();
   // const en = headersList.get('en');
   // const id = headersList.get('ip-address');
   // const coordinates = headersList.get('coordinates');
   // console.log(headersList);
-  console.log(p);
+
+  const cookieStore = cookies();
+  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  const range = cookieStore.get("range")?.value || "0.5";
+
+  console.log(coordinates, "Range: ", range, "search: ", p.searchParams?.search);
+
   return (
     <>
-      <StoreSearch coordinates={[41.0247, 28.9252]} />
+      <StoreSearch coordinates={coordinates} />
 
       <h1>Hello from stores nearby page!</h1>
       <div>
@@ -43,13 +41,29 @@ export default function StoresNearby(p) {
       </div>
 
       <p>Here show all the stores that near you.</p>
-      <div className="flex ">
-        <Store />
-        <Store />
-        <Store />
-        <Store />
-        <Store />
+      <div className="flex flex-wrap">
+        <Store imageUrl="/img/store-0.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-1.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-2.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-3.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-4.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-5.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-6.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-7.png" name="Store name 1" distance="1.5" />
+        <Store imageUrl="/img/store-8.png" name="Store name 1" distance="1.5" />
       </div>
+
+      <a
+        href="#"
+        className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          Noteworthy technology acquisitions 2021
+        </h5>
+        <p className="font-normal text-gray-700 dark:text-gray-400">
+          Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological
+          order.
+        </p>
+      </a>
     </>
   );
 }
