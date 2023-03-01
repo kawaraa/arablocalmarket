@@ -1,7 +1,7 @@
 "use client";
-export default function StarRating({ rating = 0, onRate, size = "sm" }) {
+export default function StarRating({ rating = 0, onRate, cls }) {
   return (
-    <p className={`relative inline-block text-${size}`}>
+    <p className={`relative inline-block ${cls || "text-sm"}`}>
       &#9733;&#9733;&#9733;&#9733;&#9733;
       <span className={`overflow-hidden absolute inset-0 h-1/1 w-[${(rating / 5) * 100}%] text-orange`}>
         &#9733;&#9733;&#9733;&#9733;&#9733;

@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
             <header>
               <Navigation />
             </header>
-            <main className="px-3 md:px-8">{children}</main>
+            <main dir="auto" className="px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8">
+              {children}
+            </main>
           </AppSessionContextProvider>
         </div>
         <div className="z10 flex justify-center items-center fixed inset-0 bg-[transparent]">

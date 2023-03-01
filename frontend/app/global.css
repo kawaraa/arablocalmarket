@@ -87,15 +87,18 @@ body.dark {
 
 /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
 .lazy-c {
-  animation: lazy-c 0.5s ease-in 0.3s 1 reverse backwards;
+  animation: lazy-c 0.8s ease-in 1 reverse backwards;
+  /* animation-delay: attr(data-d); */
+  /* animation-delay: calc(attr(data-d) * 100ms); */
+  /* animation-delay: calc(var(--a-d) * 100ms); */
 }
 .lazy-r {
   transform-origin: top right;
-  animation: lazy-r 0.5s ease-in 0.3s 1 reverse backwards;
+  animation: lazy-r 0.8s ease-in 1 reverse backwards;
 }
 .lazy-l {
   transform-origin: top left;
-  animation: lazy-l 0.5s ease-in 0.3s 1 reverse backwards;
+  animation: lazy-l 0.8s ease-in 1 reverse backwards;
 }
 @keyframes lazy-c {
   100% {

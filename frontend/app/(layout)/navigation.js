@@ -170,7 +170,7 @@ export default function Navigation() {
         ) : (
           <Link
             href={loginLink.path}
-            className="block px-3 py-2 ml-3 text-sm bg-dbg text-dt font-medium dark:text-dt dark:bg-pc dark:text-t rounded-lg border hover:border-p-c transition">
+            className="inline-flex justify-center px-3 py-1 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-md md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t transition">
             {loginLink.text[lang]}
           </Link>
         )}
