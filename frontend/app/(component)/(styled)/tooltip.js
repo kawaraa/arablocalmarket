@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Transition from "../../(layout)/transitions";
-import icons from "./icons";
+import SvgIcon from "./svg-icon";
 
 export default function Tooltip({ children, description = "", size, position }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -57,12 +57,14 @@ export default function Tooltip({ children, description = "", size, position }) 
       onClick={(e) => e.preventDefault() + setTooltipOpen(!tooltipOpen)}
       onMouseEnter={() => setTooltipOpen(true)}
       onMouseLeave={() => setTooltipOpen(false)}>
-      <span className="block w-4 h-4 text-l-tc dark:text-d-tc cursor-help">{icons.exclamationMark}</span>
+      <span className="block w-4 h-4 cursor-help">
+        <SvgIcon name={exclamationMark} />{" "}
+      </span>
 
       <Transition
         tag="div"
         open={tooltipOpen}
-        base={`absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg dark:text-d-c border border-d-c shadow-lg 
+        base={`absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg border border-d-c shadow-lg 
           ${positionOuterClasses(position)} 
           ${sizeClasses(size)}`}
         enter={`opacity-100 ${positionInnerClasses(position)}`}

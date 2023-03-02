@@ -4,7 +4,7 @@ import Cookies from "./(service)/cookies";
 import { getCssDelay } from "./(service)/functions";
 import Footer from "./(layout)/footer";
 import content from "./page.json";
-import icons from "./(component)/(styled)/icons";
+import SvgIcon from "./(component)/(styled)/svg-icon";
 
 export default function LandingPage(props) {
   const headersList = headers();
@@ -18,7 +18,7 @@ export default function LandingPage(props) {
           style={getCssDelay()}
           data-d="1">
           <img src="/img/a.png" className="w-full" />
-          <div className="absolute top-0 left-0 right-0 w-ful h-full text-t dark:bg-[#0000001a]">
+          <div className="absolute top-0 left-0 right-0 w-ful h-full dark:bg-[#0000001a]">
             {/* text-gradient-to-b from-pc to-c */}
             <h1 className="absolute top-5 left-3 text-2xl md:text-4xl mt-0 mb-5 text-center font-bold">
               {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
@@ -48,7 +48,7 @@ export default function LandingPage(props) {
           </Link>
 
           <a href="#section2" className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
-            {icons.arrowDownInCircle}
+            <SvgIcon name="arrowDownInCircle" />
           </a>
         </article>
       </section>

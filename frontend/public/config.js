@@ -4,7 +4,7 @@ tailwind.config = {
   theme: {
     colors: {
       hpbg: "radial-gradient(#b8f5d9, #ffffff)",
-      pc: "#9bface", // Primary Color
+      pc: "#9bface", // Primary Color // #cbf7f2
       pc1: "#ebf9c8", // Primary Color
       pc2: "#d7e8fb", // Primary Color
       pc3: "#fcdcdc", // Primary Color

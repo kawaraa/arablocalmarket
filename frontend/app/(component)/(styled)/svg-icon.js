@@ -1,4 +1,10 @@
-export default {
+import { cloneElement } from "react";
+
+export default function SvgIcon({ name, props }) {
+  return !props ? icons[name] : cloneElement(icons[name], { ...icons[name].props, ...props });
+}
+
+const icons = {
   avatar: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -52,16 +58,6 @@ export default {
     </svg>
   ),
   search: (
-    // <svg
-    //   xmlns="http://www.w3.org/2000/svg"
-    //   viewBox="0 0 24 24"
-    //   className="pointer-events-none w-full"
-    //   fill="none"
-    //   strokeWidth="1"
-    //   stroke="currentColor"
-    //   aria-hidden="true">
-    //   <path d="M20.47 21.53a.75.75 0 1 0 1.06-1.06l-1.06 1.06Zm-9.97-4.28a6.75 6.75 0 0 1-6.75-6.75h-1.5a8.25 8.25 0 0 0 8.25 8.25v-1.5ZM3.75 10.5a6.75 6.75 0 0 1 6.75-6.75v-1.5a8.25 8.25 0 0 0-8.25 8.25h1.5Zm6.75-6.75a6.75 6.75 0 0 1 6.75 6.75h1.5a8.25 8.25 0 0 0-8.25-8.25v1.5Zm11.03 16.72-5.196-5.197-1.061 1.06 5.197 5.197 1.06-1.06Zm-4.28-9.97c0 1.864-.755 3.55-1.977 4.773l1.06 1.06A8.226 8.226 0 0 0 18.75 10.5h-1.5Zm-1.977 4.773A6.727 6.727 0 0 1 10.5 17.25v1.5a8.226 8.226 0 0 0 5.834-2.416l-1.061-1.061Z" />
-    // </svg>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1024 1024"
@@ -79,7 +75,7 @@ export default {
       className="pointer-events-none w-full"
       fill="currentColor"
       stroke="#000000"
-      stroke-width="0.4"
+      strokeWidth="0.4"
       aria-hidden="true">
       <path
         fill="#555"
@@ -316,6 +312,86 @@ export default {
       <path d="m3.33,196.18c-2.17,-5.68 18.84,-31.24 62.78,-76.71l19.38,-20.01l-19.8,-20.11c-37.02,-37.23 -62.67,-68.15 -62.67,-75.42c0,-1.71 12.35,-1.82 185.43,-1.61l185.32,0.33l4.98,0.50c6.93,3.32 12.66,8.09 16.02,16.15l0.82,5.99l0.33,70.51c0.33,79.6 0.43,77.67 -7.69,87.52c-2.93,3.53 -6.82,6.63 -11.04,8.77l-7.49,2.32l-184.34,0.33c-171.47,0.21 -184.34,0.1 -184.99,-1.5l-0.03,-0.01z" />
     </svg>
   ),
+  favorite: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+    </svg>
+  ),
+  phone: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      fill="currentColor"
+      strokeWidth="2"
+      stroke="currentColor">
+      <path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+    </svg>
+  ),
+  whatsapp: (
+    // whatsapp color: "#25d366"
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" className="pointer-events-none w-full">
+      <path
+        d="m20,289l14,-65a138,138 0 1 1 50,47l-64,18z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="26"
+      />
+      <path
+        d="m205,169c-3,-2 -6,-3 -9,1l-12,16c-3,2 -5,3 -9,1c-15,-8 -36,-17 -54,-47c-1,-4 1,-6 3,-8l9,-14c2,-2 1,-4 0,-6l-12,-29c-3,-8 -6,-7 -9,-7l-8,0c-2,0 -6,1 -10,5c-22,22 -13,53 3,73c3,4 23,40 66,59c32,14 39,12 48,10c11,-1 22,-10 27,-19c1,-3 6,-16 2,-18"
+        fill="currentColor"
+      />
+    </svg>
+  ),
+  share: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="2">
+      <circle cx="7" cy="12" r="3" />
+      <circle cx="17" cy="6" r="3" />
+      <circle cx="17" cy="18" r="3" />
+      <line x1="9.5" y1="10.5" x2="14.5" y2="7.5" id="Path" />
+      <line x1="14.5" y1="16.5" x2="9.5" y2="13.5" id="Path" />
+    </svg>
+  ),
+  qr: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      fill="none"
+      strokeWidth="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M20 18V20H18M20 14H19L17 16M16 18H14V20M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14V15H15V14H14Z" />
+      <path d="M17 7H17.001" />
+      <path d="M7 7H7.001" />
+      <path d="M7 17H7.001" />
+    </svg>
+  ),
+  scan: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      className="pointer-events-none w-full"
+      fill="currentColor">
+      <path d="M3 3h1V1H2.5A1.5 1.5 0 001 2.5V4h2V3zM17 3v1h2V2.5A1.5 1.5 0 0017.5 1H16v2h1zM16 17h1v-1h2v1.5a1.5 1.5 0 01-1.5 1.5H16v-2zM3 17v-1H1v1.5A1.5 1.5 0 002.5 19H4v-2H3zM2 14h3V6H2v8zM14 14h-3V6h3v8zM7 14h2V6H7v8zM16 14h2V6h-2v8z" />
+    </svg>
+  ),
+
   logo: <></>,
   logoWithLetters: <></>,
 };

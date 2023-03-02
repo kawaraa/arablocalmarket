@@ -11,6 +11,7 @@ export default function RootLayout({ children }) {
         <title>Arab Local Market</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Complete description of the content showed in this sample page." />
+        {/* <meta name="theme-color" content="black" /> */}
         {/* <meta property="og:title" content="My Sample Page"/>
         <meta property="og:description" content="Complete description of the content showed in this sample page for Open Graph."/>
         <meta property="og:url" content="https://mydomain.com/"/>
@@ -31,7 +32,7 @@ export default function RootLayout({ children }) {
             </main>
           </AppSessionContextProvider>
         </div>
-        <div className="z10 flex justify-center items-center fixed inset-0 bg-[transparent]">
+        <div className="z10 flex justify-center items-center fixed inset-0 bg-dbg">
           <div className="w-24 h-24 border-8 border-t-[transparent] border-[#999] rounded-full animate-spin"></div>
         </div>
       </body>

@@ -1,5 +1,5 @@
 "use client";
-import icons from "./icons";
+import SvgIcon from "./svg-icon";
 
 export default function IconButton({ icon, size = "8", handler, disabled, label, cls }) {
   let c = `transition w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full disabled:opacity-60 disabled:cursor-no-drop `;
@@ -15,7 +15,7 @@ export default function IconButton({ icon, size = "8", handler, disabled, label,
       title={label}
       aria-label={label}
       className={c}>
-      {(typeof icon === "string" && icons[icon]) || icon}
+      {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import icons from "./(styled)/icons";
+import SvgIcon from "./(styled)/svg-icon";
 import SearchBox from "./(styled)/search-box";
 import Loader from "../(layout)/loader";
 
@@ -120,7 +120,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
               className="peer absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
             />
             <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer ">
-              {icons.location}
+              <SvgIcon name={location} />
             </label>
           </div>
         )}

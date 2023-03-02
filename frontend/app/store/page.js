@@ -1,7 +1,7 @@
 import { headers, cookies } from "next/headers";
 import Link from "next/link";
 import StarRating from "../(component)/(styled)/start-rating";
-import Store from "../(component)/store";
+import StoreCard from "../(component)/store-card";
 import StoreSearch from "../(component)/store-search";
 // import ContextMenu from "../(component)/context-menu";
 
@@ -38,19 +38,19 @@ export default async function StoresNearby({ searchParams }) {
     <>
       <StoreSearch coordinates={coordinates} />
 
-      <h1 className="mb-4 text-center text-t dark:text-dt">
+      <h1 className="mb-4 text-center">
         Found <strong>( 5 )</strong> stores
       </h1>
 
       <div className="flex flex-wrap max-w-[1400px] mx-auto mb-16">
-        <Store imageUrl="/img/store-3.png" name="Store name 1" distance="1.5" open={false} />
-        <Store imageUrl="/img/store-1.png" name="Store name 1" distance="1.5" open={true} />
-        <Store imageUrl="/img/store-0.png" name="Store name 1" distance="1.5" open={true} />
-        <Store imageUrl="/img/store-2.png" name="Store name 1" distance="1.5" open={false} />
-        <Store imageUrl="/img/store-4.png" name="Store name 1" distance="1.5" open={true} />
-        <Store imageUrl="/img/store-5.png" name="Store name 1" distance="1.5" open={false} />
-        <Store imageUrl="/img/store-6.png" name="Store name 1" distance="1.5" open={true} />
-        <Store imageUrl="/img/store-7.png" name="Store name 1" distance="1.5" open={false} />
+        <StoreCard imageUrl="/img/store-3.png" name="Store name 1" distance="1.5" open={false} />
+        <StoreCard imageUrl="/img/store-1.png" name="Store name 1" distance="1.5" open={true} />
+        <StoreCard imageUrl="/img/store-0.png" name="Store name 1" distance="1.5" open={true} />
+        <StoreCard imageUrl="/img/store-2.png" name="Store name 1" distance="1.5" open={false} />
+        <StoreCard imageUrl="/img/store-4.png" name="Store name 1" distance="1.5" open={true} />
+        <StoreCard imageUrl="/img/store-5.png" name="Store name 1" distance="1.5" open={false} />
+        <StoreCard imageUrl="/img/store-6.png" name="Store name 1" distance="1.5" open={true} />
+        <StoreCard imageUrl="/img/store-7.png" name="Store name 1" distance="1.5" open={false} />
       </div>
     </>
   );
