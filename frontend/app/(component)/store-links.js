@@ -3,10 +3,11 @@
 import SvgIcon from "./(styled)/svg-icon";
 
 export default function StoreLinks({ phone }) {
-  const liCls = "w-8 h-8 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
+  const liCls =
+    "w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
 
   return (
-    <ul className="absolute bottom-1 w-full flex text-xl font-bold ">
+    <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-2xl font-bold ">
       <li className={liCls}>
         <a className="block w-6" href="tel:+4733378901">
           <SvgIcon name="phone" />
@@ -23,8 +24,9 @@ export default function StoreLinks({ phone }) {
         </a>
       </li>
       <li className={liCls}>
-        <a href="#" title="Add to favorite" aria-label="Add to favorite">
-          <SvgIcon name="favorite" />
+        <a href="#" title="Add to favorite" aria-label="Add to favorite" className="fill-none p-[2px]">
+          {/* Or favorite */}
+          <SvgIcon name="heart" />
         </a>
       </li>
       <li className={liCls}>
@@ -32,11 +34,11 @@ export default function StoreLinks({ phone }) {
           <SvgIcon name="share" />
         </a>
       </li>
-      <li className={liCls}>
+      {/* <li className={liCls}>
         <a href="#" title="Rate store" aria-label="Rate store">
           &#9733;
         </a>
-      </li>
+      </li> */}
     </ul>
   );
 }

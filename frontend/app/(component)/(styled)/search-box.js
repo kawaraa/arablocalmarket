@@ -1,7 +1,7 @@
 "use client";
 import SvgIcon from "./svg-icon";
 
-export default function SearchBox({ label, onSearch, search, onShowFilter, onFinish }) {
+export default function SearchBox({ label, onSearch, search, onShowFilter, onFinish, cls }) {
   const id = label.replace(/\s/gim, "_");
 
   const handleSubmit = (e) => {
@@ -10,7 +10,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative w-full mt-3 mb-5 flex justify-end">
+    <form onSubmit={handleSubmit} className={"relative w-full mt-3 mb-5 flex justify-end " + cls}>
       {onShowFilter && (
         <button
           type="button"
@@ -31,7 +31,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
         name="search"
         autoComplete="search"
         placeholder={label}
-        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg cd_hr duration-200"
+        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg cd_hr peer duration-200"
         id={id}
         tabIndex="0"
       />
@@ -39,7 +39,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
       <label
         onClick={onFinish}
         htmlFor={id}
-        className="absolute top-1.5 right-2 w-5 text-black cursor-pointer hover:text-red">
+        className="absolute top-1.5 right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
         <SvgIcon name="search" />
       </label>
     </form>

@@ -1,4 +1,5 @@
 // import { headers } from "next/headers";
+import SearchBox from "../../../(component)/(styled)/search-box";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Name / title products - ALM" };
@@ -19,6 +20,8 @@ export default function ProductsByStore({ params, searchParams }) {
 
   return (
     <div>
+      <SearchBox label="Search " cls="sm:w-1/3" />
+
       <h1>Public Store Products page!</h1>
       <p>Here will show Products by store.</p>
       <p>Category and All products tabs</p>

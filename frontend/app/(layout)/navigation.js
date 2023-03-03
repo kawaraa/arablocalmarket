@@ -28,7 +28,7 @@ export default function Navigation() {
     }
 
     window.addEventListener("scroll", scrollHandler);
-    window.setLoading(false);
+    // window.setLoading(false);
 
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);

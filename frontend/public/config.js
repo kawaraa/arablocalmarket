@@ -44,10 +44,10 @@ function setLoading(loading) {
   const elements = document.body?.children;
 
   if (loading) {
-    elements[0].style.opacity = "0";
+    // elements[0].style.opacity = "0";
     elements[1].style.display = "flex";
   } else {
-    elements[0].style.opacity = "1";
+    // elements[0].style.opacity = "1";
     elements[1].style.display = "none";
   }
 }

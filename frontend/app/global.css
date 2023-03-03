@@ -32,7 +32,7 @@
 .cd_hr:hover {
   border-color: #9aa0a6;
   box-shadow: 3px 3px 20px 5px rgb(0 0 0 / 0.1);
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 .cd_hr:focus {
   border-color: #9aa0a6;
@@ -42,7 +42,6 @@
 .dark .cd_hr:hover {
   border-color: #9aa0a6;
   box-shadow: 3px 3px 20px 5px #ffffff1a;
-  transform: scale(1.02);
 }
 .dark .cd_hr:focus {
   border-color: #9aa0a6;
