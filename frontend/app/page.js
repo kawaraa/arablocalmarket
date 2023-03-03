@@ -1,34 +1,38 @@
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import Link from "next/link";
-import Cookies from "./(service)/cookies";
 import { getCssDelay } from "./(service)/functions";
 import Footer from "./(layout)/footer";
 import content from "./page.json";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 
-export default function LandingPage(props) {
-  const headersList = headers();
-  const { lang, themeMode } = Cookies.parse(headersList.get("cookie"));
+export default function LandingPage({ searchParams }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
   return (
     <>
       <section className="absolute inset-0 h-[100vh] w-full bg-hpbg dark:bg-dbg border-b border-b-2 border-b-bc">
         <div
-          className="relative w-full flex justify-center mt-24 md:mt-16 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c"
-          style={getCssDelay()}
-          data-d="1">
-          <img src="/img/a.png" className="w-full" />
-          <div className="absolute top-0 left-0 right-0 w-ful h-full dark:bg-[#0000001a]">
-            {/* text-gradient-to-b from-pc to-c */}
-            <h1 className="absolute top-5 left-3 text-2xl md:text-4xl mt-0 mb-5 text-center font-bold">
-              {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
-            </h1>
+          className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c"
+          style={{
+            ...getCssDelay(),
+            backgroundImage: "url('img/a.png')",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}>
+          {/* <img src="/img/a.png" className="w-full" /> */}
 
-            <p className="absolute bottom-10 px-3 opacity-0">
-              Look for a nearby store or supermarket, Select and add the products you need to the cart, Select
-              the payment method you like, checkout and let the store deliver you order to you.
-            </p>
-          </div>
+          <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div>
+          {/* text-gradient-to-b from-pc to-c */}
+          <h1 className="mt-5 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
+            {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
+          </h1>
+
+          <p className="mb-10 px-3 opacity-0">
+            Look for a nearby store or supermarket, Select and add the products you need to the cart, Select
+            the payment method you like, checkout and let the store deliver you order to you.
+          </p>
         </div>
 
         <article dir="auto" className="relative text-center top-0 px-4 pt-6 md:pt-3 w-full">
@@ -42,7 +46,7 @@ export default function LandingPage(props) {
 
           <Link
             href="/store"
-            className="inline-flex justify-center px-3 py-1 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-full md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t lazy-c"
+            className="inline-flex justify-center px-3 py-1 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-full md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t duration-200 lazy-c"
             style={getCssDelay()}>
             Find a store to order from
           </Link>

@@ -4,7 +4,6 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import StoreLinks from "../../(component)/store-links";
-import StarRating from "../../(component)/(styled)/start-rating";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Name / title - ALM" };
@@ -46,16 +45,12 @@ export default function StoreBySearch({ children, params, searchParams }) {
       </section>
 
       <section className="mt-6 pb-6 border-b-2 border-bc">
-        <div className="text-center">
-          <StarRating rating={0} />
-        </div>
-        <h2 className="text-lg mb-3">Description</h2>
+        <h2 className="text-lg mb-3 font-medium">Description</h2>
 
         <p>About: Hello from public store by ID page!, Here will show the store by ID to the public.</p>
       </section>
 
       <p>Open / Closed.</p>
-      <p>About</p>
       <p>Products</p>
       {children}
     </article>
