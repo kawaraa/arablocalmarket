@@ -32,7 +32,7 @@ export default function ContextMenu({ children }) {
   return (
     // absolute mt-2 scale-75
 
-    <ol
+    <ul
       ref={menu}
       role="menu"
       tabIndex="0"
@@ -45,6 +45,6 @@ export default function ContextMenu({ children }) {
         Support
       </li>
       {children}
-    </ol>
+    </ul>
   );
 }

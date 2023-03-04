@@ -17,6 +17,11 @@ export default function StoreOverview({ params, searchParams }) {
 
   return (
     <>
+      <h2 className="text-lg mb-3 font-medium">Opening hours</h2>
+
+      <h2 className="text-lg mb-3 font-medium">Rating</h2>
+
+      <br />
       <h2 className="text-lg mb-3 font-medium">Description</h2>
 
       <p>
@@ -48,10 +53,6 @@ export default function StoreOverview({ params, searchParams }) {
         Thank you for choosing our supermarket for your grocery needs. We look forward to serving you and
         helping you make mealtime a little easier and more enjoyable.
       </p>
-
-      <p>Opening hours</p>
-
-      <p>Rating</p>
     </>
   );
 }

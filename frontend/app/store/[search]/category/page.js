@@ -12,7 +12,7 @@ export default function StoreOverview({ params, searchParams }) {
     <>
       <h2 className="text-lg mb-3 font-medium">Categories</h2>
 
-      <ol className="flex flex-wrap">
+      <ul className="flex flex-wrap">
         {store.categories.map((c) => (
           <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
             <Link
@@ -26,7 +26,7 @@ export default function StoreOverview({ params, searchParams }) {
             </Link>
           </li>
         ))}
-      </ol>
+      </ul>
     </>
   );
 }

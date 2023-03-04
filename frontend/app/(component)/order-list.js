@@ -1,6 +1,6 @@
 "use client";
-import Order from "./order";
-import Customer from "./customer";
+// import Order from "./order";
+// import Customer from "./customer";
 
 export default function OrderList({ orders, openedOrderId, admin }) {
   console.log("OrderList: >>>", props);

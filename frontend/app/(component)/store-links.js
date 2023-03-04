@@ -26,7 +26,7 @@ export default function StoreLinks({ phone }) {
       <li className={liCls}>
         <a href="#" title="Add to favorite" aria-label="Add to favorite" className="fill-none p-[2px]">
           {/* Or favorite */}
-          <SvgIcon name="heart" />
+          <SvgIcon name="favorite" />
         </a>
       </li>
       <li className={liCls}>

@@ -1,4 +1,4 @@
-import Footer from "../(component)/footer";
+import Footer from "../(layout)/footer";
 
 export default function PrivacyPolicy(props) {
   console.log("PrivacyPolicy: >>>", props);

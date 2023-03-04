@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import Store from "../../../(component)/store";
+// import Store from "../../../(component)/store";
 
 export default function WorkStores() {
   useEffect(() => {
@@ -12,9 +12,9 @@ export default function WorkStores() {
       <h1>Hello from work stores page!</h1>
       <p>Here show the stores I work at.</p>
       <div className="flex">
+        {/* <Store />
         <Store />
-        <Store />
-        <Store />
+        <Store /> */}
       </div>
     </div>
   );

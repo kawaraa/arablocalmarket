@@ -13,22 +13,22 @@ export default function Settings(props) {
       <div>
         <h3>Profile section!</h3>
 
-        <p>First name</p>
-        <p>Last name</p>
+        <div>First name</div>
+        <div>Last name</div>
       </div>
 
       <div>
         <h3>Account section!</h3>
 
-        <p>
+        <div>
           Phone number : visible
           <input type="checkbox" />
-        </p>
-        <p>
+        </div>
+        <div>
           Email <input type="checkbox" />
-        </p>
-        <p>Password</p>
-        <p>2AF</p>
+        </div>
+        <div>Password</div>
+        <div>2AF</div>
       </div>
     </div>
   );

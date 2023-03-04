@@ -5,7 +5,7 @@ export default function RadioGroup({ a }) {
   // https://headlessui.com/react/radio-group
   return (
     <div class="w-full px-4 py-16">
-      <div class="mx-auto w-full max-w-md">
+      {/* <div class="mx-auto w-full max-w-md">
         <div id="headlessui-radiogroup-:R2:" role="radiogroup" aria-labelledby="headlessui-label-:Rr6:">
           <label class="sr-only" id="headlessui-label-:R1m:" role="none">
             Server size
@@ -27,7 +27,7 @@ export default function RadioGroup({ a }) {
                       Startup
                     </p>
                     <span class="inline text-sky-100" id="headlessui-description-:R9mm:">
-                      <span>{/* 12GB<!-- -->/<!-- -->6 CPUs */}</span> <span aria-hidden="true">·</span>
+                      <span></span> <span aria-hidden="true">·</span>
                       <span>160 GB SSD disk</span>
                     </span>
                   </div>
@@ -61,7 +61,7 @@ export default function RadioGroup({ a }) {
                       Business
                     </p>
                     <span class="inline text-gray-500" id="headlessui-description-:R9qm:">
-                      <span>{/* 16GB<!-- -->/<!-- -->8 CPUs */}</span> <span aria-hidden="true">·</span>{" "}
+                      <span></span> <span aria-hidden="true">·</span>{" "}
                       <span>512 GB SSD disk</span>
                     </span>
                   </div>
@@ -86,7 +86,7 @@ export default function RadioGroup({ a }) {
                       Enterprise
                     </p>
                     <span class="inline text-gray-500" id="headlessui-description-:R9um:">
-                      <span>{/* 32GB<!-- -->/<!-- -->12 CPUs */}</span> <span aria-hidden="true">·</span>{" "}
+                      <span></span> <span aria-hidden="true">·</span>{" "}
                       <span>1024 GB SSD disk</span>
                     </span>
                   </div>
@@ -95,7 +95,7 @@ export default function RadioGroup({ a }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

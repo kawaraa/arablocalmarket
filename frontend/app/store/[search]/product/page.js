@@ -26,7 +26,7 @@ export default function ProductsByStore({ params, searchParams }) {
       </h2>
       <p>Sort products by created date, updated date, price, quantity, category.</p>
 
-      <ol className="flex flex-wrap">
+      <ul className="flex flex-wrap">
         {store.products.map((p, i) => (
           <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
             <Link
@@ -50,7 +50,7 @@ export default function ProductsByStore({ params, searchParams }) {
             </Link>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   );
 }

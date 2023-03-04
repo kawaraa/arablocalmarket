@@ -6,7 +6,7 @@ export default function Order({ order, customer }) {
   return (
     <div>
       <h1>Order!</h1>
-      <p>{order.items.length}</p>
+      {/* <p>{order.items.length}</p> */}
       <div>{customer}</div>
     </div>
   );

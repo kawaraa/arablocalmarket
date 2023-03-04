@@ -120,7 +120,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
               className="peer absolute top-0 left-0 w-full h-full cursor-pointer opacity-0"
             />
             <label htmlFor="my-location" className="peer-checked:text-green cursor-pointer ">
-              <SvgIcon name={location} />
+              <SvgIcon name={"location"} />
             </label>
           </div>
         )}

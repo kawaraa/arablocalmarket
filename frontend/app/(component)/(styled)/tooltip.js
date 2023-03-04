@@ -62,9 +62,9 @@ export default function Tooltip({ children, description = "", size, position }) 
       </span>
 
       <Transition
-        tag="div"
+        tag="span"
         open={tooltipOpen}
-        base={`absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg border border-d-c shadow-lg 
+        base={`block absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg border border-d-c shadow-lg 
           ${positionOuterClasses(position)} 
           ${sizeClasses(size)}`}
         enter={`opacity-100 ${positionInnerClasses(position)}`}
