@@ -25,7 +25,7 @@ export default function StoreCard({ imageUrl, name, distance, open }) {
           </span>
         </p>
         <h2 className="p-3 font-medium">{name}</h2>
-        <div className="w-ful h-40 sm:h-48 md:h-40 relative">
+        <div className="w-ful h-40 sm:h-48 md:h-40 ">
           <Image
             src={imageUrl}
             width="250"
@@ -43,7 +43,7 @@ export default function StoreCard({ imageUrl, name, distance, open }) {
           </p>
           <h3 className="text-sm mb-1">hef wfiuhfw ffpuhf wefwfpwuef wf</h3>
           <div className="flex justify-between items-center">
-            <StarRating rating={3.5} cls="text-sm lg:text-base" />
+            <StarRating stars={3.5} cls="text-sm lg:text-base" />
 
             <p>
               <strong className="">{dst} </strong>

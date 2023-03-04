@@ -21,9 +21,8 @@ export default function LandingPage({ searchParams }) {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
           }}>
-          {/* <img src="/img/a.png" className="w-full" /> */}
-
           <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div>
+
           {/* text-gradient-to-b from-pc to-c */}
           <h1 className="mt-5 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
             {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
