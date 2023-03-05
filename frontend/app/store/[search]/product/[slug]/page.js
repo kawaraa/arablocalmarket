@@ -82,7 +82,7 @@ export default function ProductBySlug({ params }) {
               />
               <label
                 htmlFor={op}
-                className="px-1 bg-dbg dark:bg-pc text-t peer-checked:bg-red peer-checked:text-dt">
+                className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
                 {op}
               </label>
             </li>
@@ -106,7 +106,7 @@ export default function ProductBySlug({ params }) {
                 />
                 <label
                   htmlFor={v.options[1]?.value}
-                  className="px-1 bg-dbg dark:bg-pc text-t peer-checked:bg-red peer-checked:text-dt">
+                  className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
                   {v.options[1]?.value} {v.weight ? v.weight + v.weightUnit : ""}
                 </label>
               </li>
@@ -130,7 +130,7 @@ export default function ProductBySlug({ params }) {
                 />
                 <label
                   htmlFor={v.options[2]?.value}
-                  className="px-1 bg-dbg dark:bg-pc text-t peer-checked:bg-red peer-checked:text-dt">
+                  className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
                   {v.options[2]?.value}
                 </label>
               </li>

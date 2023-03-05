@@ -28,7 +28,7 @@ export default function Navigation() {
     }
 
     window.addEventListener("scroll", scrollHandler);
-    // window.setLoading(false);
+    window.setLoading(false);
 
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
@@ -50,8 +50,9 @@ export default function Navigation() {
       </Link>
 
       <idv
-        onClick={() => setShowMenu(!showMenu)}
-        className={`z7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 duration-300 ${
+        onClick={() => setShowMenu(false)}
+        onTouchStart={() => setTimeout(() => setShowMenu(false), 100)}
+        className={`z7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
           showMenu && "w-[100%] opacity-100"
         }`}></idv>
 

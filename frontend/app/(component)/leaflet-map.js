@@ -14,7 +14,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
 
     try {
       if (!q) throw new Error("Please enter a location.");
-
+      setRequestingLocation(true);
       const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2`;
       const response = await fetch(url);
 
@@ -33,6 +33,8 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
     } catch (error) {
       alert("Error: " + error.message);
     }
+
+    setRequestingLocation(false);
   };
 
   const initializeMap = (Map) => {

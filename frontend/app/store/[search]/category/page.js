@@ -13,8 +13,8 @@ export default function StoreOverview({ params, searchParams }) {
       <h2 className="text-lg mb-3 font-medium">Categories</h2>
 
       <ul className="flex flex-wrap">
-        {store.categories.map((c) => (
-          <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
+        {store.categories.map((c, i) => (
+          <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
             <Link
               href={`/store/${store.id}/product?category=${c.name.replace(/\s/gim, "")}`}
               className="relative block w-full p-2 pt-3 bg-cbg cd_hr rounded-xl duration-200">

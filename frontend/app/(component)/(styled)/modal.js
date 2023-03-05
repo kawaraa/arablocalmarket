@@ -18,7 +18,7 @@ export default function Modal({ children, title, okBtn, open, loading, onCancel,
         base="z9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
-        time="200"
+        time="300"
         open={open}
         wrapperProps={{ "aria-label": `${title} modal window`, role: "dialog", "aria-modal": "true" }}>
         <CloseButton

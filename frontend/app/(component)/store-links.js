@@ -7,7 +7,7 @@ export default function StoreLinks({ phone }) {
     "w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
 
   return (
-    <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-2xl font-bold ">
+    <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-2xl font-bold lazy-c">
       <li className={liCls}>
         <a className="block w-6" href="tel:+4733378901">
           <SvgIcon name="phone" />

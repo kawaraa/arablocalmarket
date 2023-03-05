@@ -1,23 +1,17 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import Cookies from "../(service)/cookies";
 import Modal from "./(styled)/modal";
-import LeafletMap from "./leaflet-map";
 import SearchBox from "./(styled)/search-box";
 
-export default function StoreSearch({ text, coordinates = [0, 0] }) {
+export default function ProductSearch({ text }) {
   const router = useRouter();
   const pathname = usePathname();
 
   const [showFilter, setShowFilter] = useState(false);
-  const [position, setPosition] = useState(coordinates);
-  const [range, setRange] = useState("0.5");
-  const [search, setSearch] = useState(text);
+  const [search, setSearch] = useState(text || "");
 
   const handleSearch = async () => {
-    Cookies.set("coordinates", `${position[0]}:${position[1]}`);
-    Cookies.set("range", range);
     router.push(`${pathname}?search=${search}`);
     if (showFilter) setShowFilter(false);
   };
@@ -25,16 +19,17 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
   return (
     <>
       <SearchBox
-        label="Search for a store"
+        label="Search for a product"
         onSearch={setSearch}
         search={search}
-        onShowFilter={setShowFilter}
+        // onShowFilter={setShowFilter}
         onFinish={handleSearch}
+        cls="sm:w-1/3 lazy-r"
       />
 
       <Modal
-        title="Select a location"
-        okBtn="Save"
+        title="Filter the result"
+        okBtn="Search"
         open={showFilter}
         onApprove={handleSearch}
         onCancel={() => setShowFilter(false)}
@@ -55,29 +50,15 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
           </svg>
         }>
         <div className="text-left">
-          <LeafletMap
-            coordinates={position}
-            onLocate={({ lat, lng }) => setPosition([lat, lng])}
-            requestUserLocation={true}
-            onError={() => alert("Could not access your location, please turn your location on.")}
-          />
-
-          <label
-            htmlFor="default-range"
-            dir="auto"
-            className="block mt-2 mb-1 text-sm text-t font-medium dark:text-dt">
-            Location range: {range} KM
-          </label>
-          <input
-            id="default-range"
-            type="range"
-            min="0.1"
-            max="10"
-            step="0.1"
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-            className="w-full h-1 md:h-2 bg-bc rounded-lg appearance-none cursor-pointer dark:bg-t"
-          />
+          <p>
+            Sort products by:
+            <br />
+            created date
+            <br />
+            updated date
+            <br />
+            price, quantity
+          </p>
         </div>
       </Modal>
     </>

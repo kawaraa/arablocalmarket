@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import SearchBox from "../../../(component)/(styled)/search-box";
+import ProductSearch from "../../../(component)/product-search";
 // import StarRating from "../../../(component)/(styled)/start-rating";
 import ProductButtons from "../../../(component)/product-buttons";
 
@@ -12,19 +12,17 @@ export default function ProductsByStore({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  console.log("ProductsByStore: ", searchParams);
+  console.log("ProductsByStore: ", searchParams.search);
 
   const store = { id: "1", currency: "€", products };
 
   return (
     <div>
-      {/* Pass onShowFilter function to this component */}
-      <SearchBox label="Search " cls="sm:w-1/3" />
+      <ProductSearch text={searchParams.search} />
 
       <h2 className="text-lg mb-3 font-medium">
         Found <span className="font-bold">( 9 )</span> Products
       </h2>
-      <p>Sort products by created date, updated date, price, quantity, category.</p>
 
       <ul className="flex flex-wrap">
         {store.products.map((p, i) => (

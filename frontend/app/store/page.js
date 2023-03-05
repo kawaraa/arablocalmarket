@@ -1,5 +1,5 @@
 import { headers, cookies } from "next/headers";
-import Link from "next/link";
+// import Link from "next/link";
 // import StarRating from "../(component)/(styled)/start-rating";
 import StoreCard from "../(component)/store-card";
 import StoreSearch from "../(component)/store-search";
@@ -36,7 +36,7 @@ export default async function StoresNearby({ searchParams }) {
 
   return (
     <>
-      <StoreSearch coordinates={coordinates} />
+      <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
       <h1 className="mb-4 text-center">
         Found <strong>( 5 )</strong> stores

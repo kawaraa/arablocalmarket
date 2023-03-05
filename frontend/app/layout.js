@@ -44,8 +44,8 @@ export default function RootLayout({ children, searchParams }) {
             </main>
           </AppSessionContextProvider>
         </div>
-        <div className={`z10 _flex hidden justify-center items-center fixed inset-0 bg-blur`}>
-          <div className="w-24 h-24 border-8 border-t-[transparent] border-dbg rounded-full animate-spin"></div>
+        <div className="z10 flex justify-center items-center fixed inset-0">
+          <div className="w-20 h-20 border-[6px] border-t-[transparent] border-dbg dark:border-bg dark:border-t-[transparent] rounded-full animate-spin"></div>
         </div>
       </body>
     </html>

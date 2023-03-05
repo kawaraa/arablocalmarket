@@ -100,7 +100,7 @@ body.dark {
   /* animation-delay: calc(var(--a-d) * 100ms); */
 }
 .lazy-r {
-  transform-origin: top right;
+  /* transform-origin: top right; */
   animation: lazy-r 0.8s ease-in 1 reverse backwards;
 }
 .lazy-l {
@@ -116,12 +116,14 @@ body.dark {
 @keyframes lazy-r {
   100% {
     opacity: 0;
-    transform: rotate(-10deg) translate(5%, 80%);
+    /* transform: rotate(-10deg) translate(5%, 80%); */
+    transform: translate(15%, 50%);
   }
 }
 @keyframes lazy-l {
   100% {
     opacity: 0;
-    transform: rotate(10deg) translate(-5%, 50%);
+    /* transform: rotate(10deg) translate(-5%, 50%); */
+    transform: translate(-15%, 50%);
   }
 }

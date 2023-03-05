@@ -34,7 +34,7 @@ export default function StoreBySearch({ children, params, searchParams }) {
           />
           <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div>
         </div>
-        <h1 className="absolute w-full top-8 px-8 text-xl font-bold flex items-center">
+        <h1 className="absolute w-full top-8 px-8 text-xl font-bold flex items-center lazy-l">
           <span className={`inline-block w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
           {name}
         </h1>
@@ -48,7 +48,7 @@ export default function StoreBySearch({ children, params, searchParams }) {
             path: path.replace("storeId", id),
             text: text[lang],
           }))}
-          cls="shadow-none border-none"
+          cls="shadow-none border-none lazy-c"
         />
         <section className="p-3">{children}</section>
       </div>
