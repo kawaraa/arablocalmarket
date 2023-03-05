@@ -3,7 +3,7 @@
 import SvgIcon from "./(styled)/svg-icon";
 
 export default function AddToFavoriteButtons({ id, cls }) {
-  console.log("AAA: >>>", id);
+  // console.log("AAA: >>>", id);
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();

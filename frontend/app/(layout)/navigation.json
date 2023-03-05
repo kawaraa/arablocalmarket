@@ -13,7 +13,7 @@
   "navLinks": [
     { "text": { "en": "Find a store", "ar": "ابحث عن متجر" }, "path": "/store" },
     { "text": { "en": "My stores", "ar": "متاجري" }, "path": "/store/my" },
-    { "text": { "en": "Login", "ar": "تسجيل الدخول" }, "path": "/login" }
+    { "text": { "en": "Sign in", "ar": "تسجيل الدخول" }, "path": "/sign-in" }
   ],
   "userLinks": [
     { "text": { "en": "Settings", "ar": "إعدادات" }, "path": "/settings" },

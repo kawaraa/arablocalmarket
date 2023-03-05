@@ -113,7 +113,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
         <div id="map" className="w-full h-64 rounded-lg"></div>
 
         {requestUserLocation && (
-          <div className="z9 absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
+          <div className="z-9 absolute bottom-8 right-4 w-8 py-[3px] text-t hover:text-lt bg-bg dark:bg-dbg rounded-full shadow-md transition">
             <input
               type="checkbox"
               checked={permissionGranted}
@@ -128,7 +128,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
         )}
 
         {requestingLocation && (
-          <Loader size="40" wrapperCls="z9 absolute inset-0 !m-0 bg-blur" cls="text-dt" />
+          <Loader size="40" wrapperCls="z-9 absolute inset-0 !m-0 bg-blur" cls="text-dt" />
         )}
       </div>
     </div>

@@ -45,7 +45,7 @@ export default function LandingPage({ searchParams }) {
 
           <Link
             href="/store"
-            className="inline-flex justify-center px-3 py-1 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-full md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t duration-200 lazy-c"
+            className="inline-flex justify-center px-4 py-2 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-full md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t duration-200 lazy-c"
             style={getCssDelay()}>
             Find a store to order from
           </Link>

@@ -7,7 +7,7 @@ export default function Logout(props) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("/logout").then((res) => {
+    fetch("/sign-out").then((res) => {
       if (!res.ok) router.back();
       else {
         router.push("/");
@@ -15,5 +15,5 @@ export default function Logout(props) {
     });
   }, []);
 
-  return <Loader size="100" wrapperCls="z10 flex justify-center items-center fixed inset-0 bg-[#ffffffdc]" />;
+  return <Loader size="100" wrapperCls="z-10 flex justify-center items-center fixed inset-0" />;
 }

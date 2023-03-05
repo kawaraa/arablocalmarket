@@ -1,7 +1,7 @@
 "use client";
 
 export default function InputField({ a }) {
-  console.log("AAA: >>>", a);
+  // console.log("AAA: >>>", a);
 
   return (
     <div>

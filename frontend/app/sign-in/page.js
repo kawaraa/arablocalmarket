@@ -2,13 +2,16 @@
 import { useState } from "react";
 
 export default function Login({ a }) {
+  const handleSignIn = () => {
+    console.log("handleSignIn: ");
+  };
   return (
     // <div>
     //   <form>
     //     <label className="block">
     //       <span className="block text-sm font-medium text-slate-700">Email</span>
 
-    //       <input type="email" className="peer ..." //>
+    //       <input type="email" className="peer ..." />
     //       <p className="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
     //         Please provide a valid email address.
     //       </p>
@@ -16,20 +19,14 @@ export default function Login({ a }) {
     //   </form>
     // </div>
 
-    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
+    <div className="min-h-full flex items-center justify-center pt-12 px-4 ">
+      <div className="w-full max-w-md ">
         <div>
-          <img
-            className="h-auto w-12 mx-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=600"
-            alt="Arab Local market"
-          />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
+          <img src="logo.svg" alt="Arab Local market Logo" className="h-auto w-12 mx-auto " />
+          <h2 className="mt-6 text-center text-3xl font-bold ">Sign in to your account</h2>
         </div>
-        <form className="mt-8 space-y-6" action="#" method="POST">
-          <input type="hidden" name="remember" value="true" />
+
+        <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
           <div className="-space-y-px rounded-md shadow-sm">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -69,13 +66,13 @@ export default function Login({ a }) {
                 type="checkbox"
                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+              <label htmlFor="remember-me" className="ml-2 block text-sm">
                 Remember me
               </label>
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="#" className="font-bold text-t hover:text-pc2">
                 Forgot your password?
               </a>
             </div>

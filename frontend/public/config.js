@@ -3,12 +3,14 @@ tailwind.config = {
   darkMode: "class",
   theme: {
     colors: {
-      hpbg: "radial-gradient(#b8f5d9, #ffffff)",
+      // testbg: "linear-gradient(to bottom right, #9bface, #b26cfc)",
+      // hpbg: "radial-gradient(#b8f5d9, #ffffff)",
       pc: "#9bface", // Primary Color // #cbf7f2
-      pc1: "#ebf9c8", // Primary Color
-      pc2: "#d7e8fb", // Primary Color
-      pc3: "#fcdcdc", // Primary Color
-      pc4: "#fde3c2", // Primary Color
+      pc2: "#b26cfc",
+      // pc1: "#b8f5d9", // Primary Color
+      // pc2: "#d7e8fb", // Primary Color
+      // pc3: "#fcdcdc", // Primary Color
+      // pc4: "#fde3c2", // Primary Color
       bg: "#ffffff", // Background & Dark Title Color
       cbg: "#ffffff1a", // Card Background
       t: "#666666", // Light Color
@@ -36,6 +38,20 @@ tailwind.config = {
       // sans: ["Graphik", "sans-serif"],
       // serif: ["Merriweather", "serif"],
       // font1: "Inter var,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji",
+    },
+    zIndex: {
+      auto: "auto",
+      0: "0",
+      1: "1",
+      2: "2",
+      3: "3",
+      4: "4",
+      5: "5",
+      6: "6",
+      7: "7",
+      8: "8",
+      9: "9",
+      10: "10",
     },
   },
 };

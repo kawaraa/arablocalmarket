@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import data from "./navigation.json";
 import OptionXIcon from "../(component)/option-x-icon";
@@ -10,12 +11,17 @@ import { AppSessionContext } from "../app-session-context";
 const { languageOptions, themeOptions, navLinks, userLinks, dir, themeModeIconsMap } = data;
 
 export default function Navigation() {
+  const pathName = usePathname();
   const [cls, setCls] = useState("top-0");
   const [showMenu, setShowMenu] = useState(false);
 
   const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
     useContext(AppSessionContext);
   const loginLink = navLinks[navLinks.length - 1];
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [pathName]);
 
   useEffect(() => {
     let previousYOffset = window.pageYOffset;
@@ -35,8 +41,8 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`z7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center transition-top duration-300 ease-in-out ${cls}`}>
-      <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z8 mr-3 md:hidden" />
+      className={`z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center transition-top duration-300 ease-in-out ${cls}`}>
+      <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
 
       <Link
         className="flex flex-shrink-0 items-center text-md uppercase font-bold"
@@ -52,12 +58,12 @@ export default function Navigation() {
       <idv
         onClick={() => setShowMenu(false)}
         onTouchStart={() => setTimeout(() => setShowMenu(false), 100)}
-        className={`z7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
+        className={`z-7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
           showMenu && "w-[100%] opacity-100"
         }`}></idv>
 
       <ul
-        className={`z7 absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
+        className={`z-7 absolute overflow-hidden overflow-x-hidden scroll block items-center h-[100vh] w-[75%] top-0 pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
           showMenu && "left-[0]"
         }`}>
         <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
