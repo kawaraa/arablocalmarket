@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Noto Kufi Arabic";
+  src: url(/font/NotoKufiArabic-VariableFont_wght.ttf);
+}
+
 :root {
   --dark-background: #111;
   --dark-foreground: #999;
@@ -35,6 +40,7 @@
   transform: scale(1.01);
 }
 .cd_hr:focus {
+  outline: none;
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
@@ -44,6 +50,7 @@
   box-shadow: 3px 3px 20px 5px #ffffff1a;
 }
 .dark .cd_hr:focus {
+  outline: none;
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px #ffffff1a, 0 4px 6px -4px #ffffff1a;
 }
@@ -59,7 +66,13 @@ body.dark {
 } */
 
 .hp-bg {
-  background: radial-gradient(#b8f5d9, #ffffff);
+  background: radial-gradient(#b8f5d9, transparent);
+}
+.pc2-gdt-bg {
+  background: radial-gradient(#b26cfc, transparent);
+}
+.pc-pc2-gdt-bg {
+  background: linear-gradient(to bottom right, #b8f5d9 35%, #b26cfc);
 }
 
 /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */

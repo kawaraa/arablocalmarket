@@ -35,9 +35,7 @@ tailwind.config = {
       blur: "#00000066",
     },
     fontFamily: {
-      // sans: ["Graphik", "sans-serif"],
-      // serif: ["Merriweather", "serif"],
-      // font1: "Inter var,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji",
+      arabic: ["Noto Kufi Arabic", "sans-serif"],
     },
     zIndex: {
       auto: "auto",
@@ -57,13 +55,13 @@ tailwind.config = {
 };
 
 function setLoading(loading) {
-  const elements = document.body?.children;
+  const loader = document.getElementById("global-screen-loader");
 
   if (loading) {
     // elements[0].style.opacity = "0";
-    elements[1].style.display = "flex";
+    loader.style.display = "flex";
   } else {
     // elements[0].style.opacity = "1";
-    elements[1].style.display = "none";
+    loader.style.display = "none";
   }
 }

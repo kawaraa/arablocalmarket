@@ -1,7 +1,6 @@
 import AppSessionContextProvider from "./app-session-context";
 import { cookies } from "next/headers";
 import Navigation from "./(layout)/navigation";
-// import { Inter } from "next/font/google";
 import "./global.css";
 
 // https://www.datocms.com/blog/dealing-with-nextjs-seo
@@ -9,11 +8,6 @@ export default function RootLayout({ children, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
-
-  // if (lang == "ar") {
-  //   // Arabic font: Noto Kufi Arabic
-  //   console.log("lang: ", lang);
-  // }
 
   return (
     <html lang={lang} className={`scroll-smooth group ${themeMode}`} dir="auto">
@@ -32,19 +26,19 @@ export default function RootLayout({ children, searchParams }) {
         <script src="/config.js"></script>
       </head>
       <body
-        className="relative min-h-[100vh] bg-bg dark:bg-dbg text-t dark:text-dt font-[Noto Kufi Arabic]"
-        dir="auto">
-        <div className="pt-14 md:pt-16" dir="auto">
-          <AppSessionContextProvider>
-            <header>
-              <Navigation />
-            </header>
-            <main dir="auto" className="px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8">
-              {children}
-            </main>
-          </AppSessionContextProvider>
-        </div>
-        <div className="z-10 flex justify-center items-center fixed inset-0">
+        className={`relative min-h-[100vh] bg-bg dark:bg-dbg text-t dark:text-dt ${
+          lang == "ar" && "font-arabic"
+        }`}>
+        <AppSessionContextProvider language={lang} theme={themeMode}>
+          <header>
+            <Navigation />
+          </header>
+          <main className="min-h-[100vh] pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8">
+            {children}
+          </main>
+        </AppSessionContextProvider>
+
+        <div id="global-screen-loader" className="z-10 flex justify-center items-center fixed inset-0">
           <div className="w-20 h-20 border-[6px] border-t-[transparent] border-dbg dark:border-bg dark:border-t-[transparent] rounded-full animate-spin"></div>
         </div>
       </body>

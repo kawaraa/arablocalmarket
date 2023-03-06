@@ -1,7 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppSessionContext } from "../app-session-context";
 
 export default function Login({ a }) {
+  const { lang } = useContext(AppSessionContext);
+
   const handleSignIn = () => {
     console.log("handleSignIn: ");
   };
@@ -18,87 +21,74 @@ export default function Login({ a }) {
     //     </label>
     //   </form>
     // </div>
-
-    <div className="min-h-full flex items-center justify-center pt-12 px-4 ">
-      <div className="w-full max-w-md ">
+    // dir="auto"
+    <div className="min-h-[90vh] flex justify-center pt-12 px-4 ">
+      <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md space-y-6">
         <div>
-          <img src="logo.svg" alt="Arab Local market Logo" className="h-auto w-12 mx-auto " />
-          <h2 className="mt-6 text-center text-3xl font-bold ">Sign in to your account</h2>
+          <img src="logo.svg" alt="Arab Local market Logo" className="h-auto w-14 mx-auto " />
+          <h1 className="mt-6 text-center text-3xl font-bold ">{data.h1.text[lang]}</h1>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
-          <div className="-space-y-px rounded-md shadow-sm">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required=""
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required=""
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm">
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <a href="#" className="font-bold text-t hover:text-pc2">
-                Forgot your password?
-              </a>
-            </div>
-          </div>
-
+        <div className="-space-y-px rounded-md shadow-sm">
           <div>
-            <button
-              type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                    clipRule="evenodd"></path>
-                </svg>
-              </span>
-              Sign in
-            </button>
+            <label htmlFor="email-address" className="sr-only">
+              {data.email.text[lang]}
+            </label>
+            <input
+              id="email-address"
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              placeholder={data.email.text[lang]}
+              className="block w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-t-md sm:text-sm cd_hr"
+            />
           </div>
-        </form>
-      </div>
+          <div>
+            <label htmlFor="password" className="sr-only">
+              {data.password.text[lang]}
+            </label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              autoComplete="current-password"
+              required
+              placeholder={data.password.text[lang]}
+              className="block w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-b-md sm:text-sm cd_hr"
+            />
+          </div>
+        </div>
+
+        <div className="text-sm text-right">
+          <a href="#" className="inline-block font-medium text-t hover:text-pc2">
+            {data.forget.text[lang]}
+          </a>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 rounded-md bg-dbg text-dt hover:bg-pc hover:text-t dark:bg-pc dark:text-t dark:hover:bg-lbg duration-200">
+            {data.submit.text[lang]}
+          </button>
+        </div>
+
+        <div className="text-sm text-left">
+          <a href="#" className="inline-block font-medium text-t hover:text-pc2">
+            {data.createAccount.text[lang]}
+          </a>
+        </div>
+      </form>
     </div>
   );
 }
+
+const data = {
+  h1: { text: { en: "Sign in to your account", ar: "تسجيل الدخول إلى حسابك" } },
+  email: { text: { en: "Email address", ar: "البريد الإلكتروني" } },
+  password: { text: { en: "Password", ar: "كلمة المرور" } },
+  forget: { text: { en: "Forgot your password?", ar: "هل نسيت كلمة المرور؟" } },
+  submit: { text: { en: "Sign in", ar: "تسجيل الدخول" } },
+  createAccount: { text: { en: "Create an account", ar: "إنشاء حساب" } },
+};

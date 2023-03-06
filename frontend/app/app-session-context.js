@@ -5,12 +5,12 @@ import Cookies from "./(service)/cookies";
 
 export const AppSessionContext = createContext();
 
-export default function AppSessionContextProvider({ children }) {
+export default function AppSessionContextProvider({ children, language, theme }) {
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [errors, setErrors] = useState([]);
-  const [lang, setLang] = useState("en");
-  const [themeMode, setThemeMode] = useState("auto");
+  const [lang, setLang] = useState(language);
+  const [themeMode, setThemeMode] = useState(theme);
   const [user, setUser] = useState(null);
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
 
