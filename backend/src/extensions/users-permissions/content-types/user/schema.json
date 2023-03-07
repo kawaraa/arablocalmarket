@@ -87,12 +87,6 @@
       "repeatable": true,
       "component": "user-information.address"
     },
-    "ratings": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::rating.rating",
-      "mappedBy": "user"
-    },
     "sentNotifications": {
       "type": "relation",
       "relation": "oneToMany",
