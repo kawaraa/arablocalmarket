@@ -7,18 +7,21 @@ import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
+import Cookies from "../(service)/cookies";
 
 export default function Navigation() {
   const pathName = usePathname();
   const [cls, setCls] = useState("top-0");
   const [showMenu, setShowMenu] = useState(false);
-
   const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
     useContext(AppSessionContext);
+
   const signinLink = content.navLinks[content.navLinks.length - 1];
 
   useEffect(() => {
     setShowMenu(false);
+    if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
+    else if (pathName?.toLowerCase() === "/ar") Cookies.set("lang", "ar");
   }, [pathName]);
 
   useEffect(() => {
@@ -32,8 +35,6 @@ export default function Navigation() {
     }
 
     window.addEventListener("scroll", scrollHandler);
-    window.setLoading(false);
-
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getCssDelay } from "../(service)/functions";
+import { getCssDelay } from "../(service)/style-methods";
 import SvgIcon from "./(styled)/svg-icon";
 import StarRating from "./(styled)/start-rating";
 

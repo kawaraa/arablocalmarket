@@ -1,5 +1,5 @@
 "use client";
-import { getCssDelay } from "../(service)/functions";
+import { getCssDelay } from "../(service)/style-methods";
 
 export default function Card({ a, ...props }) {
   console.log("Card: >>>", a);

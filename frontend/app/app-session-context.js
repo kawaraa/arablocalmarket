@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { createContext, useState, useEffect } from "react";
 import Cookies from "./(service)/cookies";
 // import { Validator } from "k-utilities";
@@ -6,6 +7,7 @@ import Cookies from "./(service)/cookies";
 export const AppSessionContext = createContext();
 
 export default function AppSessionContextProvider({ children, language, theme }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [errors, setErrors] = useState([]);
@@ -96,6 +98,17 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     updateLang(aLang || lang);
     updateThemeMode(theme || themeMode);
+
+    // Todo: here
+    const user = JSON.parse(window.localStorage.getItem("user") || null);
+    if (!user) {
+      // getUser("url").then((user) => user && window.localStorage.getItem("user", JSON.stringify(user)));
+    }
+
+    // if (user?.hasStore) router.push("/my");
+    // else if (user) router.push("/store");
+
+    window.setLoading(false);
   }, []);
 
   // useEffect(() => {

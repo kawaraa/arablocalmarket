@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import Navigation from "./(layout)/navigation";
 import "./global.css";
 
-// https://www.datocms.com/blog/dealing-with-nextjs-seo
+// Todo: https://www.datocms.com/blog/dealing-with-nextjs-seo
 export default function RootLayout({ children, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";

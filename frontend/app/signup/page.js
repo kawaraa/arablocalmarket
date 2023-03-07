@@ -8,6 +8,8 @@ export default function Signup({ a }) {
 
   const handleSignup = (e) => {
     e.preventDefault();
+    // /auth/local/register
+
     console.log("handleSignup: ", e);
   };
 

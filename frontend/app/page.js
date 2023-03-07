@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { getCssDelay } from "./(service)/functions";
+import { getCssDelay } from "./(service)/style-methods";
 import Footer from "./(layout)/footer";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 
-export default function LandingPage({ searchParams }) {
+export default async function LandingPage({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
 
   return (
     <>
