@@ -16,9 +16,6 @@
     "imageId": {
       "type": "string"
     },
-    "description": {
-      "type": "richtext"
-    },
     "price": {
       "type": "decimal",
       "required": true,
