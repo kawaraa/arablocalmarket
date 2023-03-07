@@ -31,6 +31,8 @@ export default function StoreOverview({ params, searchParams }) {
   );
 }
 
+const content = {};
+
 const categories = [
   { name: "Produce", image: "/produce-vegetables-clipart.png", numberOfItems: 1 },
   { name: "Bakery", image: "/bread-clipart.png", numberOfItems: 10 },

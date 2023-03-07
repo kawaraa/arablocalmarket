@@ -157,18 +157,14 @@ export default function ProductBySlug({ params }) {
           <SvgIcon name="cart" />
         </button>
 
-        <Button
-          text={data.buyBtn.text[lang]}
-          handler={handleCheckout}
-          cls="!text-lg font-medium shadow-none"
-        />
+        <Button text={content.buyBtn[lang]} handler={handleCheckout} cls="!text-lg font-medium shadow-none" />
       </div>
     </>
   );
 }
 
-const data = {
-  buyBtn: { text: { en: "Buy", ar: "شراء" } },
+const content = {
+  buyBtn: { en: "Buy", ar: "شراء" },
   // description: { text: { en: "Description", ar: "" } },
 };
 

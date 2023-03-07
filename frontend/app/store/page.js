@@ -55,3 +55,5 @@ export default async function StoresNearby({ searchParams }) {
     </>
   );
 }
+
+const content = {};

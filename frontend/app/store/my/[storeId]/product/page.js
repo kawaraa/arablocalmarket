@@ -17,3 +17,5 @@ export default function ProductsByStore(props) {
     </div>
   );
 }
+
+const content = {};

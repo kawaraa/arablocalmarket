@@ -43,7 +43,7 @@ export default function StoreBySearch({ children, params, searchParams }) {
 
       <div className="mt-8 sm:mt-16 pb-6 border-b-2 border-bc">
         <Tabs
-          tabs={tabs.map(({ key, path, text }) => ({
+          tabs={content.tabs.map(({ key, path, text }) => ({
             key,
             path: path.replace("storeId", id),
             text: text[lang],
@@ -56,8 +56,10 @@ export default function StoreBySearch({ children, params, searchParams }) {
   );
 }
 
-const tabs = [
-  { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
-  { key: "2", path: "/store/storeId/category", text: { en: "Category", ar: "الفئات" } },
-  { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
-];
+const content = {
+  tabs: [
+    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
+    { key: "2", path: "/store/storeId/category", text: { en: "Category", ar: "الفئات" } },
+    { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
+  ],
+};

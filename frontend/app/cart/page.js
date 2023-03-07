@@ -45,3 +45,5 @@ export default function Cart(props) {
     </div>
   );
 }
+
+const content = {};

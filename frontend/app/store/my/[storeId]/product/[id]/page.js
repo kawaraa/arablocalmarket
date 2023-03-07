@@ -17,3 +17,5 @@ export default function ProductById({ params, searchParams }) {
     </div>
   );
 }
+
+const content = {};

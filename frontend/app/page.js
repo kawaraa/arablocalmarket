@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import { getCssDelay } from "./(service)/functions";
 import Footer from "./(layout)/footer";
-import content from "./page.json";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 
 export default function LandingPage({ searchParams }) {
@@ -23,7 +22,6 @@ export default function LandingPage({ searchParams }) {
           }}>
           <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div>
 
-          {/* text-gradient-to-b from-pc to-c */}
           <h1 className="mt-5 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
             {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
           </h1>
@@ -35,19 +33,19 @@ export default function LandingPage({ searchParams }) {
         </div>
 
         <article dir="auto" className="relative text-center top-0 px-4 pt-6 md:pt-3 w-full">
-          <p className="text-md text-center font-medium lazy-c" style={getCssDelay()}>
+          <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
             {content.h1P[lang]}
           </p>
 
-          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-c" style={getCssDelay()}>
+          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-r" style={getCssDelay()}>
             {content.h2[lang]}
           </h2>
 
           <Link
             href="/store"
-            className="inline-flex justify-center px-4 py-2 text-sm bg-dbg dark:bg-pc text-dt dark:text-t rounded-full md:px-4 md:py-2 font-medium shadow-md border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t duration-200 lazy-c"
+            className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-c"
             style={getCssDelay()}>
-            Find a store to order from
+            {content.findStoreLink[lang]}
           </Link>
 
           <a href="#section2" className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
@@ -79,3 +77,34 @@ export default function LandingPage({ searchParams }) {
     </>
   );
 }
+
+const content = {
+  h1: {
+    text: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
+    hidden: {
+      en: "Arabic Stores Supermarkets near you Halal food around the world Create your store and start selling Halal food products online locally.",
+      ar: ".المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا",
+    },
+  },
+  h1P: {
+    en: "Welcome to the first Arabic Local Stores platform where you can look for Arabic stores or supermarkets nearby.",
+    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
+  },
+  h2: {
+    en: "Find an Arabic Store and Supermarket near you.",
+    ar: "ابحث عن متجر عربي وسوبر ماركت بالقرب منك.",
+  },
+  findStoreLink: { en: "Find a store to order from", ar: "ابحث عن متجر للطلب منه" },
+  h3: {
+    en: "Are you a store owner and you want to create a store to list your products?",
+    ar: "هل أنت صاحب متجر وتريد إنشاء متجر لعرض منتجاتك؟",
+  },
+  h3P: {
+    en: "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
+    ar: "فأنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
+  },
+  h3Link: {
+    en: "Create a store",
+    ar: "أنشئ متجرًا",
+  },
+};

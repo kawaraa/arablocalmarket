@@ -19,3 +19,5 @@ export default function Orders(props) {
     </div>
   );
 }
+
+const content = {};

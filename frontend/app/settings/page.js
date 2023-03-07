@@ -33,3 +33,5 @@ export default function Settings(props) {
     </div>
   );
 }
+
+const content = {};

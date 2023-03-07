@@ -17,3 +17,5 @@ export default function StoreById(props) {
     </div>
   );
 }
+
+const content = {};

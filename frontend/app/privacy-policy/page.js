@@ -27,7 +27,7 @@ export default function PrivacyPolicy(props) {
         <p className="text-sm text-l-c">
           We receive and store any information you knowingly provide to us when you make a purchase through
           the Website. Currently this is limited to your email address, which is required for you to be able
-          to login to the Website and access any purchased ArabLocalMarket UI products.
+          to sign in to the Website and access any purchased ArabLocalMarket UI products.
         </p>
 
         <h2 className="text-lg font-bold mt-8 mb-3 text-l-tc">Collection of non-personal information</h2>
@@ -266,3 +266,5 @@ export default function PrivacyPolicy(props) {
     </div>
   );
 }
+
+const content = {};

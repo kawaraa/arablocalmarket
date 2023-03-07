@@ -53,6 +53,8 @@ export default function ProductsByStore({ params, searchParams }) {
   );
 }
 
+const content = {};
+
 const products = [
   {
     id: "12",

@@ -51,6 +51,10 @@ tailwind.config = {
       9: "9",
       10: "10",
     },
+    backgroundImage: {
+      "gradient-to-tl": "linear-gradient(to top left, var(--tw-gradient-stops) 65%)",
+      "gradient-from-c": "radial-gradient(var(--tw-gradient-stops))",
+    },
   },
 };
 

@@ -56,3 +56,5 @@ export default function StoreOverview({ params, searchParams }) {
     </>
   );
 }
+
+const content = {};

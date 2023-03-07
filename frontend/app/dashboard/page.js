@@ -15,3 +15,5 @@ export default function Dashboard(props) {
     </div>
   );
 }
+
+const content = {};

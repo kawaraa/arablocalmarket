@@ -7,7 +7,7 @@ export default function Logout(props) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("/sign-out").then((res) => {
+    fetch("/signout").then((res) => {
       if (!res.ok) router.back();
       else {
         router.push("/");
