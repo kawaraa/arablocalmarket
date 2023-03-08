@@ -1,10 +1,10 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import Cookies from "../(service)/cookies";
-import Modal from "./(styled)/modal";
-import LeafletMap from "./leaflet-map";
-import SearchBox from "./(styled)/search-box";
+import Cookies from "../../(service)/cookies";
+import Modal from "../../(component)/(styled)/modal";
+import LeafletMap from "../../(component)/leaflet-map";
+import SearchBox from "../../(component)/(styled)/search-box";
 
 export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const router = useRouter();

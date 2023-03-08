@@ -1,8 +1,8 @@
 import { headers, cookies } from "next/headers";
 // import Link from "next/link";
 // import StarRating from "../(component)/(styled)/start-rating";
-import StoreCard from "../(component)/store-card";
-import StoreSearch from "../(component)/store-search";
+import StoreCard from "./(component)/store-card";
+import StoreSearch from "./(component)/store-search";
 // import ContextMenu from "../(component)/context-menu";
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo

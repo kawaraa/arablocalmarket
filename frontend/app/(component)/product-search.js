@@ -24,7 +24,7 @@ export default function ProductSearch({ text }) {
         search={search}
         // onShowFilter={setShowFilter}
         onFinish={handleSearch}
-        cls="sm:w-1/3 lazy-r"
+        cls="sm:w-1/3 lazy-c"
       />
 
       <Modal

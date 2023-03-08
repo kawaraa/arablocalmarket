@@ -20,6 +20,7 @@ export default function ProductBySlug({ params }) {
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
   const [option3, setOption3] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const { lang } = useContext(AppSessionContext);
 
@@ -136,6 +137,35 @@ export default function ProductBySlug({ params }) {
               </li>
             ))}
         </ul>
+      </div>
+
+      <div className="flex my-3">
+        <label className="mr-6">Quantity</label>
+
+        <button
+          className="w-6 h-6 bg-pc rounded-full hover:text-red"
+          onClick={() => setQuantity(quantity - 1)}>
+          <SvgIcon name="minus" />
+        </button>
+
+        <input
+          value={quantity}
+          name="quantity"
+          max="10"
+          min="1"
+          className="w-8 text-center"
+          onChange={(e) => setQuantity(e.value || 0)}
+        />
+
+        <button
+          className="w-6 h-6 bg-pc rounded-full hover:text-red"
+          onClick={() => setQuantity(quantity + 1)}>
+          <SvgIcon name="plus" />
+        </button>
+
+        <div className="ml-6 text-sm font-light">
+          <span className="font-medium">{15}</span> in Stock
+        </div>
       </div>
 
       <h2 className="text-lg my-3">{product.title}</h2>

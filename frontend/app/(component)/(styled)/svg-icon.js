@@ -177,6 +177,30 @@ const icons = {
       />
     </svg>
   ),
+  plus: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M12 6v12m6-6H6" />
+    </svg>
+  ),
+  minus: (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="pointer-events-none w-full"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M18 12H6" />
+    </svg>
+  ),
   powerOff: (
     <svg
       xmlns="http://www.w3.org/2000/svg"

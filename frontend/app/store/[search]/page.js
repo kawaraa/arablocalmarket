@@ -23,7 +23,6 @@ export default function StoreOverview({ params, searchParams }) {
 
       <br />
       <h2 className="text-lg mb-3 font-medium">Description</h2>
-
       <p>
         Welcome to our supermarket, where we are committed to providing you with a convenient and enjoyable
         shopping experience. We understand that grocery shopping can be a chore, which is why we have worked

@@ -12,15 +12,13 @@ export default function ProductsByStore({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  console.log("ProductsByStore: ", searchParams.search);
-
   const store = { id: "1", currency: "€", products };
 
   return (
     <div>
       <ProductSearch text={searchParams.search} />
 
-      <h2 className="text-lg mb-3 font-medium">
+      <h2 className="text-lg mb-3 font-medium lazy-l">
         Found <span className="font-bold">( 9 )</span> Products
       </h2>
 
@@ -32,7 +30,7 @@ export default function ProductsByStore({ params, searchParams }) {
               className="relative block w-full p-2  bg-cbg cd_hr rounded-xl duration-200">
               <h3 className="text-center mt-2">{p.title}</h3>
               <div className="overflow-hidden h-40 flex justify-center items-center">
-                <Image src={p.image} width="250" height="250" alt={p.title} className="max-h-36 w-auto" />
+                <Image src={p.image} alt={p.title} width="250" height="250" className="max-h-36 w-auto" />
               </div>
 
               {/* <StarRating stars={p.starts} cls="text-xs md:text-sm" /> */}

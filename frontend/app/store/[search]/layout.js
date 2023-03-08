@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
-import StoreLinks from "../../(component)/store-links";
+import StoreLinks from "../(component)/store-links";
 import Tabs from "../../(component)/(styled)/tabs";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo

@@ -1,6 +1,6 @@
 "use client";
 
-import SvgIcon from "./(styled)/svg-icon";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
 
 export default function StoreLinks({ phone }) {
   const liCls =
