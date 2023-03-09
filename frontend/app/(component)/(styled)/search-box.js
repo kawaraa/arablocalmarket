@@ -30,11 +30,11 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
       <input
         onChange={(e) => onSearch(e.target.value)}
         value={search}
-        type="text"
+        type="search"
         name="search"
         autoComplete="search"
         placeholder={label}
-        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg cd_hr peer duration-200"
+        className="flex-auto p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr cd_fs peer duration-200"
         id={id}
         tabIndex="0"
       />

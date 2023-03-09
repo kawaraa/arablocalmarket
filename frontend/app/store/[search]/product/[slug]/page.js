@@ -1,28 +1,25 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
-// import { useSearchParams } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
 import SvgIcon from "../../../../(component)/(styled)/svg-icon";
 import Button from "../../../../(component)/(styled)/button";
+import { useRouter } from "next/navigation";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Product Name / title - store name - ALM" };
 
-// http://localhost:3000/store/1/product/1
-// http://localhost:3000/store/1/product/barcode // UPC/IAN/EAN
-// http://localhost:3000/store/1/product/product-name
-// http://localhost:3000/store/1/product/product-title
+// slug could be product ID, barcode E.g. UPC/IAN/EAN or product-title (in future search in th product description)
 
 export default function ProductBySlug({ params }) {
+  const router = useRouter();
+  const { lang } = useContext(AppSessionContext);
   const [imgPreviewIndex, setImgPreviewIndex] = useState(0);
   const [options, setOptions] = useState([]);
   const [option1, setOption1] = useState("");
   const [option2, setOption2] = useState("");
   const [option3, setOption3] = useState("");
   const [quantity, setQuantity] = useState(1);
-
-  const { lang } = useContext(AppSessionContext);
 
   const store = { id: "1", currency: "€" };
   console.log("Product ID, Name or title: ", params.slug);
@@ -36,6 +33,8 @@ export default function ProductBySlug({ params }) {
   };
   const handleCheckout = () => {
     console.log("handleCheckout");
+
+    router.push("/checkout");
   };
 
   useEffect(() => {
@@ -187,15 +186,18 @@ export default function ProductBySlug({ params }) {
           <SvgIcon name="cart" />
         </button>
 
-        <Button text={content.buyBtn[lang]} handler={handleCheckout} cls="!text-lg font-medium shadow-none" />
+        <Button
+          text={content.checkoutBtn[lang]}
+          handler={handleCheckout}
+          cls="!text-lg font-medium shadow-none"
+        />
       </div>
     </>
   );
 }
 
 const content = {
-  buyBtn: { en: "Buy", ar: "شراء" },
-  // description: { text: { en: "Description", ar: "" } },
+  checkoutBtn: { en: "Checkout", ar: "الدفع" },
 };
 
 const product = {

@@ -28,10 +28,10 @@
 }
 
 /* Card hover and focus */
-.cd_hr {
+.card {
   border: 1px solid #0000001a;
 }
-.dark .cd_hr {
+.dark .card {
   border-color: #666666;
 }
 .cd_hr:hover {
@@ -39,7 +39,7 @@
   box-shadow: 3px 3px 20px 5px rgb(0 0 0 / 0.1);
   transform: scale(1.01);
 }
-.cd_hr:focus {
+.cd_fs:focus {
   outline: none;
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -49,7 +49,7 @@
   border-color: #9aa0a6;
   box-shadow: 3px 3px 20px 5px #ffffff1a;
 }
-.dark .cd_hr:focus {
+.dark .cd_fs:focus {
   outline: none;
   border-color: #9aa0a6;
   box-shadow: 0 10px 15px -3px #ffffff1a, 0 4px 6px -4px #ffffff1a;

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
@@ -27,3 +28,22 @@ export default function Button({ text, icon, type = "button", handler, loading, 
     </button>
   );
 }
+
+// export function LinkButton({ href, icon, handler, loading, cls, iconCls }) {
+//   let c = `inline-flex justify-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop duration-200 hover:from-pc2 `;
+//   c = loading ? "cursor-progress " + cls : cls;
+
+//   return (
+//     <Link href={href} onClick={handler} title={text} className={c}>
+//       {text}
+//       {loading ? (
+//         <Loader size="4" />
+//       ) : (
+//         <span className={`max-w-4 ${iconCls}`}>
+//           {" "}
+//           {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
+//         </span>
+//       )}
+//     </Link>
+//   );
+// }
