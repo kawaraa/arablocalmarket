@@ -36,7 +36,7 @@ export default function Cart({ params, searchParams }) {
   const total = 40;
 
   return (
-    <article className="pb-10">
+    <article className="pb-14">
       <h1 className="text-xl text-center my-6">
         {tabs.find((t) => t.path == p)?.text}
         <span className="font-bold"> ( 10 )</span>
@@ -57,8 +57,8 @@ export default function Cart({ params, searchParams }) {
           </a>
         </div>
 
-        <ul className="mt-4">
-          <li className="flex my-2">
+        <ul className="mt-4 mb-1 space-y-3">
+          <li className="flex">
             <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">
               <Image
                 src="/burger-prepared-food-clipart.png"
@@ -68,17 +68,17 @@ export default function Cart({ params, searchParams }) {
                 className="w-full"
               />
             </div>
-            <div className="relative ml-3 ">
-              <Link href="/store/1/product/1" className="text-sm hover:text-pc2">
+            <div className="relative w-full mx-2">
+              <Link href="/store/1/product/1" className="block text-sm hover:text-pc2">
                 Product title + the variant title goes here
               </Link>
 
-              <p className="flex justify-between text-sm text-red font-medium ">
-                €10.50 <span className="text-t dark:text-dt mt-3 font-bold">2</span>
+              <p className="flex justify-between w-full text-sm text-red font-medium ">
+                €10.50 <span className="text-t dark:text-dt font-bold">2</span>
               </p>
             </div>
           </li>
-          <li className="flex my-2">
+          <li className="flex">
             <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">
               <Image
                 src="/bread-clipart.png"
@@ -88,13 +88,13 @@ export default function Cart({ params, searchParams }) {
                 className="w-full"
               />
             </div>
-            <div className="relative ml-3 ">
-              <Link href="/store/1/product/1" className="text-sm hover:text-pc2">
+            <div className="relative w-full mx-2">
+              <Link href="/store/1/product/1" className="block text-sm hover:text-pc2">
                 Product title + the variant title goes here
               </Link>
 
-              <p className="flex justify-between text-sm text-red font-medium ">
-                €10.50 <span className="text-t dark:text-dt mt-3 font-bold">2</span>
+              <p className="flex justify-between w-full text-sm text-red font-medium ">
+                €10.50 <span className="text-t dark:text-dt font-bold">2</span>
               </p>
             </div>
           </li>
@@ -116,8 +116,8 @@ export default function Cart({ params, searchParams }) {
           </a>
         </div>
 
-        <ul className="mt-4">
-          <li className="flex my-2">
+        <ul className="mt-4 mb-1 space-y-3">
+          <li className="flex">
             <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">
               <Image
                 src="/care-products-clipart.png"
@@ -127,17 +127,17 @@ export default function Cart({ params, searchParams }) {
                 className="w-full"
               />
             </div>
-            <div className="relative ml-3 ">
-              <Link href="/store/1/product/1" className="text-sm hover:text-pc2">
+            <div className="relative w-full mx-2">
+              <Link href="/store/1/product/1" className="block text-sm hover:text-pc2">
                 Product title + the variant title goes here
               </Link>
 
-              <p className="flex justify-between text-sm text-red font-medium ">
-                €10.50 <span className="text-t dark:text-dt mt-3 font-bold">2</span>
+              <p className="flex justify-between w-full text-sm text-red font-medium ">
+                €10.50 <span className="text-t dark:text-dt font-bold">2</span>
               </p>
             </div>
           </li>
-          <li className="flex my-2">
+          <li className="flex">
             <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">
               <Image
                 src="/canned-food-clipart.png"
@@ -147,13 +147,13 @@ export default function Cart({ params, searchParams }) {
                 className="w-full"
               />
             </div>
-            <div className="relative ml-3 ">
-              <Link href="/store/1/product/1" className="text-sm hover:text-pc2">
+            <div className="relative w-full mx-2">
+              <Link href="/store/1/product/1" className="block text-sm hover:text-pc2">
                 Product title + the variant title goes here
               </Link>
 
-              <p className="flex justify-between text-sm text-red font-medium ">
-                €10.50 <span className="text-t dark:text-dt mt-3 font-bold">2</span>
+              <p className="flex justify-between w-full text-sm text-red font-medium ">
+                €10.50 <span className="text-t dark:text-dt font-bold">2</span>
               </p>
             </div>
           </li>
@@ -162,8 +162,9 @@ export default function Cart({ params, searchParams }) {
 
       <button
         onClick={handleCheckout}
+        dir="ltr"
         className="fixed bottom-0 right-0 left-0 h-12 flex justify-center items-center bg-pc text-t text-lg font-medium hover:text-red duration-200">
-        <span className="text-red mr-2">
+        <span className="text-red mx-2">
           {store.currency}
           {total}
         </span>

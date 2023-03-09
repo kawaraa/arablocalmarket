@@ -31,8 +31,8 @@ export default function ProductBySlug({ params }) {
   const handleAddToCart = () => {
     console.log("handleAddToCart");
   };
-  const handleCheckout = () => {
-    console.log("handleCheckout");
+  const handleBuy = () => {
+    console.log("handleBuy");
 
     router.push("/checkout");
   };
@@ -186,18 +186,14 @@ export default function ProductBySlug({ params }) {
           <SvgIcon name="cart" />
         </button>
 
-        <Button
-          text={content.checkoutBtn[lang]}
-          handler={handleCheckout}
-          cls="!text-lg font-medium shadow-none"
-        />
+        <Button text={content.buyBtn[lang]} handler={handleBuy} cls="!text-lg font-medium shadow-none" />
       </div>
     </>
   );
 }
 
 const content = {
-  checkoutBtn: { en: "Checkout", ar: "الدفع" },
+  buyBtn: { en: "Buy", ar: "شراء" },
 };
 
 const product = {

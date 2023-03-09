@@ -5,7 +5,7 @@ import CloseButton from "./icon-button";
 import SvgIcon from "./svg-icon";
 
 export default function Modal({ children, title, okBtn, open, loading, onCancel, onApprove, icon }) {
-  const cls = open ? "h-full p-4 opacity-100" : "";
+  const cls = open ? "!h-full p-4 opacity-100" : "";
 
   return (
     <>
@@ -27,14 +27,16 @@ export default function Modal({ children, title, okBtn, open, loading, onCancel,
           label="Cancel and close the modal window"
           cls="absolute top-5 right-5"
         />
-
         <div className="block bg-l-bg pb-4 md:flex justify-start">
-          <div
-            className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 md:mr-2 rounded-full ${
-              icon === "warning" ? "bg-lb text-red" : "bg-pc text-t"
-            }`}>
-            {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
-          </div>
+          {icon && (
+            <div
+              className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 md:mr-2 rounded-full ${
+                icon === "warning" ? "bg-lb text-red" : "bg-pc text-t"
+              }`}>
+              {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}
+            </div>
+          )}
+
           <div className="flex-auto mt-3 text-sm text-center md:text-left">
             <h2 className="mb-1 text-lg">{title}</h2>
             {children}

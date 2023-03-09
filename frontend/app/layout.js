@@ -10,7 +10,7 @@ export default function RootLayout({ children, searchParams }) {
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
-    <html lang={lang} className={`scroll-smooth group ${themeMode}`} dir="auto">
+    <html lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <head>
         <title>Arab Local Market</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +33,7 @@ export default function RootLayout({ children, searchParams }) {
           <header>
             <Navigation />
           </header>
-          <main className="min-h-[100vh] pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8">
+          <main className="min-h-[100vh] pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8" dir="auto">
             {children}
           </main>
         </AppSessionContextProvider>
