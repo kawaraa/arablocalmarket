@@ -45,7 +45,7 @@ export default function Cart({ params, searchParams }) {
 
       <section className="my-2 p-3 bg-cbg card rounded-lg">
         <div className="pb-2 flex justify-between items-center border-b-[1px] border-bc dark:border-bf">
-          <Radio name="store" onCheck={() => selectStore("store-id-1")} color="red" />
+          <Radio name="store" onChange={() => selectStore("store-id-1")} color="red" />
           <h3 className="font-medium">Store 1 name </h3>
           <a
             href="https://wa.me/+905365646833"
@@ -103,7 +103,7 @@ export default function Cart({ params, searchParams }) {
 
       <section className="my-2 p-3 bg-cbg card rounded-lg">
         <div className="pb-2 flex justify-between items-center border-b-[1px] border-bc dark:border-bf">
-          <Radio name="store" onCheck={() => selectStore("store-id-2")} color="red" />
+          <Radio name="store" onChange={() => selectStore("store-id-2")} color="red" />
 
           <h3 className="font-medium">Store 2 name </h3>
           <a

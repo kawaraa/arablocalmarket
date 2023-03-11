@@ -3,8 +3,8 @@ import Link from "next/link";
 import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
-export default function Button({ text, icon, type = "button", handler, loading, disabled, cls, iconCls }) {
-  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop duration-200 `;
+export function Button({ text, icon, type = "button", handler, loading, disabled, cls, iconCls }) {
+  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop fs duration-200 `;
   // let c = `inline-flex justify-center px-3 py-1 text-sm md:text-lg bg-dbg dark:bg-pc text-dt dark:text-t rounded-md md:px-4 md:py-2 font-medium shadow-md disabled:opacity-60 disabled:cursor-no-drop transition-all duration-200`;
   if (!disabled) c += "hover:from-pc2 ";
   // if (!disabled) c += "border border-bc hover:border-bf hover:bg-pc dark:hover:bg-lbg hover:text-t ";
@@ -25,6 +25,24 @@ export default function Button({ text, icon, type = "button", handler, loading, 
           {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}
         </span>
       )}
+    </button>
+  );
+}
+
+export function IconButton({ icon, size = "8", handler, disabled, label, cls }) {
+  let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full disabled:opacity-60 disabled:cursor-no-drop fs duration-200 `;
+  if (!disabled) c += "hover:text-red ";
+  c += cls;
+
+  return (
+    <button
+      type="button"
+      onClick={handler}
+      disabled={disabled}
+      title={label}
+      aria-label={label}
+      className={c}>
+      {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
     </button>
   );
 }

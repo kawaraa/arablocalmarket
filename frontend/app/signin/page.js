@@ -2,7 +2,7 @@
 import { useContext, useState } from "react";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
-import Button from "../(component)/(styled)/button";
+import { Button } from "../(component)/(styled)/button";
 
 export default function Signin({ a }) {
   const { lang } = useContext(AppSessionContext);
@@ -32,7 +32,7 @@ export default function Signin({ a }) {
               autoComplete="email"
               required
               placeholder={content.email[lang]}
-              className="block peer w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-t-md card cd_hr cd_fs"
+              className="block peer w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-t-md card cd_hr fs"
             />
             {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
               Please provide a valid email address.
@@ -49,7 +49,7 @@ export default function Signin({ a }) {
               autoComplete="current-password"
               required
               placeholder={content.password[lang]}
-              className="block pear w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-b-md card cd_hr cd_fs"
+              className="block pear w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-b-md card cd_hr fs"
             />
             {/* <p className="absolute -bottom-0 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
               Please provide a valid email address.

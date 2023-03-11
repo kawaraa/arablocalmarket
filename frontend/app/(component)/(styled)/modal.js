@@ -1,10 +1,9 @@
 "use client";
 import Transition from "../../(layout)/transitions";
-import Button from "./button";
-import CloseButton from "./icon-button";
+import { Button, IconButton } from "./button";
 import SvgIcon from "./svg-icon";
 
-export default function Modal({ children, title, okBtn, open, loading, onCancel, onApprove, icon }) {
+export default function Modal({ tag, title, okBtn, open, loading, onCancel, onApprove, icon, ...p }) {
   const cls = open ? "!h-full p-4 opacity-100" : "";
 
   return (
@@ -14,20 +13,23 @@ export default function Modal({ children, title, okBtn, open, loading, onCancel,
         onClick={onCancel}></div>
 
       <Transition
-        tag="section"
+        Tag={tag || "section"}
         base="z-9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
         open={open}
-        wrapperProps={{ "aria-label": `${title} modal window`, role: "dialog", "aria-modal": "true" }}>
-        <CloseButton
+        aria-label={`${title} modal window`}
+        role="dialog"
+        aria-modal="true"
+        {...p}>
+        <IconButton
           icon="close"
           handler={onCancel}
           label="Cancel and close the modal window"
           cls="absolute top-5 right-5"
         />
-        <div className="block bg-l-bg pb-4 md:flex justify-start">
+        <div className="block py-4 md:flex justify-start">
           {icon && (
             <div
               className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 md:mr-2 rounded-full ${
@@ -39,12 +41,13 @@ export default function Modal({ children, title, okBtn, open, loading, onCancel,
 
           <div className="flex-auto mt-3 text-sm text-center md:text-left">
             <h2 className="mb-1 text-lg">{title}</h2>
-            {children}
+            {p.children}
           </div>
         </div>
 
         <div className="pt-3 flex justify-end">
           <Button
+            type={tag == "form" && "submit"}
             text={okBtn}
             handler={onApprove}
             loading={loading}

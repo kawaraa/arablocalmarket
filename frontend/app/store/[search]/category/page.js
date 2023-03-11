@@ -17,7 +17,7 @@ export default function StoreOverview({ params, searchParams }) {
           <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
             <Link
               href={`/store/${store.id}/product?category=${c.name.replace(/\s/gim, "")}`}
-              className="relative block w-full p-2 pt-3 bg-cbg card cd_hr cd_fs rounded-xl duration-200">
+              className="relative block w-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">
               <span className="absolute top-2 right-2">{c.numberOfItems}</span>
               <div className="overflow-hidden h-40 flex justify-center items-center">
                 <Image src={c.image} alt={c.name} width="250" height="250" className="max-h-36 w-auto" />

@@ -48,10 +48,11 @@ export default function Tooltip({ children, description = "", size, position }) 
   // Plain HTML tooltip: <a href="#"  title="Hooray!, this text will show up" role="tooltip">Hover over me</a>
   return (
     <a
-      className="relative inline-flex"
+      className="relative inline-flex fs"
       href="#"
       title={description}
       role="tooltip"
+      aria-label={"Tooltip. " + description}
       aria-haspopup="true"
       aria-expanded={tooltipOpen}
       onClick={(e) => e.preventDefault() + setTooltipOpen(!tooltipOpen)}
@@ -62,7 +63,7 @@ export default function Tooltip({ children, description = "", size, position }) 
       </span>
 
       <Transition
-        tag="span"
+        Tag="span"
         open={tooltipOpen}
         base={`block absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg border border-d-c shadow-lg 
           ${positionOuterClasses(position)} 

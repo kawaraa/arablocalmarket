@@ -1,7 +1,8 @@
 "use client";
 import { useContext, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
-import Button from "../(component)/(styled)/button";
+import { Button } from "../(component)/(styled)/button";
+import { InputField } from "../(component)/(styled)/inputs";
 
 export default function Signup({ a }) {
   const { lang } = useContext(AppSessionContext);
@@ -22,102 +23,74 @@ export default function Signup({ a }) {
         </div>
 
         <div className="flex -space-x-px shadow-sm">
-          <div className="relative w-1/2">
-            <label htmlFor="first-name" className="sr-only">
-              {content.firstName[lang]}
-            </label>
-            <input
-              id="first-name"
-              type="text"
-              name="firstName"
-              autoComplete="given-name"
-              required
-              placeholder={content.firstName[lang]}
-              className="block peer w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-l-md card cd_hr cd_fs"
-            />
-          </div>
-          <div className="relative w-1/2">
-            <label htmlFor="last-name" className="sr-only">
-              {content.lastName[lang]}
-            </label>
-            <input
-              id="last-name"
-              type="text"
-              name="lastName"
-              autoComplete="family-name"
-              required
-              placeholder={content.lastName[lang]}
-              className="block pear w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-r-md card cd_hr cd_fs"
-            />
-          </div>
+          <InputField
+            type="text"
+            name="firstName"
+            required
+            autoComplete="given-name"
+            placeholder={content.firstName[lang]}
+            title={content.firstName[lang]}
+            cls="relative w-1/2"
+            inCls="rounded-l-md"
+          />
+
+          <InputField
+            type="text"
+            name="lastName"
+            required
+            autoComplete="family-name"
+            placeholder={content.lastName[lang]}
+            title={content.lastName[lang]}
+            cls="relative w-1/2"
+            inCls="rounded-r-md"
+          />
         </div>
 
-        <div className="relative shadow-sm">
-          <label htmlFor="email-address" className="sr-only">
-            {content.email[lang]}
-          </label>
-          <input
-            id="email-address"
-            type="email"
-            name="email"
-            autoComplete="email"
-            required
-            placeholder={content.email[lang]}
-            className="block peer w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-md card cd_hr cd_fs"
-          />
-          {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
-          Please provide a valid email address.
-        </p> */}
-        </div>
+        <InputField
+          type="email"
+          name="email"
+          required
+          autoComplete="email"
+          placeholder={content.email[lang]}
+          title={content.email[lang]}
+          cls="relative shadow-sm"
+        />
 
-        <div className="relative shadow-sm">
-          <label htmlFor="phone" className="sr-only">
-            {content.phone[lang]}
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            name="phone"
-            autoComplete="tel"
-            required
-            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-            placeholder={content.phone[lang]}
-            className="block pear w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-md card cd_hr cd_fs"
-          />
-          {/* <p className="absolute -bottom-0 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
-          Please provide a valid phone number.
-        </p> */}
-        </div>
+        <InputField
+          type="tel"
+          name="phone"
+          required
+          autoComplete="tel"
+          placeholder={content.phone[lang]}
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+          title={content.phone[lang]}
+          cls="relative shadow-sm"
+        />
 
         <div className="flex -space-x-px shadow-sm">
-          <div className="relative w-1/2">
-            <label htmlFor="password" className="sr-only">
-              {content.email[lang]}
-            </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              autoComplete="current-password"
-              required
-              placeholder={content.password[lang]}
-              className="block peer w-full bg-bg dark:bg-cbg appearance-none border border-bc px-3 py-2 rounded-l-md card cd_hr cd_fs"
-            />
-          </div>
-          <div className="relative w-1/2">
-            <label htmlFor="confirm-password" className="sr-only">
-              {content.confirmPassword[lang]}
-            </label>
-            <input
-              id="confirm-password"
-              type="password"
-              name="confirmPassword"
-              autoComplete="new-password"
-              required
-              placeholder={content.confirmPassword[lang]}
-              className="block pear w-full bg-cbg appearance-none border border-bc px-3 py-2 rounded-r-md card cd_hr cd_fs"
-            />
-          </div>
+          <InputField
+            type="password"
+            name="password"
+            required
+            autoComplete="current-password"
+            placeholder={content.password[lang]}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title={content.password[lang]}
+            cls="relative w-1/2"
+            inCls="rounded-l-md"
+          />
+
+          <InputField
+            type="password"
+            name="confirmPassword"
+            required
+            autoComplete="new-password"
+            placeholder={content.confirmPassword[lang]}
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title={content.confirmPassword[lang]}
+            cls="relative w-1/2"
+            inCls="rounded-r-md"
+          />
         </div>
 
         <div>

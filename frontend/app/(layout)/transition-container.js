@@ -2,17 +2,7 @@
 import { renderToString } from "react-dom/server";
 import { useEffect, useState } from "react";
 
-export default function TransitionContainer({
-  children,
-  tag = "div",
-  cls = "",
-  base = "",
-  enter = "",
-  update = "",
-  exit = "",
-  time = 100,
-  ...props
-}) {
+export default function TransitionContainer({ Tag, children, base, enter, update, exit, time, ...p }) {
   const [elements, setElements] = useState(null);
   const [shallowElements, setShallowElements] = useState(null);
   const [activeElement, setActiveElement] = useState({ index: -1, class: "" });
@@ -68,7 +58,7 @@ export default function TransitionContainer({
   }, [children]);
 
   return (
-    <props.tag className={cls}>
+    <Tag {...p}>
       {!shallowElements &&
         React.Children.map(elements, (ch, i) =>
           React.cloneElement(
@@ -78,6 +68,6 @@ export default function TransitionContainer({
         )}
 
       {shallowElements || null}
-    </props.tag>
+    </Tag>
   );
 }

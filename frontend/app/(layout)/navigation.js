@@ -135,11 +135,11 @@ export default function Navigation() {
             <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Dropdown
               event="click"
+              cls="ml-2"
               icon="bell"
               iconCls="w-[28px] md:w-8"
-              wrapperCls="ml-2"
-              cls="!rounded-full"
-              label="View notifications">
+              btnCls="!rounded-full"
+              title="View notifications">
               {notifications.map((note, i) => (
                 <li key={i}>
                   <a
@@ -153,9 +153,9 @@ export default function Navigation() {
             <Dropdown
               event="click"
               btnContent={<Avatar initial="a" />}
-              wrapperCls="ml-4"
-              cls="!rounded-full shadow-md"
-              label="View user menu">
+              cls="ml-4"
+              btnCls="!rounded-full shadow-md"
+              title="View user menu">
               {content.userLinks.map((link, i) => (
                 <li key={i}>
                   <a

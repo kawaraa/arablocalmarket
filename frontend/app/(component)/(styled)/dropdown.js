@@ -4,16 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import SvgIcon from "./svg-icon";
 import Transition from "../../(layout)/transitions";
 
-export default function Dropdown({
-  children,
-  label = "user menu",
-  event = "hover",
-  btnContent = "",
-  icon = "",
-  iconCls = "",
-  wrapperCls = "",
-  cls = "",
-}) {
+export default function Dropdown({ children, title, event, btnContent, icon, iconCls, cls, btnCls, ...p }) {
   const wrapper = useRef(null);
   const [active, setActive] = useState(false);
   const btnProps = {};
@@ -35,12 +26,12 @@ export default function Dropdown({
   }, []);
 
   return (
-    <div ref={wrapper} {...btnProps} className={`relative inline-block ${wrapperCls}`}>
+    <div ref={wrapper} {...btnProps} className={`relative inline-block ${cls}`}>
       <button
         type="button"
-        className={`overflow-hidden flex w-full items-center justify-end rounded-md hover:text-lt dark:hover:text-dt ${cls}`}
-        title={label}
-        aria-label={label}
+        className={`overflow-hidden flex w-full items-center justify-end rounded-md hover:text-lt dark:hover:text-dt fs ${btnCls}`}
+        title={title || "user menu"}
+        aria-label={title}
         aria-expanded={active}
         aria-haspopup="menu">
         {btnContent}
@@ -48,7 +39,7 @@ export default function Dropdown({
       </button>
 
       <Transition
-        tag="ul"
+        Tag="ul"
         open={active}
         base={`absolute right-0 whitespace-nowrap overflow-hidden text-left bg-l-bg dark:bg-dcbg border border-d-c rounded shadow-lg `}
         enter={`opacity-100 scale-100 mt-${event == "click" ? "[10px]" : 0} mr-0 translate-x-0 translate-y-0`}

@@ -23,11 +23,15 @@
 }
 
 /* Global */
-/* 
-* {
+/* * {} */
 
-} 
-*/
+.fs:focus {
+  outline: #9aa0a6 solid 1px;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.dark .fs:focus {
+  box-shadow: 0 10px 15px -3px #ffffff1a, 0 4px 6px -4px #ffffff1a;
+}
 
 /* Card hover and focus */
 .card {
@@ -38,39 +42,28 @@
 }
 .cd_hr:hover {
   border-color: #9aa0a6;
-  box-shadow: 3px 3px 20px 5px rgb(0 0 0 / 0.1);
   transform: scale(1.01);
-}
-.cd_fs:focus {
-  outline: none;
-  border-color: #9aa0a6;
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 3px 3px 20px 5px rgb(0 0 0 / 0.1);
 }
 
 .dark .cd_hr:hover {
-  border-color: #9aa0a6;
   box-shadow: 3px 3px 20px 5px #ffffff1a;
-}
-.dark .cd_fs:focus {
-  outline: none;
-  border-color: #9aa0a6;
-  box-shadow: 0 10px 15px -3px #ffffff1a, 0 4px 6px -4px #ffffff1a;
 }
 
 /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
 .lazy-c {
-  animation: lazy-c 0.8s ease-in 1 reverse backwards;
+  animation: lazy-c 0.5s ease-in 0.3s reverse backwards;
   /* animation-delay: attr(data-d); */
   /* animation-delay: calc(attr(data-d) * 100ms); */
   /* animation-delay: calc(var(--a-d) * 100ms); */
 }
 .lazy-r {
   /* transform-origin: top right; */
-  animation: lazy-r 0.8s ease-in 1 reverse backwards;
+  animation: lazy-r 0.5s ease-in 0.3s reverse backwards;
 }
 .lazy-l {
   transform-origin: top left;
-  animation: lazy-l 0.8s ease-in 1 reverse backwards;
+  animation: lazy-l 0.5s ease-in 0.3s reverse backwards;
 }
 @keyframes lazy-c {
   100% {
@@ -82,13 +75,13 @@
   100% {
     opacity: 0;
     /* transform: rotate(-10deg) translate(5%, 80%); */
-    transform: translate(20px, 40px);
+    transform: translate(20px, 30px);
   }
 }
 @keyframes lazy-l {
   100% {
     opacity: 0;
     /* transform: rotate(10deg) translate(-5%, 50%); */
-    transform: translate(-20px, 40px);
+    transform: translate(-20px, 30px);
   }
 }
