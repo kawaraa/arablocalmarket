@@ -17,7 +17,7 @@
       "type": "string",
       "required": true
     },
-    "zipCode": {
+    "postalCode": {
       "type": "string",
       "required": true
     },

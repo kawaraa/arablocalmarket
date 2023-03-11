@@ -122,6 +122,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "deliver": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }
