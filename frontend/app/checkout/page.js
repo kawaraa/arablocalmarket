@@ -54,7 +54,6 @@ export default function Checkout({}) {
           { text: { en: "delivery", ar: "توصيل" }, icon: "foodDeliverBike" },
         ].map(({ text, icon }, i) => (
           <RadioCard
-            Tag="label"
             name="delivery"
             onChange={() => setDeliveryMethod(text.en)}
             required
@@ -142,19 +141,19 @@ export default function Checkout({}) {
           <p className="pb-3 mt-6 mb-3 mx-2 border-b-[1px] border-bc">{content.paymentMethods.p[lang]}</p>
           {selectedPaymentMethods === "on-delivery" ? (
             <div className="mb-3 flex lazy-c">
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#d7e8fb] ">
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc3 ">
                 <span className="h-4 mx-1">
                   <SvgIcon name="cash" />
                 </span>
                 {content.paymentMethods.onDelivery.methods.cash[lang]}
               </span>
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#fcdcdc] ">
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc4 ">
                 <span className="h-4 mx-1">
                   <SvgIcon name="creditCard" />
                 </span>
                 {content.paymentMethods.onDelivery.methods.card[lang]}
               </span>
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#fde3c2] ">
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc5 ">
                 <span className="h-4 mx-1">
                   <SvgIcon name="bank" />
                 </span>
@@ -165,7 +164,6 @@ export default function Checkout({}) {
             <>
               <div className="flex lazy-c">
                 <RadioCard
-                  Tag="label"
                   name="payment"
                   checked={selectedPayment == "card"}
                   onChange={() => setSelectedPayment("card")}
@@ -178,7 +176,6 @@ export default function Checkout({}) {
                   {content.paymentMethods.online.methods.card[lang]}
                 </RadioCard>
                 <RadioCard
-                  Tag="label"
                   name="payment"
                   checked={selectedPayment == "bank-transfer"}
                   onChange={() => setSelectedPayment("bank-transfer")}

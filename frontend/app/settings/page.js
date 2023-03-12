@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 
 export default function Settings(props) {
   console.log("Settings: >>>", props);
@@ -8,16 +9,16 @@ export default function Settings(props) {
   }, []);
 
   return (
-    <div>
-      <h1>Settings!</h1>
-      <div>
+    <article className="mt-10">
+      <h1 className="text-xl">Settings!</h1>
+      <section>
         <h3>Profile section!</h3>
 
         <div>First name</div>
         <div>Last name</div>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <h3>Account section!</h3>
 
         <div>
@@ -29,8 +30,8 @@ export default function Settings(props) {
         </div>
         <div>Password</div>
         <div>2AF</div>
-      </div>
-    </div>
+      </section>
+    </article>
   );
 }
 

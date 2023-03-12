@@ -7,10 +7,10 @@ tailwind.config = {
       // hpbg: "radial-gradient(#b8f5d9, #ffffff)",
       pc: "#9bface", // Primary Color // #cbf7f2
       pc2: "#b26cfc",
-      // pc1: "#b8f5d9", // Primary Color
-      // pc2: "#d7e8fb", // Primary Color
-      // pc3: "#fcdcdc", // Primary Color
-      // pc4: "#fde3c2", // Primary Color
+      pc3: "#d7e8fb", // Primary Color
+      pc4: "#fcdcdc", // Primary Color
+      pc5: "#fde3c2", // Primary Color
+      pc6: "#b8f5d9", // Primary Color
       bg: "#ffffff", // Background & Dark Title Color
       cbg: "#ffffff1a", // Card Background
       t: "#666666", // Light Color

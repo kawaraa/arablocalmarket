@@ -93,11 +93,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     if (Cookies.get("themeMode") === "dark" || dark) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
 
-    const aLang = Cookies.get("lang");
-    const theme = Cookies.get("themeMode");
-
-    updateLang(aLang || lang);
-    updateThemeMode(theme || themeMode);
+    updateThemeMode(Cookies.get("themeMode") || themeMode);
 
     // Todo: here
     const user = JSON.parse(window.localStorage.getItem("user") || null);

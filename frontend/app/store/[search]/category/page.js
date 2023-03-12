@@ -16,13 +16,13 @@ export default function StoreOverview({ params, searchParams }) {
         {store.categories.map((c, i) => (
           <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
             <Link
-              href={`/store/${store.id}/product?category=${c.name.replace(/\s/gim, "")}`}
+              href={`/store/${store.id}/product?category=${c.text[lang].replace(/\s/gim, "")}`}
               className="relative block w-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">
               <span className="absolute top-2 right-2">{c.numberOfItems}</span>
-              <div className="overflow-hidden h-40 flex justify-center items-center">
-                <Image src={c.image} alt={c.name} width="250" height="250" className="max-h-36 w-auto" />
+              <div className="overflow-hidden h-16 flex justify-center items-center">
+                <Image src={c.image} alt={c.text[lang]} width="250" height="250" className="h-full w-auto" />
               </div>
-              <h3 className="text-sm text-center mt-2">{c.name}</h3>
+              <h3 className="text-sm text-center mt-2">{c.text[lang]}</h3>
             </Link>
           </li>
         ))}
@@ -34,24 +34,32 @@ export default function StoreOverview({ params, searchParams }) {
 const content = {};
 
 const categories = [
-  { name: "Produce", image: "/produce-vegetables-clipart.png", numberOfItems: 1 },
-  { name: "Bakery", image: "/bread-clipart.png", numberOfItems: 10 },
-  { name: "Meat - poultry", image: "/cut-of-meat-clipart.png", numberOfItems: 13 },
-  { name: "Seafood", image: "/fish-clipart.png", numberOfItems: 11 },
-  { name: "Deli - prepared food", image: "/burger-prepared-food-clipart.png", numberOfItems: 3 },
-  { name: "Dairy - eggs", image: "/dairy-clipart.png", numberOfItems: 31 },
-  // { name: "Frozen foods", image: "", numberOfItems: 1031 },
-  { name: "Beverages", image: "/beverages-clipart.png", numberOfItems: 52 },
-  { name: "Snacks - candy", image: "/snacks-clipart.png", numberOfItems: 86 },
-  { name: "Canned - packaged goods", image: "/canned-food-clipart.png", numberOfItems: 25 },
-  // { name: "Pasta - rice", image: "", numberOfItems: 1031 },
-  { name: "Condiments - sauces - spices", image: "/condiments-sauces-spices-clipart.png", numberOfItems: 45 },
-  { name: "Cleaning supplies", image: "/cleaning-supplies-clipart.png", numberOfItems: 32 },
-  { name: "Care products", image: "/care-products-clipart.png", numberOfItems: 24 },
-  // { name: "Health - wellness products", image: "", numberOfItems: 1031 },
-  { name: "Baby food - supplies", image: "/baby-food-clipart.png", numberOfItems: 35 },
-  // { name: "Office - school supplies", image: "", numberOfItems: 1031 },
-  // { name: "Electronics", image: "", numberOfItems: 1031 },
-  // { name: "Home - kitchen supplies", image: "", numberOfItems: 1031 },
-  // { name: "Seasonal items", image: "", numberOfItems: 1031 },
+  { text: { en: "Produce", ar: "" }, image: "/produce-vegetables-clipart.png", numberOfItems: 1 },
+  { text: { en: "Bakery", ar: "" }, image: "/bread-clipart.png", numberOfItems: 10 },
+  { text: { en: "Meat - poultry", ar: "" }, image: "/cut-of-meat-clipart.png", numberOfItems: 13 },
+  { text: { en: "Seafood", ar: "" }, image: "/fish-clipart.png", numberOfItems: 11 },
+  {
+    text: { en: "Deli - prepared food", ar: "" },
+    image: "/burger-prepared-food-clipart.png",
+    numberOfItems: 3,
+  },
+  { text: { en: "Dairy - eggs", ar: "" }, image: "/dairy-clipart.png", numberOfItems: 31 },
+  //text:{ { name: "Frozen foods"}, image: "", numberOfItems: 1031 },
+  { text: { en: "Beverages", ar: "" }, image: "/beverages-clipart.png", numberOfItems: 52 },
+  { text: { en: "Snacks - candy", ar: "" }, image: "/snacks-clipart.png", numberOfItems: 86 },
+  { text: { en: "Canned - packaged goods", ar: "" }, image: "/canned-food-clipart.png", numberOfItems: 25 },
+  // {text:{ name: "Pasta - rice"}, image: "", numberOfItems: 1031 },
+  {
+    text: { en: "Condiments - sauces - spices" },
+    image: "/condiments-sauces-spices-clipart.png",
+    numberOfItems: 45,
+  },
+  { text: { en: "Cleaning supplies", ar: "" }, image: "/cleaning-supplies-clipart.png", numberOfItems: 32 },
+  { text: { en: "Care products", ar: "" }, image: "/care-products-clipart.png", numberOfItems: 24 },
+  // {text:{ name: "Health - wellness products"}, image: "", numberOfItems: 1031 },
+  { text: { en: "Baby food - supplies", ar: "" }, image: "/baby-food-clipart.png", numberOfItems: 35 },
+  // {text:{ name: "Office - school supplies"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Electronics"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Home - kitchen supplies"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Seasonal items"}, image: "", numberOfItems: 1031 },
 ];

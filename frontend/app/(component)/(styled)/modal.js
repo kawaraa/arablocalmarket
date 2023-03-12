@@ -13,7 +13,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         onClick={onCancel}></div>
 
       <Transition
-        Tag={tag || "section"}
+        Tag={tag || "article"}
         base="z-9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
@@ -23,12 +23,14 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         role="dialog"
         aria-modal="true"
         {...p}>
-        <IconButton
-          icon="close"
-          handler={onCancel}
-          label="Cancel and close the modal window"
-          cls="absolute top-5 right-5"
-        />
+        {onCancel && (
+          <IconButton
+            icon="close"
+            handler={onCancel}
+            label="Cancel and close the modal window"
+            cls="absolute top-5 right-5"
+          />
+        )}
         <div className="block py-4 md:flex justify-start">
           {icon && (
             <div
@@ -45,15 +47,17 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
           </div>
         </div>
 
-        <div className="pt-3 flex justify-end">
-          <Button
-            type={tag == "form" ? "submit" : ""}
-            text={okBtn}
-            handler={onApprove}
-            loading={loading}
-            cls="w-full md:w-auto justify-center py-2"
-          />
-        </div>
+        {onApprove && (
+          <div className="pt-3 flex justify-end">
+            <Button
+              type={tag == "form" ? "submit" : ""}
+              text={okBtn}
+              handler={onApprove}
+              loading={loading}
+              cls="w-full md:w-auto justify-center py-2"
+            />
+          </div>
+        )}
       </Transition>
     </>
   );

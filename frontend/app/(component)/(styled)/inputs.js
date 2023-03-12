@@ -22,7 +22,7 @@ export function Radio({ children, size = "20", color = "red", cls, ...p }) {
   );
 }
 
-export function RadioCard({ Tag, children, cls, ...p }) {
+export function RadioCard({ Tag = "label", children, cls, ...p }) {
   return (
     <Tag className={`relative w-1/2 md:w-44 h-24 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
