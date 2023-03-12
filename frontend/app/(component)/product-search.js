@@ -1,10 +1,12 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
 
 export default function ProductSearch({ text }) {
+  const { lang } = useContext(AppSessionContext);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -19,7 +21,7 @@ export default function ProductSearch({ text }) {
   return (
     <>
       <SearchBox
-        label="Search for a product"
+        label={content.search[lang]}
         onSearch={setSearch}
         search={search}
         // onShowFilter={setShowFilter}
@@ -28,8 +30,8 @@ export default function ProductSearch({ text }) {
       />
 
       <Modal
-        title="Filter the result"
-        okBtn="Search"
+        title={content.filter[lang]}
+        okBtn={content.okBtn[lang]}
         open={showFilter}
         onApprove={handleSearch}
         onCancel={() => setShowFilter(false)}
@@ -64,3 +66,9 @@ export default function ProductSearch({ text }) {
     </>
   );
 }
+
+const content = {
+  search: { en: "Search for a product", ar: "ابحث عن منتج" },
+  filter: { en: "Filter the result", ar: "فلتر النتيجة" },
+  okBtn: { en: "Search", ar: "بحث" },
+};

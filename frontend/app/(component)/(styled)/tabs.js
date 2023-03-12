@@ -13,7 +13,7 @@ export default function Tabs({ children, tabs, title, cls }) {
   };
 
   return (
-    <div className={`p-3 mb-8 md:mb-6 border border-bc shadow-lg rounded-md ${cls}`}>
+    <div className={`p-3 mb-3 md:mb-6 border border-bc shadow-lg rounded-md ${cls}`}>
       {title && <h2 className="pb-3 font-semibold text-lt text-xl font-medium">{title}</h2>}
 
       {/* flex-auto col-span-full xl:col-span-6  */}

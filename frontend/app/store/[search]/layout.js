@@ -50,7 +50,7 @@ export default function StoreBySearch({ children, params, searchParams }) {
           }))}
           cls="shadow-none border-none lazy-c"
         />
-        <section className="p-3">{children}</section>
+        <section className="">{children}</section>
       </div>
     </article>
   );

@@ -19,7 +19,7 @@ export default function ProductsByStore({ params, searchParams }) {
       <ProductSearch text={searchParams.search} />
 
       <h2 className="text-lg mb-3 font-medium lazy-l">
-        Found <span className="font-bold">( 9 )</span> Products
+        {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}
       </h2>
 
       <ul className="flex flex-wrap">
@@ -51,7 +51,7 @@ export default function ProductsByStore({ params, searchParams }) {
   );
 }
 
-const content = {};
+const content = { h2: { en: ["Found", "Products"], ar: ["يوجد", "منتج"] } };
 
 const products = [
   {

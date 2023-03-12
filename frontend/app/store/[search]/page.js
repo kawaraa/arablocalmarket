@@ -56,4 +56,4 @@ export default function StoreOverview({ params, searchParams }) {
   );
 }
 
-const content = {};
+const content = { h2: { en: "Categories", ar: "فئات" } };
