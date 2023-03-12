@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { AppSessionContext } from "../../../../app-session-context";
 import SvgIcon from "../../../../(component)/(styled)/svg-icon";
-import Button from "../../../../(component)/(styled)/button";
+import { Button } from "../../../../(component)/(styled)/button";
 import { useRouter } from "next/navigation";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo

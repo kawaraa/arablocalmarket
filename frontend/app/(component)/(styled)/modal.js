@@ -47,7 +47,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
 
         <div className="pt-3 flex justify-end">
           <Button
-            type={tag == "form" && "submit"}
+            type={tag == "form" ? "submit" : ""}
             text={okBtn}
             handler={onApprove}
             loading={loading}

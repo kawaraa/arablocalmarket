@@ -6,7 +6,7 @@ export default function SearchBox({ label, onSearch, search, onShowFilter, onFin
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Todo: Hide the keyboard
+    // Hide the keyboard.
     e.target.search.setAttribute("readonly", true);
     setTimeout(() => e.target.search.removeAttribute("readonly"), 200);
     if (onFinish) onFinish();

@@ -3,63 +3,81 @@ import { useState } from "react";
 import { countries } from "k-utilities";
 import { InputField } from "./(styled)/inputs";
 
-// Todo: render addresses, and add / update
-export function AddressInputs({ lang, line1, line2, city, postalCode, province, country }) {
-  const [l1, setL1] = useState(line1 || "");
-  const [l2, setL2] = useState(line2 || "");
-  const [c, setC] = useState(city || "");
-  const [pC, setPC] = useState(postalCode || "");
-  const [p, setP] = useState(province || "north holland");
-  const [cy, setCy] = useState(country || "netherlands");
+export function AddressInputs({ lang, line1, line2, city, postalCode, province = "", country = "" }) {
+  const [p, setP] = useState(province || "");
+  const [cy, setCy] = useState(country || "");
 
-  const allCountries = Object.keys(countries);
-  // const allProvinces = Object.keys(countries[cy].provinces);
-  // const allCities = countries[cy].provinces[p];
-  // console.log(allCountries);
-  // console.log(allProvinces);
-  // console.log(allCities);
+  const renderCountries = () => {
+    const options = [];
+    for (const c in countries) {
+      options.push(
+        <option value={c} key={countries[c].code}>
+          {c}
+        </option>
+      );
+    }
+    return options;
+  };
+
+  const renderProvinces = () => {
+    const options = [];
+    if (!countries[cy]) return options;
+    for (const p in countries[cy].provinces) {
+      options.push(
+        <option value={p} key={p}>
+          {p}
+        </option>
+      );
+    }
+    return options;
+  };
 
   return (
     <div className="w-full max-w-md mx-auto mt-6 space-y-3">
       <div className="flex">
         <select
+          name="country"
+          onChange={(e) => setCy(e.target.value)}
+          defaultValue={cy}
           required
           autoComplete="country"
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
-          <option selected>{content.country[lang]}</option>
-          {allCountries.map((c) => (
-            <option value={c}>{c}</option>
-          ))}
+          <option value="">{content.country[lang]}</option>
+          {renderCountries()}
         </select>
 
         <select
+          name="province"
+          onChange={(e) => setP(e.target.value)}
           required
           autoComplete="country-name"
+          defaultValue={p}
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-r-md">
-          <option selected>{content.province[lang]}</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
+          <option value="">{content.province[lang]}</option>
+          {renderProvinces()}
         </select>
       </div>
       <div className="flex">
         <select
+          name="city"
           required
+          defaultValue={city}
           title={content.city[lang]}
           aria-label={content.city[lang]}
           autoComplete="address-level2"
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
-          <option selected>{content.city[lang]}</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
+          <option value="">{content.city[lang]}</option>
+          {countries[cy]?.provinces[p]?.map((city, i) => (
+            <option value={city} key={i}>
+              {city}
+            </option>
+          ))}
         </select>
 
         <InputField
           type="text"
           name="postalCode"
+          defaultValue={postalCode}
           required
           autoComplete="postal-code"
           placeholder={content.postalCode[lang]}
@@ -73,6 +91,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province, 
       <InputField
         type="text"
         name="line1"
+        defaultValue={line1}
         required
         autoComplete="address-line1"
         placeholder={content.line1[lang]}
@@ -84,7 +103,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province, 
       <InputField
         type="text"
         name="line2"
-        required
+        defaultValue={line2}
         autoComplete="address-line2"
         placeholder={content.line2[lang]}
         title={content.line2[lang]}

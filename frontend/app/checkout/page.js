@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState } from "react";
 import { Button } from "../(component)/(styled)/button";
-import { RadioCard } from "../(component)/(styled)/inputs";
+import { Radio, RadioCard } from "../(component)/(styled)/inputs";
 import Modal from "../(component)/(styled)/modal";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
@@ -10,15 +10,27 @@ import { AddressInputs } from "../(component)/address-inputs";
 export default function Checkout({}) {
   const { lang, user } = useContext(AppSessionContext);
 
-  const [deliveryMethod, setDeliveryMethod] = useState("pickup");
-  const [selectedAddress, setSelectedAddress] = useState("pickup");
   const [loading, setLoading] = useState(false);
   const [addressForm, setAddressForm] = useState(false);
+  const [deliveryMethod, setDeliveryMethod] = useState("pickup");
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedPaymentMethods, setSelectedPaymentMethods] = useState("on-delivery");
+  const [selectedPayment, setSelectedPayment] = useState("bank-transfer");
+  const [addresses, setAddresses] = useState(fakeAddresses);
 
-  const addresses = fakeAddresses;
+  const store = { currency: "€" };
+  const total = 40;
 
-  const handleCreateAddress = () => {
+  const handleCreateAddress = (e) => {
+    e.preventDefault();
+
     setLoading(true);
+    const data = {};
+
+    new FormData(e.target).forEach((value, key) => (data[key] = value));
+
+    setAddresses([...addresses, data]);
+
     setTimeout(() => {
       setLoading(false);
       setAddressForm(false);
@@ -26,12 +38,14 @@ export default function Checkout({}) {
   };
 
   const handleBuy = () => {
+    // Todo: Only the logged in users can order products with on delivery options
+    // redirect to a success page with a message says E.g.: Please note: if you chose pay on delivery and the delivery man can find you or you don't come to collect your order, you will be baned after 3 times
     console.log("handleBuy: ");
   };
 
   return (
     <article className="py-8">
-      <h3 className="mb-3 text-lg font-medium">{content.deliveryH3[lang]}</h3>
+      <h3 className="mb-2 text-lg font-medium">{content.deliveryH3[lang]}</h3>
 
       <section className="flex justify-center items-center lazy-c">
         {/* Todo: if store.deliver then show delivery option. */}
@@ -45,7 +59,7 @@ export default function Checkout({}) {
             onChange={() => setDeliveryMethod(text.en)}
             required
             key={i}
-            cls="flex flex-col justify-center items-center mx-1">
+            cls="flex flex-col justify-center items-center mx-1 space-y-3">
             <div className="h-1/3 ">
               <SvgIcon name={icon} />
             </div>
@@ -55,32 +69,42 @@ export default function Checkout({}) {
       </section>
 
       {deliveryMethod === "delivery" && (
-        <section className="pb-8 ">
+        <section className="">
           {addresses ? (
             <>
-              <h3 className="mt-6 mb-3 text-lg font-medium">{content.addressH3[lang]}</h3>
+              <h3 className="mt-6 text-lg font-medium">{content.addressH3[lang]}</h3>
 
-              {addresses.map((adr, i) => (
-                <RadioCard
-                  key={i}
-                  Tag="address"
-                  name="address"
-                  title="Saved Address"
-                  onChange={() => setSelectedAddress(adr.id)}
-                  required
-                  cls="p-3 w-auto md:w-1/2">
-                  <h6 className="font-medium" dir="ltr">
-                    {adr.firstName} {adr.lastName}
-                  </h6>
-                  <p dir="ltr">
-                    {adr.line1} {adr.line2 || ""},<br />
-                    {adr.zipCode} {adr.city}, {adr.country}
-                  </p>
-                </RadioCard>
-              ))}
+              <div className="flex flex-wrap">
+                {addresses.map((adr, i) => (
+                  <RadioCard
+                    key={i}
+                    Tag="address"
+                    name="address"
+                    title="Saved Address"
+                    onChange={() => setSelectedAddress(adr.id)}
+                    required
+                    cls="m-2 p-3 w-full md:w-1/2 lg:w-1/3">
+                    <h6 className="font-medium" dir="ltr">
+                      {adr.firstName} {adr.lastName}
+                    </h6>
+                    <p dir="ltr">
+                      {adr.line1} {adr.line2 || ""},<br />
+                      {adr.zipCode} {adr.city}, {adr.country}
+                    </p>
+                  </RadioCard>
+                ))}
+              </div>
             </>
           ) : (
-            <p className="mt-8 text-center text-sm">Seems you have added your address yet.</p>
+            <>
+              <p className="mt-8 text-center text-sm">Seems you have added your address yet.</p>
+              <Button
+                text={content.addressBtn[lang]}
+                icon="plus"
+                cls="mt-6 !flex w-40 mx-auto !py-2 !rounded-full"
+                handler={() => setAddressForm(true)}
+              />
+            </>
           )}
 
           <Modal
@@ -94,29 +118,123 @@ export default function Checkout({}) {
             open={addressForm}>
             <AddressInputs lang={lang} />
           </Modal>
-
-          <Button
-            text={content.addressBtn[lang]}
-            icon="plus"
-            cls="mt-6 !flex w-40 mx-auto !py-2 !rounded-full"
-            handler={() => setAddressForm(true)}
-          />
         </section>
       )}
 
-      <div className="mt-10">
-        <h3>Payment methods!</h3>
-        Show the available methods tabs
-        <br />
-        in person cash, card
-        <br />
-        Online Credit card, Bank transfer
-      </div>
+      <section className="pt-6 mb-6 lazy-c">
+        <h3 className="mb-1 text-lg font-medium">{content.paymentH3[lang]}</h3>
+        <div className="md:w-1/2 mx-auto flex justify-evenly">
+          <Radio
+            name="payment-methods"
+            checked={selectedPaymentMethods == "online"}
+            onChange={() => setSelectedPaymentMethods("online")}>
+            {content.paymentMethods.online.text[lang]}
+          </Radio>
+          <Radio
+            name="payment-methods"
+            checked={selectedPaymentMethods == "on-delivery"}
+            onChange={() => setSelectedPaymentMethods("on-delivery")}>
+            {content.paymentMethods.onDelivery.text[lang]}
+          </Radio>
+        </div>
+
+        <section className="card p-3 mt-4 rounded-md lazy-c">
+          <p className="pb-3 mt-6 mb-3 mx-2 border-b-[1px] border-bc">{content.paymentMethods.p[lang]}</p>
+          {selectedPaymentMethods === "on-delivery" ? (
+            <div className="mb-3 flex lazy-c">
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#d7e8fb] ">
+                <span className="h-4 mx-1">
+                  <SvgIcon name="cash" />
+                </span>
+                {content.paymentMethods.onDelivery.methods.cash[lang]}
+              </span>
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#fcdcdc] ">
+                <span className="h-4 mx-1">
+                  <SvgIcon name="creditCard" />
+                </span>
+                {content.paymentMethods.onDelivery.methods.card[lang]}
+              </span>
+              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-[#fde3c2] ">
+                <span className="h-4 mx-1">
+                  <SvgIcon name="bank" />
+                </span>
+                {content.paymentMethods.onDelivery.methods.bank[lang]}
+              </span>
+            </div>
+          ) : (
+            <>
+              <div className="flex lazy-c">
+                <RadioCard
+                  Tag="label"
+                  name="payment"
+                  checked={selectedPayment == "card"}
+                  onChange={() => setSelectedPayment("card")}
+                  title="Credit card and other online payment methods"
+                  aria-label="Credit card and other online payment methods"
+                  cls="!h-10 mx-1 flex justify-center items-center">
+                  <span className="h-[25px] ">
+                    <SvgIcon name="creditCard" />
+                  </span>
+                  {content.paymentMethods.online.methods.card[lang]}
+                </RadioCard>
+                <RadioCard
+                  Tag="label"
+                  name="payment"
+                  checked={selectedPayment == "bank-transfer"}
+                  onChange={() => setSelectedPayment("bank-transfer")}
+                  title="Make a bank transfer to the seller bank's account"
+                  aria-label="Make a bank transfer to the seller bank's account"
+                  cls="!h-10 mx-1 flex justify-center items-center">
+                  <span className="h-[25px]">
+                    <SvgIcon name="bank" />
+                  </span>
+                  {content.paymentMethods.online.methods.bank[lang]}
+                </RadioCard>
+              </div>
+              <div className="mb-3 lazy-c">
+                {selectedPayment == "card" ? (
+                  <div className="lazy-r">
+                    <img src="/credit-card-inputs.png" />
+                  </div>
+                ) : (
+                  <dl className="mt-6 lazy-c">
+                    <dt className="">Account holder</dt>
+                    <dd className=" flex justify-between items-center text-blue cursor-pointer">
+                      A Kawara
+                      <span className="inline-block w-6">
+                        <SvgIcon name="copy" />
+                      </span>
+                    </dd>
+                    <dt className="">Account Number / IBAN</dt>
+                    <dd className="flex justify-between items-center text-blue cursor-pointer">
+                      ING06B887823483542
+                      <span className="inline-block w-6">
+                        <SvgIcon name="copy" />
+                      </span>
+                    </dd>
+                    <dt className="">BIC / Swift</dt>
+                    <dd className="flex justify-between items-center text-blue cursor-pointer">
+                      FJENKXX
+                      <span className="inline-block w-6">
+                        <SvgIcon name="copy" />
+                      </span>
+                    </dd>
+                  </dl>
+                )}
+              </div>
+            </>
+          )}
+        </section>
+      </section>
 
       <button
         onClick={handleBuy}
         dir="ltr"
-        className="fixed bottom-0 right-0 left-0 h-12 flex justify-center items-center bg-pc text-t text-lg font-medium fs hover:text-red duration-200">
+        className="fixed bottom-0 right-0 left-0 h-12 flex justify-center items-center bg-pc text-t text-lg font-medium hover:text-red duration-200">
+        <span className="text-red mx-2">
+          {store.currency}
+          {total}
+        </span>
         {content.payBtn[lang]}
       </button>
     </article>
@@ -127,16 +245,38 @@ const content = {
   deliveryH3: { en: "Please select delivery method", ar: "الرجاء تحديد طريقة التسليم" },
   addressH3: { en: "Saved Addresses", ar: "العناوين المحفوظة" },
   addressBtn: { en: "New address", ar: "عنوان جديد" },
+  paymentH3: { en: "Payment methods", ar: "طرق الدفع" },
+  paymentMethods: {
+    p: {
+      en: "This store provides the following payment methods",
+      ar: "يوفر هذا المتجر طرق الدفع التالية",
+    },
+    onDelivery: {
+      text: { en: "On delivery", ar: "عند التسليم" },
+      methods: {
+        cash: { en: "Cash", ar: "نقدي" },
+        card: { en: "Card", ar: "بطاقة" },
+        bank: { en: "Bank Transfer", ar: "تحويل" },
+      },
+    },
+    online: {
+      text: { en: "Online", ar: "عبر الإنترنت" },
+      methods: {
+        card: { en: "Credit card", ar: "بطاقة إئتمان" },
+        bank: { en: "Bank Transfer", ar: "التحويل المصرفي" },
+      },
+    },
+  },
+
   payBtn: { en: "Pay", ar: "دفع" },
 };
 
 const fakeAddresses = [
   {
-    firstName: "Mr",
-    lastName: "Tester",
-    line1: "street 1",
-    line2: "av-1",
+    line1: "Govert Flinckstraat",
+    line2: "2",
     city: "Amsterdam",
+    province: "north holland",
     country: "Netherlands",
   },
 ];

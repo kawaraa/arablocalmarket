@@ -39,7 +39,7 @@ export default function ContextMenu({ children }) {
       ref={menu}
       role="menu"
       tabIndex="0"
-      className={`z-15 absolute overflow-hidden py-1 mt-2 bg-bg dark:bg-cbg border border-bc rounded-md shadow-lg fs duration-300 ${cls}`}>
+      className={`z-15 absolute overflow-hidden py-1 mt-2 bg-bg dark:bg-cbg border border-bc rounded-md shadow-lg duration-300 ${cls}`}>
       {/* {cls && (
         <>
           <li tabIndex="0" className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" id="menu-item-0">

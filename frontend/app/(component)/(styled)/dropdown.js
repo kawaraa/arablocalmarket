@@ -29,7 +29,7 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
     <div ref={wrapper} {...btnProps} className={`relative inline-block ${cls}`}>
       <button
         type="button"
-        className={`overflow-hidden flex w-full items-center justify-end rounded-md hover:text-lt dark:hover:text-dt fs ${btnCls}`}
+        className={`overflow-hidden flex w-full items-center justify-end rounded-md hover:text-lt dark:hover:text-dt ${btnCls}`}
         title={title || "user menu"}
         aria-label={title}
         aria-expanded={active}

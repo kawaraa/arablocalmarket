@@ -48,7 +48,7 @@ export default function Tooltip({ children, description = "", size, position }) 
   // Plain HTML tooltip: <a href="#"  title="Hooray!, this text will show up" role="tooltip">Hover over me</a>
   return (
     <a
-      className="relative inline-flex fs"
+      className="relative inline-flex"
       href="#"
       title={description}
       role="tooltip"
