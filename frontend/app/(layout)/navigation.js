@@ -142,11 +142,11 @@ export default function Navigation() {
               title="View notifications">
               {notifications.map((note, i) => (
                 <li key={i}>
-                  <a
-                    className="block px-4 py-2 text-sm hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200"
-                    href={"/order/" + note.path}>
+                  <Link
+                    href={"/order/" + note.path}
+                    className="block px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {note.description[lang]}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </Dropdown>
@@ -158,11 +158,11 @@ export default function Navigation() {
               title="View user menu">
               {content.userLinks.map((link, i) => (
                 <li key={i}>
-                  <a
-                    className="block px-4 py-2 text-sm hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200"
-                    href={link.path}>
+                  <Link
+                    href={link.path}
+                    className="block px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {link.text[lang]}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </Dropdown>
@@ -196,6 +196,7 @@ const content = {
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
+    { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/create-store" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Logout", ar: "تسجيل خروج" }, path: "/logout" },
   ],

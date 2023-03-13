@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "../../(component)/(styled)/button";
-import { InputField } from "../../(component)/(styled)/inputs";
+import { InputField, NameInputField } from "../../(component)/(styled)/inputs";
 import Modal from "../../(component)/(styled)/modal";
 import { AddressInputs } from "../../(component)/address-inputs";
 
@@ -40,25 +40,8 @@ export default function Profile({ lang, firstName, lastName, address }) {
     <section>
       <h3 className="text-lg font-medium mb-3">Profile</h3>
       <div className="flex ">
-        <InputField
-          editable
-          type="text"
-          name="firstName"
-          title="First name"
-          defaultValue={ftName}
-          onBlur={changeFirstName}
-          cls="mr-2"
-          inCls="pr-12 rounded-md"
-        />
-        <InputField
-          editable
-          type="text"
-          name="lastName"
-          title="Last name"
-          defaultValue={ltName}
-          onBlur={changeLastName}
-          inCls="pr-12 rounded-md"
-        />
+        <NameInputField editable first defaultValue={ftName} onBlur={changeFirstName} cls="mr-2" />
+        <NameInputField editable defaultValue={ltName} onBlur={changeLastName} />
       </div>
 
       <h3 className="text-lg font-medium mt-6 mb-2">Address</h3>

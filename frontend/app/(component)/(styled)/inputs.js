@@ -22,7 +22,7 @@ export function InputField({ editable, cls, inCls, onChange, onBlur, ...p }) {
         placeholder={p.title || p.name}
         aria-label={p.title || p.name}
         className={`block peer w-full bg-cbg appearance-none border border-bc px-3 py-2 card ${
-          !editable && "cd_hr"
+          editable ? "pr-12" : "cd_hr"
         } fs ${inCls || "rounded-md"}`}
         {...p}
         onChange={editable ? handleChange : onChange}
@@ -79,3 +79,91 @@ export function RadioCard({ Tag = "label", children, cls, ...p }) {
     </Tag>
   );
 }
+
+export function Textarea({ cls, ...p }) {
+  return (
+    <textarea
+      dir="auto"
+      autoComplete="on"
+      className={"w-full h-40 mt-3 p-2 card cd_hr fs rounded-md " + cls}
+      {...p}></textarea>
+  );
+}
+
+export function NameInputField({ lang, first, ...p }) {
+  const t = first ? content.firstName[lang] : content.lastName[lang];
+
+  return (
+    <InputField
+      type="text"
+      name={first ? "firstName" : "lastName"}
+      required
+      min="4"
+      max="15"
+      autoComplete={first ? "given-name" : "family-name"}
+      placeholder={t}
+      title={t}
+      {...p}
+    />
+  );
+}
+
+export function EmailInputField({ lang, ...p }) {
+  return (
+    <InputField
+      type="email"
+      name="email"
+      required
+      min="10"
+      max="30"
+      autoComplete="email"
+      placeholder={content.email[lang]}
+      title={content.email[lang]}
+      {...p}
+    />
+  );
+}
+export function PhoneInputField({ lang, ...p }) {
+  return (
+    <InputField
+      type="tel"
+      name="phone"
+      required
+      min="10"
+      max="15"
+      pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+      autoComplete="tel"
+      placeholder={content.phone[lang]}
+      title={content.phone[lang]}
+      {...p}
+    />
+  );
+}
+export function PswInputField({ lang, confirm, ...p }) {
+  const newProps = { ...p, ...(!confirm ? {} : { name: "confirmPassword", autoComplete: "new-password" }) };
+  const t = !confirm ? content.password[lang] : content.confirmPassword[lang];
+  return (
+    <InputField
+      type="password"
+      name="password"
+      required
+      min="9"
+      max="50"
+      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+      autoComplete="current-password"
+      placeholder={t}
+      title={t}
+      {...newProps}
+    />
+  );
+}
+
+const content = {
+  firstName: { en: "First name", ar: "الاسم" },
+  lastName: { en: "Last name", ar: "اسم العائلة" },
+  // username: { en: "Username", ar: "اسم المستخدم" } ,
+  email: { en: "Email address", ar: "البريد الإلكتروني" },
+  phone: { en: "Phone number", ar: "رقم الهاتف" },
+  password: { en: "Password", ar: "كلمة المرور" },
+  confirmPassword: { en: "Confirm Password", ar: "تأكيد كلمة المرور" },
+};

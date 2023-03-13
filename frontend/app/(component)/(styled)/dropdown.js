@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import SvgIcon from "./svg-icon";
 import Transition from "../../(layout)/transitions";
+import { usePathname } from "next/navigation";
 
 export default function Dropdown({ children, title, event, btnContent, icon, iconCls, cls, btnCls, ...p }) {
   const wrapper = useRef(null);
+  const pathName = usePathname();
   const [active, setActive] = useState(false);
   const btnProps = {};
 
@@ -13,6 +15,10 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
     btnProps.onMouseEnter = () => setActive(true);
     btnProps.onMouseLeave = () => setActive(false);
   }
+
+  useEffect(() => {
+    setActive(false);
+  }, [pathName]);
 
   useEffect(() => {
     const clickHandler = (e) => {

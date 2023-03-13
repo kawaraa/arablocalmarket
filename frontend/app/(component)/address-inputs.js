@@ -40,7 +40,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           onChange={(e) => setCy(e.target.value)}
           defaultValue={cy}
           required
-          autoComplete="country"
+          // autoComplete="country"
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
           <option value="">{content.country[lang]}</option>
           {renderCountries()}
@@ -50,7 +50,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           name="province"
           onChange={(e) => setP(e.target.value)}
           required
-          autoComplete="country-name"
+          // autoComplete="country-name"
           defaultValue={p}
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-r-md">
           <option value="">{content.province[lang]}</option>
@@ -64,7 +64,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           defaultValue={city}
           title={content.city[lang]}
           aria-label={content.city[lang]}
-          autoComplete="address-level2"
+          // autoComplete="address-level2"
           className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
           <option value="">{content.city[lang]}</option>
           {countries[cy]?.provinces[p]?.map((city, i) => (
@@ -77,13 +77,13 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         <InputField
           type="text"
           name="postalCode"
-          defaultValue={postalCode}
           required
+          min="4"
+          max="10"
+          defaultValue={postalCode}
           autoComplete="postal-code"
           placeholder={content.postalCode[lang]}
           title={content.postalCode[lang]}
-          min="4"
-          max="10"
           cls="relative w-1/2 "
           inCls="rounded-r-md"
         />
@@ -91,18 +91,20 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
       <InputField
         type="text"
         name="line1"
-        defaultValue={line1}
         required
+        min="2"
+        max="150"
+        defaultValue={line1}
         autoComplete="address-line1"
         placeholder={content.line1[lang]}
         title={content.line1[lang]}
-        min="2"
-        max="150"
         cls="relative shadow-sm"
       />
       <InputField
         type="text"
         name="line2"
+        min="0"
+        max="150"
         defaultValue={line2}
         autoComplete="address-line2"
         placeholder={content.line2[lang]}

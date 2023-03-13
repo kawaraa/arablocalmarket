@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import { InputField } from "../../(component)/(styled)/inputs";
+import {
+  EmailInputField,
+  InputField,
+  PhoneInputField,
+  PswInputField,
+} from "../../(component)/(styled)/inputs";
 
 export default function Profile({ lang, username, email, phone }) {
   const [urName, setUrName] = useState(username);
@@ -39,44 +44,23 @@ export default function Profile({ lang, username, email, phone }) {
         editable
         type="text"
         name="username"
+        required
+        min="4"
+        max="15"
         defaultValue={urName}
         onBlur={updateUsername}
         cls="mb-2"
       />
-      <InputField
-        editable
-        type="email"
-        name="email"
-        title="Email address"
-        defaultValue={eml}
-        onBlur={updateEmail}
-        cls="mb-2"
-        inCls="pr-12 rounded-md"
-      />
-      <InputField
-        editable
-        type="tel"
-        name="phone"
-        title="Phone number"
-        defaultValue={phn}
-        onBlur={updatePhone}
-        cls="mb-2"
-        inCls="pr-12 rounded-md"
-      />
+
+      <EmailInputField editable defaultValue={eml} onBlur={updateEmail} cls="mb-2" />
+      <PhoneInputField editable defaultValue={phn} onBlur={updatePhone} cls="mb-2" />
 
       {/* <div>
         Phone number : visible
         <input type="checkbox" />
       </div> */}
 
-      <InputField
-        editable
-        type="password"
-        name="password"
-        placeholder="********"
-        onBlur={updatePassword}
-        inCls="pr-12 rounded-md"
-      />
+      <PswInputField editable placeholder="********" onBlur={updatePassword} cls="mb-2" />
 
       {/* <div>2AF Switch button</div> */}
     </section>
