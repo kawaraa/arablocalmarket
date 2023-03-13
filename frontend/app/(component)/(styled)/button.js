@@ -3,7 +3,7 @@ import Link from "next/link";
 import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
-export function Button({ text, icon, type = "button", handler, loading, disabled, cls, iconCls }) {
+export function Button({ text, type = "button", icon, handler, loading, disabled, cls, iconCls }) {
   let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop duration-200 `;
   // let c = `inline-flex justify-center px-3 py-1 text-sm md:text-lg bg-dbg dark:bg-pc text-dt dark:text-t rounded-md md:px-4 md:py-2 font-medium shadow-md disabled:opacity-60 disabled:cursor-no-drop transition-all duration-200`;
   if (!disabled) c += "hover:from-pc2 ";

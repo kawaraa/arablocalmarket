@@ -1,7 +1,8 @@
 export default class Cookies {
   static set(name, value) {
     if (!name) value = Date.now() + value * 24 * 60 * 60 * 1000;
-    document.cookie = `${name || "expires"}=${value};`;
+    document.cookie = `${name || "expires"}=;path=/;`; // Delete cookie
+    document.cookie = `${name || "expires"}=${value};path=/;`; // create cookie
   }
   static get(name) {
     return Cookies.getAll()[name] || null;

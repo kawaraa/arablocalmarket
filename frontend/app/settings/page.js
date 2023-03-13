@@ -1,38 +1,32 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppSessionContext } from "../app-session-context";
+import Profile from "./(component)/profile";
+import Account from "./(component)/account";
 
 export default function Settings(props) {
-  console.log("Settings: >>>", props);
+  const { lang } = useContext(AppSessionContext);
 
   useEffect(() => {
     document.title = "Settings - ALM";
   }, []);
 
   return (
-    <article className="mt-10">
-      <h1 className="text-xl">Settings!</h1>
-      <section>
-        <h3>Profile section!</h3>
-
-        <div>First name</div>
-        <div>Last name</div>
-      </section>
-
-      <section>
-        <h3>Account section!</h3>
-
-        <div>
-          Phone number : visible
-          <input type="checkbox" />
-        </div>
-        <div>
-          Email <input type="checkbox" />
-        </div>
-        <div>Password</div>
-        <div>2AF</div>
-      </section>
+    <article className="mt-4">
+      {/* <h1 className="text-xl mb-6">Settings</h1> */}
+      <Profile lang={lang} firstName={"Mr"} lastName={"Tester"} address={fakeAddress} />
+      <Account lang={lang} username={"username"} email={"test@example.com"} />
     </article>
   );
 }
 
 const content = {};
+
+const fakeAddress = {
+  line1: "Govert Flinckstraat",
+  line2: "2",
+  postalCode: "1072 EE",
+  city: "Amsterdam",
+  province: "north holland",
+  country: "Netherlands",
+};

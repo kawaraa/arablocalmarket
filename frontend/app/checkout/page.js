@@ -88,7 +88,7 @@ export default function Checkout({}) {
                     </h6>
                     <p dir="ltr">
                       {adr.line1} {adr.line2 || ""},<br />
-                      {adr.zipCode} {adr.city}, {adr.country}
+                      {adr.postalCode} {adr.city}, {adr.country}
                     </p>
                   </RadioCard>
                 ))}
@@ -113,6 +113,7 @@ export default function Checkout({}) {
             okBtn="Create"
             onCancel={() => setAddressForm(false)}
             onSubmit={handleCreateAddress}
+            onApprove={() => {}}
             loading={loading}
             open={addressForm}>
             <AddressInputs lang={lang} />
@@ -272,6 +273,7 @@ const fakeAddresses = [
   {
     line1: "Govert Flinckstraat",
     line2: "2",
+    postalCode: "1072 EE",
     city: "Amsterdam",
     province: "north holland",
     country: "Netherlands",

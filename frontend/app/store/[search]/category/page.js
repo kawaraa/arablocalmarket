@@ -61,12 +61,23 @@ const categories = [
     image: "/snacks-clipart.png",
     numberOfItems: 86,
   },
+  // { text: { en: "Canned and packaged goods", ar: "البضائع المعلبة والمعبأة" }, image: "/", numberOfItems: 25},
   {
-    text: { en: "Canned goods", ar: "البضائع المعلبة" },
-    image: "/canned-food-clipart.png",
-    numberOfItems: 25,
+    text: {
+      en: "Legumes and grains",
+      ar: "الحبوب والبقوليات",
+    },
+    image: "/legumes-grains-clipart.png",
+    numberOfItems: 1031,
   },
-  // {text:{ name: "Pasta - rice"}, image: "", numberOfItems: 1031 },
+  {
+    text: {
+      en: "Nuts and seeds",
+      ar: "المكسرات والبذور",
+    },
+    image: "/nuts-seeds-clipart.png",
+    numberOfItems: 1031,
+  },
   {
     text: { en: "Spices and sauces", ar: "البهارات والصلصات" },
     image: "/condiments-sauces-spices-clipart.png",

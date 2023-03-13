@@ -33,7 +33,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-6 space-y-3">
+    <div className="w-full max-w-md mx-auto mt-3 space-y-3">
       <div className="flex">
         <select
           name="country"
