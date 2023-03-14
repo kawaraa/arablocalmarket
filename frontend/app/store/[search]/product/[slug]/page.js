@@ -5,6 +5,7 @@ import { AppSessionContext } from "../../../../app-session-context";
 import SvgIcon from "../../../../(component)/(styled)/svg-icon";
 import { Button } from "../../../../(component)/(styled)/button";
 import { useRouter } from "next/navigation";
+import { NumberInputField } from "../../../../(component)/(styled)/inputs";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Product Name / title - store name - ALM" };
@@ -72,7 +73,7 @@ export default function ProductBySlug({ params }) {
         <h3 className="w-16">{product.variants[0].options[0].name || ""}</h3>
         <ul className="flex items-center">
           {options.map((op, i) => (
-            <li key={i} className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm">
+            <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
               <input
                 type="radio"
                 id={op}
@@ -96,7 +97,7 @@ export default function ProductBySlug({ params }) {
           {product.variants
             .filter((v) => v.options[0]?.value == option1 && v.options[1]?.value)
             .map((v, i) => (
-              <li key={i} className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm">
+              <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
                 <input
                   type="radio"
                   id={v.options[1]?.value}
@@ -120,7 +121,7 @@ export default function ProductBySlug({ params }) {
           {product.variants
             .filter((v) => v.options[1]?.value == option2 && v.options[2]?.value)
             .map((v, i) => (
-              <li key={i} className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm">
+              <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
                 <input
                   type="radio"
                   id={v.options[2]?.value}
@@ -139,28 +140,14 @@ export default function ProductBySlug({ params }) {
       </div>
 
       <div className="flex my-3">
-        <label className="mr-6">Quantity</label>
-
-        <button
-          className="w-6 h-6 bg-pc rounded-full hover:text-red"
-          onClick={() => setQuantity(quantity - 1)}>
-          <SvgIcon name="minus" />
-        </button>
-
-        <input
-          value={quantity}
+        <NumberInputField
           name="quantity"
-          max="10"
+          value={quantity}
           min="1"
-          className="w-8 text-center"
-          onChange={(e) => setQuantity(e.value || 0)}
+          max="10"
+          onChange={(n) => setQuantity(quantity + n < 0 ? 0 : quantity + n)}
+          title="Quantity"
         />
-
-        <button
-          className="w-6 h-6 bg-pc rounded-full hover:text-red"
-          onClick={() => setQuantity(quantity + 1)}>
-          <SvgIcon name="plus" />
-        </button>
 
         <div className="ml-6 text-sm font-light">
           <span className="font-medium">{15}</span> in Stock
@@ -207,7 +194,7 @@ const product = {
   featuredImageId: "id-3231",
   images: [
     { id: "id-3231", src: "/produce-vegetables-clipart.png" },
-    { id: "id-8686", src: "/canned-food-clipart.png" },
+    { id: "id-8686", src: "/dairy-clipart.png" },
   ],
   variants: [
     {

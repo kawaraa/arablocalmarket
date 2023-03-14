@@ -76,7 +76,7 @@ export default function Navigation() {
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
-                <option key={i} value={opt.value}>
+                <option value={opt.value} key={i}>
                   {opt.text[lang]}
                 </option>
               ))}
@@ -92,7 +92,7 @@ export default function Navigation() {
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full cursor-pointer">
               {content.languageOptions.map((opt, i) => (
-                <option key={i} value={opt.value}>
+                <option value={opt.value} key={i}>
                   {opt.text[lang]}
                 </option>
               ))}
@@ -102,8 +102,8 @@ export default function Navigation() {
 
         {content.navLinks.slice(0, 1).map((link, i) => (
           <li
-            key={i}
             onClick={() => setShowMenu(!showMenu)}
+            key={i}
             className="duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
             <Link href={link.path} className="block px-3 py-2">
               {link.text[lang]}

@@ -17,7 +17,7 @@ tailwind.config = {
       bc: "#0000001a", // Border Color & Hover effect
       bf: "#9aa0a6", // Border focus color
 
-      lbg: "#f9fafb", // Light Background
+      lbg: "#e5e7eb", //f9fafb Light Background
       lt: "#4b5563", // Light Title color
 
       dbg: "#121212", // Dark Background

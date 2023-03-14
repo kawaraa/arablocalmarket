@@ -61,7 +61,11 @@ const categories = [
     image: "/snacks-clipart.png",
     numberOfItems: 86,
   },
-  // { text: { en: "Canned and packaged goods", ar: "البضائع المعلبة والمعبأة" }, image: "/", numberOfItems: 25},
+  {
+    text: { en: "Canned and packaged goods", ar: "البضائع المعلبة والمعبأة" },
+    image: "/canned-goods-clipart.png",
+    numberOfItems: 25,
+  },
   {
     text: {
       en: "Legumes and grains",

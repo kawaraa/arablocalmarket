@@ -6,7 +6,7 @@ import { AppSessionContext } from "../app-session-context";
 import Tabs from "../(component)/(styled)/tabs";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import Link from "next/link";
-import { Radio } from "../(component)/(styled)/inputs";
+import { CheckInput, Radio } from "../(component)/(styled)/inputs";
 
 export default function Cart({ params, searchParams }) {
   const p = usePathname();
@@ -45,7 +45,7 @@ export default function Cart({ params, searchParams }) {
 
       <section className="my-2 p-3 bg-cbg card rounded-lg">
         <div className="pb-2 flex justify-between items-center border-b-[1px] border-bc dark:border-bf">
-          <Radio name="store" onChange={() => selectStore("store-id-1")} color="red" />
+          <CheckInput type="radio" name="store" onChange={() => selectStore("store-id-1")} />
           <h3 className="font-medium">Store 1 name </h3>
           <a
             href="https://wa.me/+905365646833"
@@ -103,7 +103,7 @@ export default function Cart({ params, searchParams }) {
 
       <section className="my-2 p-3 bg-cbg card rounded-lg">
         <div className="pb-2 flex justify-between items-center border-b-[1px] border-bc dark:border-bf">
-          <Radio name="store" onChange={() => selectStore("store-id-2")} color="red" />
+          <CheckInput type="radio" name="store" onChange={() => selectStore("store-id-2")} />
 
           <h3 className="font-medium">Store 2 name </h3>
           <a
@@ -140,7 +140,7 @@ export default function Cart({ params, searchParams }) {
           <li className="flex">
             <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">
               <Image
-                src="/canned-food-clipart.png"
+                src="/dairy-clipart.png"
                 alt={"Product title goes here"}
                 width="150"
                 height="150"

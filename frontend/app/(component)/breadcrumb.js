@@ -22,7 +22,7 @@ export default function Breadcrumb({ items = [], separator = "/", cls = "" }) {
     <ol
       className={`flex items-center bg-l-bg dark:bg-d-bg py-2 px-4 sm:px-6 lg:px-8 border-b-[0.5px] border-l-c ${cls}`}>
       {newItems.map((item, i) => (
-        <li key={i} className={`text-l-c dark:text-d-c ${item.cls || ""}`}>
+        <li className={`text-l-c dark:text-d-c ${item.cls || ""}`} key={i}>
           {item.path ? (
             <Link href={item.path} className="">
               {item.content}

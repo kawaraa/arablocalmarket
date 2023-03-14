@@ -1,11 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  EmailInputField,
-  InputField,
-  PhoneInputField,
-  PswInputField,
-} from "../../(component)/(styled)/inputs";
+import { InputField } from "../../(component)/(styled)/inputs";
+import { EmailInputField, PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
 
 export default function Profile({ lang, username, email, phone }) {
   const [urName, setUrName] = useState(username);

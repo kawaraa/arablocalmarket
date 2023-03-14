@@ -25,6 +25,15 @@
 /* Global */
 /* * {} */
 
+.rq::before {
+  display: inline-block;
+  margin-inline-end: 4px;
+  color: #ff4d4f;
+  font-size: 14px;
+  font-family: sans-serif;
+  line-height: 1;
+  content: "*";
+}
 .fs:focus {
   outline: #9aa0a6 solid 1px;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

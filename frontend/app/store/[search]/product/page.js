@@ -78,9 +78,9 @@ const products = [
   { id: "12", title: "Snacks", price: 63, image: "/snacks-clipart.png", variants: 86, starts: 1.5 },
   {
     id: "12",
-    title: "Canned goods",
+    title: "dairy",
     price: 12,
-    image: "/canned-food-clipart.png",
+    image: "/dairy-clipart.png",
     variants: 25,
     starts: 2.5,
   },

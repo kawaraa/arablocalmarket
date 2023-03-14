@@ -85,7 +85,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           placeholder={content.postalCode[lang]}
           title={content.postalCode[lang]}
           cls="relative w-1/2 "
-          inCls="rounded-r-md"
+          inCls="rounded-r-md h-full"
         />
       </div>
       <InputField

@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useState } from "react";
 import { Button } from "../(component)/(styled)/button";
-import { Radio, RadioCard } from "../(component)/(styled)/inputs";
+import { CheckInput, CheckCard } from "../(component)/(styled)/inputs";
 import Modal from "../(component)/(styled)/modal";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
@@ -53,7 +53,8 @@ export default function Checkout({}) {
           { text: { en: "pickup", ar: "التقط" }, icon: "personPushingCart" },
           { text: { en: "delivery", ar: "توصيل" }, icon: "foodDeliverBike" },
         ].map(({ text, icon }, i) => (
-          <RadioCard
+          <CheckCard
+            type="radio"
             name="delivery"
             onChange={() => setDeliveryMethod(text.en)}
             required
@@ -63,7 +64,7 @@ export default function Checkout({}) {
               <SvgIcon name={icon} />
             </div>
             <div className="capitalize">{text[lang]}</div>
-          </RadioCard>
+          </CheckCard>
         ))}
       </section>
 
@@ -75,13 +76,14 @@ export default function Checkout({}) {
 
               <div className="flex flex-wrap">
                 {addresses.map((adr, i) => (
-                  <RadioCard
-                    key={i}
+                  <CheckCard
+                    type="radio"
                     Tag="address"
                     name="address"
                     title="Saved Address"
                     onChange={() => setSelectedAddress(adr.id)}
                     required
+                    key={i}
                     cls="m-2 p-3 w-full md:w-1/2 lg:w-1/3">
                     <h6 className="font-medium" dir="ltr">
                       {adr.firstName} {adr.lastName}
@@ -90,7 +92,7 @@ export default function Checkout({}) {
                       {adr.line1} {adr.line2 || ""},<br />
                       {adr.postalCode} {adr.city}, {adr.country}
                     </p>
-                  </RadioCard>
+                  </CheckCard>
                 ))}
               </div>
             </>
@@ -124,18 +126,20 @@ export default function Checkout({}) {
       <section className="pt-6 mb-6 lazy-c">
         <h3 className="mb-1 text-lg font-medium">{content.paymentH3[lang]}</h3>
         <div className="md:w-1/2 mx-auto flex justify-evenly">
-          <Radio
+          <CheckInput
+            type="radio"
             name="payment-methods"
             checked={selectedPaymentMethods == "online"}
             onChange={() => setSelectedPaymentMethods("online")}>
             {content.paymentMethods.online.text[lang]}
-          </Radio>
-          <Radio
+          </CheckInput>
+          <CheckInput
+            type="radio"
             name="payment-methods"
             checked={selectedPaymentMethods == "on-delivery"}
             onChange={() => setSelectedPaymentMethods("on-delivery")}>
             {content.paymentMethods.onDelivery.text[lang]}
-          </Radio>
+          </CheckInput>
         </div>
 
         <section className="card p-3 mt-4 rounded-md lazy-c">
@@ -164,7 +168,8 @@ export default function Checkout({}) {
           ) : (
             <>
               <div className="flex lazy-c">
-                <RadioCard
+                <CheckCard
+                  type="radio"
                   name="payment"
                   checked={selectedPayment == "card"}
                   onChange={() => setSelectedPayment("card")}
@@ -175,8 +180,9 @@ export default function Checkout({}) {
                     <SvgIcon name="creditCard" />
                   </span>
                   {content.paymentMethods.online.methods.card[lang]}
-                </RadioCard>
-                <RadioCard
+                </CheckCard>
+                <CheckCard
+                  type="radio"
                   name="payment"
                   checked={selectedPayment == "bank-transfer"}
                   onChange={() => setSelectedPayment("bank-transfer")}
@@ -187,7 +193,7 @@ export default function Checkout({}) {
                     <SvgIcon name="bank" />
                   </span>
                   {content.paymentMethods.online.methods.bank[lang]}
-                </RadioCard>
+                </CheckCard>
               </div>
               <div className="mb-3 lazy-c">
                 {selectedPayment == "card" ? (

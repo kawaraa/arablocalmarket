@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "../../(component)/(styled)/button";
-import { InputField, NameInputField } from "../../(component)/(styled)/inputs";
 import Modal from "../../(component)/(styled)/modal";
+import { NameInputField } from "../../(component)/custom-inputs";
 import { AddressInputs } from "../../(component)/address-inputs";
 
 export default function Profile({ lang, firstName, lastName, address }) {
