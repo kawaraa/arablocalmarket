@@ -82,20 +82,21 @@ export function CheckCard({ Tag = "label", children, cls, ...p }) {
   );
 }
 
-export function ToggleSwitch({ checked, onCheck, size = 50, ...p }) {
+export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p }) {
   const h = Math.round(+size / 2);
 
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
   return (
-    <label className="inline-flex items-center cursor-pointer">
+    <label className={`inline-flex items-center cursor-pointer ${cls}`}>
+      {children}
       <div
         dir="ltr"
-        className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full cursor-pointer"`}>
+        className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full`}>
         <input
           type="checkbox"
           checked={checked}
           onChange={handler}
-          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc fs "
+          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc cursor-pointer fs "
           {...p}
         />
         <span

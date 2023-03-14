@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import ProductSearch from "../../../(component)/product-search";
-// import StarRating from "../../../(component)/(styled)/start-rating";
+// import Rating from "../../../(component)/(styled)/rating";
 import ProductButtons from "../../../(component)/product-buttons";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
@@ -33,7 +33,7 @@ export default function ProductsByStore({ params, searchParams }) {
                 <Image src={p.image} alt={p.title} width="250" height="250" className="max-h-36 w-auto" />
               </div>
 
-              {/* <StarRating stars={p.starts} cls="text-xs md:text-sm" /> */}
+              {/* <Rating stars={p.starts} cls="text-xs md:text-sm" /> */}
 
               <div className="flex justify-between px-2">
                 <p className="text-red text-lg">

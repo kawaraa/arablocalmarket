@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getCssDelay } from "../../(service)/style-methods";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
-import StarRating from "../../(component)/(styled)/start-rating";
+import Rating from "../../(component)/(styled)/rating";
 
 export default function StoreCard({ imageUrl, name, distance, open }) {
   let dst = +distance;
@@ -43,7 +43,7 @@ export default function StoreCard({ imageUrl, name, distance, open }) {
           </p>
           <h3 className="text-sm mb-1">hef wfiuhfw ffpuhf wefwfpwuef wf</h3>
           <div className="flex justify-between items-center">
-            <StarRating stars={3.5} cls="text-sm lg:text-base" />
+            <Rating stars={3.5} cls="text-sm lg:text-base" />
 
             <p>
               <strong className="">{dst} </strong>

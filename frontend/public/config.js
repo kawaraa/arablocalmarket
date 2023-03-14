@@ -18,7 +18,7 @@ tailwind.config = {
       bf: "#9aa0a6", // Border focus color
 
       lbg: "#e5e7eb", //f9fafb Light Background
-      lt: "#4b5563", // Light Title color
+      lt: "#6b7280", // Light Title color
 
       dbg: "#121212", // Dark Background
       dcbg: "#272727", // Dark card Background

@@ -6,11 +6,19 @@ import { InputField, NumberInputField, Select, Textarea, ToggleSwitch } from "..
 import { AddressInputs } from "../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../(component)/custom-inputs";
 import { Button } from "../(component)/(styled)/button";
+import Collapse from "../(component)/collapse";
 
 export default function CreateStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const [days, setDays] = useState([]);
   const [deliver, setDeliver] = useState(false);
+  const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
+  const [onlinePayment, setOnlinePayment] = useState(null);
+  // const [cash, setCash] = useState(false);
+  // const [card, setCard] = useState(false);
+  // const [bank, setBank] = useState(false);
+  const [status, setStatus] = useState(false);
+
   // console.log("CreateStore: >>>", params, searchParams);
 
   const addDay = ({ target: { name, checked } }) => {
@@ -37,8 +45,67 @@ export default function CreateStore({ params, searchParams }) {
         <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
       ))}
       <DaysCheckButtons lang={lang} checkedDays={days} onChange={addDay} />
-      <ToggleSwitch checked={deliver} onCheck={({ checked }) => setDeliver(checked)} title="Open" />
-      online and On delivery
+      <ToggleSwitch checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex">
+        <div className="w-full">This store will be open from now.</div>
+      </ToggleSwitch>
+
+      <Collapse
+        title="Do you want to accept on delivery payment?"
+        cls="mb-3"
+        hCls="rounded-t-lg"
+        checked={!!onDeliveryPayment}
+        onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}>
+        <div>
+          <ToggleSwitch
+            checked={!!onDeliveryPayment?.cash}
+            onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), cash: checked })}
+            cls="!flex mb-2">
+            <div className="flex-1">I accept cash payment.</div>
+          </ToggleSwitch>
+
+          <ToggleSwitch
+            checked={!!onDeliveryPayment?.card}
+            onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), card: checked })}
+            cls="!flex mb-2">
+            <div className="flex-1">I accept credit card payment.</div>
+          </ToggleSwitch>
+
+          <ToggleSwitch
+            checked={!!onDeliveryPayment?.bank}
+            onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), bank: checked })}
+            cls="!flex mb-2">
+            <div className="flex-1">I accept bank transfer payment.</div>
+          </ToggleSwitch>
+        </div>
+      </Collapse>
+
+      <Collapse
+        title="Do you want to accept online payment?"
+        hCls="rounded-t-lg"
+        checked={!!onlinePayment}
+        onCheck={() => setOnlinePayment(onlinePayment ? null : { bank: {} })}>
+        <ToggleSwitch
+          checked={!!onlinePayment?.card}
+          onCheck={({ checked }) => setOnlinePayment({ ...(onlinePayment || {}), card: checked })}
+          cls="!flex mb-2">
+          <div className="flex-1">I accept credit card payment.</div>
+        </ToggleSwitch>
+
+        <Collapse
+          title="I accept bank transfer payment."
+          // cls="-m-2"
+          hCls="rounded-t-lg"
+          checked={!!onlinePayment?.bank}
+          onCheck={() =>
+            setOnlinePayment({ ...(onlinePayment || {}), bank: onlinePayment?.bank ? null : {} })
+          }>
+          <h6 className="font-semibold">Bank account details</h6>
+          <p>
+            A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as
+            a welcome guest in many households across the world.
+          </p>
+        </Collapse>
+      </Collapse>
       {/* cover, payments, status, cocNumber, vatNumber */}
       <Button text="Create" type="submit" />
     </form>

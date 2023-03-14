@@ -55,12 +55,12 @@ export default function Navigation() {
         A L M
       </Link>
 
-      <idv
+      <div
         onClick={() => setShowMenu(false)}
         onTouchStart={() => setTimeout(() => setShowMenu(false), 100)}
         className={`z-7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
           showMenu && "w-[100%] opacity-100"
-        }`}></idv>
+        }`}></div>
 
       <ul
         className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${

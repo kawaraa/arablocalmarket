@@ -22,6 +22,7 @@ export default function Tabs({ children, tabs, title, cls }) {
         <ul className="overflow-x-scroll no-scrollbar text-sm font-medium flex">
           {tabs.map((t, i) => (
             <li className="px-3" key={i}>
+              {/* role="tab" */}
               <Link
                 href={t.path}
                 className={`block whitespace-nowrap py-3 ${t.path === p && "border-b-[1px] border-red"}`}
