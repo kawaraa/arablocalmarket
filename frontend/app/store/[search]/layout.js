@@ -30,7 +30,7 @@ export default function StoreBySearch({ children, params, searchParams }) {
             width="250"
             height="250"
             alt="Some description for the image"
-            className="block h-auto w-full"
+            className="block w-full"
           />
           <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div>
         </div>

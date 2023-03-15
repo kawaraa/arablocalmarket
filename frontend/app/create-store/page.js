@@ -7,10 +7,13 @@ import { AddressInputs } from "../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../(component)/custom-inputs";
 import { Button } from "../(component)/(styled)/button";
 import Collapse from "../(component)/collapse";
+import SvgIcon from "../(component)/(styled)/svg-icon";
 // import Tooltip from "../(component)/(styled)/tooltip";
 
 export default function CreateStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
+  const [imageData, setImageData] = useState("");
+  const [loading, setLoading] = useState(false);
   const [days, setDays] = useState([]);
   const [deliver, setDeliver] = useState(false);
   const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
@@ -18,6 +21,13 @@ export default function CreateStore({ params, searchParams }) {
   const [status, setStatus] = useState(false);
 
   // console.log("CreateStore: >>>", params, searchParams);
+
+  const handleChange = (e) => {
+    setLoading(true);
+    const reader = new FileReader();
+    reader.onload = () => setImageData(reader.result) + setLoading(false);
+    reader.readAsDataURL(e.target.files[0]);
+  };
 
   const addDay = ({ target: { name, checked } }) => {
     const newDays = days.filter((d) => d.name !== name);
@@ -31,9 +41,31 @@ export default function CreateStore({ params, searchParams }) {
 
   return (
     <form className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
-      <h1 className="text-xl text-center mt-8 mb-5">{content.h1[lang]}</h1>
+      <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
 
       {/* cover */}
+      <div className="overflow-hidden h-60 mb-3 flex justify-center items-center bg-lbg dark:bg-cbg rounded-lg ">
+        {imageData ? (
+          // To make responsive: max-w-full max-h-full
+          <img src={imageData} alt="Store cover image" className="w-full" />
+        ) : (
+          <label
+            htmlFor="store-cover"
+            className="relative w-32 mx-auto p-3 border border-bc rounded-lg  cursor-pointer">
+            <SvgIcon name="image" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleChange}
+              id="store-cover"
+              className="w-0 h-0 hidden"
+            />
+            <div className="w-6 mx-auto">
+              <SvgIcon name="download" />
+            </div>
+          </label>
+        )}
+      </div>
 
       <InputField type="text" name="name" placeholder="E.g. alm-store" required min="4" max="30" cls="mb-2">
         <span className="block mb-1 text-lg font-semibold rq">Store name</span>
