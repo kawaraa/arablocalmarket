@@ -71,7 +71,11 @@ export function PswInputField({ lang, confirm, ...p }) {
 
 export function CurrencySelect({ lang, ...p }) {
   return (
-    <Select title={content.currencies.text[lang]} cls="flex items-center" inCls="mx-1 rounded-full" {...p}>
+    <Select
+      title={content.currencies.text[lang]}
+      cls="flex items-center"
+      inCls="mx-1 !p-[2px] rounded-full"
+      {...p}>
       {content.currencies.values.map((currency, i) => (
         <option value={currency} key={i}>
           {currency}
@@ -82,7 +86,7 @@ export function CurrencySelect({ lang, ...p }) {
 }
 export function DaysCheckButtons({ lang, checkedDays, ...p }) {
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap my-3">
       {content.day.values.map((d, i) => (
         <CheckCard
           type="checkbox"
@@ -99,7 +103,7 @@ export function DaysCheckButtons({ lang, checkedDays, ...p }) {
 }
 export function OpeningHoursSelect({ lang, ...p }) {
   return (
-    <Select title={content[p.name][lang]} cls="flex items-center" inCls="mx-1 rounded-full" {...p}>
+    <Select title={content[p.name][lang]} cls="flex items-center" inCls="mx-1 !p-[2px] rounded-full" {...p}>
       {content.periods.map((period, i) =>
         content.times.map((time, ii) => (
           <option value={time + "-" + period[lang]} key={i + ii}>
@@ -115,9 +119,9 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
     onDayUpdate({ ...day, [e.target.name]: e.target.value });
   };
   return (
-    <div className="">
-      <h6>{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
-      <div className="flex ">
+    <div className="mb-2">
+      <h6 className="font-semibold mb-1">{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
+      <div className="flex justify-evenly">
         <OpeningHoursSelect lang={lang} name="open" onChange={handleUpdate} />
         <OpeningHoursSelect lang={lang} name="close" onChange={handleUpdate} />
       </div>

@@ -7,6 +7,7 @@ import { AddressInputs } from "../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../(component)/custom-inputs";
 import { Button } from "../(component)/(styled)/button";
 import Collapse from "../(component)/collapse";
+// import Tooltip from "../(component)/(styled)/tooltip";
 
 export default function CreateStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
@@ -14,9 +15,6 @@ export default function CreateStore({ params, searchParams }) {
   const [deliver, setDeliver] = useState(false);
   const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
   const [onlinePayment, setOnlinePayment] = useState(null);
-  // const [cash, setCash] = useState(false);
-  // const [card, setCard] = useState(false);
-  // const [bank, setBank] = useState(false);
   const [status, setStatus] = useState(false);
 
   // console.log("CreateStore: >>>", params, searchParams);
@@ -32,26 +30,61 @@ export default function CreateStore({ params, searchParams }) {
   };
 
   return (
-    <form className="mb-12">
+    <form className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
       <h1 className="text-xl text-center mt-8 mb-5">{content.h1[lang]}</h1>
-      <InputField type="text" name="name" title="Store name" required min="4" max="30" cls="mb-2" />
-      <Textarea name="about" cls="" />
-      <CurrencySelect lang={lang} required min="0" step="0.5" />
-      {/* <InputField type="number" title={content.delivery[lang]} /> */}
-      <ToggleSwitch checked={deliver} onCheck={({ checked }) => setDeliver(checked)} title="Deliver" />
-      <div>{deliver && <NumberInputField value={0} onChange={null} inCls="w-12" />}</div>
+
+      {/* cover */}
+
+      <InputField type="text" name="name" placeholder="E.g. alm-store" required min="4" max="30" cls="mb-2">
+        <span className="block mb-1 text-lg font-semibold rq">Store name</span>
+      </InputField>
+
+      <Textarea
+        name="about"
+        title="Write something about your store, E.g. Welcome to our supermarket, ..."
+        cls=""
+      />
+
+      <div className="my-6 md:flex md:justify-between">
+        <div className="flex justify-between">
+          <CurrencySelect lang={lang} required min="0" step="0.5" cls="mx-0" />
+
+          <ToggleSwitch checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
+            <div className="mx-3">Deliver</div>
+          </ToggleSwitch>
+        </div>
+
+        {deliver && (
+          <NumberInputField
+            value={0}
+            onChange={null}
+            required
+            cls="w-full md:w-auto my-3 md:my-0"
+            inCls="w-12">
+            <label className="flex-1 md:flex-initial md:mx-2 ">Delivery rate</label>
+          </NumberInputField>
+        )}
+      </div>
+
+      <h6 className="mb-2 text-lg font-semibold rq">Store Address</h6>
       <AddressInputs lang={lang} />
-      {days.map((d, i) => (
-        <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
-      ))}
+
+      <h6 className="text-lg font-semibold mt-7 rq">Working days</h6>
       <DaysCheckButtons lang={lang} checkedDays={days} onChange={addDay} />
-      <ToggleSwitch checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex">
-        <div className="w-full">This store will be open from now.</div>
+      <div className="my-5">
+        {days.map((d, i) => (
+          <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
+        ))}
+      </div>
+
+      <ToggleSwitch checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex my-6">
+        <div className="flex-1">This store will be open from now.</div>
       </ToggleSwitch>
 
+      <h6 className="text-lg font-semibold mt-7 rq">Payment methods</h6>
       <Collapse
         title="Do you want to accept on delivery payment?"
-        cls="mb-3"
+        cls="my-3"
         hCls="rounded-t-lg"
         checked={!!onDeliveryPayment}
         onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}>
@@ -59,21 +92,21 @@ export default function CreateStore({ params, searchParams }) {
           <ToggleSwitch
             checked={!!onDeliveryPayment?.cash}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), cash: checked })}
-            cls="!flex mb-2">
+            cls="!flex my-3">
             <div className="flex-1">I accept cash payment.</div>
           </ToggleSwitch>
 
           <ToggleSwitch
             checked={!!onDeliveryPayment?.card}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), card: checked })}
-            cls="!flex mb-2">
+            cls="!flex my-3">
             <div className="flex-1">I accept credit card payment.</div>
           </ToggleSwitch>
 
           <ToggleSwitch
             checked={!!onDeliveryPayment?.bank}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), bank: checked })}
-            cls="!flex mb-2">
+            cls="!flex my-3">
             <div className="flex-1">I accept bank transfer payment.</div>
           </ToggleSwitch>
         </div>
@@ -87,7 +120,7 @@ export default function CreateStore({ params, searchParams }) {
         <ToggleSwitch
           checked={!!onlinePayment?.card}
           onCheck={({ checked }) => setOnlinePayment({ ...(onlinePayment || {}), card: checked })}
-          cls="!flex mb-2">
+          cls="!flex my-5">
           <div className="flex-1">I accept credit card payment.</div>
         </ToggleSwitch>
 
@@ -100,14 +133,45 @@ export default function CreateStore({ params, searchParams }) {
             setOnlinePayment({ ...(onlinePayment || {}), bank: onlinePayment?.bank ? null : {} })
           }>
           <h6 className="font-semibold">Bank account details</h6>
-          <p>
-            A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as
-            a welcome guest in many households across the world.
-          </p>
+          <InputField
+            type="text"
+            name="accountHolder"
+            label="Account holder"
+            placeholder="E.g. John Doe"
+            required
+            cls="my-1"
+          />
+          <InputField
+            type="text"
+            name="iban"
+            label="Account Number / IBAN"
+            placeholder="E.g. FI21 1234 5698 7654 3210"
+            required
+            cls="my-1"
+          />
+          <InputField
+            type="text"
+            name="bic"
+            label="BIC / Swift"
+            title="Bank Identifier Number"
+            placeholder="E.g. BOHIUS77"
+            required
+            cls="my-1"
+          />
         </Collapse>
       </Collapse>
-      {/* cover, payments, status, cocNumber, vatNumber */}
-      <Button text="Create" type="submit" />
+
+      <h6 className="text-lg font-semibold mt-7">Business details</h6>
+      <InputField
+        type="text"
+        name="cocNumber"
+        label="COC Number"
+        placeholder="E.g. 9876543"
+        cls="mt-1 mb-3"
+      />
+      <InputField type="text" name="vatNumber" label="VAT Number" placeholder="E.g. US52359525" />
+
+      <Button text="Create" type="submit" cls="w-full my-5" />
     </form>
   );
 }

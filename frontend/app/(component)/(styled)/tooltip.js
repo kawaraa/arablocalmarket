@@ -45,27 +45,27 @@ export default function Tooltip({ children, description = "", size, position }) 
     }
   };
 
-  // Plain HTML tooltip: <a href="#"  title="Hooray!, this text will show up" role="tooltip">Hover over me</a>
   return (
-    <a
+    <div
       className="relative inline-flex"
-      href="#"
-      title={description}
-      role="tooltip"
-      aria-label={"Tooltip. " + description}
-      aria-haspopup="true"
-      aria-expanded={tooltipOpen}
-      onClick={(e) => e.preventDefault() + setTooltipOpen(!tooltipOpen)}
+      onClick={() => setTooltipOpen(!tooltipOpen)}
       onMouseEnter={() => setTooltipOpen(true)}
       onMouseLeave={() => setTooltipOpen(false)}>
-      <span className="block w-4 h-4 cursor-help">
-        <SvgIcon name={exclamationMark} />{" "}
-      </span>
+      <button
+        type="button"
+        // title={description}
+        role="tooltip"
+        aria-label={"Tooltip. " + description}
+        aria-haspopup="true"
+        aria-expanded={tooltipOpen}
+        className="inline-block w-4 h-4 mx-1 cursor-help">
+        <SvgIcon name="exclamationMark" />
+      </button>
 
       <Transition
         Tag="span"
         open={tooltipOpen}
-        base={`block absolute overflow-hidden rounded-md transition bg-l-bg dark:bg-d-c-bg border border-d-c shadow-lg 
+        base={`z-2 block absolute rounded-md transition bg-bg dark:bg-dbg border border-bc shadow-lg 
           ${positionOuterClasses(position)} 
           ${sizeClasses(size)}`}
         enter={`opacity-100 ${positionInnerClasses(position)}`}
@@ -73,6 +73,6 @@ export default function Tooltip({ children, description = "", size, position }) 
         time="100">
         {description || children}
       </Transition>
-    </a>
+    </div>
   );
 }

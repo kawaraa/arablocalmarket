@@ -33,7 +33,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-3 space-y-3">
+    <div className="space-y-3">
       <div className="flex">
         <select
           name="country"
@@ -65,7 +65,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           title={content.city[lang]}
           aria-label={content.city[lang]}
           // autoComplete="address-level2"
-          className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
+          className="block bg-cbg w-1/2 px-2 py-1 card cd_hr fs rounded-l-md">
           <option value="">{content.city[lang]}</option>
           {countries[cy]?.provinces[p]?.map((city, i) => (
             <option value={city} key={i}>
@@ -85,7 +85,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           placeholder={content.postalCode[lang]}
           title={content.postalCode[lang]}
           cls="relative w-1/2 "
-          inCls="rounded-r-md h-full"
+          inCls="rounded-r-md"
         />
       </div>
       <InputField

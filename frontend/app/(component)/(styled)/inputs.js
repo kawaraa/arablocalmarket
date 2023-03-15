@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
-export function InputField({ editable, cls, inCls, onChange, onBlur, ...p }) {
+export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, ...p }) {
   const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
@@ -16,13 +16,15 @@ export function InputField({ editable, cls, inCls, onChange, onBlur, ...p }) {
   };
 
   return (
-    <label htmlFor={p.name} className={"block " + (editable && "relative ") + cls}>
+    <label htmlFor={p.name} className={"block " + (editable ? "relative " : "") + cls}>
+      {children}
+      {label && <span className={`block mt-2 mb-1 ${p.required ? "rq" : ""}`}>{label}</span>}
       <input
         id={p.name}
         placeholder={p.title || p.name}
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className={`block peer w-full bg-cbg appearance-none border border-bc px-3 py-2 card ${
+        className={`block peer w-full bg-cbg appearance-none border border-bc px-2 py-1 card ${
           editable ? "pr-12" : "cd_hr"
         } fs ${inCls || "rounded-md"}`}
         {...p}
@@ -55,7 +57,7 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
       <div className={`relative w-[${size}px] h-[${size}px] flex justify-center items-center`}>
         <input
           id={p.name}
-          title={!children && (p.title || p.name)}
+          title={p.title || p.name}
           aria-label={p.title || p.name}
           className={`peer absolute top-0 left-0 w-full h-full appearance-none bg-bc dark:bg-cbg border border-bf ${radius} cursor-pointer`}
           {...p}
@@ -96,7 +98,7 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
           type="checkbox"
           checked={checked}
           onChange={handler}
-          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc cursor-pointer fs "
+          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc cursor-pointer focus:border-blue "
           {...p}
         />
         <span
@@ -145,6 +147,7 @@ export function Textarea({ cls, ...p }) {
       dir="auto"
       title={p.title || p.name}
       aria-label={p.title || p.name}
+      placeholder={p.title || p.name}
       autoComplete="on"
       className={"block w-full h-32 mt-3 p-2 bg-cbg card cd_hr fs " + (cls || "rounded-md")}
       {...p}></textarea>
@@ -158,10 +161,9 @@ export function Select({ children, cls, inCls, ...p }) {
       {p.title}
       <select
         id={p.name}
-        required
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className={"block bg-cbg w-full px-3 py-2 card cd_hr fs " + (inCls || " rounded-md")}
+        className={"block bg-cbg w-full px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
         {...p}>
         {children}
       </select>
@@ -169,12 +171,12 @@ export function Select({ children, cls, inCls, ...p }) {
   );
 }
 
-export function NumberInputField({ onChange, inCls, ...p }) {
+export function NumberInputField({ children, onChange, cls, inCls, ...p }) {
   const handler = (n) => onChange && onChange(n);
 
   return (
-    <div className="inline-flex">
-      <label className="flex justify-center items-center">{p.title}</label>
+    <div className={`inline-flex ${cls}`}>
+      {children || <label className="">{p.title}</label>}
       <div className={`flex justify-center items-center ${p.title && "mx-2"}`}>
         <Button icon="minus" handler={() => handler(-1)} cls="w-6 h-6 !p-0 !rounded-full" iconCls="w-full" />
         <input
