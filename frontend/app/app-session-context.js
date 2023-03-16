@@ -1,13 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
 import React, { createContext, useState, useEffect } from "react";
+// import { getUser } from "./(service)/api-provider";
 import Cookies from "./(service)/cookies";
 // import { Validator } from "k-utilities";
 
 export const AppSessionContext = createContext();
 
 export default function AppSessionContextProvider({ children, language, theme }) {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([]);
   const [errors, setErrors] = useState([]);
@@ -87,6 +86,12 @@ export default function AppSessionContextProvider({ children, language, theme })
   //   setConversations(conversationsCopy);
   // };
 
+  const updateUser = (user) => {
+    if (user) window.localStorage.setItem("user", JSON.stringify(user));
+    else window.localStorage.removeItem("user");
+    setUser(user);
+  };
+
   useEffect(() => {
     const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
@@ -95,14 +100,14 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     updateThemeMode(Cookies.get("themeMode") || themeMode);
 
-    // Todo: here
     const user = JSON.parse(window.localStorage.getItem("user") || null);
-    if (!user) {
-      // getUser("url").then((user) => user && window.localStorage.getItem("user", JSON.stringify(user)));
+    if (user) updateUser(user);
+    else {
+      // Todo: here
+      // getUser("url")
+      //   .then(({ jwt, user }) => updateUser(user))
+      //   .catch(() => updateUser(null));
     }
-
-    // if (user?.hasStore) router.push("/my");
-    // else if (user) router.push("/store");
 
     window.setLoading(false);
   }, []);
@@ -153,7 +158,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     updateThemeMode,
 
     user,
-    setUser,
+    updateUser,
     cart,
     notifications,
     // location,

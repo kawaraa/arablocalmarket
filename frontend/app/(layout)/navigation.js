@@ -196,7 +196,7 @@ const content = {
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
-    { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/create-store" },
+    { text: { en: "Stores", ar: "المتاجر" }, path: "/admin?tab=my" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Logout", ar: "تسجيل خروج" }, path: "/logout" },
   ],

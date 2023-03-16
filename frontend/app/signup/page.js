@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import { Button } from "../(component)/(styled)/button";
 import {
@@ -10,15 +11,22 @@ import {
 } from "../(component)/(styled)/inputs";
 
 export default function Signup({ a }) {
+  const router = useRouter();
   const { lang } = useContext(AppSessionContext);
+  const [loading, setLoading] = useState(false);
 
   const handleSignup = (e) => {
     e.preventDefault();
     // /auth/local/register
+    // Redirect the user to a page that show him that he needs to confirm his Email to be able to sign in.
 
     console.log("handleSignup: ", e);
   };
 
+  if (user) {
+    router.push("/");
+    return null;
+  }
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">

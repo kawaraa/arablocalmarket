@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCssDelay } from "./(service)/style-methods";
 import Footer from "./(layout)/footer";
 import SvgIcon from "./(component)/(styled)/svg-icon";
+import CheckUser from "./(component)/check-user";
 
 export default async function LandingPage({ params, searchParams }) {
   const cookieStore = cookies();
@@ -11,6 +12,7 @@ export default async function LandingPage({ params, searchParams }) {
 
   return (
     <>
+      <CheckUser />
       <section className="absolute inset-0 h-[100vh] w-full bg-hpbg dark:bg-dbg border-b border-b-2 border-b-bc">
         <div
           className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c"

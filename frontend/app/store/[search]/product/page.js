@@ -13,6 +13,8 @@ export default function ProductsByStore({ params, searchParams }) {
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
   const store = { id: "1", currency: "€", products };
+  console.log("Show products based on this: >>> ", searchParams.category);
+  console.log("Show products based on this: >>> ", searchParams.search);
 
   return (
     <div>

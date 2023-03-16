@@ -20,15 +20,15 @@ export default async function StoresNearby({ searchParams }) {
   // const coordinates = headersList.get('coordinates');
   // console.log(headersList);
 
-  // const stores = await fetch("https://dummyjson.com/products")
-  //   .then((res) => res.json())
-  //   .then((d) => d.products);
-
   const cookieStore = cookies();
   const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = cookieStore.get("range")?.value || "0.5";
 
-  console.log(coordinates, "Range: ", range, "search: ", searchParams?.search);
+  console.log("Show result based on this: >>> ", coordinates, range, searchParams?.search);
+
+  // const stores = await fetch("https://dummyjson.com/products")
+  //   .then((res) => res.json())
+  //   .then((d) => d.products);
 
   // Todo: if no stores found, then show empty stat page E.g.
   // <h4>Could not find stores near you!</h4>

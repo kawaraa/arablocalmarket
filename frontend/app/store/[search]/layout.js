@@ -10,16 +10,12 @@ export default function StoreBySearch({ children, params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  console.log("ID, store name or title: ", params);
+  console.log("Store ID, Name or Title: ", params.search);
 
   let imageUrl = "/img/store-3.png";
   let id = 1;
   let open = true;
   let name = "Store name";
-
-  // console.log("Store ID, Name or Title: ", params.search);
-  // Share: onClick={() => navigator.share(window.location.href)}
-  // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
 
   return (
     <article>

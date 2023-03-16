@@ -1,16 +1,29 @@
 "use client";
+import { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
 
-export default function Tabs({ children, tabs, title, cls }) {
+export default function Tabs({ children, tabs, title, onTabChange, cls }) {
   const p = usePathname();
+  const search = useSearchParams();
+  const current = search.toString();
+
+  const [active, setActive] = useState(null);
   const [bar, setBar] = useState([0, 0]);
 
   const handleBarChange = ({ target: { offsetLeft, offsetWidth } }) => {
     setBar([offsetLeft, offsetWidth]);
     setTimeout(() => setBar([offsetLeft, 0]), 200);
   };
+
+  const getActiveCls = (key) => (key != active?.key ? "" : "border-b-[1px] border-red");
+
+  useEffect(() => {
+    const clean = (a, b) => (a + (b || "")).replace(/[^\w\s]/gi, "");
+    const t = tabs.find((t) => clean(p, current) == clean(t.path));
+    setActive(t);
+    if (onTabChange) onTabChange(t);
+  }, [p, current]);
 
   return (
     <div className={`p-3 mb-3 md:mb-6 border border-bc shadow-lg rounded-md ${cls}`}>
@@ -25,7 +38,7 @@ export default function Tabs({ children, tabs, title, cls }) {
               {/* role="tab" */}
               <Link
                 href={t.path}
-                className={`block whitespace-nowrap py-3 ${t.path === p && "border-b-[1px] border-red"}`}
+                className={`block whitespace-nowrap py-3 ${getActiveCls(t.key)}`}
                 onClick={handleBarChange}>
                 {t.text}
               </Link>

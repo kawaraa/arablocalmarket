@@ -1,21 +1,32 @@
 "use client";
 import { useContext, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
 import { Button } from "../(component)/(styled)/button";
 import { InputField } from "../(component)/(styled)/inputs";
 
 export default function Signin({ a }) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, updateUser } = useContext(AppSessionContext);
+  const [loading, setLoading] = useState(false);
 
-  const handleSignin = () => {
+  const handleSignIn = async () => {
     e.preventDefault();
-
-    console.log("handleSignin: ");
+    // const {jwt, user} = await fetch("url");
+    // updateUser(user)
+    // Todo: Adjust Strapi tp make return the jwt in the cookie as well with "HttpOnly"
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
+    console.log("handleSignIn: ");
   };
+
+  if (user) {
+    router.push("/");
+    return null;
+  }
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
-      <form dir="auto" onSubmit={handleSignin} className="w-full max-w-md mx-auto space-y-6">
+      <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">
         <div>
           <img src="logo.svg" alt="Arab Local market Logo" className="h-auto w-14 mx-auto " />
           <h1 className="mt-6 text-center text-2xl font-bold ">{content.h1[lang]}</h1>

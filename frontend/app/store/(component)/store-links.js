@@ -1,10 +1,17 @@
 "use client";
 
 import SvgIcon from "../../(component)/(styled)/svg-icon";
+import { copyText } from "../../(service)/utilities";
 
 export default function StoreLinks({ phone }) {
   const liCls =
     "w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
+
+  const handleShare = () => {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+    if (navigator.share) return navigator.share(window.location.href);
+    copyText(window.location.href, (copied) => alert((copied ? "Copied" : "Could not copy") + " store link"));
+  };
 
   return (
     <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-2xl font-bold lazy-c">
@@ -25,14 +32,13 @@ export default function StoreLinks({ phone }) {
       </li>
       <li className={liCls}>
         <a href="#" title="Add to favorite" aria-label="Add to favorite" className="fill-none p-[2px]">
-          {/* Or favorite */}
           <SvgIcon name="favorite" />
         </a>
       </li>
       <li className={liCls}>
-        <a href="#" title="Share" aria-label="Share">
+        <span href="#" onClick={handleShare} title="Share" aria-label="Share">
           <SvgIcon name="share" />
-        </a>
+        </span>
       </li>
       {/* <li className={liCls}>
         <a href="#" title="Rate store" aria-label="Rate store">

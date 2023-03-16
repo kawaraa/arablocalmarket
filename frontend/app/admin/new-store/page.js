@@ -1,16 +1,16 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { AppSessionContext } from "../app-session-context";
-import { InputField, NumberInputField, Select, Textarea, ToggleSwitch } from "../(component)/(styled)/inputs";
-import { AddressInputs } from "../(component)/address-inputs";
-import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../(component)/custom-inputs";
-import { Button } from "../(component)/(styled)/button";
-import Collapse from "../(component)/collapse";
-import SvgIcon from "../(component)/(styled)/svg-icon";
+import { AppSessionContext } from "../../app-session-context";
+import { InputField, NumberInputField, Textarea, ToggleSwitch } from "../../(component)/(styled)/inputs";
+import { AddressInputs } from "../../(component)/address-inputs";
+import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(component)/custom-inputs";
+import { Button } from "../../(component)/(styled)/button";
+import Collapse from "../../(component)/collapse";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
 // import Tooltip from "../(component)/(styled)/tooltip";
 
-export default function CreateStore({ params, searchParams }) {
+export default function NewStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const [imageData, setImageData] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function CreateStore({ params, searchParams }) {
   const [onlinePayment, setOnlinePayment] = useState(null);
   const [status, setStatus] = useState(false);
 
-  // console.log("CreateStore: >>>", params, searchParams);
+  // console.log("NewStore: >>>", params, searchParams);
 
   const handleChange = (e) => {
     setLoading(true);
