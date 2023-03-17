@@ -6,7 +6,7 @@ import Tabs from "../../(component)/(styled)/tabs";
 import { AppSessionContext } from "../../app-session-context";
 import StoreCard from "../../store/(component)/store-card";
 
-export default function MyStores({ params, searchParams }) {
+export default function Stores({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
 

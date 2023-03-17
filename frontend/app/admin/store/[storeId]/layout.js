@@ -5,7 +5,7 @@ import Image from "next/image";
 import Tabs from "../../../(component)/(styled)/tabs";
 import { AppSessionContext } from "../../../app-session-context";
 
-export default function StoreBySearch({ children, params }) {
+export default function StoreById({ children, params }) {
   const { lang } = useContext(AppSessionContext);
 
   console.log("Store ID, Name or Title: ", params.storeId);
@@ -19,7 +19,7 @@ export default function StoreBySearch({ children, params }) {
 
   return (
     <article>
-      <section className="relative text-bg sm:h-[40vh] sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
+      <section className="sm:h-[40vh] sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
         <div className="overflow-hidden flex items-center sm:absolute sm:-bottom-10 sm:left-6 max-h-[40vh] w-full sm:w-40 rounded-2xl">
           <Image
             src={imageUrl}
@@ -28,11 +28,11 @@ export default function StoreBySearch({ children, params }) {
             alt="Some description for the image"
             className="block w-full"
           />
-          <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div>
         </div>
-        <h1 className="absolute w-full top-8 px-8 text-xl font-bold flex items-center lazy-l">
-          <span className={`inline-block w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
+
+        <h1 className="w-full mt-5 text-xl font-bold flex justify-between items-center lazy-l">
           {name}
+          <span className={`w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
         </h1>
       </section>
 
@@ -53,9 +53,9 @@ export default function StoreBySearch({ children, params }) {
 
 const content = {
   tabs: [
-    { key: "1", path: "/admin/store/storeId/order", text: { en: "Orders", ar: "الطلبات" } },
+    { key: "1", path: "/admin/store/storeId", text: { en: "Orders", ar: "الطلبات" } },
     { key: "3", path: "/admin/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
-    { key: "2", path: "/admin/store/storeId/employee", text: { en: "Employees", ar: "الموظفون" } },
-    { key: "2", path: "/admin/store/storeId/category", text: { en: "Customers", ar: "الزبائن" } },
+    { key: "4", path: "/admin/store/storeId/employee", text: { en: "Employees", ar: "الموظفون" } },
+    { key: "5", path: "/admin/store/storeId/customer", text: { en: "Customers", ar: "الزبائن" } },
   ],
 };

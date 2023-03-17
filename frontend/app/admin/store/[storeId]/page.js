@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import OrderCard from "../../../(component)/order-card";
 
-export default function StoreById({ params, searchParams }) {
+export default function StoreOrders({ params, searchParams }) {
+  const orders = [{ items: ["a", "b"] }];
+
   console.log("Vew and update store by ID: >>>", params, searchParams);
 
   useEffect(() => {
@@ -11,11 +14,12 @@ export default function StoreById({ params, searchParams }) {
 
   return (
     <div>
-      <h1></h1>
-      <p>Here will show the store by ID to the admin Or the store by ID to the employee.</p>
-      <p>Show Products tab.</p>
-      <p>Show Orders tab.</p>
-      <p>If admin, Show Employees tab.</p>
+      <h1>Orders</h1>
+      <ul>
+        {orders.map((o, i) => (
+          <OrderCard {...o} admin={true} key={i} />
+        ))}
+      </ul>
     </div>
   );
 }

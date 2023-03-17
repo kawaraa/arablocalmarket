@@ -1,9 +1,12 @@
 "use client";
+
+import { useEffect } from "react";
+
 // http://localhost:3000/store/1/product
 // http://localhost:3000/store/1/product
 // http://localhost:3000/store/1/product
 
-export default function ProductsByStore(props) {
+export default function StoreProducts(props) {
   console.log("Products: >>>", props);
 
   useEffect(() => {

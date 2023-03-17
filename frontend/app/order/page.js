@@ -1,5 +1,5 @@
 "use client";
-import OrderList from "../(component)/order-list";
+import OrderCard from "../(component)/order-card";
 
 export default function Orders(props) {
   console.log("Orders: >>>", props);
@@ -18,7 +18,11 @@ export default function Orders(props) {
 
       <section>
         <h3>Store 1 name</h3>
-        <OrderList orders={orders} openedOrderId={orderId} />
+        <ul>
+          {orders.map((o, i) => (
+            <OrderCard {...o} key={i} />
+          ))}
+        </ul>
       </section>
     </div>
   );

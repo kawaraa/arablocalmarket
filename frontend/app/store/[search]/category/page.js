@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function StoreOverview({ params, searchParams }) {
+export default function StoreCategories({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 

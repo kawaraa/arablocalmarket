@@ -6,7 +6,7 @@ import Tabs from "../../(component)/(styled)/tabs";
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Name / title - ALM" };
 
-export default function StoreBySearch({ children, params, searchParams }) {
+export default function StoreLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 

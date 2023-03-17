@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
+
 export default function Employees(props) {
   console.log("Employees: >>>", props);
 
   useEffect(() => {
-    document.title = "Employees - ALM";
+    document.title = "Admin Employees - ALM";
   }, []);
 
   return (
