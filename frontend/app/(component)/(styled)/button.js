@@ -16,7 +16,7 @@ export function Button({ text, type = "button", icon, handler, loading, disabled
         <Loader size="18" />
       ) : (
         icon && (
-          <span className={`w-5 ${iconCls || ""}`}>
+          <span className={iconCls || "w-5"}>
             {" "}
             {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}
           </span>
@@ -44,21 +44,15 @@ export function IconButton({ icon, size = "8", handler, disabled, label, cls }) 
   );
 }
 
-// export function LinkButton({ href, icon, handler, loading, cls, iconCls }) {
-//   let c = `inline-flex justify-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop duration-200 hover:from-pc2 `;
-//   c = loading ? "cursor-progress " + cls : cls;
+export function LinkButton({ link, text, icon, cls, iconCls, ...p }) {
+  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-pc2 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all duration-200 `;
 
-//   return (
-//     <Link href={href} onClick={handler} title={text} className={c}>
-//       {text}
-//       {loading ? (
-//         <Loader size="4" />
-//       ) : (
-//         <span className={`max-w-4 ${iconCls}`}>
-//           {" "}
-//           {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
-//         </span>
-//       )}
-//     </Link>
-//   );
-// }
+  return (
+    <Link href={link} className={c + (cls || "")} {...p}>
+      {text}
+      {icon && (
+        <span className={iconCls || "w-5"}> {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}</span>
+      )}
+    </Link>
+  );
+}

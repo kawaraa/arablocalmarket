@@ -1,21 +1,21 @@
-import { cookies } from "next/headers";
+"use client";
+
+import { useContext, useEffect } from "react";
 import Image from "next/image";
-import StoreLinks from "../(component)/store-links";
-import Tabs from "../../(component)/(styled)/tabs";
+import Tabs from "../../../(component)/(styled)/tabs";
+import { AppSessionContext } from "../../../app-session-context";
 
-// For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-export const metadata = { title: "Store Name / title - ALM" };
+export default function StoreBySearch({ children, params }) {
+  const { lang } = useContext(AppSessionContext);
 
-export default function StoreBySearch({ children, params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-
-  console.log("Store ID, Name or Title: ", params.search);
+  console.log("Store ID, Name or Title: ", params.storeId);
 
   let imageUrl = "/img/store-3.png";
   let id = 1;
   let open = true;
   let name = "Store name";
+
+  // useEffect(() => {}, []);
 
   return (
     <article>
@@ -34,17 +34,16 @@ export default function StoreBySearch({ children, params, searchParams }) {
           <span className={`inline-block w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
           {name}
         </h1>
-        <StoreLinks />
       </section>
 
-      <div className="mt-8 sm:mt-16 pb-6 border-b-2 border-bc">
+      <div className="mt-8 sm:mt-16 pb-6 border-b-2 border-bc sticky top-0">
         <Tabs
           tabs={content.tabs.map(({ key, path, text }) => ({
             key,
             path: path.replace("storeId", id),
             text: text[lang],
           }))}
-          cls="sticky top-14 z-1 bg-bg dark:bg-dbg shadow-none border-none lazy-c"
+          cls="sticky top-14 shadow-none border-none lazy-c"
         />
         <section className="">{children}</section>
       </div>
@@ -54,8 +53,9 @@ export default function StoreBySearch({ children, params, searchParams }) {
 
 const content = {
   tabs: [
-    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
-    { key: "2", path: "/store/storeId/category", text: { en: "Category", ar: "الفئات" } },
-    { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
+    { key: "1", path: "/admin/store/storeId/order", text: { en: "Orders", ar: "الطلبات" } },
+    { key: "3", path: "/admin/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
+    { key: "2", path: "/admin/store/storeId/employee", text: { en: "Employees", ar: "الموظفون" } },
+    { key: "2", path: "/admin/store/storeId/category", text: { en: "Customers", ar: "الزبائن" } },
   ],
 };

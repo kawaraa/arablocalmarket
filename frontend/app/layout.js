@@ -28,14 +28,14 @@ export default function RootLayout({ children, searchParams }) {
         <script src="/config.js"></script>
       </head>
       <body
-        className={`relative min-h-[100vh] bg-bg dark:bg-dbg text-t dark:text-dt ${
+        className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt ${
           lang == "ar" && "font-arabic"
         }`}>
         <AppSessionContextProvider language={lang} theme={themeMode}>
           <header>
             <Navigation />
           </header>
-          <main className="min-h-[100vh] pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8" dir="auto">
+          <main className="min-h-screen pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8" dir="auto">
             {children}
             {!language && <SelectLanguage selectedLanguage={false} />}
           </main>

@@ -1,7 +1,8 @@
 "use client";
 export default function StarRating({ stars = 0, onRate, cls }) {
+  // label, title, aria-label, focus and keyboard interactivity
   return (
-    <p className={`relative inline-block ${cls || "text-sm"}`}>
+    <span className={`relative inline-block ${cls || "text-sm"}`}>
       &#9733;&#9733;&#9733;&#9733;&#9733;
       <span className={`overflow-hidden absolute inset-0 h-1/1 w-[${(stars / 5) * 100}%] text-orange`}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
@@ -17,6 +18,6 @@ export default function StarRating({ stars = 0, onRate, cls }) {
           className="overflow-hidden absolute inset-0 h-1/1 w-1/1 appearance-none cursor-pointer opacity-0"
         />
       )}
-    </p>
+    </span>
   );
 }
