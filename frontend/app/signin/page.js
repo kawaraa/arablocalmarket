@@ -8,7 +8,7 @@ import { InputField } from "../(component)/(styled)/inputs";
 
 export default function Signin({ a }) {
   const router = useRouter();
-  const { lang, updateUser } = useContext(AppSessionContext);
+  const { lang, user, updateUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async () => {
@@ -39,6 +39,7 @@ export default function Signin({ a }) {
             required
             min="10"
             max="30"
+            full
             title={content.email[lang]}
             autoComplete="email"
             inCls="rounded-t-md cd_hr"
@@ -50,6 +51,7 @@ export default function Signin({ a }) {
             required
             min="10"
             max="30"
+            full
             title={content.password[lang]}
             autoComplete="current-password"
             inCls="rounded-b-md cd_hr"

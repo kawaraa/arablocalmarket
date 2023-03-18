@@ -157,6 +157,13 @@ export default function Navigation() {
               cls="ml-4"
               btnCls="!rounded-full shadow-md"
               title="View user menu">
+              {/* <LinkButton
+                    link={}
+                    text={}
+                    // onClick={() => setLoading(true)}
+                    cls="absolute top-7 right-2 shadow-none"
+                    iconCls="w-full"
+                  /> */}
               {content.userLinks.map((link, i) => (
                 <li key={i}>
                   <Link
@@ -197,6 +204,7 @@ const content = {
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
+    { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/admin/new-store" },
     { text: { en: "Stores", ar: "المتاجر" }, path: "/admin/store?tab=my" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Logout", ar: "تسجيل خروج" }, path: "/logout" },

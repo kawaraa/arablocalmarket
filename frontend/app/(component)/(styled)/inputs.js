@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
-export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, ...p }) {
+export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, full, ...p }) {
   const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
@@ -16,33 +16,38 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <label htmlFor={p.name} className={"block " + (editable ? "relative " : "") + cls}>
+    <label htmlFor={p.name} className={"block " + cls}>
       {children}
       {label && <span className={`block mt-2 mb-1 ${p.required ? "rq" : ""}`}>{label}</span>}
-      <input
-        id={p.name}
-        placeholder={p.title || p.name}
-        title={p.title || p.name}
-        aria-label={p.title || p.name}
-        className={`block peer w-full bg-cbg appearance-none border border-bc px-2 py-1 card ${
-          editable ? "pr-12" : "cd_hr"
-        } fs ${inCls || "rounded-md"}`}
-        {...p}
-        onChange={editable ? handleChange : onChange}
-        onBlur={editable ? handleBlur : onBlur}
-      />
-      {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
+      <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
+        <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
+          {!full && (
+            <span className={(inCls || "") + " block opacity-0 px-2 py-1 pr-10"}>{p.defaultValue}</span>
+          )}
+
+          <input
+            id={p.name}
+            placeholder={p.title || p.name}
+            title={p.title || p.name}
+            aria-label={p.title || p.name}
+            className={`${!full ? "absolute" : ""} w-full bg-cbg appearance-none px-2 py-1 ${
+              editable ? "pr-10" : "card border border-bc cd_hr"
+            } fs ${inCls || "rounded-md"}`}
+            {...p}
+            onChange={editable ? handleChange : onChange}
+            onBlur={editable ? handleBlur : onBlur}
+          />
+          {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
           Please provide a valid email address.
         </p> */}
-
-      {editable && (
-        <span
-          className={`block absolute top-0 right-0 w-[42px] p-${
-            changed ? 2 : 3
-          } cursor-pointer hover:text-red duration-150`}>
-          <SvgIcon name={changed ? "checkMark" : "edit"} />
         </span>
-      )}
+
+        {editable && (
+          <span className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
+            <SvgIcon name={changed ? "checkMark" : "edit"} />
+          </span>
+        )}
+      </span>
     </label>
   );
 }
@@ -72,8 +77,9 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
 
 export function CheckCard({ Tag = "label", children, cls, ...p }) {
   return (
-    <Tag className={`relative w-1/2 md:w-44 h-24 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
+    <Tag htmlFor={p.name} className={`relative w-1/2 md:w-44 h-24 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
+        id={p.name}
         title={p.title || p.name}
         aria-label={p.title || p.name}
         className="absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs"
@@ -89,7 +95,7 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
 
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
   return (
-    <label className={`inline-flex items-center cursor-pointer ${cls}`}>
+    <label htmlFor={p.name} className={`inline-flex items-center cursor-pointer ${cls}`}>
       {children}
       <div
         dir="ltr"
@@ -98,7 +104,8 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
           type="checkbox"
           checked={checked}
           onChange={handler}
-          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc cursor-pointer focus:border-blue "
+          id={p.name}
+          className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc dark:checked:bg-pc cursor-pointer focus:border-blue "
           {...p}
         />
         <span
@@ -112,34 +119,48 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
 }
 
 // Todo: https://codepen.io/pen?&editors=001
-// export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
-//   const h = Math.round(+size / 2);
+{
+  /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
+}
+export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
+  // const h = Math.round(+size / 2);
 
-//   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
-//   return (
-//     <label className="inline-flex items-center cursor-pointer">
-//       <div
-//         dir="ltr"
-//         className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full cursor-pointer"`}>
-//         <input
-//           type="checkbox"
-//           checked={checked}
-//           onChange={handler}
-//           className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc fs "
-//           {...p}
-//         />
-//         <div
-//           className={`bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}>
-//           <span
-//             className={`inline-block w-[${h - 2}px] h-[${
-//               h - 2
-//             }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
-//         </div>
-//       </div>
-//       {p.title && <span className="ml-3 text-sm font-medium">{p.title}</span>}
-//     </label>
-//   );
-// }
+  const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
+  return (
+    <label
+      dir="ltr"
+      htmlFor={p.name}
+      className="overflow-hidden relative inline-block w-auto h-[24px] cursor-pointer bg-[#121212] rounded-full">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={handler}
+        id={p.name}
+        className="absolute inset-0 w-full h-full bg-[transparent] border border-bc rounded-full appearance-none fs"
+        {...p}
+      />
+      <span className={`block px-2`}>open</span>
+      <span className={`block px-2`}>close</span>
+
+      <span className="overflow-hidden flex items-center absolute inset-0 h-full">
+        <span className={`px-2 text-center ${checked ? "ml-0" : "absolute -left-[100%]"}`}>open</span>
+        <span className={`w-[22px] h-[22px] mx-[2px] bg-[#ffffff] rounded-full bg-pc`}></span>
+        <span className={`px-2 text-center ${checked ? "absolute left-[100%]" : "left-[2px]"}`}>close</span>
+      </span>
+      {/* 
+       
+        <div
+          className={`bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}>
+          <span
+            className={`inline-block w-[${h - 2}px] h-[${
+              h - 2
+            }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
+        </div>
+
+      {p.title && <span className="ml-3 text-sm font-medium">{p.title}</span>} */}
+    </label>
+  );
+}
 
 export function Textarea({ cls, ...p }) {
   return (

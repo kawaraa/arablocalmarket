@@ -44,7 +44,7 @@ export function PhoneInputField({ lang, ...p }) {
       max="15"
       pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
       autoComplete="tel"
-      placeholder={content.phone[lang]}
+      placeholder="E.g. +31639793297"
       title={content.phone[lang]}
       {...p}
     />

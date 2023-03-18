@@ -40,8 +40,8 @@ export default function Profile({ lang, firstName, lastName, address }) {
     <section>
       <h3 className="text-lg font-medium mb-3">Profile</h3>
       <div className="flex ">
-        <NameInputField editable first defaultValue={ftName} onBlur={changeFirstName} cls="mr-2" />
-        <NameInputField editable defaultValue={ltName} onBlur={changeLastName} />
+        <NameInputField editable full first defaultValue={ftName} onBlur={changeFirstName} cls="mr-2" />
+        <NameInputField editable full defaultValue={ltName} onBlur={changeLastName} />
       </div>
 
       <h3 className="text-lg font-medium mt-6 mb-2">Address</h3>
@@ -59,7 +59,7 @@ export default function Profile({ lang, firstName, lastName, address }) {
           onClick={() => setAddressForm(true)}
           title="Click to edit your Address"
           aria-label="Click to edit your Address"
-          className="card cd_hr p-3 w-full md:w-1/2 lg:w-1/3 rounded-md cursor-pointer">
+          className="card cd_hr p-3 w-full lg:w-1/2 rounded-md cursor-pointer">
           <p dir="ltr">
             {adr.line1} {adr.line2 || ""},<br />
             {adr.postalCode} {adr.city}, {adr.country}

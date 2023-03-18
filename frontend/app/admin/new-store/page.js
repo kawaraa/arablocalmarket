@@ -81,7 +81,7 @@ export default function NewStore({ params, searchParams }) {
         <div className="flex justify-between">
           <CurrencySelect lang={lang} required min="0" step="0.5" cls="mx-0" />
 
-          <ToggleSwitch checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
+          <ToggleSwitch name="deliver" checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
             <div className="mx-3">Deliver</div>
           </ToggleSwitch>
         </div>
@@ -109,7 +109,7 @@ export default function NewStore({ params, searchParams }) {
         ))}
       </div>
 
-      <ToggleSwitch checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex my-6">
+      <ToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex my-6">
         <div className="flex-1">This store will be open from now.</div>
       </ToggleSwitch>
 
@@ -122,6 +122,7 @@ export default function NewStore({ params, searchParams }) {
         onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}>
         <div>
           <ToggleSwitch
+          name="onDeliveryCash"
             checked={!!onDeliveryPayment?.cash}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), cash: checked })}
             cls="!flex my-3">
@@ -129,6 +130,7 @@ export default function NewStore({ params, searchParams }) {
           </ToggleSwitch>
 
           <ToggleSwitch
+          name="onDeliveryCard"
             checked={!!onDeliveryPayment?.card}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), card: checked })}
             cls="!flex my-3">
@@ -136,6 +138,7 @@ export default function NewStore({ params, searchParams }) {
           </ToggleSwitch>
 
           <ToggleSwitch
+          name="onDeliveryBank"
             checked={!!onDeliveryPayment?.bank}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), bank: checked })}
             cls="!flex my-3">
@@ -150,6 +153,7 @@ export default function NewStore({ params, searchParams }) {
         checked={!!onlinePayment}
         onCheck={() => setOnlinePayment(onlinePayment ? null : { bank: {} })}>
         <ToggleSwitch
+        name="online"
           checked={!!onlinePayment?.card}
           onCheck={({ checked }) => setOnlinePayment({ ...(onlinePayment || {}), card: checked })}
           cls="!flex my-5">

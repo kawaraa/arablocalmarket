@@ -12,7 +12,7 @@ export default function Settings(props) {
   }, []);
 
   return (
-    <article className="mt-4">
+    <article className="mt-4 max-w-md mx-auto">
       {/* <h1 className="text-xl mb-6">Settings</h1> */}
       <Profile lang={lang} firstName={"Mr"} lastName={"Tester"} address={fakeAddress} />
       <Account lang={lang} username={"username"} email={"test@example.com"} />

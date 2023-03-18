@@ -32,13 +32,13 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
       {/* flex-auto col-span-full xl:col-span-6  */}
 
       <div className="relative border-b-[1px] border-bc">
-        <ul className="overflow-x-scroll no-scrollbar text-sm font-medium flex">
+        <ul className="flex text-sm font-medium">
           {tabs.map((t, i) => (
-            <li className="px-3" key={i}>
+            <li className="flex-1 text-center" key={i}>
               {/* role="tab" */}
               <Link
                 href={t.path}
-                className={`block whitespace-nowrap py-3 ${getActiveCls(t.key)}`}
+                className={`inline-block px-1 whitespace-nowrap py-3 ${getActiveCls(t.key)}`}
                 onClick={handleBarChange}>
                 {t.text}
               </Link>

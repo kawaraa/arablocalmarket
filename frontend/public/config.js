@@ -7,15 +7,20 @@ tailwind.config = {
       // hpbg: "radial-gradient(#b8f5d9, #ffffff)",
       pc: "#9bface", // Primary Color // #cbf7f2
       pc2: "#b26cfc",
-      pc3: "#d7e8fb", // Primary Color
-      pc4: "#fcdcdc", // Primary Color
-      pc5: "#fde3c2", // Primary Color
-      pc6: "#b8f5d9", // Primary Color
       bg: "#ffffff", // Background & Dark Title Color
       cbg: "#ffffff1a", // Card Background
       t: "#666666", // Light Color
       bc: "#0000001a", // Border Color & Hover effect
       bf: "#9aa0a6", // Border focus color
+
+      bg1: "#fde3c2",
+      bg2: "#f7c8f7",
+      bg3: "#ff9898",
+      bg4: "#ffc2ac",
+      bg5: "#d7e8fb",
+      bg6: "#b8f5d9",
+      bg7: "#fcdcdc",
+      bg8: "#A9A9A9",
 
       lbg: "#e5e7eb", //f9fafb Light Background
       lt: "#6b7280", // Light Title color

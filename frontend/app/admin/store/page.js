@@ -25,14 +25,6 @@ export default function Stores({ params, searchParams }) {
       />
 
       <LinkButton
-        link={content.createStore.path}
-        text={content.createStore.text[lang]}
-        // onClick={() => setLoading(true)}
-        cls="absolute top-7 right-2 shadow-none"
-        iconCls="w-full"
-      />
-
-      <LinkButton
         link={content.createProduct.path}
         title={content.createProduct.text[lang]}
         icon="plus"
@@ -81,6 +73,5 @@ const content = {
     { key: "1", path: "/admin/store?tab=my", text: { en: "My stores", ar: "متاجري" } },
     { key: "2", path: "/admin/store?tab=work", text: { en: "Work stores", ar: "مخازن العمل" } },
   ],
-  createStore: { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/admin/new-store" },
   createProduct: { text: { en: "Create product", ar: "إنشاء منتج" }, path: "/admin/new-product" },
 };

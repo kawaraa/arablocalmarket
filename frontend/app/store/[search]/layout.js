@@ -26,7 +26,7 @@ export default function StoreLayout({ children, params, searchParams }) {
             width="250"
             height="250"
             alt="Some description for the image"
-            className="block w-full"
+            className="block w-full overlay"
           />
           <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div>
         </div>

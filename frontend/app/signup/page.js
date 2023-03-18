@@ -8,11 +8,11 @@ import {
   NameInputField,
   PhoneInputField,
   PswInputField,
-} from "../(component)/(styled)/inputs";
+} from "../(component)/custom-inputs";
 
 export default function Signup({ a }) {
   const router = useRouter();
-  const { lang } = useContext(AppSessionContext);
+  const { lang, user } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
   const handleSignup = (e) => {
@@ -36,16 +36,16 @@ export default function Signup({ a }) {
         </div>
 
         <div className="flex -space-x-px shadow-sm">
-          <NameInputField lang={lang} first cls="relative w-1/2" inCls="rounded-l-md" />
-          <NameInputField lang={lang} cls="relative w-1/2" inCls="rounded-r-md" />
+          <NameInputField full lang={lang} first cls="relative w-1/2" inCls="rounded-l-md" />
+          <NameInputField full lang={lang} cls="relative w-1/2" inCls="rounded-r-md" />
         </div>
 
-        <EmailInputField lang={lang} cls="relative shadow-sm" />
-        <PhoneInputField lang={lang} cls="relative shadow-sm" />
+        <EmailInputField full lang={lang} cls="relative shadow-sm" />
+        <PhoneInputField full lang={lang} cls="relative shadow-sm" />
 
         <div className="flex -space-x-px shadow-sm">
-          <PswInputField lang={lang} cls="relative w-1/2" inCls="rounded-l-md" />
-          <PswInputField lang={lang} confirm cls="relative w-1/2" inCls="rounded-r-md" />
+          <PswInputField full lang={lang} cls="relative w-1/2" inCls="rounded-l-md" />
+          <PswInputField full lang={lang} confirm cls="relative w-1/2" inCls="rounded-r-md" />
         </div>
 
         <div>

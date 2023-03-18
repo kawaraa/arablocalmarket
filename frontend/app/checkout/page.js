@@ -6,6 +6,7 @@ import Modal from "../(component)/(styled)/modal";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
 import { AddressInputs } from "../(component)/address-inputs";
+import Badge from "../(component)/(styled)/badge";
 
 export default function Checkout({}) {
   const { lang, user } = useContext(AppSessionContext);
@@ -146,24 +147,24 @@ export default function Checkout({}) {
           <p className="pb-3 mt-6 mb-3 mx-2 border-b-[1px] border-bc">{content.paymentMethods.p[lang]}</p>
           {selectedPaymentMethods === "on-delivery" ? (
             <div className="mb-3 flex lazy-c">
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc3 ">
-                <span className="h-4 mx-1">
-                  <SvgIcon name="cash" />
-                </span>
-                {content.paymentMethods.onDelivery.methods.cash[lang]}
-              </span>
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc4 ">
-                <span className="h-4 mx-1">
-                  <SvgIcon name="creditCard" />
-                </span>
-                {content.paymentMethods.onDelivery.methods.card[lang]}
-              </span>
-              <span className="flex justify-center items-center card py-1 px-2 mx-1 text-t rounded-lg bg-pc5 ">
-                <span className="h-4 mx-1">
-                  <SvgIcon name="bank" />
-                </span>
-                {content.paymentMethods.onDelivery.methods.bank[lang]}
-              </span>
+              <Badge
+                text={content.paymentMethods.onDelivery.methods.cash[lang]}
+                icon="cash"
+                color={5}
+                cls=""
+              />
+              <Badge
+                text={content.paymentMethods.onDelivery.methods.card[lang]}
+                icon="creditCard"
+                color={7}
+                cls=""
+              />
+              <Badge
+                text={content.paymentMethods.onDelivery.methods.bank[lang]}
+                icon="bank"
+                color={1}
+                cls=""
+              />
             </div>
           ) : (
             <>

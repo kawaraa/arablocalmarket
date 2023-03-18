@@ -38,6 +38,7 @@ export default function Profile({ lang, username, email, phone }) {
       <h3 className="text-lg font-medium mb-2 mt-6">Account</h3>
       <InputField
         editable
+        full
         type="text"
         name="username"
         required
@@ -48,15 +49,15 @@ export default function Profile({ lang, username, email, phone }) {
         cls="mb-2"
       />
 
-      <EmailInputField editable defaultValue={eml} onBlur={updateEmail} cls="mb-2" />
-      <PhoneInputField editable defaultValue={phn} onBlur={updatePhone} cls="mb-2" />
+      <EmailInputField editable full defaultValue={eml} onBlur={updateEmail} cls="mb-2" />
+      <PhoneInputField editable full defaultValue={phn} onBlur={updatePhone} cls="mb-2" />
 
       {/* <div>
         Phone number : visible
         <input type="checkbox" />
       </div> */}
 
-      <PswInputField editable placeholder="********" onBlur={updatePassword} cls="mb-2" />
+      <PswInputField editable full placeholder="********" onBlur={updatePassword} cls="mb-2" />
 
       {/* <div>2AF Switch button</div> */}
     </section>
