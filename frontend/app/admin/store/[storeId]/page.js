@@ -2,7 +2,6 @@
 
 import { useContext, useEffect, useState } from "react";
 import Badge from "../../../(component)/(styled)/badge";
-import { Button, IconButton, LinkButton } from "../../../(component)/(styled)/button";
 import Modal from "../../../(component)/(styled)/modal";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import LineItems from "../../../(component)/line-items";
@@ -12,9 +11,20 @@ import { AppSessionContext } from "../../../app-session-context";
 export default function StoreOrders({ params, searchParams }) {
   const { lang, user } = useContext(AppSessionContext);
   const [clickedOrder, setClickedOrder] = useState(null);
+  const [modalOpen, setModalOpen] = useState(null);
   const orders = fakeOrders;
 
   // console.log("Vew and update store by ID: >>>", params, searchParams);
+
+  const clearSelectedOrder = () => {
+    setModalOpen(false);
+    setTimeout(() => setClickedOrder(null), 300);
+  };
+
+  const selectOrder = (order) => {
+    setClickedOrder(order);
+    setTimeout(() => setModalOpen(true), 300);
+  };
 
   useEffect(() => {
     // document.title = "Admin Store products - ALM";
@@ -24,36 +34,40 @@ export default function StoreOrders({ params, searchParams }) {
     <div>
       <ul>
         {orders.map((o, i) => (
-          <OrderCard lang={lang} {...o} onClick={setClickedOrder} admin={true} key={i} />
+          <OrderCard lang={lang} {...o} onClick={selectOrder} admin={true} key={i} />
         ))}
       </ul>
 
       <Modal
         tag="section"
         title="Order details"
-        open={!!clickedOrder}
-        onCancel={() => setClickedOrder(null)}
-        // okBtn={content.okBtn[lang]}
-      >
+        open={modalOpen}
+        onCancel={clearSelectedOrder}
+        okBtn={content.okBtn[lang]}
+        onApprove={user?.admin ? window.print : null}>
         {clickedOrder && (
           <>
             <div className="flex justify-between items-center">
-              <span className="text-sm font-semibold px-1 mr-3 border rounded">{clickedOrder.id}</span>
+              <span className="text-sm font-semibold px-1 mr-3 border rounded print:text-3xl">
+                {clickedOrder.id}
+              </span>
               <Badge
                 text={oContent.status[clickedOrder.status][lang] || clickedOrder.status}
                 color={oContent.status[clickedOrder.status].color}
                 cls="text-sm"
               />
             </div>
+
             <LineItems bill items={clickedOrder.lineItems} currency={clickedOrder.currency} />
+
             <p className="mt-3 pt-2 border-t-[1px] border-bc flex justify-between">
               {clickedOrder?.payment && (
-                <span>
+                <span className="print:text-3xl print:!font-bold">
                   {oContent.payment[clickedOrder.payment.type][lang] || clickedOrder.payment.type}{" "}
                   {oContent.payment[clickedOrder.payment.method][lang] || clickedOrder.payment.method}
                 </span>
               )}
-              <span className="text-lg font-semibold text-red">
+              <span className="text-lg font-semibold text-red print:text-3xl">
                 {clickedOrder.discount > 0 && (
                   <span className="mr-2 line-through">
                     {clickedOrder.currency}
@@ -65,7 +79,9 @@ export default function StoreOrders({ params, searchParams }) {
               </span>
             </p>
             {user?.admin && (
-              <address dir="ltr" className="relative card mt-5 p-1 rounded-md">
+              <address
+                dir="ltr"
+                className="relative card mt-5 px-2 py-1 rounded-md print:text-3xl print:mt-20">
                 <h6 className="font-medium">
                   {clickedOrder.customer.firstName} {clickedOrder.customer.lastName}
                 </h6>
@@ -92,8 +108,6 @@ export default function StoreOrders({ params, searchParams }) {
                 </p>
               </address>
             )}
-            {/*  order.customer, order.addressId */}
-            {/* if it's admin, show the customer info, else just the address */}
           </>
         )}
       </Modal>
@@ -102,7 +116,7 @@ export default function StoreOrders({ params, searchParams }) {
 }
 
 const content = {
-  okBtn: { en: "Save", ar: "حفظ" },
+  okBtn: { en: "Print", ar: "طباعة" },
 };
 
 // { accountHolder: "Mr Tester", acountNumber: "ING06B887823483542", bic: "FJENKXX" }

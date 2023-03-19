@@ -12,9 +12,10 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         className={`z-9 fixed inset-0 h-0 p-0 bg-blur opacity-0 transition-opacity duration-200 ${cls}`}
         onClick={onCancel}></div>
 
+      {/* look into dialog tag */}
       <Transition
         Tag={tag || "article"}
-        base="z-9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2"
+        base="z-9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2 print:top-0 print:text-t"
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
@@ -28,7 +29,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             icon="close"
             handler={onCancel}
             label="Cancel and close the modal window"
-            cls="absolute top-4 right-4"
+            cls="absolute top-4 right-4 print:hidden"
           />
         )}
         <div className="block py-4 md:flex justify-start">
@@ -42,7 +43,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
           )}
 
           <div className="flex-auto mt-3 md:text-left">
-            <h2 className="mb-1 text-lg text-center">{title}</h2>
+            <h2 className="mb-1 text-lg text-center print:text-3xl">{title}</h2>
             {p.children}
           </div>
         </div>
@@ -54,7 +55,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
               text={okBtn}
               handler={onApprove}
               loading={loading}
-              cls="w-full md:w-auto justify-center py-2"
+              cls="print:hidden w-full md:w-auto justify-center py-2"
             />
           </div>
         )}

@@ -131,7 +131,7 @@ export default function Navigation() {
           <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 10}</span>
         </Link>
 
-        {!user ? (
+        {user ? (
           <>
             <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Dropdown
