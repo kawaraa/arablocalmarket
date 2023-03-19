@@ -32,7 +32,7 @@ export default function StoreOrders({ params, searchParams }) {
 
   return (
     <div>
-      <ul>
+      <ul className="print:hidden">
         {orders.map((o, i) => (
           <OrderCard lang={lang} {...o} onClick={selectOrder} admin={true} key={i} />
         ))}
