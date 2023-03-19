@@ -1,43 +1,54 @@
 "use client";
-
 import Badge from "./(styled)/badge";
+import SvgIcon from "./(styled)/svg-icon";
 
-// import Order from "./order";
-// import Customer from "./customer";
+export default function OrderCard({ lang, admin, onClick, ...order }) {
+  // console.log("OrderList: >>>", order.lineItems);
 
-export default function OrderCard({ lang, admin, ...order }) {
-  console.log("OrderList: >>>", order.lineItems);
-  // {"accountHolder":"Mr Tester", "acountNumber":"ING06B887823483542", "bic":"FJENKXX"}
-  // Todo: When the user can click on the order item, it should see a popup card with all the details
-  // Todo: put the Order component inside a modal to popup.
   return (
-    <li className="card md:flex">
-      <div className="flex">
-        <h3>{order.customer}</h3>
-        <p>{order.lineItems}</p>
-      </div>
+    <li
+      className="card p-2 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex"
+      onClick={() => onClick(order)}>
+      <div className="flex justify-between items-center">
+        {admin && (
+          <h3 className="flex-auto">
+            <span className="inline-block w-3.5 mr-2">
+              <SvgIcon name="avatar" />
+            </span>
+            {order.customer}
+          </h3>
+        )}
 
-      <p className="font-bold">
-        {order.payment.type}
-        <span className="mx-2">{order.payment.method}</span>
-      </p>
-
-      <div className="flex">
-        <p>{order.currency + order.total}</p>
-
+        <span className="text-sm font-semibold px-1 mr-3 border rounded">{order.id}</span>
         <Badge
           text={content.status[order.status][lang] || order.status}
           color={content.status[order.status].color}
+          cls="text-sm"
         />
       </div>
-      {/* // This should be an Avatar or User Icon where the user can click on and see a popup card with all the details
-            // Todo: put the Customer component inside a modal to popup. */}
-      {admin && <div>User Icon</div>}
+
+      <p dir="auto" className="flex justify-between my-3 ">
+        <span className="text-sm font-semibold">
+          {content.payment[order.payment.method][lang] || order.payment.method}{" "}
+          {content.payment[order.payment.type][lang] || order.payment.type}
+        </span>
+        <span>
+          <span className="mx-2">( {order.lineItems} )</span>
+          <span className="text-red">{order.currency + order.total}</span>
+        </span>
+      </p>
     </li>
   );
 }
 
-const content = {
+export const content = {
+  payment: {
+    "ON-DELIVERY": { ar: "عند التسليم", color: 1 },
+    ONLINE: { ar: "عبر الإنترنت", color: 2 },
+    CASH: { ar: "نقدي", color: 3 },
+    CARD: { ar: "بطاقة", color: 4 },
+    BANK: { ar: "تحويل", color: 5 },
+  },
   status: {
     PENDING: { ar: "معلق", color: 1 },
     PAID: { ar: "مدفوع", color: 2 },
@@ -53,7 +64,7 @@ const content = {
 let o = {
   customer: "Customer 1",
   lineItems: 10,
-  paymentMethod: "on-delivery",
+  payment: { accountHolder: "Mr Tester", acountNumber: "ING06B887823483542", bic: "FJENKXX" },
   total: 120,
   currency: "€",
   status: "PENDING",

@@ -59,7 +59,7 @@ export default function StoreById({ children, params }) {
         </label>
       </section>
 
-      <section className="mt-5 flex justify-between lazy-c">
+      <section className="mt-5 mb-3 flex justify-between lazy-c">
         <InputField editable defaultValue={name} title="Edit name" inCls="rounded-md text-xl font-bold" />
 
         <ToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)}>

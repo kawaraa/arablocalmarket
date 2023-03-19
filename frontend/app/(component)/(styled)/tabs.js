@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -7,38 +7,36 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
   const p = usePathname();
   const search = useSearchParams();
   const current = search.toString();
-
-  const [active, setActive] = useState(null);
+  const list = useRef(null);
   const [bar, setBar] = useState([0, 0]);
 
-  const handleBarChange = ({ target: { offsetLeft, offsetWidth } }) => {
-    setBar([offsetLeft, offsetWidth]);
-    setTimeout(() => setBar([offsetLeft, 0]), 200);
-  };
-
-  const getActiveCls = (key) => (key != active?.key ? "" : "border-b-[1px] border-red");
+  const handleBarChange = ({ target: { offsetLeft, offsetWidth } }) => setBar([offsetLeft, offsetWidth]);
 
   useEffect(() => {
     const clean = (a, b) => (a + (b || "")).replace(/[^\w\s]/gi, "");
     const t = tabs.find((t) => clean(p, current) == clean(t.path));
-    setActive(t);
     if (onTabChange) onTabChange(t);
+
+    const isActive = (el) => el.getAttribute("href") == t.path;
+    for (let { children } of list.current.children) {
+      if (isActive(children[0])) setBar([children[0].offsetLeft, children[0].offsetWidth]);
+    }
   }, [p, current]);
 
   return (
-    <div className={`p-3 mb-3 md:mb-6 border border-bc shadow rounded-md ${cls}`}>
+    <div className={` mb-3 md:mb-6 border border-bc shadow rounded-md ${cls}`}>
       {title && <h2 className="pb-3 font-semibold text-lt text-xl font-medium">{title}</h2>}
 
       {/* flex-auto col-span-full xl:col-span-6  */}
 
-      <div className="relative border-b-[1px] border-bc">
-        <ul className="flex text-sm font-medium">
+      <div className="relative border-b-[1px] border-bc dark:border-bf">
+        <ul className="flex" ref={list}>
           {tabs.map((t, i) => (
             <li className="flex-1 text-center" key={i}>
               {/* role="tab" */}
               <Link
                 href={t.path}
-                className={`inline-block px-1 whitespace-nowrap py-3 ${getActiveCls(t.key)}`}
+                className={`relative inline-block px-1 whitespace-nowrap py-3 `}
                 onClick={handleBarChange}>
                 {t.text}
               </Link>

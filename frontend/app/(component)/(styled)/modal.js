@@ -28,7 +28,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             icon="close"
             handler={onCancel}
             label="Cancel and close the modal window"
-            cls="absolute top-5 right-5"
+            cls="absolute top-4 right-4"
           />
         )}
         <div className="block py-4 md:flex justify-start">
