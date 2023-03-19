@@ -41,8 +41,8 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             </div>
           )}
 
-          <div className="flex-auto mt-3 text-sm text-center md:text-left">
-            <h2 className="mb-1 text-lg">{title}</h2>
+          <div className="flex-auto mt-3 md:text-left">
+            <h2 className="mb-1 text-lg text-center">{title}</h2>
             {p.children}
           </div>
         </div>

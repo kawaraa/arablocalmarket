@@ -107,6 +107,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       // getUser("url")
       //   .then(({ jwt, user }) => updateUser(user))
       //   .catch(() => updateUser(null));
+      updateUser({ firstName: "Mr", lastName: "Tester", admin: true });
     }
 
     window.setLoading(false);

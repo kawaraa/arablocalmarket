@@ -3,7 +3,7 @@ import Badge from "./(styled)/badge";
 import SvgIcon from "./(styled)/svg-icon";
 
 export default function OrderCard({ lang, admin, onClick, ...order }) {
-  // console.log("OrderList: >>>", order.lineItems);
+  // console.log("OrderList: >>>", order);
 
   return (
     <li
@@ -15,7 +15,7 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
             <span className="inline-block w-3.5 mr-2">
               <SvgIcon name="avatar" />
             </span>
-            {order.customer}
+            {order.customer.firstName} {order.customer.lastName}
           </h3>
         )}
 
@@ -33,7 +33,7 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
           {content.payment[order.payment.type][lang] || order.payment.type}
         </span>
         <span>
-          <span className="mx-2">( {order.lineItems} )</span>
+          <span className="mx-2">( {order.lineItems.length} )</span>
           <span className="text-red">{order.currency + order.total}</span>
         </span>
       </p>
@@ -59,13 +59,4 @@ export const content = {
     RETURNED: { ar: "تم إرجاعه", color: 7 },
     ARCHIVED: { ar: "مؤرشف", color: 8 },
   },
-};
-
-let o = {
-  customer: "Customer 1",
-  lineItems: 10,
-  payment: { accountHolder: "Mr Tester", acountNumber: "ING06B887823483542", bic: "FJENKXX" },
-  total: 120,
-  currency: "€",
-  status: "PENDING",
 };

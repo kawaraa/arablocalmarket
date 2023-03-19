@@ -15,11 +15,13 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
   useEffect(() => {
     const clean = (a, b) => (a + (b || "")).replace(/[^\w\s]/gi, "");
     const t = tabs.find((t) => clean(p, current) == clean(t.path));
-    if (onTabChange) onTabChange(t);
+    if (t) {
+      if (onTabChange) onTabChange(t);
 
-    const isActive = (el) => el.getAttribute("href") == t.path;
-    for (let { children } of list.current.children) {
-      if (isActive(children[0])) setBar([children[0].offsetLeft, children[0].offsetWidth]);
+      const isActive = (el) => el.getAttribute("href") == t.path;
+      for (let { children } of list.current.children) {
+        if (isActive(children[0])) setBar([children[0].offsetLeft, children[0].offsetWidth]);
+      }
     }
   }, [p, current]);
 
