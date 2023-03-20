@@ -1,13 +1,16 @@
 {
   "collectionName": "components_user_information_warnings",
   "info": {
-    "displayName": "warning"
+    "displayName": "warning",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "message": {
-      "type": "richtext",
-      "required": true
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 5
     },
     "active": {
       "type": "boolean",

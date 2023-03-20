@@ -1,24 +1,33 @@
 {
   "collectionName": "components_user_information_payment_methods",
   "info": {
-    "displayName": "paymentMethod"
+    "displayName": "paymentMethod",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "type": {
       "type": "enumeration",
       "enum": [
-        "in-person",
-        "bank-transfer",
-        "online"
+        "ON-DELIVERY",
+        "ONLINE"
       ],
-      "default": "in-person",
+      "default": "ON-DELIVERY",
       "required": true
     },
-    "methods": {
-      "type": "string",
-      "required": true,
-      "unique": true
+    "method": {
+      "type": "enumeration",
+      "enum": [
+        "CASH",
+        "CARD",
+        "BANK"
+      ],
+      "default": "CASH",
+      "required": true
+    },
+    "value": {
+      "type": "json",
+      "required": false
     }
   }
 }

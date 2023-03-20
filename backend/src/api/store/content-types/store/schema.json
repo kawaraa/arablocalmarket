@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
@@ -19,15 +19,6 @@
     },
     "about": {
       "type": "text"
-    },
-    "status": {
-      "type": "enumeration",
-      "enum": [
-        "OPEN",
-        "CLOSED"
-      ],
-      "default": "CLOSED",
-      "required": true
     },
     "owner": {
       "type": "relation",
@@ -81,32 +72,12 @@
       "required": true,
       "private": true
     },
-    "currency": {
-      "type": "enumeration",
-      "enum": [
-        "USD-$",
-        "EUR-€",
-        "GBP-£",
-        "AUD-$",
-        "CAD-$",
-        "CHF-CHF",
-        "TRY-₺"
-      ],
-      "required": true,
-      "default": "USD-$"
-    },
     "openingHours": {
       "type": "component",
       "repeatable": true,
       "component": "user-information.opening-hours",
       "max": 7,
       "min": 0
-    },
-    "shippingRate": {
-      "type": "decimal",
-      "required": true,
-      "min": 0,
-      "default": 0
     },
     "payments": {
       "type": "component",
@@ -127,6 +98,36 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "$-USD",
+        "€-EUR",
+        "£-GBP",
+        "$-AUD",
+        "$-CAD",
+        "CHF-CHF",
+        "₺-TRY"
+      ],
+      "required": true,
+      "default": "€-EUR"
+    },
+    "deliveryRate": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "rating": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.rating"
     }
   }
 }

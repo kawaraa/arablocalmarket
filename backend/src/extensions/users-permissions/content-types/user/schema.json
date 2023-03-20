@@ -87,18 +87,6 @@
       "repeatable": true,
       "component": "user-information.address"
     },
-    "sentNotifications": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::notification.notification",
-      "mappedBy": "sender"
-    },
-    "receivedNotifications": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::notification.notification",
-      "mappedBy": "receiver"
-    },
     "cart": {
       "type": "component",
       "repeatable": true,
@@ -116,6 +104,11 @@
       "component": "user-information.warning",
       "required": true,
       "min": 0
+    },
+    "notifications": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-information.notification"
     }
   }
 }

@@ -22,16 +22,6 @@
       "type": "string",
       "required": true
     },
-    "paymentMethod": {
-      "type": "enumeration",
-      "enum": [
-        "in-person",
-        "bank-transfer",
-        "online"
-      ],
-      "default": "in-person",
-      "required": true
-    },
     "discount": {
       "type": "decimal",
       "required": true,
@@ -52,11 +42,12 @@
       "enum": [
         "PENDING",
         "PAID",
-        "FAIL",
+        "FAILED",
         "CANCELED",
         "SENT",
         "DELIVERED",
-        "RETURNED"
+        "RETURNED",
+        "ARCHIVED"
       ],
       "required": true,
       "default": "PENDING"
@@ -67,6 +58,10 @@
       "component": "product.line-item",
       "required": true,
       "min": 1
+    },
+    "payment": {
+      "type": "json",
+      "required": true
     }
   }
 }
