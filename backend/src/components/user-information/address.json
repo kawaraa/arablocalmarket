@@ -37,6 +37,12 @@
       "type": "boolean",
       "default": true,
       "required": true
+    },
+    "province": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "minLength": 1
     }
   }
 }

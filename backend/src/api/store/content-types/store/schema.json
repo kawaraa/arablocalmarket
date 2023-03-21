@@ -22,16 +22,15 @@
     },
     "owner": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "private": true
+      "inversedBy": "myStores"
     },
     "employees": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "private": true,
-      "inversedBy": "stores"
+      "inversedBy": "workStores"
     },
     "address": {
       "type": "component",
@@ -124,10 +123,16 @@
       "default": false,
       "required": true
     },
-    "rating": {
+    "ratings": {
       "type": "component",
       "repeatable": true,
       "component": "product.rating"
+    },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "favoriteStores"
     }
   }
 }

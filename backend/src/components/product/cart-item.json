@@ -24,11 +24,6 @@
       "required": true,
       "min": 1,
       "default": 1
-    },
-    "favorite": {
-      "type": "boolean",
-      "default": false,
-      "required": true
     }
   }
 }

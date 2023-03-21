@@ -55,6 +55,17 @@
       "type": "string",
       "maxLength": 20,
       "minLength": 1
+    },
+    "ratings": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.rating"
+    },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "favoriteProducts"
     }
   }
 }
