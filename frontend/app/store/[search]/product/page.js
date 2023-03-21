@@ -1,9 +1,6 @@
 import { cookies } from "next/headers";
-import Image from "next/image";
-import Link from "next/link";
 import ProductSearch from "../../../(component)/product-search";
-// import Rating from "../../../(component)/(styled)/rating";
-import ProductButtons from "../../../(component)/product-buttons";
+import ProductCard from "../../../(component)/product-card";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Nprice:12,ame / title products - ALM" };
@@ -26,27 +23,7 @@ export default function ProductsByStore({ params, searchParams }) {
 
       <ul className="flex flex-wrap">
         {store.products.map((p, i) => (
-          <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
-            <Link
-              href={`/store/${store.id}/product/${p.id}`}
-              className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-200">
-              <h3 className="text-center mt-2">{p.title}</h3>
-              <div className="overflow-hidden h-40 flex justify-center items-center">
-                <Image src={p.image} alt={p.title} width="250" height="250" className="max-h-36 w-auto" />
-              </div>
-
-              {/* <Rating stars={p.starts} cls="text-xs md:text-sm" /> */}
-
-              <div className="flex justify-between px-2">
-                <p className="text-red text-lg">
-                  {store.currency}
-                  {p.price}
-                </p>
-
-                <ProductButtons id={p.id} cls="fill-none" />
-              </div>
-            </Link>
-          </li>
+          <ProductCard currency={store.currency} {...p} link={`/store/${store.id}/product/${p.id}`} key={i} />
         ))}
       </ul>
     </div>

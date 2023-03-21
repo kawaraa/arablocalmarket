@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import Badge from "../../../(component)/(styled)/badge";
+// import { InputField } from "../../../(component)/(styled)/inputs";
 import Modal from "../../../(component)/(styled)/modal";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import LineItems from "../../../(component)/line-items";
@@ -26,36 +27,53 @@ export default function StoreOrders({ params, searchParams }) {
     setTimeout(() => setModalOpen(true), 300);
   };
 
+  const handleStatusChange = ({ target: { value } }) => {
+    console.log(value);
+    setClickedOrder({ ...clickedOrder, status: value });
+  };
   useEffect(() => {
-    // document.title = "Admin Store products - ALM";
+    // document.title = "Admin Store orders - ALM";
   }, []);
 
   return (
     <div>
       <ul className="print:hidden">
         {orders.map((o, i) => (
-          <OrderCard lang={lang} {...o} onClick={selectOrder} admin={true} key={i} />
+          <OrderCard lang={lang} {...o} onClick={selectOrder} admin key={i} />
         ))}
       </ul>
 
       <Modal
         tag="section"
-        title="Order details"
+        title={content.modalTitle[lang]}
         open={modalOpen}
         onCancel={clearSelectedOrder}
         okBtn={content.okBtn[lang]}
         onApprove={user?.admin ? window.print : null}>
         {clickedOrder && (
           <>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-8">
               <span className="text-sm font-semibold px-1 mr-3 border rounded print:text-3xl">
                 {clickedOrder.id}
               </span>
-              <Badge
-                text={oContent.status[clickedOrder.status][lang] || clickedOrder.status}
-                color={oContent.status[clickedOrder.status].color}
-                cls="text-sm"
-              />
+              <label htmlFor="order-status" className="relative inline-flex rounded-full">
+                <Badge
+                  text={oContent.status[clickedOrder.status][lang] || clickedOrder.status}
+                  color={oContent.status[clickedOrder.status].color}
+                  cls="text-sm"
+                />
+                <select
+                  name="orderStatus"
+                  id="order-status"
+                  onChange={handleStatusChange}
+                  className="absolute inset-0 appearance-none text-[transparent] bg-[transparent] rounded-full print:hidden">
+                  {Object.keys(oContent.status).map((k, i) => (
+                    <option value={k} key={i}>
+                      {oContent.status[k][lang] || k}
+                    </option>
+                  ))}
+                </select>
+              </label>
             </div>
 
             <LineItems bill items={clickedOrder.lineItems} currency={clickedOrder.currency} />
@@ -108,6 +126,14 @@ export default function StoreOrders({ params, searchParams }) {
                 </p>
               </address>
             )}
+
+            {/* <InputField
+              editable
+              full
+              defaultValue={clickedOrder.note}
+              cls="mt-5 "
+              inCls="rounded-md text-xl border-[1px] border-bc"
+            /> */}
           </>
         )}
       </Modal>
@@ -117,6 +143,7 @@ export default function StoreOrders({ params, searchParams }) {
 
 const content = {
   okBtn: { en: "Print", ar: "طباعة" },
+  modalTitle: { en: "Order details", ar: "تفاصيل الطلب" },
 };
 
 // { accountHolder: "Mr Tester", acountNumber: "ING06B887823483542", bic: "FJENKXX" }

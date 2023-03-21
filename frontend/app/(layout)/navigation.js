@@ -209,4 +209,24 @@ const content = {
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Logout", ar: "تسجيل خروج" }, path: "/logout" },
   ],
+  notifications: {
+    NEW_ORDER: { en: "You have a new order", ar: "لديك طلب جديد" },
+    READY_ORDER: {
+      en: "Your order with the number orderNumber is ready",
+      ar: "طلبك بالرقم orderNumber جاهز",
+    },
+    SENT_ORDER: { en: "Your order with the number orderNumber is sent", ar: "تم إرسال طلبك رقم orderNumber" },
+    DELIVERED: {
+      en: "Your order with the number orderNumber is delivered",
+      ar: "تم تسليم طلبك رقم orderNumber",
+    },
+    EXPIRATION: {
+      en: "Product with the number productNumber is about to expired",
+      ar: "المنتج رقم productNumber على وشك الانتهاء",
+    },
+    JOIN_REQUEST: {
+      en: "storeOwner sent you a request to join his team",
+      ar: "storeOwner ارسل لك طلب الانضمام إلى فريقه",
+    },
+  },
 };

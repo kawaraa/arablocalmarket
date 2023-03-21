@@ -28,7 +28,7 @@ export default function RootLayout({ children, searchParams }) {
         <script src="/config.js"></script>
       </head>
       <body
-        className={`relative min-h-screen print:min-h-fit bg-bg dark:bg-dbg text-t dark:text-dt ${
+        className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"
         }`}>
         <AppSessionContextProvider language={lang} theme={themeMode}>
@@ -36,7 +36,7 @@ export default function RootLayout({ children, searchParams }) {
             <Navigation />
           </header>
           <main
-            className="min-h-screen print:min-h-fit pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8"
+            className="min-h-screen pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:min-h-fit"
             dir="auto">
             {children}
             {!language && <SelectLanguage selectedLanguage={false} />}

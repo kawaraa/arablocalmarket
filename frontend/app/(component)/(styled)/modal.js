@@ -43,7 +43,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
           )}
 
           <div className="flex-auto mt-3 md:text-left">
-            <h2 className="mb-1 text-lg text-center print:text-3xl">{title}</h2>
+            <h2 className="mb-1 text-lg text-center print:text-3xl print:font-semibold">{title}</h2>
             {p.children}
           </div>
         </div>

@@ -14,7 +14,7 @@ export const StoreCustomerInfo = ({ description, ratings, distance }) => {
       <p className="flex justify-between items-center">
         <span>
           <Rating stars={ratings.stars} cls="text-md lg:text-base" />
-          {/* <span className="text-xs mx-1 text-t dark:text-dt">{ratings.total}</span> */}
+          <span className="text-xs mx-1 ">{ratings.total}</span>
         </span>
         <span>
           <strong className="text-sm">{distance}</strong>

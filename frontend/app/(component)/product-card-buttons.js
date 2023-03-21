@@ -2,7 +2,7 @@
 
 import SvgIcon from "./(styled)/svg-icon";
 
-export default function AddToFavoriteButtons({ id, cls }) {
+export default function ProductCardButtons({ id, cls }) {
   // console.log("AAA: >>>", id);
 
   const handleAddToFavorite = (e) => {

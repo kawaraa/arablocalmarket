@@ -7,8 +7,8 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
 
   return (
     <li
-      className="card p-2 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex"
-      onClick={() => onClick(order)}>
+      onClick={() => onClick(order)}
+      className="card p-2 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex">
       <div className="flex justify-between items-center">
         {admin && (
           <h3 className="flex-auto">
