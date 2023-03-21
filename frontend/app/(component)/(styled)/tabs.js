@@ -15,7 +15,9 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
   useEffect(() => {
     const clean = (a, b) => (a + (b || "")).replace(/[^\w\s]/gi, "");
     const t = tabs.find((t) => clean(p, current) == clean(t.path));
-    if (t) {
+
+    if (!t) setBar([0, 0]);
+    else {
       if (onTabChange) onTabChange(t);
 
       const isActive = (el) => el.getAttribute("href") == t.path;

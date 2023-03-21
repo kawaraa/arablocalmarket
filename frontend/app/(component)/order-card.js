@@ -1,6 +1,7 @@
 "use client";
 import Badge from "./(styled)/badge";
 import SvgIcon from "./(styled)/svg-icon";
+// import { getCssDelay } from "../(service)/style-methods";
 
 export default function OrderCard({ lang, admin, onClick, ...order }) {
   // console.log("OrderList: >>>", order);
@@ -8,7 +9,8 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
   return (
     <li
       onClick={() => onClick(order)}
-      className="card p-2 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex">
+      // style={getCssDelay()}
+      className="card p-2 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex lazy-c">
       <div className="flex justify-between items-center">
         {admin && (
           <h3 className="flex-auto">

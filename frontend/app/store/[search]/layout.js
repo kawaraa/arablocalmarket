@@ -44,7 +44,7 @@ export default function StoreLayout({ children, params, searchParams }) {
             path: path.replace("storeId", id),
             text: text[lang],
           }))}
-          cls="sticky top-14 z-1 bg-bg dark:bg-dbg shadow-none border-none lazy-c"
+          cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none lazy-c"
         />
         <section className="">{children}</section>
       </div>

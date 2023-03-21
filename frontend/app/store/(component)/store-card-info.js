@@ -1,5 +1,5 @@
 import SvgIcon from "../../(component)/(styled)/svg-icon";
-import Rating from "../../(component)/(styled)/rating";
+import StarRating from "../../(component)/(styled)/rating";
 
 export const StoreCustomerInfo = ({ description, ratings, distance }) => {
   return (
@@ -13,7 +13,7 @@ export const StoreCustomerInfo = ({ description, ratings, distance }) => {
 
       <p className="flex justify-between items-center">
         <span>
-          <Rating stars={ratings.stars} cls="text-md lg:text-base" />
+          <StarRating stars={ratings.stars} cls="text-md lg:text-base" />
           <span className="text-xs mx-1 ">{ratings.total}</span>
         </span>
         <span>
@@ -52,7 +52,7 @@ export const StoreAdminInfo = ({ totalOrders, employees, favorites, ratings }) =
 
       <p className="flex justify-between items-center">
         <span>
-          <Rating stars={ratings.stars} cls="lg:text-base" />
+          <StarRating stars={ratings.stars} cls="lg:text-base" />
           <span className="mx-1 text-t dark:text-dt">{ratings.total}</span>
         </span>
         <span className="flex items-center">

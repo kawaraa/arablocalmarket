@@ -59,7 +59,7 @@ export default function StoreById({ children, params }) {
         </label>
       </section>
 
-      <section className="mt-5 mb-3 flex justify-between lazy-c">
+      <section className="mt-5 mb-3 flex justify-between">
         <InputField editable defaultValue={name} title="Edit name" inCls="rounded-md text-xl font-bold" />
 
         <ToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)}>
@@ -74,7 +74,7 @@ export default function StoreById({ children, params }) {
             path: path.replace("storeId", id),
             text: text[lang],
           }))}
-          cls="sticky top-14 shadow-none border-none lazy-c"
+          cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
         />
         <section className="">{children}</section>
       </div>

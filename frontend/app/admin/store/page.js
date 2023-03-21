@@ -1,7 +1,6 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { LinkButton } from "../../(component)/(styled)/button";
 import Tabs from "../../(component)/(styled)/tabs";
 import { AppSessionContext } from "../../app-session-context";
 import StoreCard from "../../store/(component)/store-card";
@@ -22,15 +21,7 @@ export default function Stores({ params, searchParams }) {
       <Tabs
         tabs={content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }))}
         onTabChange={setActiveTab}
-      />
-
-      <LinkButton
-        link={content.createProduct.path}
-        title={content.createProduct.text[lang]}
-        icon="plus"
-        // onClick={() => setLoading(true)}
-        cls="fixed z-1 bottom-7 right-7 w-12 h-12 !p-0 rounded-lg"
-        iconCls="w-full"
+        cls="z-1 sticky top-14 md:top-16 bg-bg dark:bg-dbg"
       />
 
       {/* <h1 className="mx-2 my-3">Found ( 3 ) stores</h1> */}
@@ -73,5 +64,4 @@ const content = {
     { key: "1", path: "/admin/store?tab=my", text: { en: "My stores", ar: "متاجري" } },
     { key: "2", path: "/admin/store?tab=work", text: { en: "Work stores", ar: "مخازن العمل" } },
   ],
-  createProduct: { text: { en: "Create product", ar: "إنشاء منتج" }, path: "/admin/new-product" },
 };

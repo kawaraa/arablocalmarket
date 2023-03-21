@@ -23,7 +23,13 @@ export default function ProductsByStore({ params, searchParams }) {
 
       <ul className="flex flex-wrap">
         {store.products.map((p, i) => (
-          <ProductCard currency={store.currency} {...p} link={`/store/${store.id}/product/${p.id}`} key={i} />
+          <ProductCard
+            lang={lang}
+            currency={store.currency}
+            {...p}
+            link={`/store/${store.id}/product/${p.id}`}
+            key={i}
+          />
         ))}
       </ul>
     </div>
