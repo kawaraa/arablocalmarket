@@ -84,6 +84,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           autoComplete="postal-code"
           placeholder={content.postalCode[lang]}
           title={content.postalCode[lang]}
+          full
           cls="relative w-1/2 "
           inCls="rounded-r-md"
         />
@@ -98,6 +99,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         autoComplete="address-line1"
         placeholder={content.line1[lang]}
         title={content.line1[lang]}
+        full
         cls="relative shadow-sm"
       />
       <InputField
@@ -109,6 +111,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         autoComplete="address-line2"
         placeholder={content.line2[lang]}
         title={content.line2[lang]}
+        full
         cls="relative shadow-sm"
       />
     </div>

@@ -6,6 +6,7 @@ import Tabs from "../../../(component)/(styled)/tabs";
 import { AppSessionContext } from "../../../app-session-context";
 import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
+import Link from "next/link";
 
 export default function StoreById({ children, params }) {
   const { lang } = useContext(AppSessionContext);
@@ -13,7 +14,7 @@ export default function StoreById({ children, params }) {
   const [imageData, setImageData] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // console.log("Store ID, Name or Title: ", params.storeId);
+  // console.log("Todo: Show store based on this: ID or Title: ", params.storeId);
 
   let imageUrl = "/img/store-2.png";
   let id = 1;
@@ -21,7 +22,6 @@ export default function StoreById({ children, params }) {
   let name = "Store name";
 
   const handleChange = (e) => {
-    console.log(e.target.files[0]);
     setLoading(true);
     const reader = new FileReader();
     reader.onload = () => setImageData(reader.result) + setLoading(false);
@@ -42,10 +42,20 @@ export default function StoreById({ children, params }) {
           alt="Some description for the image"
           className="block w-full overlay"
         />
+
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
+
+        <Link
+          href={`/admin/pos?storeId=${id}`}
+          replace
+          title="Point of sale - Store mode"
+          className="absolute top-5 left-5 w-8">
+          <SvgIcon name="logo" />
+        </Link>
+
         <label
           htmlFor="store-cover"
-          className="absolute top-5 right-5 bg-blur text-dt w-8 border border-bc rounded-full cursor-pointer hover:text-red">
+          className="absolute top-5 right-5 bg-blur text-dt w-8 rounded-full cursor-pointer hover:text-red">
           <SvgIcon name="edit" />
           <input
             type="file"

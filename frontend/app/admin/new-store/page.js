@@ -8,11 +8,12 @@ import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(compon
 import { Button } from "../../(component)/(styled)/button";
 import Collapse from "../../(component)/collapse";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
+import ImageUpload from "../../(component)/(styled)/upload-image";
 // import Tooltip from "../(component)/(styled)/tooltip";
 
 export default function NewStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
-  const [imageData, setImageData] = useState("");
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState([]);
   const [deliver, setDeliver] = useState(false);
@@ -23,10 +24,7 @@ export default function NewStore({ params, searchParams }) {
   // console.log("NewStore: >>>", params, searchParams);
 
   const handleChange = (e) => {
-    setLoading(true);
-    const reader = new FileReader();
-    reader.onload = () => setImageData(reader.result) + setLoading(false);
-    reader.readAsDataURL(e.target.files[0]);
+    setFile(e.target.files[0]);
   };
 
   const addDay = ({ target: { name, checked } }) => {
@@ -44,31 +42,18 @@ export default function NewStore({ params, searchParams }) {
       <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
 
       {/* cover */}
-      <div className="overflow-hidden h-60 mb-3 flex justify-center items-center bg-lbg dark:bg-cbg rounded-lg ">
-        {imageData ? (
-          // To make responsive: max-w-full max-h-full
-          <img src={imageData} alt="Store cover image" className="w-full" />
-        ) : (
-          <label
-            htmlFor="store-cover"
-            className="relative w-32 mx-auto p-3 border border-bc rounded-lg  cursor-pointer">
-            <SvgIcon name="image" />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleChange}
-              id="store-cover"
-              className="w-0 h-0 hidden"
-            />
-            <div className="w-6 mx-auto">
-              <SvgIcon name="download" />
-            </div>
-          </label>
-        )}
-      </div>
+      <ImageUpload id="store-cover" name="image" />
 
-      <InputField type="text" name="name" placeholder="E.g. alm-store" required min="4" max="30" cls="mb-2">
-        <span className="block mb-1 text-lg font-semibold rq">Store name</span>
+      <InputField
+        type="text"
+        name="name"
+        placeholder="E.g. alm-store"
+        required
+        min="4"
+        max="30"
+        full
+        cls="mb-2">
+        <span className="block mb-1 font-semibold rq">Store name</span>
       </InputField>
 
       <Textarea
@@ -79,7 +64,7 @@ export default function NewStore({ params, searchParams }) {
 
       <div className="my-6 md:flex md:justify-between">
         <div className="flex justify-between">
-          <CurrencySelect lang={lang} required min="0" step="0.5" cls="mx-0" />
+          <CurrencySelect lang={lang} required cls="mx-0" />
 
           <ToggleSwitch name="deliver" checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
             <div className="mx-3">Deliver</div>
@@ -98,10 +83,10 @@ export default function NewStore({ params, searchParams }) {
         )}
       </div>
 
-      <h6 className="mb-2 text-lg font-semibold rq">Store Address</h6>
+      <h6 className="mb-2  font-semibold rq">Store Address</h6>
       <AddressInputs lang={lang} />
 
-      <h6 className="text-lg font-semibold mt-7 rq">Working days</h6>
+      <h6 className="font-semibold mt-7 rq">Working days</h6>
       <DaysCheckButtons lang={lang} checkedDays={days} onChange={addDay} />
       <div className="my-5">
         {days.map((d, i) => (
@@ -109,11 +94,15 @@ export default function NewStore({ params, searchParams }) {
         ))}
       </div>
 
-      <ToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} cls="!flex my-6">
+      <ToggleSwitch
+        name="status"
+        checked={status}
+        onCheck={({ checked }) => setStatus(checked)}
+        cls="!flex my-6">
         <div className="flex-1">This store will be open from now.</div>
       </ToggleSwitch>
 
-      <h6 className="text-lg font-semibold mt-7 rq">Payment methods</h6>
+      <h6 className="font-semibold mt-7 rq">Payment methods</h6>
       <Collapse
         title="Do you want to accept on delivery payment?"
         cls="my-3"
@@ -122,7 +111,7 @@ export default function NewStore({ params, searchParams }) {
         onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}>
         <div>
           <ToggleSwitch
-          name="onDeliveryCash"
+            name="onDeliveryCash"
             checked={!!onDeliveryPayment?.cash}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), cash: checked })}
             cls="!flex my-3">
@@ -130,7 +119,7 @@ export default function NewStore({ params, searchParams }) {
           </ToggleSwitch>
 
           <ToggleSwitch
-          name="onDeliveryCard"
+            name="onDeliveryCard"
             checked={!!onDeliveryPayment?.card}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), card: checked })}
             cls="!flex my-3">
@@ -138,7 +127,7 @@ export default function NewStore({ params, searchParams }) {
           </ToggleSwitch>
 
           <ToggleSwitch
-          name="onDeliveryBank"
+            name="onDeliveryBank"
             checked={!!onDeliveryPayment?.bank}
             onCheck={({ checked }) => setOnDeliveryPayment({ ...(onDeliveryPayment || {}), bank: checked })}
             cls="!flex my-3">
@@ -153,7 +142,7 @@ export default function NewStore({ params, searchParams }) {
         checked={!!onlinePayment}
         onCheck={() => setOnlinePayment(onlinePayment ? null : { bank: {} })}>
         <ToggleSwitch
-        name="online"
+          name="online"
           checked={!!onlinePayment?.card}
           onCheck={({ checked }) => setOnlinePayment({ ...(onlinePayment || {}), card: checked })}
           cls="!flex my-5">
@@ -175,6 +164,7 @@ export default function NewStore({ params, searchParams }) {
             label="Account holder"
             placeholder="E.g. John Doe"
             required
+            full
             cls="my-1"
           />
           <InputField
@@ -183,6 +173,7 @@ export default function NewStore({ params, searchParams }) {
             label="Account Number / IBAN"
             placeholder="E.g. FI21 1234 5698 7654 3210"
             required
+            full
             cls="my-1"
           />
           <InputField
@@ -192,20 +183,22 @@ export default function NewStore({ params, searchParams }) {
             title="Bank Identifier Number"
             placeholder="E.g. BOHIUS77"
             required
+            full
             cls="my-1"
           />
         </Collapse>
       </Collapse>
 
-      <h6 className="text-lg font-semibold mt-7">Business details</h6>
+      <h6 className="font-semibold mt-7">Business details</h6>
       <InputField
         type="text"
         name="cocNumber"
         label="COC Number"
         placeholder="E.g. 9876543"
+        full
         cls="mt-1 mb-3"
       />
-      <InputField type="text" name="vatNumber" label="VAT Number" placeholder="E.g. US52359525" />
+      <InputField type="text" name="vatNumber" label="VAT Number" placeholder="E.g. US52359525" full />
 
       <Button text="Create" type="submit" cls="w-full my-5" />
     </form>

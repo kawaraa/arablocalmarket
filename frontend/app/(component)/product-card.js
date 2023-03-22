@@ -40,7 +40,7 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
         {/* Use icon for the number of the variants */}
         {admin && (
           <div className="flex justify-between items-center mt-1">
-            <span>3</span>
+            <span title={content.variants[lang]}>3</span>
 
             <div className="flex items-center">
               <span className="text-xs">232</span>
@@ -61,4 +61,4 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
   );
 }
 
-const content = { stock: { en: "In stock", ar: "في المخزن" } };
+const content = { stock: { en: "In stock", ar: "في المخزن" }, variants: { en: "Variants", ar: "اصناف" } };

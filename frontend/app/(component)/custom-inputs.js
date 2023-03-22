@@ -93,7 +93,7 @@ export function DaysCheckButtons({ lang, checkedDays, ...p }) {
           name={d.en}
           checked={!!checkedDays.find(({ name }) => name == d.en)}
           key={i}
-          cls="flex justify-center items-center h-auto flex-1 m-1 py-1 px-2 capitalize"
+          cls="flex justify-center items-center flex-1 m-1 py-2 px-2 capitalize"
           {...p}>
           {d[lang]}
         </CheckCard>
@@ -129,6 +129,122 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
   );
 }
 
+export function CategorySelect({ lang, ...p }) {
+  return (
+    <Select
+      title={content.categories.text[lang]}
+      cls="flex items-center"
+      inCls="mx-1 !p-[2px] rounded-full"
+      {...p}>
+      {content.categories.values.map((v, i) => (
+        <option value={v.key} key={i}>
+          {v.text[lang]}
+        </option>
+      ))}
+    </Select>
+  );
+}
+
+export const categories = [
+  {
+    text: { en: "Vegetables and fruits", ar: "الخضروات والفواكه" },
+    key: "vegetable",
+    image: "/produce-vegetables-clipart.png",
+    numberOfItems: 1,
+  },
+  { text: { en: "Bakery", ar: "مخبوزات" }, key: "bakery", image: "/bread-clipart.png", numberOfItems: 10 },
+  {
+    text: { en: "Meat and poultry", ar: "لحم و دواجن" },
+    key: "meat",
+    image: "/cut-of-meat-clipart.png",
+    numberOfItems: 13,
+  },
+  {
+    text: { en: "Seafood", ar: "مأكولات بحرية" },
+    key: "seafood",
+    image: "/fish-clipart.png",
+    numberOfItems: 11,
+  },
+  {
+    text: { en: "Deli", ar: "الأطعمة" },
+    key: "deli",
+    image: "/burger-prepared-food-clipart.png",
+    numberOfItems: 3,
+  },
+  {
+    text: { en: "Dairy and eggs", ar: "الألبان والبيض" },
+    key: "dairy",
+    image: "/dairy-clipart.png",
+    numberOfItems: 31,
+  },
+  //text:{ { name: "Frozen foods"}, image: "", numberOfItems: 1031 },
+  {
+    text: { en: "Beverages", ar: "المشروبات" },
+    key: "beverages",
+    image: "/beverages-clipart.png",
+    numberOfItems: 52,
+  },
+  {
+    text: { en: "Snacks and candy", ar: "الوجبات الخفيفة والحلوى" },
+    key: "snack",
+    image: "/snacks-clipart.png",
+    numberOfItems: 86,
+  },
+  {
+    text: { en: "Canned and packaged goods", ar: "البضائع المعلبة والمعبأة" },
+    key: "canned",
+    image: "/canned-goods-clipart.png",
+    numberOfItems: 25,
+  },
+  {
+    text: {
+      en: "Legumes and grains",
+      ar: "الحبوب والبقوليات",
+    },
+    key: "legumes",
+    image: "/legumes-grains-clipart.png",
+    numberOfItems: 1031,
+  },
+  {
+    text: {
+      en: "Nuts and seeds",
+      ar: "المكسرات والبذور",
+    },
+    key: "seeds",
+    image: "/nuts-seeds-clipart.png",
+    numberOfItems: 1031,
+  },
+  {
+    text: { en: "Spices and sauces", ar: "البهارات والصلصات" },
+    key: "spices",
+    image: "/condiments-sauces-spices-clipart.png",
+    numberOfItems: 45,
+  },
+  {
+    text: { en: "Cleaning supplies", ar: "معدات تنظيف" },
+    key: "cleaning",
+    image: "/cleaning-supplies-clipart.png",
+    numberOfItems: 32,
+  },
+  {
+    text: { en: "Care products", ar: "منتجات العناية" },
+    key: "care",
+    image: "/care-products-clipart.png",
+    numberOfItems: 24,
+  },
+  // {text:{ name: "Health - wellness products"}, image: "", numberOfItems: 1031 },
+  {
+    text: { en: "Baby supplies", ar: "مستلزمات الأطفال" },
+    key: "baby",
+    image: "/baby-food-clipart.png",
+    numberOfItems: 35,
+  },
+  // {text:{ name: "Office - school supplies"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Electronics"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Home - kitchen supplies"}, image: "", numberOfItems: 1031 },
+  // {text:{ name: "Seasonal items"}, image: "", numberOfItems: 1031 },
+];
+
 const content = {
   firstName: { en: "First name", ar: "الاسم" },
   lastName: { en: "Last name", ar: "اسم العائلة" },
@@ -140,6 +256,10 @@ const content = {
   currencies: {
     text: { en: "Currency", ar: "العملة" },
     values: ["$-USD", "€-EUR", "£-GBP", "$-AUD", "$-CAD", "CHF-CHF", "₺-TRY"],
+  },
+  categories: {
+    text: { en: "Category", ar: "الفئة" },
+    values: categories,
   },
   day: {
     en: "Day",

@@ -18,12 +18,15 @@ export default function Navigation() {
 
   const signinLink = content.navLinks[content.navLinks.length - 1];
 
+  console.log(pathName == "/admin/pos");
+
   useEffect(() => {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
     else if (pathName?.toLowerCase() === "/ar") Cookies.set("lang", "ar");
   }, [pathName]);
 
+  // // Hide nav on scroll up and show it on scroll down
   // useEffect(() => {
   // base:  transition-top duration-300 ease-in-out
   //   let previousYOffset = window.pageYOffset;
@@ -39,6 +42,7 @@ export default function Navigation() {
   //   return () => window.removeEventListener("scroll", scrollHandler);
   // }, []);
 
+  if (pathName == "/admin/pos") return BackLink;
   return (
     <nav
       aria-label="Primary Navigation"
@@ -186,6 +190,12 @@ export default function Navigation() {
     </nav>
   );
 }
+
+const BackLink = (
+  <Link href="/" className="flex fixed top-5 right-5 w-6 hover:text-red">
+    <SvgIcon name="close" />
+  </Link>
+);
 
 const content = {
   themeModeIconsMap: { auto: "circleHalf", dark: "brightness", light: "moon" },

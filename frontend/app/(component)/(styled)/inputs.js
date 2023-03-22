@@ -77,7 +77,7 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
 
 export function CheckCard({ Tag = "label", children, cls, ...p }) {
   return (
-    <Tag htmlFor={p.name} className={`relative w-1/2 md:w-44 h-24 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
+    <Tag htmlFor={p.name} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
         id={p.name}
         title={p.title || p.name}
@@ -178,13 +178,14 @@ export function Textarea({ cls, ...p }) {
 export function Select({ children, cls, inCls, ...p }) {
   // autoComplete="day"
   return (
-    <label htmlFor={p.name} className={"inline-flex mx-1 " + cls}>
-      {p.title}
+    <label htmlFor={p.name} className={"inline-block mx-1 " + cls}>
+      {p.title && <span className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>{p.title}</span>}
+
       <select
         id={p.name}
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className={"block bg-cbg w-full px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
+        className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
         {...p}>
         {children}
       </select>
