@@ -13,9 +13,8 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         className={`z-9 fixed inset-0 h-0 p-0 bg-blur opacity-0 transition-opacity duration-200 ${cls}`}
         onClick={onCancel}></div>
 
-      {/* look into dialog tag */}
       <Transition
-        Tag={tag || "article"}
+        Tag={tag || "div"}
         base={`z-9 fixed left-5 ${c} right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"

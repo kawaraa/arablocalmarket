@@ -20,7 +20,7 @@ export default function ProductById({ params, searchParams }) {
   }, []);
 
   return (
-    <form className="mb-10">
+    <form dir="auto" className="mb-10">
       <h1 className="text-xl font-semibold text-center mb-3">{content.h1[lang]}</h1>
 
       <InputField
@@ -35,23 +35,34 @@ export default function ProductById({ params, searchParams }) {
         <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
       </InputField>
 
-      <Textarea name="about" title={content.description.placeholder[lang]} cls="" />
+      <Textarea name="about" title={content.description.placeholder[lang]} cls="mb-3" />
 
       <ImageUpload name="image" required />
 
       <CategorySelect lang={lang} cls="w-full mx-0" />
 
-      <InputField name="vendor" label={content.vendor[lang]} full />
+      <InputField
+        name="vendor"
+        label={content.vendor.text[lang]}
+        placeholder={content.vendor.placeholder[lang]}
+        full
+      />
 
-      <div className="relative">
-        <h3 className="block mb-1 font-semibold rq">{content.variant[lang]}</h3>
+      <div className="relative my-5">
+        <h3 className="block mb-1 font-semibold">{content.variant[lang]}</h3>
 
         {variants.map((v, i) => (
-          <Variant lang={lang} {...v} key={i} />
+          <Variant lang={lang} {...v} number={i + 1} key={i} />
         ))}
 
         <div className="text-right">
-          <Button name="addVariant" icon="plus" handler={() => setVariants([...variants, {}])} />
+          <Button
+            name="addVariant"
+            icon="plus"
+            handler={() => setVariants([...variants, {}])}
+            cls="!p-0"
+            iconCls="w-8"
+          />
         </div>
       </div>
     </form>
@@ -62,15 +73,18 @@ const content = {
   h1: { en: "New product", ar: "منتج جدي" },
   name: {
     text: { en: "Product name", ar: "اسم المنتج" },
-    placeholder: { en: "E.g. Black Tea", ar: "شاي أسود" },
+    placeholder: { en: "E.g. Black Tea", ar: "مثال, شاي أسود" },
   },
   description: {
     text: { en: "Product description", ar: "وصف المنتج" },
     placeholder: {
       en: "A fresh nice black tea from ... E.g. brand name, etc",
-      ar: "شاي أسود طازج ولذيذ من ... اسم العلامة التجارية، إلخ",
+      ar: "مثال, شاي أسود طازج ولذيذ من ... اسم العلامة التجارية، إلخ",
     },
   },
-  vendor: { en: "Vendor / Supplier", ar: "المورد / المزود" },
+  vendor: {
+    text: { en: "Vendor / Supplier", ar: "المورد / المزود" },
+    placeholder: { en: "E.g. Lipton", ar: "مثال, ليبتون" },
+  },
   variant: { en: "Variants", ar: "الاصناف" },
 };

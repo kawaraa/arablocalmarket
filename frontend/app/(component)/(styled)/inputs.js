@@ -4,6 +4,7 @@ import SvgIcon from "./svg-icon";
 
 export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, full, ...p }) {
   const [changed, setChanged] = useState(false);
+  const id = (Math.random() + "").replace("0.", "");
 
   const handleChange = (e) => {
     setChanged(true);
@@ -16,9 +17,14 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <label htmlFor={p.name} className={"block " + (cls || "")}>
+    <label htmlFor={id} dir="auto" className={"block " + (cls || "")}>
       {children}
-      {label && <span className={`block mt-2 mb-1 ${p.required ? "rq" : ""}`}>{label}</span>}
+      {label && (
+        <>
+          <span className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>{label}</span>
+          <span className="w-1 h-1"></span>
+        </>
+      )}
       <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
         <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
           {!full && (
@@ -26,12 +32,13 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           )}
 
           <input
-            id={p.name}
+            id={id}
+            dir={p.type == "number" ? "ltr" : "auto"}
             placeholder={p.title || p.name}
             title={p.title || p.name}
             aria-label={p.title || p.name}
             className={`${!full ? "absolute" : ""} w-full bg-cbg appearance-none px-2 py-1 ${
-              editable ? "pr-10" : "card border border-bc cd_hr"
+              editable ? "pr-10" : "card cd_hr"
             } fs ${inCls || "rounded-md"}`}
             {...p}
             onChange={editable ? handleChange : onChange}
@@ -56,12 +63,13 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
   const checkSize = Math.round(+size / 3);
   const checkBorder = Math.round(+size / 5);
   const radius = p.type == "radio" ? "rounded-full" : "rounded";
+  const id = (Math.random() + "").replace("0.", "");
 
   return (
-    <label htmlFor={p.name} className={`inline-flex justify-center items-center ${cls}`}>
+    <label htmlFor={id} className={`inline-flex justify-center items-center ${cls}`}>
       <div className={`relative w-[${size}px] h-[${size}px] flex justify-center items-center`}>
         <input
-          id={p.name}
+          id={id}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           className={`peer absolute top-0 left-0 w-full h-full appearance-none bg-bc dark:bg-cbg border border-bf ${radius} cursor-pointer`}
@@ -76,10 +84,12 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
 }
 
 export function CheckCard({ Tag = "label", children, cls, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
+
   return (
-    <Tag htmlFor={p.name} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
+    <Tag htmlFor={id} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
-        id={p.name}
+        id={id}
         title={p.title || p.name}
         aria-label={p.title || p.name}
         className="absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs"
@@ -92,10 +102,11 @@ export function CheckCard({ Tag = "label", children, cls, ...p }) {
 
 export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p }) {
   const h = Math.round(+size / 2);
-
+  const id = (Math.random() + "").replace("0.", "");
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
+
   return (
-    <label htmlFor={p.name} className={`inline-flex items-center cursor-pointer ${cls}`}>
+    <label htmlFor={id} className={`inline-flex items-center cursor-pointer ${cls}`}>
       {children}
       <div
         dir="ltr"
@@ -104,7 +115,7 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
           type="checkbox"
           checked={checked}
           onChange={handler}
-          id={p.name}
+          id={id}
           className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc dark:checked:bg-pc cursor-pointer focus:border-blue "
           {...p}
         />
@@ -122,19 +133,20 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
 /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
 
 export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
+  const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
   // const h = Math.round(+size / 2);
 
-  const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
   return (
     <label
       dir="ltr"
-      htmlFor={p.name}
+      htmlFor={id}
       className="overflow-hidden relative inline-block w-auto h-[24px] cursor-pointer bg-[#121212] rounded-full">
       <input
         type="checkbox"
         checked={checked}
         onChange={handler}
-        id={p.name}
+        id={id}
         className="absolute inset-0 w-full h-full bg-[transparent] border border-bc rounded-full appearance-none fs"
         {...p}
       />
@@ -175,13 +187,15 @@ export function Textarea({ cls, ...p }) {
 }
 
 export function Select({ children, cls, inCls, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
   // autoComplete="day"
+
   return (
-    <label htmlFor={p.name} className={"inline-block mx-1 " + cls}>
+    <label htmlFor={id} className={"inline-block mx-1 " + cls}>
       {p.title && <span className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>{p.title}</span>}
 
       <select
-        id={p.name}
+        id={id}
         title={p.title || p.name}
         aria-label={p.title || p.name}
         className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
@@ -192,21 +206,31 @@ export function Select({ children, cls, inCls, ...p }) {
   );
 }
 
-export function NumberInputField({ children, onChange, cls, inCls, ...p }) {
+export function NumberInputField({ children, onChange, label, cls, inCls, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
   const handler = (n) => onChange && onChange(n);
 
   return (
-    <div className={`inline-flex ${cls}`}>
-      {children || <label className="">{p.title}</label>}
-      <div className={`flex justify-center items-center ${p.title ? "mx-2" : ""}`}>
+    <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
+      {children || (
+        <>
+          <label htmlFor={id} className="text-sm">
+            {label}
+          </label>
+          <span className="!h-2 !w-2"></span>
+        </>
+      )}
+      <div className="flex justify-center items-center">
         <Button icon="minus" handler={() => handler(-1)} cls="w-6 h-6 !p-0 !rounded-full" iconCls="w-full" />
         <input
+          dir="ltr"
           type="number"
+          id={id}
           onChange={(e) => handler(Math.round(+e.target.value || 0))}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center font-semibold md:-mr-3 ${inCls || "w-10"}`}
+          className={`appearance-none text-center font-semibold md:-mr-3 bg-[transparent] ${inCls || "w-10"}`}
           {...p}
         />
         <Button icon="plus" handler={() => handler(1)} cls="w-6 s h-6 !p-0 !rounded-full" iconCls="w-full" />

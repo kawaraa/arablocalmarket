@@ -44,7 +44,6 @@ export default function StoreOrders({ params, searchParams }) {
       </ul>
 
       <Modal
-        tag="section"
         title={content.modalTitle[lang]}
         open={modalOpen}
         onCancel={clearSelectedOrder}

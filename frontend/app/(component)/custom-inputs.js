@@ -88,6 +88,47 @@ export function PriceInputField({ lang, compare, ...p }) {
     />
   );
 }
+export function WeightInputField({ lang, label, cls, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
+  return (
+    <div className={`relative flex items-center w-auto ${cls || ""}`}>
+      {label && (
+        <>
+          <label htmlFor={"weight-" + id}>{content.weight.text[lang]}</label>
+          <span className="w-2"></span>
+        </>
+      )}
+
+      <div className="relative flex-1">
+        <input
+          dir="ltr"
+          type="number"
+          name="weight"
+          id={"weight-" + id}
+          required
+          min="1"
+          max="1000"
+          step="1"
+          placeholder="10"
+          inputMode="numeric"
+          pattern="\d*"
+          autoComplete="one"
+          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-md hover:border-bf fs"
+          {...p}
+        />
+        <Select
+          cls="z-1 absolute right-0 h-full !m-0 rounded-r-md hover:border-bf"
+          inCls="rounded-r-md h-full">
+          {Object.keys(content.weight.units).map((unit, i) => (
+            <option value={unit} key={i}>
+              {content.weight.units[unit][lang] || unit}
+            </option>
+          ))}
+        </Select>
+      </div>
+    </div>
+  );
+}
 
 export function CurrencySelect({ lang, ...p }) {
   return (
@@ -275,6 +316,10 @@ const content = {
   confirmPassword: { en: "Confirm Password", ar: "تأكيد كلمة المرور" },
   price: { en: "Price", ar: "السعر" },
   comparePrice: { en: "Compare price", ar: "السعر المقارن" },
+  weight: {
+    text: { en: "Weight", ar: "الوزن" },
+    units: { G: { ar: "جرام" }, KG: { ar: "كغ" }, OZ: { ar: "وقية" }, LBS: { ar: "رطل" } },
+  },
   currencies: {
     text: { en: "Currency", ar: "العملة" },
     values: ["$-USD", "€-EUR", "£-GBP", "$-AUD", "$-CAD", "CHF-CHF", "₺-TRY"],
