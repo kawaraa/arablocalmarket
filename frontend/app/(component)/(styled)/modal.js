@@ -3,8 +3,9 @@ import Transition from "../../(layout)/transitions";
 import { Button, IconButton } from "./button";
 import SvgIcon from "./svg-icon";
 
-export default function Modal({ tag, title, okBtn, open, loading, onCancel, onApprove, icon, ...p }) {
+export default function Modal({ tag, title, okBtn, open, loading, onCancel, onApprove, icon, center, ...p }) {
   const cls = open ? "!h-full p-4 opacity-100" : "";
+  const c = center ? "top-1/2 -translate-y-1/2" : "bottom-10 md:bottom-1/2 md:translate-y-1/2";
 
   return (
     <>
@@ -15,7 +16,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
       {/* look into dialog tag */}
       <Transition
         Tag={tag || "article"}
-        base="z-9 fixed left-5 bottom-10 right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2 print:top-0 print:text-t"
+        base={`z-9 fixed left-5 ${c} right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"

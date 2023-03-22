@@ -14,10 +14,10 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
         </div>
 
         <div className="flex justify-between items-center">
-          <p className="text-red text-lg">
+          <strong className="text-red text-lg">
             {currency}
             {p.price}
-          </p>
+          </strong>
 
           {!admin ? (
             <ProductCardButtons id={p.id} cls="fill-none" />

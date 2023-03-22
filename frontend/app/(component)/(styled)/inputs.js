@@ -16,7 +16,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <label htmlFor={p.name} className={"block " + cls}>
+    <label htmlFor={p.name} className={"block " + (cls || "")}>
       {children}
       {label && <span className={`block mt-2 mb-1 ${p.required ? "rq" : ""}`}>{label}</span>}
       <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
@@ -119,9 +119,8 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
 }
 
 // Todo: https://codepen.io/pen?&editors=001
-{
-  /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
-}
+/* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
+
 export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   // const h = Math.round(+size / 2);
 
@@ -199,14 +198,15 @@ export function NumberInputField({ children, onChange, cls, inCls, ...p }) {
   return (
     <div className={`inline-flex ${cls}`}>
       {children || <label className="">{p.title}</label>}
-      <div className={`flex justify-center items-center ${p.title && "mx-2"}`}>
+      <div className={`flex justify-center items-center ${p.title ? "mx-2" : ""}`}>
         <Button icon="minus" handler={() => handler(-1)} cls="w-6 h-6 !p-0 !rounded-full" iconCls="w-full" />
         <input
+          type="number"
           onChange={(e) => handler(Math.round(+e.target.value || 0))}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center font-semibold ${inCls || "w-8"}`}
+          className={`appearance-none text-center font-semibold md:-mr-3 ${inCls || "w-10"}`}
           {...p}
         />
         <Button icon="plus" handler={() => handler(1)} cls="w-6 s h-6 !p-0 !rounded-full" iconCls="w-full" />

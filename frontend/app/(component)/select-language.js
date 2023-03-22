@@ -15,9 +15,7 @@ export default function SelectLanguage({ SelectLanguage }) {
   };
 
   return (
-    <Modal
-      open={open}
-      base="z-9 fixed left-5 top-[40%] right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl md:left-1/2 md:bottom-1/2 md:-translate-x-1/2 md:translate-y-1/2">
+    <Modal open={open} center>
       <div className="flex justify-center items-center">
         <CheckCard
           type="radio"

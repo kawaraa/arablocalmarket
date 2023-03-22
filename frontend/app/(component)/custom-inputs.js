@@ -68,6 +68,26 @@ export function PswInputField({ lang, confirm, ...p }) {
     />
   );
 }
+export function PriceInputField({ lang, compare, ...p }) {
+  const t = compare ? content.comparePrice[lang] : content.price[lang];
+  return (
+    <InputField
+      type="number"
+      name={compare ? "comparePrice" : "price"}
+      required
+      min="0"
+      max="1000"
+      step="0.10"
+      inputMode="numeric"
+      pattern="\d*"
+      autoComplete="one"
+      placeholder={compare ? "11.50" : "10.50"}
+      title={t}
+      label={t}
+      {...p}
+    />
+  );
+}
 
 export function CurrencySelect({ lang, ...p }) {
   return (
@@ -253,6 +273,8 @@ const content = {
   phone: { en: "Phone number", ar: "رقم الهاتف" },
   password: { en: "Password", ar: "كلمة المرور" },
   confirmPassword: { en: "Confirm Password", ar: "تأكيد كلمة المرور" },
+  price: { en: "Price", ar: "السعر" },
+  comparePrice: { en: "Compare price", ar: "السعر المقارن" },
   currencies: {
     text: { en: "Currency", ar: "العملة" },
     values: ["$-USD", "€-EUR", "£-GBP", "$-AUD", "$-CAD", "CHF-CHF", "₺-TRY"],

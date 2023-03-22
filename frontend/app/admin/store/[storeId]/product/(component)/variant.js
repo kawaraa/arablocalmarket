@@ -1,4 +1,5 @@
 import { InputField, NumberInputField } from "../../../../../(component)/(styled)/inputs";
+import { PriceInputField } from "../../../../../(component)/custom-inputs";
 
 export default function Variant({ lang, ...v }) {
   //  imageId,   weight, weightUnit, options: name, value
@@ -16,15 +17,11 @@ export default function Variant({ lang, ...v }) {
         <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span>
       </InputField>
 
-      <label className="">
-        <input type="number" name="price" className="card cd_hr fs" />
-      </label>
-
-      <label className="">
-        <input type="number" name="comparePrice" className="card cd_hr fs" />
-      </label>
-
-      <NumberInputField name="quantity" defaultValue={1} />
+      <div dir="ltr" className="flex items-end">
+        <PriceInputField lang={lang} full cls="flex-1 mr-2" />
+        <PriceInputField lang={lang} compare full cls="flex-1 mr-2" />
+        <NumberInputField name="quantity" defaultValue={1} cls="" inCls="w-14" />
+      </div>
     </div>
   );
 }
