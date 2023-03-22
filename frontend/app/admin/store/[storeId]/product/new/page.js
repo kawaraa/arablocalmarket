@@ -7,12 +7,12 @@ import ImageUpload from "../../../../../(component)/(styled)/upload-image";
 import { CategorySelect } from "../../../../../(component)/custom-inputs";
 import { AppSessionContext } from "../../../../../app-session-context";
 
-export default function ProductById({ params, searchParams }) {
+export default function ProductById({ params, searchParams, ...product }) {
   const { lang } = useContext(AppSessionContext);
   const [variants, setVariants] = useState([{}]);
   // const [imageData, setImageData] = useState("");
 
-  console.log("Product ID, Name or title: ", params.slug, variants);
+  // console.log("Todo: Product ID, Name or title: ", params.slug, variants);
 
   useEffect(() => {
     document.title = "Product Name / title - store name - ALM";
@@ -64,6 +64,10 @@ export default function ProductById({ params, searchParams }) {
             iconCls="w-8"
           />
         </div>
+      </div>
+
+      <div className="text-right">
+        <Button text="Save" type="submit" cls="w-full md:w-auto" />
       </div>
     </form>
   );

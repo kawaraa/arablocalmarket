@@ -5,6 +5,16 @@ import { PriceInputField, WeightInputField } from "../../../../../(component)/cu
 
 export default function Variant({ lang, number, ...v }) {
   const [options, setOptions] = useState([{}]);
+
+  const removeOption = (index) => {
+    setOptions(options.filter((_, i) => i !== index));
+  };
+  const handleChangeOption = (index, key, value) => {
+    const copy = [...options];
+    copy[index][key] = value;
+    setOptions(copy);
+  };
+
   //  imageId,
   return (
     <div className="relative my-3 card p-2 rounded">
@@ -45,14 +55,13 @@ export default function Variant({ lang, number, ...v }) {
       <WeightInputField lang={lang} label cls="mt-3" />
 
       {options.map((o, i) => (
-        <Option lang={lang} {...o} number={i + 1} key={i} />
+        <Option lang={lang} {...o} index={i} onChange={handleChangeOption} onRemove={removeOption} key={i} />
       ))}
 
       <div className="text-right mt-3">
         <Button
-          name="addVariant"
           icon="plus"
-          handler={() => setOptions([...options, {}])}
+          handler={() => options.length < 3 && setOptions([...options, {}])}
           cls="!p-0 !rounded-full"
         />
       </div>
@@ -60,10 +69,12 @@ export default function Variant({ lang, number, ...v }) {
   );
 }
 
-const Option = ({ lang, number }) => {
+const Option = ({ lang, index, onChange, onRemove, ...o }) => {
   return (
     <div className="relative flex pt-2 my-3 border-t-[1px] border-bc">
       <InputField
+        onChange={(e) => onChange(index, "name", e.target.value)}
+        value={o.name}
         type="text"
         name="name"
         required
@@ -76,6 +87,8 @@ const Option = ({ lang, number }) => {
       />
       <span className="w-2"></span>
       <InputField
+        onChange={(e) => onChange(index, "value", e.target.value)}
+        value={o.value}
         type="text"
         name="value"
         required
@@ -86,7 +99,9 @@ const Option = ({ lang, number }) => {
         full
         cls="flex-1 flex items-end"
       />
-      {number > 1 && <IconButton cls="absolute top-1 right-0 p-0" icon="close" size="3" />}
+      {index + 1 > 1 && (
+        <IconButton cls="absolute top-1 right-0 !p-0" icon="close" size="3" handler={() => onRemove(index)} />
+      )}
     </div>
   );
 };
