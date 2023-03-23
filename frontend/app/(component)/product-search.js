@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
+import SvgIcon from "./(styled)/svg-icon";
 
 export default function ProductSearch({ text, scroll }) {
   const { lang } = useContext(AppSessionContext);
@@ -24,14 +25,26 @@ export default function ProductSearch({ text, scroll }) {
 
   return (
     <>
-      <SearchBox
-        label={content.search[lang]}
-        onSearch={setSearch}
-        search={search}
-        // onShowFilter={setShowFilter}
-        onFinish={handleSearch}
-        cls="sm:w-1/3 lazy-c"
-      />
+      <div className="flex mb-3">
+        {/* <button
+          type="button"
+          onClick={() => setShowFilter(true)}
+          title="Show search filter"
+          aria-label="Search filter"
+          aria-expanded="true"
+          aria-haspopup="dialog"
+          className="w-8 p-1 hover:text-pc transition">
+          <SvgIcon name="filter" />
+        </button> */}
+
+        <SearchBox
+          label={content.search[lang]}
+          onSearch={setSearch}
+          search={search}
+          onFinish={handleSearch}
+          cls="flex-1 sm:flex-none lazy-c"
+        />
+      </div>
 
       <Modal
         title={content.filter[lang]}

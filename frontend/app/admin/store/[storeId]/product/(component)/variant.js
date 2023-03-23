@@ -3,7 +3,7 @@ import { Button, IconButton } from "../../../../../(component)/(styled)/button";
 import { InputField, NumberInputWithControl, Select } from "../../../../../(component)/(styled)/inputs";
 import { PriceInputField, WeightInputField } from "../../../../../(component)/custom-inputs";
 
-export default function Variant({ lang, number, ...v }) {
+export default function Variant({ lang, number, onRemove, ...v }) {
   const [options, setOptions] = useState(v.options || [{ name: "WEIGHT" }]);
 
   const removeOption = (index) => {
@@ -27,7 +27,7 @@ export default function Variant({ lang, number, ...v }) {
         <h4 className="mb-2">
           {content.h4[lang]} ( {number} )
         </h4>
-        {number > 1 && <IconButton icon="close" size="7" />}
+        {number > 1 && <IconButton icon="close" size="7" handler={onRemove} />}
       </div>
 
       <InputField
@@ -39,11 +39,11 @@ export default function Variant({ lang, number, ...v }) {
         min="4"
         max="25"
         full
-        cls="mb-2">
+        cls="mb-2 ">
         <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span>
       </InputField>
 
-      <div dir="ltr" className="flex items-end">
+      <div dir="ltr" className="flex items-end mb-8">
         <PriceInputField lang={lang} defaultValue={v.price} full cls="flex-1 mr-2" />
         <PriceInputField lang={lang} compare defaultValue={v.comparePrice} full cls="flex-1 mr-2" />
         <NumberInputWithControl
@@ -51,7 +51,7 @@ export default function Variant({ lang, number, ...v }) {
           required
           min="0"
           max="1000"
-          defaultValue={v.quantity}
+          defaultValue={v.quantity + 1}
           label={content.quantity[lang]}
           cls="flex-col"
           inCls="w-14"
@@ -60,7 +60,7 @@ export default function Variant({ lang, number, ...v }) {
 
       {options.map((o, index) => (
         <div className="relative pt-2 my-3 border-t-[1px] border-bc" key={index}>
-          <div className="flex">
+          <div className="flex relative">
             <label htmlFor={"name-" + index} className="w-32 mb-1 text-sm rq">
               {content.options.name[lang]}
             </label>
@@ -68,6 +68,9 @@ export default function Variant({ lang, number, ...v }) {
             <label htmlFor={"value-" + index} className="flex-1 mb-1 text-sm rq">
               {content.options.value[lang]}
             </label>
+            {index + 1 > 1 && (
+              <IconButton cls="!p-0" icon="close" size="3" handler={() => removeOption(index)} />
+            )}
           </div>
           <div className="flex ">
             <Select
@@ -103,15 +106,6 @@ export default function Variant({ lang, number, ...v }) {
               />
             )}
           </div>
-
-          {index + 1 > 1 && (
-            <IconButton
-              cls="absolute top-1 right-0 !p-0"
-              icon="close"
-              size="3"
-              handler={() => removeOption(index)}
-            />
-          )}
         </div>
       ))}
 

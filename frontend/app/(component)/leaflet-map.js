@@ -98,7 +98,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative pt-2">
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
       <link rel="stylesheet" href="/leaflet/leaflet.css" />
 
@@ -109,7 +109,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
         onFinish={handleAddressSearch}
       />
 
-      <div className="relative overflow-hidden rounded-lg">
+      <div className="relative overflow-hidden mt-3 rounded-lg">
         <div id="map" className="w-full h-64 rounded-lg"></div>
 
         {requestUserLocation && (

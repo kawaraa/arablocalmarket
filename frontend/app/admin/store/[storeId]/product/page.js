@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect } from "react";
 import { AppSessionContext } from "../../../../app-session-context";
-import ProductSearch from "../../../../(component)/product-search";
+// import ProductSearch from "../../../../(component)/product-search";
 import ProductCard from "../../../../(component)/product-card";
 import { LinkButton } from "../../../../(component)/(styled)/button";
 
@@ -26,7 +26,8 @@ export default function StoreProducts({ params, searchParams }) {
         iconCls="w-full"
       />
 
-      <ProductSearch text={searchParams.search} />
+      {/* <ProductSearch text={searchParams.search} /> */}
+
       <h2 className="text-lg mb-3 font-medium lazy-l">
         {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}
       </h2>

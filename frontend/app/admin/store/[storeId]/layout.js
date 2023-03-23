@@ -39,7 +39,6 @@ export default function StoreById({ children, params }) {
         title="Edit store cover">
         <Link
           href={`/admin/pos?storeId=${id}`}
-          replace
           title="Point of sale - Store mode"
           className="absolute top-5 left-5 w-8">
           <SvgIcon name="logo" />

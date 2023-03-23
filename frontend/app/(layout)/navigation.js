@@ -11,14 +11,11 @@ import Cookies from "../(service)/cookies";
 
 export default function Navigation() {
   const pathName = usePathname();
-  // const [cls, setCls] = useState("top-0");
   const [showMenu, setShowMenu] = useState(false);
   const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
     useContext(AppSessionContext);
 
   const signinLink = content.navLinks[content.navLinks.length - 1];
-
-  console.log(pathName == "/admin/pos");
 
   useEffect(() => {
     setShowMenu(false);
@@ -26,27 +23,11 @@ export default function Navigation() {
     else if (pathName?.toLowerCase() === "/ar") Cookies.set("lang", "ar");
   }, [pathName]);
 
-  // // Hide nav on scroll up and show it on scroll down
-  // useEffect(() => {
-  // base:  transition-top duration-300 ease-in-out
-  //   let previousYOffset = window.pageYOffset;
-
-  //   function scrollHandler() {
-  //     if (previousYOffset > window.pageYOffset) setCls("top-0 bg-bg dark:bg-dcbg shadow-md");
-  //     else setCls("-top-14 md:-top-16");
-
-  //     previousYOffset = window.pageYOffset;
-  //   }
-
-  //   window.addEventListener("scroll", scrollHandler);
-  //   return () => window.removeEventListener("scroll", scrollHandler);
-  // }, []);
-
-  if (pathName == "/admin/pos") return BackLink;
+  if (pathName == "/admin/pos") return "";
   return (
     <nav
       aria-label="Primary Navigation"
-      className={`z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg `}>
+      className="z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg ">
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
 
       <Link
@@ -190,12 +171,6 @@ export default function Navigation() {
     </nav>
   );
 }
-
-const BackLink = (
-  <Link href="/" className="flex fixed top-5 right-5 w-6 hover:text-red">
-    <SvgIcon name="close" />
-  </Link>
-);
 
 const content = {
   themeModeIconsMap: { auto: "circleHalf", dark: "brightness", light: "moon" },

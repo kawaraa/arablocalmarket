@@ -5,9 +5,12 @@ import SvgIcon from "./(styled)/svg-icon";
 import StarRating from "./(styled)/rating";
 
 export default function ProductCard({ lang, link, currency, admin, ...p }) {
+  const Tag = typeof link == "function" ? "div" : Link;
+  const newP = typeof link == "function" ? { onClick: () => link(p.id) } : { href: link };
+
   return (
     <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
-      <Link href={link} className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
+      <Tag {...newP} className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
         <h3 className="text-center mt-2">{p.title}</h3>
         <div className="overflow-hidden h-40 flex justify-center items-center">
           <Image src={p.image} alt={p.title} width="250" height="250" className="max-h-36 w-auto" />
@@ -56,7 +59,7 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
           <StarRating stars={3} cls="text-md md:text-lg" />
           {admin && <span className="text-xs mx-1">{324}</span>}
         </div>
-      </Link>
+      </Tag>
     </li>
   );
 }

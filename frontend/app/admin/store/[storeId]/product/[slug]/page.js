@@ -7,16 +7,12 @@ import ImageUpload from "../../../../../(component)/(styled)/upload-image";
 import { CategorySelect } from "../../../../../(component)/custom-inputs";
 import { AppSessionContext } from "../../../../../app-session-context";
 
-// Todo Think of view, create and update product admin page
-// Can the admin review and update the product at the same time?
-// Create button should be easy to reach?
+// Todo: preview the product
 
 export default function ProductById({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const [product, setProduct] = useState(null);
   const [variants, setVariants] = useState([{}]);
-
-  // console.log("Todo: Product ID, Name or title: ", params.slug, variants);
 
   const fetchProduct = async (id) => {
     console.log(id);
@@ -57,7 +53,7 @@ export default function ProductById({ params, searchParams }) {
         min="4"
         max="25"
         full={!product}
-        cls="mb-2 font-semibold">
+        cls="mb-2 text-lg font-semibold">
         <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
       </InputField>
 
@@ -69,7 +65,12 @@ export default function ProductById({ params, searchParams }) {
         cls="mb-3 rounded-md"
       />
 
-      <CategorySelect lang={lang} defaultValue={product?.category} cls="w-full mx-0" />
+      <CategorySelect
+        lang={lang}
+        defaultValue={product?.category}
+        cls="w-full mx-0"
+        inCls="text-center mx-2 rounded-full"
+      />
 
       <InputField
         editable={!!product}
@@ -83,8 +84,14 @@ export default function ProductById({ params, searchParams }) {
       <div className="relative my-5">
         <h3 className="block mb-1 font-semibold">{content.variant[lang]}</h3>
 
-        {variants.map((v, i) => (
-          <Variant lang={lang} {...v} number={i + 1} key={i} />
+        {variants.map((v, index) => (
+          <Variant
+            lang={lang}
+            {...v}
+            onRemove={() => setVariants(variants.filter((_, i) => i !== index))}
+            number={index + 1}
+            key={index}
+          />
         ))}
 
         {variants.length < 20 && (

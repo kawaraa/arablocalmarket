@@ -89,7 +89,7 @@ export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p 
         <Select
           onChange={(e) => onSelect(e.target.value)}
           cls="!m-0 rounded-r-md"
-          inCls="py-[5.5px] rounded-r-md ">
+          inCls="!py-0 rounded-r-md ">
           {options.map((op, i) => (
             <option value={op.key} key={i}>
               {op.text}

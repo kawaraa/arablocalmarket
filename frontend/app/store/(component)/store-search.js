@@ -5,6 +5,7 @@ import Cookies from "../../(service)/cookies";
 import Modal from "../../(component)/(styled)/modal";
 import LeafletMap from "../../(component)/leaflet-map";
 import SearchBox from "../../(component)/(styled)/search-box";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
 
 export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const router = useRouter();
@@ -13,9 +14,9 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const [showFilter, setShowFilter] = useState(false);
   const [position, setPosition] = useState(coordinates);
   const [range, setRange] = useState("0.5");
-  const [search, setSearch] = useState(text);
+  const [search, setSearch] = useState(text || "");
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchText) => {
     Cookies.set("coordinates", `${position[0]}:${position[1]}`);
     Cookies.set("range", range);
     router.push(`${pathname}?search=${search}`);
@@ -24,13 +25,26 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
 
   return (
     <>
-      <SearchBox
-        label="Search for a store"
-        onSearch={setSearch}
-        search={search}
-        onShowFilter={setShowFilter}
-        onFinish={handleSearch}
-      />
+      <div className="flex my-3">
+        <button
+          type="button"
+          onClick={() => setShowFilter(true)}
+          title="Show search filter"
+          aria-label="Search filter"
+          aria-expanded="true"
+          aria-haspopup="dialog"
+          className="w-8 p-1 hover:text-pc transition">
+          <SvgIcon name="filter" />
+        </button>
+
+        <SearchBox
+          label="Search for a store"
+          onSearch={setSearch}
+          search={search}
+          onFinish={handleSearch}
+          cls="flex-1 sm:flex-none"
+        />
+      </div>
 
       <Modal
         title="Select a location"
