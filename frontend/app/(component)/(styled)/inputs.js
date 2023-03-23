@@ -60,40 +60,37 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
     </div>
   );
 }
-export function InputWithSelect({ lang, label, cls, ...p }) {
+export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p }) {
   const id = (Math.random() + "").replace("0.", "");
+  const numProp = { inputMode: "numeric", pattern: `\d*`, min: "1", max: "1000", step: "1" };
+
   return (
-    <div className={`relative flex items-center w-auto ${cls || ""}`}>
-      {label && (
+    <div className={`flex items-center w-auto ${cls || ""}`}>
+      {typeof label != "sting" ? (
+        label
+      ) : (
         <>
-          <label htmlFor={"weight-" + id}>{content.weight.text[lang]}</label>
-          <span className="w-2"></span>
+          <label htmlFor={id}>{label}</label>
+          <span className="w-2 h-2"></span>
         </>
       )}
 
-      <div className="relative flex-1">
+      <div dir="ltr" className="flex-1 flex items-center">
         <input
-          dir="ltr"
-          type="number"
-          name="weight"
-          id={"weight-" + id}
-          required
-          min="1"
-          max="1000"
-          step="1"
-          placeholder="10"
-          inputMode="numeric"
-          pattern="\d*"
+          id={id}
           autoComplete="one"
-          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-md hover:border-bf fs"
+          className="w-full pl-2 pr-10 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
+          onChange={(e) => onChange(e.target.value)}
+          {...(p.type == "number" ? numProp : {})}
           {...p}
         />
         <Select
-          cls="z-1 absolute right-0 h-full !m-0 rounded-r-md hover:border-bf"
-          inCls="rounded-r-md h-full">
-          {Object.keys(content.weight.units).map((unit, i) => (
-            <option value={unit} key={i}>
-              {content.weight.units[unit][lang] || unit}
+          onChange={(e) => onSelect(e.target.value)}
+          cls="!m-0 rounded-r-md"
+          inCls="py-[5.5px] rounded-r-md ">
+          {options.map((op, i) => (
+            <option value={op.key} key={i}>
+              {op.text}
             </option>
           ))}
         </Select>
@@ -174,7 +171,6 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
 
 // Todo: https://codepen.io/pen?&editors=001
 /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
-
 export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   const id = (Math.random() + "").replace("0.", "");
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
@@ -279,13 +275,15 @@ export function Select({ children, label, cls, inCls, ...p }) {
   );
 }
 
-export function NumberInputWithControl({ children, onChange, label, cls, inCls, ...p }) {
+export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
   const id = (Math.random() + "").replace("0.", "");
   const handler = (n) => onChange && onChange(n);
 
   return (
     <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
-      {children || (
+      {typeof label != "sting" ? (
+        label
+      ) : (
         <>
           <label htmlFor={id} className="text-sm">
             {label}

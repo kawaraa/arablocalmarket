@@ -15,7 +15,7 @@ export default function ProductsByStore({ params, searchParams }) {
 
   return (
     <div>
-      <ProductSearch text={searchParams.search} />
+      <ProductSearch text={searchParams.search} scroll="180" />
 
       <h2 className="text-lg mb-3 font-medium lazy-l">
         {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}

@@ -2,7 +2,12 @@
 
 import { useContext, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
-import { InputField, NumberInputWithControl, Textarea, ToggleSwitch } from "../../(component)/(styled)/inputs";
+import {
+  InputField,
+  NumberInputWithControl,
+  Textarea,
+  ToggleSwitch,
+} from "../../(component)/(styled)/inputs";
 import { AddressInputs } from "../../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(component)/custom-inputs";
 import { Button } from "../../(component)/(styled)/button";
@@ -76,9 +81,9 @@ export default function NewStore({ params, searchParams }) {
             onChange={null}
             required
             cls="w-full md:w-auto my-3 md:my-0"
-            inCls="w-12">
-            <label className="flex-1 md:flex-initial md:mx-2 ">Delivery rate</label>
-          </NumberInputWithControl>
+            inCls="w-12"
+            label={<label className="flex-1 md:flex-initial md:mx-2 ">Delivery rate</label>}
+          />
         )}
       </div>
 

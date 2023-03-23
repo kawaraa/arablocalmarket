@@ -28,8 +28,8 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
 
   return (
     <div
-      className={`relative overflow-hidden mb-3 flex justify-center items-center bg-lbg dark:bg-cbg rounded-lg ${
-        cls || "max-h-60"
+      className={`relative overflow-hidden mb-3 -mx-1 sm:mx-0 flex justify-center items-center bg-lbg dark:bg-cbg sm:rounded-lg ${
+        cls || "h-44"
       }`}>
       {input?.current?.files[0] || imageUrl ? (
         <>

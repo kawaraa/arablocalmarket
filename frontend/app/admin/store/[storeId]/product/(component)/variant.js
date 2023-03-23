@@ -62,9 +62,6 @@ export default function Variant({ lang, number, ...v }) {
         />
       </div>
 
-      <WeightInputField lang={lang} label cls="mt-3" />
-      {/* <InputWithSelect lang={lang} label cls="mt-3" /> */}
-
       {options.map((o, index) => (
         <div className="relative pt-2 my-3 border-t-[1px] border-bc" key={index}>
           <div className="flex">
@@ -93,7 +90,7 @@ export default function Variant({ lang, number, ...v }) {
             <span className="w-2"></span>
 
             {o.name === "WEIGHT" ? (
-              <WeightInputField lang={lang} label cls="mt-3" />
+              <WeightInputField lang={lang} cls="" />
             ) : (
               <InputField
                 id={"value-" + index}
@@ -152,9 +149,4 @@ const content = {
       // SCENT: { ar: "الرائحة", placeholder: { en: "E.g. Sweet", ar: "مثال، حلو" } },
     },
   },
-
-  // options: {
-  //   name: { text: { en: "Name", ar: "الاسم" }, placeholder: { en: "E.g. Color", ar: "مثال، لون" } },
-  //   value: { text: { en: "Value", ar: "القيمة" }, placeholder: { en: "E.g. Black", ar: "مثال، أسود" } },
-  // },
 };

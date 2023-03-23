@@ -19,17 +19,15 @@ export default function StoreLayout({ children, params, searchParams }) {
 
   return (
     <article>
-      <section className="relative text-bg sm:h-[40vh] sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
-        <div className="overflow-hidden flex items-center sm:absolute sm:-bottom-10 sm:left-6 max-h-[40vh] w-full sm:w-40 rounded-2xl">
-          <Image
-            src={imageUrl}
-            width="250"
-            height="250"
-            alt="Some description for the image"
-            className="block w-full overlay"
-          />
-          <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div>
-        </div>
+      <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 text-bg h-44 sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
+        <Image
+          src={imageUrl}
+          width="250"
+          height="250"
+          alt="Some description for the image"
+          className="block w-auto"
+        />
+        <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
         <h1 className="absolute w-full top-8 px-8 text-xl font-bold flex items-center lazy-l">
           <span className={`inline-block w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
           {name}
@@ -37,7 +35,7 @@ export default function StoreLayout({ children, params, searchParams }) {
         <StoreLinks />
       </section>
 
-      <div className="mt-8 sm:mt-16 pb-6 border-b-2 border-bc">
+      <div className="mt-3 pb-6 border-b-2 border-bc">
         <Tabs
           tabs={content.tabs.map(({ key, path, text }) => ({
             key,
@@ -54,8 +52,8 @@ export default function StoreLayout({ children, params, searchParams }) {
 
 const content = {
   tabs: [
-    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
-    { key: "2", path: "/store/storeId/category", text: { en: "Category", ar: "الفئات" } },
     { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
+    { key: "2", path: "/store/storeId/category", text: { en: "Category", ar: "الفئات" } },
+    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
   ],
 };

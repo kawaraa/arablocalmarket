@@ -45,7 +45,7 @@ export default async function StoresNearby({ searchParams }) {
       <ul className="flex flex-wrap  mx-auto mb-16">
         <StoreCard
           Tag="li"
-          link={"store/1"}
+          link={"store/1/product"}
           name="Store name 1"
           imageUrl="/img/store-3.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -55,7 +55,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/2"}
+          link={"store/2/product"}
           name="Store name 2"
           imageUrl="/img/store-1.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -65,7 +65,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/3"}
+          link={"store/3/product"}
           name="Store name 3"
           imageUrl="/img/store-0.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -75,7 +75,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/4"}
+          link={"store/4/product"}
           name="Store name 4"
           imageUrl="/img/store-2.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -85,7 +85,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/5"}
+          link={"store/5/product"}
           name="Store name 5"
           imageUrl="/img/store-4.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -95,7 +95,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/6"}
+          link={"store/6/product"}
           name="Store name 6"
           imageUrl="/img/store-5.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -105,7 +105,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/7"}
+          link={"store/7/product"}
           name="Store name 7"
           imageUrl="/img/store-6.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"
@@ -115,7 +115,7 @@ export default async function StoresNearby({ searchParams }) {
         />
         <StoreCard
           Tag="li"
-          link={"store/8"}
+          link={"store/8/product"}
           name="Store name 8"
           imageUrl="/img/store-7.png"
           description="hef wfiuhfw ffpuhf wefwfpwuef wf"

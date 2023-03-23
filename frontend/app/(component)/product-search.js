@@ -1,11 +1,11 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
 
-export default function ProductSearch({ text }) {
+export default function ProductSearch({ text, scroll }) {
   const { lang } = useContext(AppSessionContext);
   const router = useRouter();
   const pathname = usePathname();
@@ -17,6 +17,10 @@ export default function ProductSearch({ text }) {
     router.push(`${pathname}?search=${search}`);
     if (showFilter) setShowFilter(false);
   };
+
+  useEffect(() => {
+    if (+scroll) setTimeout(() => window.scroll(0, scroll), 500);
+  }, [scroll]);
 
   return (
     <>

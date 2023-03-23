@@ -1,6 +1,6 @@
 "use client";
-
-import { CheckCard, InputField, Select } from "./(styled)/inputs";
+import categories from "../(layout)/json/categories.json";
+import { CheckCard, InputField, InputWithSelect, Select } from "./(styled)/inputs";
 
 export function NameInputField({ lang, first, ...p }) {
   const t = first ? content.firstName[lang] : content.lastName[lang];
@@ -88,45 +88,16 @@ export function PriceInputField({ lang, compare, ...p }) {
     />
   );
 }
-export function WeightInputField({ lang, label, cls, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+export function WeightInputField({ lang, label, ...p }) {
   return (
-    <div className={`relative flex items-center w-auto ${cls || ""}`}>
-      {label && (
-        <>
-          <label htmlFor={"weight-" + id}>{content.weight.text[lang]}</label>
-          <span className="w-2"></span>
-        </>
-      )}
-
-      <div className="relative flex-1">
-        <input
-          dir="ltr"
-          type="number"
-          name="weight"
-          id={"weight-" + id}
-          required
-          min="1"
-          max="1000"
-          step="1"
-          placeholder="10"
-          inputMode="numeric"
-          pattern="\d*"
-          autoComplete="one"
-          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-md hover:border-bf fs"
-          {...p}
-        />
-        <Select
-          cls="z-1 absolute right-0 h-full !m-0 rounded-r-md hover:border-bf"
-          inCls="rounded-r-md h-full">
-          {Object.keys(content.weight.units).map((unit, i) => (
-            <option value={unit} key={i}>
-              {content.weight.units[unit][lang] || unit}
-            </option>
-          ))}
-        </Select>
-      </div>
-    </div>
+    <InputWithSelect
+      label={!label ? null : content.weight.text[lang]}
+      options={Object.keys(content.weight.units).map((unit) => ({
+        key: unit,
+        text: content.weight.units[unit][lang] || unit,
+      }))}
+      {...p}
+    />
   );
 }
 
@@ -205,106 +176,6 @@ export function CategorySelect({ lang, ...p }) {
     </Select>
   );
 }
-
-export const categories = [
-  {
-    text: { en: "Vegetables and fruits", ar: "الخضروات والفواكه" },
-    key: "vegetable",
-    image: "/produce-vegetables-clipart.png",
-    numberOfItems: 1,
-  },
-  { text: { en: "Bakery", ar: "مخبوزات" }, key: "bakery", image: "/bread-clipart.png", numberOfItems: 10 },
-  {
-    text: { en: "Meat and poultry", ar: "لحم و دواجن" },
-    key: "meat",
-    image: "/cut-of-meat-clipart.png",
-    numberOfItems: 13,
-  },
-  {
-    text: { en: "Seafood", ar: "مأكولات بحرية" },
-    key: "seafood",
-    image: "/fish-clipart.png",
-    numberOfItems: 11,
-  },
-  {
-    text: { en: "Deli", ar: "الأطعمة" },
-    key: "deli",
-    image: "/burger-prepared-food-clipart.png",
-    numberOfItems: 3,
-  },
-  {
-    text: { en: "Dairy and eggs", ar: "الألبان والبيض" },
-    key: "dairy",
-    image: "/dairy-clipart.png",
-    numberOfItems: 31,
-  },
-  //text:{ { name: "Frozen foods"}, image: "", numberOfItems: 1031 },
-  {
-    text: { en: "Beverages", ar: "المشروبات" },
-    key: "beverages",
-    image: "/beverages-clipart.png",
-    numberOfItems: 52,
-  },
-  {
-    text: { en: "Snacks and candy", ar: "الوجبات الخفيفة والحلوى" },
-    key: "snack",
-    image: "/snacks-clipart.png",
-    numberOfItems: 86,
-  },
-  {
-    text: { en: "Canned and packaged goods", ar: "البضائع المعلبة والمعبأة" },
-    key: "canned",
-    image: "/canned-goods-clipart.png",
-    numberOfItems: 25,
-  },
-  {
-    text: {
-      en: "Legumes and grains",
-      ar: "الحبوب والبقوليات",
-    },
-    key: "legumes",
-    image: "/legumes-grains-clipart.png",
-    numberOfItems: 1031,
-  },
-  {
-    text: {
-      en: "Nuts and seeds",
-      ar: "المكسرات والبذور",
-    },
-    key: "seeds",
-    image: "/nuts-seeds-clipart.png",
-    numberOfItems: 1031,
-  },
-  {
-    text: { en: "Spices and sauces", ar: "البهارات والصلصات" },
-    key: "spices",
-    image: "/condiments-sauces-spices-clipart.png",
-    numberOfItems: 45,
-  },
-  {
-    text: { en: "Cleaning supplies", ar: "معدات تنظيف" },
-    key: "cleaning",
-    image: "/cleaning-supplies-clipart.png",
-    numberOfItems: 32,
-  },
-  {
-    text: { en: "Care products", ar: "منتجات العناية" },
-    key: "care",
-    image: "/care-products-clipart.png",
-    numberOfItems: 24,
-  },
-  // {text:{ name: "Health - wellness products"}, image: "", numberOfItems: 1031 },
-  {
-    text: { en: "Baby supplies", ar: "مستلزمات الأطفال" },
-    key: "baby",
-    image: "/baby-food-clipart.png",
-    numberOfItems: 35,
-  },
-  // {text:{ name: "Office - school supplies"}, image: "", numberOfItems: 1031 },
-  // {text:{ name: "Electronics"}, image: "", numberOfItems: 1031 },
-  // {text:{ name: "Home - kitchen supplies"}, image: "", numberOfItems: 1031 },
-  // {text:{ name: "Seasonal items"}, image: "", numberOfItems: 1031 },
-];
 
 const content = {
   firstName: { en: "First name", ar: "الاسم" },
