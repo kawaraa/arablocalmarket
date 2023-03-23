@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { Button, IconButton } from "../../../../../(component)/(styled)/button";
-import {
-  InputField,
-  NumberInputWithControl,
-  InputWithSelect,
-  Select,
-} from "../../../../../(component)/(styled)/inputs";
+import { InputField, NumberInputWithControl, Select } from "../../../../../(component)/(styled)/inputs";
 import { PriceInputField, WeightInputField } from "../../../../../(component)/custom-inputs";
 
 export default function Variant({ lang, number, ...v }) {
-  const [options, setOptions] = useState([{ name: "WEIGHT" }]);
+  const [options, setOptions] = useState(v.options || [{ name: "WEIGHT" }]);
 
   const removeOption = (index) => {
     setOptions(options.filter((_, i) => i !== index));
@@ -38,7 +33,8 @@ export default function Variant({ lang, number, ...v }) {
       <InputField
         type="text"
         name="barcode"
-        placeholder={content.barcode.placeholder[lang]}
+        disabled={!!v.barcode}
+        placeholder={v.barcode || content.barcode.placeholder[lang]}
         required
         min="4"
         max="25"
@@ -48,14 +44,14 @@ export default function Variant({ lang, number, ...v }) {
       </InputField>
 
       <div dir="ltr" className="flex items-end">
-        <PriceInputField lang={lang} full cls="flex-1 mr-2" />
-        <PriceInputField lang={lang} compare full cls="flex-1 mr-2" />
+        <PriceInputField lang={lang} defaultValue={v.price} full cls="flex-1 mr-2" />
+        <PriceInputField lang={lang} compare defaultValue={v.comparePrice} full cls="flex-1 mr-2" />
         <NumberInputWithControl
           name="quantity"
           required
           min="0"
           max="1000"
-          defaultValue={1}
+          defaultValue={v.quantity}
           label={content.quantity[lang]}
           cls="flex-col"
           inCls="w-14"
@@ -65,11 +61,11 @@ export default function Variant({ lang, number, ...v }) {
       {options.map((o, index) => (
         <div className="relative pt-2 my-3 border-t-[1px] border-bc" key={index}>
           <div className="flex">
-            <label htmlFor={"name-" + index} className="w-32 mb-1 font-semibold rq">
+            <label htmlFor={"name-" + index} className="w-32 mb-1 text-sm rq">
               {content.options.name[lang]}
             </label>
             <span className="w-2"></span>
-            <label htmlFor={"value-" + index} className="flex-1 mb-1 font-semibold rq">
+            <label htmlFor={"value-" + index} className="flex-1 mb-1 text-sm rq">
               {content.options.value[lang]}
             </label>
           </div>
@@ -90,12 +86,12 @@ export default function Variant({ lang, number, ...v }) {
             <span className="w-2"></span>
 
             {o.name === "WEIGHT" ? (
-              <WeightInputField lang={lang} cls="" />
+              <WeightInputField defaultValue={o.value} lang={lang} cls="" />
             ) : (
               <InputField
                 id={"value-" + index}
                 onChange={(e) => handleChangeOption(index, "value", e.target.value)}
-                value={o.value}
+                defaultValue={o.value}
                 type="text"
                 name="value"
                 required
@@ -119,9 +115,11 @@ export default function Variant({ lang, number, ...v }) {
         </div>
       ))}
 
-      <div className="text-right mt-3">
-        <Button icon="plus" handler={handleAddOption} cls="!p-0 !rounded-full" />
-      </div>
+      {options.length < 3 && (
+        <div className="text-right mt-3">
+          <Button icon="plus" handler={handleAddOption} cls="!p-0 !rounded-full" />
+        </div>
+      )}
     </div>
   );
 }

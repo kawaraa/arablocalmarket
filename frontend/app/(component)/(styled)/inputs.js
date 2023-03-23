@@ -39,8 +39,10 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
             placeholder={p.title}
             title={p.title}
             aria-label={p.title}
-            className={`${!full ? "absolute" : ""} w-full bg-cbg appearance-none px-2 py-1 ${
-              editable ? "pr-10" : "card cd_hr"
+            className={`${
+              !full ? "absolute" : ""
+            } w-full bg-cbg appearance-none px-2 py-1 disabled:cursor-no-drop  ${
+              editable ? "pr-10" : "card " + (p.disabled ? "" : "cd_hr")
             } fs ${inCls || "rounded-md"}`}
             {...p}
             onChange={editable ? handleChange : onChange}
@@ -66,7 +68,7 @@ export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p 
 
   return (
     <div className={`flex items-center w-auto ${cls || ""}`}>
-      {typeof label != "sting" ? (
+      {typeof label != "string" ? (
         label
       ) : (
         <>
@@ -236,9 +238,9 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
         aria-label={p.title}
         placeholder={p.title}
         autoComplete="on"
-        className={`block w-full h-32 mt-3 p-2 bg-cbg ${editable ? "pr-10" : "card cd_hr"} fs ${
-          cls || "rounded-md"
-        }`}
+        className={`block w-full mt-3 p-2 bg-cbg ${
+          editable ? "overflow-hidden focus:overflow-auto h-auto pr-10" : "h-32 card cd_hr"
+        } fs ${cls || "rounded-md"}`}
         {...p}></textarea>
       {editable && (
         <label
@@ -281,7 +283,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
 
   return (
     <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
-      {typeof label != "sting" ? (
+      {typeof label != "string" ? (
         label
       ) : (
         <>

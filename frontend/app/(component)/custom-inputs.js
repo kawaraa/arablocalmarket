@@ -164,7 +164,7 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
 export function CategorySelect({ lang, ...p }) {
   return (
     <Select
-      title={content.categories.text[lang]}
+      label={content.categories.text[lang]}
       cls="flex items-center"
       inCls="mx-1 !p-[2px] rounded-full"
       {...p}>
