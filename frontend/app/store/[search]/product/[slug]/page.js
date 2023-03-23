@@ -5,7 +5,7 @@ import { AppSessionContext } from "../../../../app-session-context";
 import SvgIcon from "../../../../(component)/(styled)/svg-icon";
 import { Button } from "../../../../(component)/(styled)/button";
 import { useRouter } from "next/navigation";
-import { NumberInputField } from "../../../../(component)/(styled)/inputs";
+import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Product Name / title - store name - ALM" };
@@ -140,7 +140,7 @@ export default function ProductBySlug({ params }) {
       </div>
 
       <div className="flex my-3">
-        <NumberInputField
+        <NumberInputWithControl
           name="quantity"
           value={quantity}
           min="1"

@@ -17,11 +17,13 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <label htmlFor={id} dir="auto" className={"block " + (cls || "")}>
+    <div dir="auto" className={"block " + (cls || "")}>
       {children}
       {label && (
         <>
-          <span className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>{label}</span>
+          <label htmlFor={id} className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>
+            {label}
+          </label>
           <span className="w-1 h-1"></span>
         </>
       )}
@@ -55,7 +57,48 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           </span>
         )}
       </span>
-    </label>
+    </div>
+  );
+}
+export function InputWithSelect({ lang, label, cls, ...p }) {
+  const id = (Math.random() + "").replace("0.", "");
+  return (
+    <div className={`relative flex items-center w-auto ${cls || ""}`}>
+      {label && (
+        <>
+          <label htmlFor={"weight-" + id}>{content.weight.text[lang]}</label>
+          <span className="w-2"></span>
+        </>
+      )}
+
+      <div className="relative flex-1">
+        <input
+          dir="ltr"
+          type="number"
+          name="weight"
+          id={"weight-" + id}
+          required
+          min="1"
+          max="1000"
+          step="1"
+          placeholder="10"
+          inputMode="numeric"
+          pattern="\d*"
+          autoComplete="one"
+          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-md hover:border-bf fs"
+          {...p}
+        />
+        <Select
+          cls="z-1 absolute right-0 h-full !m-0 rounded-r-md hover:border-bf"
+          inCls="rounded-r-md h-full">
+          {Object.keys(content.weight.units).map((unit, i) => (
+            <option value={unit} key={i}>
+              {content.weight.units[unit][lang] || unit}
+            </option>
+          ))}
+        </Select>
+      </div>
+    </div>
   );
 }
 
@@ -212,13 +255,17 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
   );
 }
 
-export function Select({ children, cls, inCls, ...p }) {
+export function Select({ children, label, cls, inCls, ...p }) {
   const id = (Math.random() + "").replace("0.", "");
   // autoComplete="day"
 
   return (
-    <label htmlFor={id} className={"inline-block mx-1 " + cls}>
-      {p.title && <span className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>{p.title}</span>}
+    <div className={"inline-block mx-1 " + cls}>
+      {label && (
+        <label htmlFor={id} className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>
+          {label}
+        </label>
+      )}
 
       <select
         id={id}
@@ -228,11 +275,11 @@ export function Select({ children, cls, inCls, ...p }) {
         {...p}>
         {children}
       </select>
-    </label>
+    </div>
   );
 }
 
-export function NumberInputField({ children, onChange, label, cls, inCls, ...p }) {
+export function NumberInputWithControl({ children, onChange, label, cls, inCls, ...p }) {
   const id = (Math.random() + "").replace("0.", "");
   const handler = (n) => onChange && onChange(n);
 
