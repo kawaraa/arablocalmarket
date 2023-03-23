@@ -52,22 +52,22 @@ export default function ProductBySlug({ params }) {
       <div className="flex justify-center items-center h-32 ">
         <Image
           src={product.images[imgPreviewIndex].src}
-          alt={product.title}
+          alt={product.name}
           width="250"
           height="250"
           className="h-full w-auto"
         />
       </div>
-      <div className="flex my-5">
+      {/* <div className="flex my-5">
         {product.images.map((img, i) => (
           <button
             className="overflow-hidden h-14 w-14 border border-bc mx-1 rounded-md"
             onClick={() => setImgPreviewIndex(i)}
             key={i}>
-            <Image src={img.src} alt={product.title} width="250" height="250" className="h-auto w-full" />
+            <Image src={img.src} alt={product.name} width="250" height="250" className="h-auto w-full" />
           </button>
         ))}
-      </div>
+      </div> */}
 
       <div className="flex items-center">
         <h3 className="w-16">{product.variants[0].options[0].name || ""}</h3>
@@ -154,7 +154,7 @@ export default function ProductBySlug({ params }) {
         </div>
       </div>
 
-      <h2 className="text-lg my-3">{product.title}</h2>
+      <h2 className="text-lg my-3">{product.name}</h2>
       <p className="text-sm mb-10">{product.description}</p>
 
       <div className="flex justify-around items-center fixed bottom-0 right-0 left-0 h-12 bg-lbg dark:bg-dbg">
@@ -185,7 +185,7 @@ const content = {
 
 const product = {
   id: "12",
-  title: "Chips 1",
+  name: "Chips 1",
   category: "snack",
   description:
     "Welcome to our supermarket, where we are committed to providing you with a convenient and enjoyable shopping experience. We understand that grocery shopping can be a chore, which is why we have worked hard to create a space that is easy to navigate, well-stocked with a wide range of products, and staffed by friendly and knowledgeable team members.",

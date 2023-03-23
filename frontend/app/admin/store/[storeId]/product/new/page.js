@@ -67,14 +67,14 @@ export default function ProductById({ params, searchParams, ...product }) {
       </div>
 
       <div className="text-right">
-        <Button text="Save" type="submit" cls="w-full md:w-auto" />
+        <Button text={content.btn[lang]} type="submit" cls="w-full md:w-auto py-2" />
       </div>
     </form>
   );
 }
 
 const content = {
-  h1: { en: "New product", ar: "منتج جدي" },
+  h1: { en: "New product", ar: "منتج جديد" },
   name: {
     text: { en: "Product name", ar: "اسم المنتج" },
     placeholder: { en: "E.g. Black Tea", ar: "مثال, شاي أسود" },
@@ -91,4 +91,5 @@ const content = {
     placeholder: { en: "E.g. Lipton", ar: "مثال, ليبتون" },
   },
   variant: { en: "Variants", ar: "الاصناف" },
+  btn: { en: "Create", ar: "إنشاء" },
 };

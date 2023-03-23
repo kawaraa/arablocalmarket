@@ -34,9 +34,9 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           <input
             id={id}
             dir={p.type == "number" ? "ltr" : "auto"}
-            placeholder={p.title || p.name}
-            title={p.title || p.name}
-            aria-label={p.title || p.name}
+            placeholder={p.title}
+            title={p.title}
+            aria-label={p.title}
             className={`${!full ? "absolute" : ""} w-full bg-cbg appearance-none px-2 py-1 ${
               editable ? "pr-10" : "card cd_hr"
             } fs ${inCls || "rounded-md"}`}
@@ -173,16 +173,42 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   );
 }
 
-export function Textarea({ cls, ...p }) {
+export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
+  const [changed, setChanged] = useState(false);
+  const id = (Math.random() + "").replace("0.", "");
+
+  const handleChange = (e) => {
+    setChanged(true);
+    if (onChange) onChange(e);
+  };
+  const handleBlur = (e) => {
+    setChanged(false);
+    if (onBlur) onBlur(e);
+  };
+
   return (
-    <textarea
-      dir="auto"
-      title={p.title || p.name}
-      aria-label={p.title || p.name}
-      placeholder={p.title || p.name}
-      autoComplete="on"
-      className={"block w-full h-32 mt-3 p-2 bg-cbg card cd_hr fs " + (cls || "rounded-md")}
-      {...p}></textarea>
+    <div className="relative">
+      <textarea
+        dir="auto"
+        id={id}
+        onChange={editable ? handleChange : onChange}
+        onBlur={editable ? handleBlur : onBlur}
+        title={p.title}
+        aria-label={p.title}
+        placeholder={p.title}
+        autoComplete="on"
+        className={`block w-full h-32 mt-3 p-2 bg-cbg ${editable ? "pr-10" : "card cd_hr"} fs ${
+          cls || "rounded-md"
+        }`}
+        {...p}></textarea>
+      {editable && (
+        <label
+          htmlFor={id}
+          className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
+          <SvgIcon name={changed ? "checkMark" : "edit"} />
+        </label>
+      )}
+    </div>
   );
 }
 
@@ -196,8 +222,8 @@ export function Select({ children, cls, inCls, ...p }) {
 
       <select
         id={id}
-        title={p.title || p.name}
-        aria-label={p.title || p.name}
+        title={p.title}
+        aria-label={p.title}
         className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
         {...p}>
         {children}

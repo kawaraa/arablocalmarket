@@ -7,7 +7,6 @@ import { AddressInputs } from "../../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(component)/custom-inputs";
 import { Button } from "../../(component)/(styled)/button";
 import Collapse from "../../(component)/collapse";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../(component)/(styled)/upload-image";
 // import Tooltip from "../(component)/(styled)/tooltip";
 

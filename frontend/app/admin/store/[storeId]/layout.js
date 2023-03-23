@@ -1,17 +1,16 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import Image from "next/image";
-import Tabs from "../../../(component)/(styled)/tabs";
+import Link from "next/link";
 import { AppSessionContext } from "../../../app-session-context";
+import Tabs from "../../../(component)/(styled)/tabs";
 import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
-import Link from "next/link";
+import ImageUpload from "../../../(component)/(styled)/upload-image";
 
 export default function StoreById({ children, params }) {
   const { lang } = useContext(AppSessionContext);
   const [status, setStatus] = useState(false);
-  const [imageData, setImageData] = useState("");
   const [loading, setLoading] = useState(false);
 
   // console.log("Todo: Show store based on this: ID or Title: ", params.storeId);
@@ -21,11 +20,10 @@ export default function StoreById({ children, params }) {
   let open = true;
   let name = "Store name";
 
-  const handleChange = (e) => {
+  const handleChange = (file) => {
     setLoading(true);
-    const reader = new FileReader();
-    reader.onload = () => setImageData(reader.result) + setLoading(false);
-    reader.readAsDataURL(e.target.files[0]);
+    console.log("File: >> ", file);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -34,17 +32,11 @@ export default function StoreById({ children, params }) {
 
   return (
     <article>
-      <section className="relative overflow-hidden -mx-1 flex items-center max-h-[24vh]">
-        <Image
-          src={imageData || imageUrl}
-          width="250"
-          height="250"
-          alt="Some description for the image"
-          className="block w-full overlay"
-        />
-
-        {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-
+      <ImageUpload
+        imageUrl={imageUrl}
+        onChange={handleChange}
+        alt="Store cover image"
+        title="Edit store cover">
         <Link
           href={`/admin/pos?storeId=${id}`}
           replace
@@ -52,22 +44,8 @@ export default function StoreById({ children, params }) {
           className="absolute top-5 left-5 w-8">
           <SvgIcon name="logo" />
         </Link>
-
-        <label
-          htmlFor="store-cover"
-          className="absolute top-5 right-5 bg-blur text-dt w-8 rounded-full cursor-pointer hover:text-red">
-          <SvgIcon name="edit" />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleChange}
-            id="store-cover"
-            title="Edit store cover"
-            aria-label="Edit store cover"
-            className="w-0 h-0 hidden"
-          />
-        </label>
-      </section>
+        {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
+      </ImageUpload>
 
       <section className="mt-5 mb-3 flex justify-between">
         <InputField editable defaultValue={name} title="Edit name" inCls="rounded-md text-xl font-bold" />
