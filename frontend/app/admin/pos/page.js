@@ -6,17 +6,20 @@ import Modal from "../../(component)/(styled)/modal";
 import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
+import BarcodeScanner from "../../(component)/barcode-scanner";
+import Scanner from "../../(component)/scanner";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
-  const [allProducts, setAllProducts] = useState([]);
+  const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
   const [foundProducts, setFoundProducts] = useState([]);
 
   const [showScanner, setShowScanner] = useState(false);
   const [search, setSearch] = useState("");
 
-  const handleSearch = async () => {
-    if (showScanner) setShowScanner(false);
+  const handleSearch = async (searchText) => {
+    // if (showScanner) setShowScanner(false);
+    setSearch(searchText);
   };
 
   const selectProduct = () => {
@@ -24,7 +27,6 @@ export default function Admin({ params, searchParams }) {
   };
 
   // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
-  const store = { id: "", currency: "€", products: fakeProducts };
 
   useEffect(() => {
     setFoundProducts(store.products);
@@ -40,7 +42,8 @@ export default function Admin({ params, searchParams }) {
             onSearch={setSearch}
             search={search}
             // onFinish={handleSearch}
-            cls="flex-1"
+            inCls="p-2"
+            cls="flex-1 "
           />
 
           <button
@@ -50,31 +53,40 @@ export default function Admin({ params, searchParams }) {
             aria-label="Search filter"
             aria-expanded="true"
             aria-haspopup="dialog"
-            className="w-8 p-1 hover:text-pc transition">
+            className="w-10 p-1 hover:text-pc transition">
             <SvgIcon name="scan" />
           </button>
         </div>
 
-        <h1 className="text-lg mb-3 text-center font-medium lazy-l">
+        <h1 className="text-lg my-3 text-center font-medium lazy-l">
           {content.h1[lang][0]} <span className="font-bold">( {foundProducts.length} )</span>{" "}
           {content.h1[lang][1]}
         </h1>
 
-        <ul className="flex flex-wrap">
+        {/* <ul className="flex flex-wrap">
           {foundProducts.map((p, i) => (
             <ProductCard lang={lang} currency={store.currency} admin {...p} link={selectProduct} key={i} />
           ))}
-        </ul>
+        </ul> */}
       </article>
 
-      <Modal
+      <Scanner onDetectBarcode={handleSearch} />
+      {/* <BarcodeScanner
+        title={content.scanner[lang]}
+        open={showScanner}
+        onClose={() => setShowScanner(false)}
+        onDetectBarcode={(e) => console.log("Success: ", e)}
+        onError={(e) => console.log("Error: ", e)}
+      /> */}
+
+      {/* <Modal
         title={content.scanner[lang]}
         okBtn={content.okBtn[lang]}
         open={showScanner}
         onApprove={handleSearch}
         onCancel={() => setShowScanner(false)}>
         <div className="text-left">Camera</div>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 import SvgIcon from "./svg-icon";
 
-export default function SearchBox({ label, onSearch, search, onFinish, cls }) {
+export default function SearchBox({ label, onSearch, search, onFinish, cls, inCls }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Hide the keyboard.
@@ -11,7 +11,7 @@ export default function SearchBox({ label, onSearch, search, onFinish, cls }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={"relative " + cls}>
+    <form onSubmit={handleSubmit} className={"relative flex items-center " + cls}>
       <input
         onChange={(e) => onSearch && onSearch(e.target.value)}
         value={search}
@@ -19,11 +19,12 @@ export default function SearchBox({ label, onSearch, search, onFinish, cls }) {
         name="search"
         autoComplete="search"
         placeholder={label}
-        className="w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-200"
-        tabIndex="0"
+        className={`w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-200 ${
+          inCls || ""
+        }`}
       />
 
-      <button className="absolute top-1.5 right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
+      <button className="absolute right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
         <SvgIcon name={"search"} />
       </button>
     </form>

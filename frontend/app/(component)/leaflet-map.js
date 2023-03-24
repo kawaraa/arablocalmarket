@@ -100,7 +100,7 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
   return (
     <div className="relative pt-2">
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
-      <link rel="stylesheet" href="/leaflet/leaflet.css" />
+      <link rel="stylesheet" href="/map/leaflet.css" />
 
       <SearchBox
         label="Search for a location"
