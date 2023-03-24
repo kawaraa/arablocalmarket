@@ -1,3 +1,5 @@
+// Author // https://serratus.github.io/quaggaJS/
+
 (function (root, factory) {
   var factorySource = factory.toString();
 
@@ -9510,7 +9512,7 @@
         });
       }
 
-      console.log(_inputImageWrapper.size);
+      // console.log(_inputImageWrapper.size);
       _boxSize = [
         vec2.create([0, 0]),
         vec2.create([0, _inputImageWrapper.size.y]),

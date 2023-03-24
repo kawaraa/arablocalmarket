@@ -17,7 +17,6 @@
     "eslint-config-next": "^13.1.6",
     "k-utilities": "^1.2.1",
     "next": "^13.1.6",
-    "quagga": "^0.6.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

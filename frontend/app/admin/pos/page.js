@@ -7,7 +7,6 @@ import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import BarcodeScanner from "../../(component)/barcode-scanner";
-import Scanner from "../../(component)/scanner";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
@@ -18,7 +17,7 @@ export default function Admin({ params, searchParams }) {
   const [search, setSearch] = useState("");
 
   const handleSearch = async (searchText) => {
-    // if (showScanner) setShowScanner(false);
+    if (showScanner) setShowScanner(false);
     setSearch(searchText);
   };
 
@@ -63,30 +62,16 @@ export default function Admin({ params, searchParams }) {
           {content.h1[lang][1]}
         </h1>
 
-        {/* <ul className="flex flex-wrap">
+        <ul className="flex flex-wrap">
           {foundProducts.map((p, i) => (
             <ProductCard lang={lang} currency={store.currency} admin {...p} link={selectProduct} key={i} />
           ))}
-        </ul> */}
+        </ul>
       </article>
 
-      <Scanner onDetectBarcode={handleSearch} />
-      {/* <BarcodeScanner
-        title={content.scanner[lang]}
-        open={showScanner}
-        onClose={() => setShowScanner(false)}
-        onDetectBarcode={(e) => console.log("Success: ", e)}
-        onError={(e) => console.log("Error: ", e)}
-      /> */}
-
-      {/* <Modal
-        title={content.scanner[lang]}
-        okBtn={content.okBtn[lang]}
-        open={showScanner}
-        onApprove={handleSearch}
-        onCancel={() => setShowScanner(false)}>
-        <div className="text-left">Camera</div>
-      </Modal> */}
+      <Modal title={content.scanner[lang]} open={showScanner} onCancel={() => setShowScanner(false)} center>
+        <BarcodeScanner onDetect={handleSearch} />
+      </Modal>
     </>
   );
 }
