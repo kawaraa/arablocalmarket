@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 
 export default function BarcodeScanner({ onDetect, onError }) {
@@ -7,15 +7,26 @@ export default function BarcodeScanner({ onDetect, onError }) {
   const width = 320;
   const height = 240;
 
+  const [image, setImage] = useState("");
+
   const initializeScanner = async () => {
     if (videoRef.current?.srcObject) return;
     try {
-      const constraints = { audio: false, video: { facingMode: { exact: "environment" } } };
+      const constraints = {
+        audio: false,
+        video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
+        advanced: [{ zoom: 500 }],
+      };
+      // { width: 1920, height: 1280 }, { aspectRatio: 1280 },
+      // zoom: true
+
+      // const constraints = { audio: false, video: { facingMode: { exact: "environment" } } };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       videoRef.current.srcObject = stream;
       videoRef.current.play();
+
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       canvas.width = width;
@@ -32,15 +43,21 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
       const check = () => {
         if (!videoRef.current?.srcObject) return;
-        ctx.drawImage(videoRef.current, 0, 0, width, height);
+
+        // ctx.drawImage(videoRef.current, 0, 0, width, height);
+        ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
+        // const img = canvas.toDataURL();
+        // "image/png" || "image/jpeg", 1.0
+        // setImage(img);
         Quagga.decodeSingle(
-          { decoder: { readers }, src: canvas.toDataURL("image/png"), locate: false, multiple: false },
+          { decoder: { readers }, src: canvas.toDataURL(), locate: false, multiple: false },
           checkResult
         );
       };
-
       check();
+      // setInterval(() => check(), 500);
     } catch (error) {
+      console.error(`${error.name}: ${error.message}`);
       stopStreams();
       if (error.message == "Permission denied") onError("Can not access camera.");
       else onError(error.message);
@@ -58,9 +75,19 @@ export default function BarcodeScanner({ onDetect, onError }) {
   useEffect(() => stopStreams);
 
   return (
-    <div className="text-center bg-blur min-h-44 w-full">
+    <div className="text-center min-h-44 w-full">
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
-      <video ref={videoRef} id="yourElement" style={{ width: "100%" }} />
+      <div className="relative">
+        <video ref={videoRef} id="yourElement" className="bg-blur" style={{ width: "100%" }} />
+
+        {/* <div className="absolute top-0 left-0 w-1/2 h-1/2 border translate-x-1/2 translate-y-1/2 "></div> */}
+        <div className="absolute inset-0 w-full h-full flex justify-center items-center">
+          <div className="w-1/3 h-1/3 border"></div>
+        </div>
+      </div>
+      {/* <div className=" mt-10">
+        <img src={image} alt="" className="w-full bg-bg2" />
+      </div> */}
     </div>
   );
 }
