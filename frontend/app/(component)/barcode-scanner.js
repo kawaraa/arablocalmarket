@@ -2,13 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 
-export default function BarcodeScanner({ onDetect, onError }) {
+export default function BarcodeScanner({ onDetect, onError, cls }) {
   const [borderSize, setBorderSize] = useState([]);
   const videoRef = useRef(null);
   const width = 500;
   const height = 250;
-
-  const [image, setImage] = useState("");
 
   const initializeScanner = async () => {
     if (videoRef.current?.srcObject) return;
@@ -17,7 +15,6 @@ export default function BarcodeScanner({ onDetect, onError }) {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
       };
-
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -50,12 +47,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
             (height / videoRef.current.videoHeight) * 100,
           ]);
         }
-        // console.log(videoRef.current.naturalWidth);
-        // console.log(videoRef.current.naturalHeight);
-        // console.log(videoRef.current.style.width, videoRef.current.style.height);
-
         // canvas.toDataURL("image/jpeg", 1.0);
-        setImage(canvas.toDataURL());
         Quagga.decodeSingle(
           { decoder: { readers }, src: canvas.toDataURL(), locate: false, multiple: false },
           checkResult
@@ -82,18 +74,16 @@ export default function BarcodeScanner({ onDetect, onError }) {
   useEffect(() => stopStreams, []);
 
   return (
-    <div className="text-center min-h-44 w-full">
+    <div
+      className={`overflow-hidden w-full h-50 flex justify-center items-center min-h-44 w-full ${cls || ""}`}>
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
       <div className="relative">
-        <video ref={videoRef} id="yourElement" className="bg-blur" style={{ width: "100%" }} />
+        <video ref={videoRef} id="yourElement" className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
 
-        {/* <div className="absolute top-0 left-0 w-1/2 h-1/2 border translate-x-1/2 translate-y-1/2 "></div> */}
-        <div className="absolute inset-0 w-full h-full flex justify-center items-center">
-          <div className={`w-[${borderSize[0] || 0}%] h-[${borderSize[1] || 0}%] border duration-150`}></div>
-        </div>
-      </div>
-      <div className=" mt-10">
-        <img src={image} alt="" className="w-full bg-bg2" />
+        <div
+          className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
+            borderSize[1] || 0
+          }%] border-4 border-red -translate-x-1/2 -translate-y-1/2`}></div>
       </div>
     </div>
   );

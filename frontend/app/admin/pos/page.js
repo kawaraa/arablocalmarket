@@ -70,7 +70,11 @@ export default function Admin({ params, searchParams }) {
       </article>
 
       <Modal title={content.scanner[lang]} open={showScanner} onCancel={() => setShowScanner(false)} center>
-        <BarcodeScanner onDetect={handleSearch} />
+        <BarcodeScanner
+          onDetect={handleSearch}
+          onError={(e) => console.log("Scanner Error: >>> " + e)}
+          cls="mt-5"
+        />
       </Modal>
     </>
   );

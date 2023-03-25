@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
+import { useEffect, useRef } from "react";
 
-export default function CustomBarcodeDetecter({ onDetect, onError }) {
+export default function CustomBarcodeDetecter({ onDetect, onError, cls }) {
   const videoRef = useRef(null);
   const width = 500;
   const height = 250;
@@ -17,13 +16,14 @@ export default function CustomBarcodeDetecter({ onDetect, onError }) {
         navigator.mozGetUserMedia ||
         navigator.msGetUserMedia;
 
-      // formats
-      const barcodeDetector = new BarcodeDetector({ formats: ["code_39", "codabar", "ean_13"] });
-      // check compatibility
+      const barcodeDetector = new BarcodeDetector({ formats });
       if (!barcodeDetector) throw new Error("Barcode Detector supported!");
       else console.log("Barcode Detector is not supported by this browser.");
 
-      const constraints = { audio: false, video: { facingMode: { exact: "environment" } } };
+      const constraints = {
+        audio: false,
+        video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
+      };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       const stream = await getUserMedia(constraints);
@@ -42,21 +42,13 @@ export default function CustomBarcodeDetecter({ onDetect, onError }) {
         const y = (videoRef.current.videoHeight - height) / 2;
         ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
 
-        const img = canvas.toDataURL();
-        setImage(canvas.toDataURL());
-
-        const barcodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
-        console.log(barcodes);
-        if (!barcodes[0]) return check();
-
-        barcodes.forEach((barcode) => {
-          console.log(barcode.rawValue);
-          onDetect(barcode.rawValue);
-          stopStreams();
-        });
+        const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
+        if (!barCodes[0]) return check();
+        onDetect(barCodes[0].rawValue);
+        stopStreams();
       };
 
-      // check();
+      check();
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();
@@ -79,9 +71,8 @@ export default function CustomBarcodeDetecter({ onDetect, onError }) {
   }, []);
 
   return (
-    <div className="text-center bg-blur min-h-44 w-full">
-      <video ref={videoRef} id="yourElement" style={{ width: "100%" }} />
-      <div></div>
+    <div className={`overflow-hidden w-full h-50 flex justify-center items-center w-full ${cls || ""}`}>
+      <video ref={videoRef} id="yourElement" className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
     </div>
   );
 }
