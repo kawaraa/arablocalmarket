@@ -4,8 +4,8 @@ import Script from "next/script";
 
 export default function BarcodeScanner({ onDetect, onError }) {
   const videoRef = useRef(null);
-  const width = 320;
-  const height = 240;
+  const width = 400;
+  const height = 200;
 
   const [image, setImage] = useState("");
 
@@ -32,8 +32,8 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const ctx = canvas.getContext("2d");
 
       videoRef.current.addEventListener("loadedmetadata", (e) => {
-        // canvas.width = videoRef.current.videoWidth;
-        // canvas.height = videoRef.current.videoHeight;
+        canvas.width = width;
+        canvas.height = height;
       });
 
       const checkResult = (result) => {
@@ -47,13 +47,13 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const check = () => {
         if (!videoRef.current?.srcObject) return;
 
-        // console.log(canvas.width);
-        // console.log(canvas.height);
-        // ctx.drawImage(videoRef.current, 0, 0, width, height);
+        console.log(canvas.width, videoRef.current.videoWidth);
+        console.log(canvas.height, videoRef.current.videoHeight);
+        // ctx.drawImage(videoRef.current, 0, 0, 640, 480);
         // ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
-        const x = (videoRef.current.videoWidth - 400) / 2;
-        const y = (videoRef.current.videoHeight - 200) / 2;
-        ctx.drawImage(videoRef.current, x, y, 400, 200, 0, 0, 400, 200);
+        const x = (videoRef.current.videoWidth - width) / 2;
+        const y = (videoRef.current.videoHeight - height) / 2;
+        ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
         const img = canvas.toDataURL();
         // "image/png" || "image/jpeg", 1.0
         // console.log("AAA");
@@ -88,7 +88,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
         {/* <div className="absolute top-0 left-0 w-1/2 h-1/2 border translate-x-1/2 translate-y-1/2 "></div> */}
         <div className="absolute inset-0 w-full h-full flex justify-center items-center">
-          <div className="w-[400px] h-[200px] border"></div>
+          <div className="w-1/2 h-1/3 border"></div>
         </div>
       </div>
       <div className=" mt-10">
