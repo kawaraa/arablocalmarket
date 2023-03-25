@@ -4,8 +4,8 @@ import Script from "next/script";
 
 export default function BarcodeScanner({ onDetect, onError }) {
   const videoRef = useRef(null);
-  const width = 400;
-  const height = 200;
+  const width = 500;
+  const height = 300;
 
   const [image, setImage] = useState("");
 
@@ -15,11 +15,10 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const constraints = {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
-        // advanced: [{ zoom: 300 }],
       };
       //  width: 1920, height: 1080,
       // { width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 },
-      // zoom: true
+      // zoom: true || // advanced: [{ zoom: 300 }],
 
       // const constraints = { audio: false, video: { facingMode: { exact: "environment" } } };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
