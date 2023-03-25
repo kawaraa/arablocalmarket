@@ -87,7 +87,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         />
       )}
       <div className="relative">
-        <video ref={videoRef} className="w-[400px] bg-lbg dark:bg-cbg mirror" />
+        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg " style={{ transform: "scaleX(-1)" }} />
 
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
