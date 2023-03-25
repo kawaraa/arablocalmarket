@@ -15,7 +15,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const constraints = {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
-        advanced: [{ zoom: 300 }],
+        // advanced: [{ zoom: 300 }],
       };
       //  width: 1920, height: 1080,
       // { width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 },
@@ -54,14 +54,11 @@ export default function BarcodeScanner({ onDetect, onError }) {
         const x = (videoRef.current.videoWidth - width) / 2;
         const y = (videoRef.current.videoHeight - height) / 2;
         ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
-        const img = canvas.toDataURL();
-        // "image/png" || "image/jpeg", 1.0
-        // console.log("AAA");
+        const img = canvas.toDataURL(); // "image/jpeg", 1.0
         setImage(img);
         Quagga.decodeSingle({ decoder: { readers }, src: img, locate: false, multiple: false }, checkResult);
       };
       check();
-      // setInterval(() => check(), 500);
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();
