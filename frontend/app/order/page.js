@@ -20,7 +20,10 @@ export default function Orders(props) {
     <div>
       <h1>Orders! {text}</h1>
       {/* <CustomBarcodeDetecter onDetect={(e) => console.log("Detected: >>> ", e)} /> */}
-      <BarcodeScanner onDetect={(e) => setText("Detected: >>> " + e)} />
+      <BarcodeScanner
+        onDetect={(e) => setText("Detected: >>> " + e)}
+        onError={(e) => setText("Detected: >>> " + e)}
+      />
       <section>
         <h3>Store 1 name</h3>
         {/* <ul>
