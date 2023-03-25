@@ -72,7 +72,8 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
   }, []);
 
   return (
-    <div className={`overflow-hidden w-full h-50 flex justify-center items-center w-full ${cls || ""}`}>
+    <div
+      className={`overflow-hidden w-full h-50 max-h-50 flex justify-center items-center w-full ${cls || ""}`}>
       {onClose && (
         <IconButton
           icon="close"
