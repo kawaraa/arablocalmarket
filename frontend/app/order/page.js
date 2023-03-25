@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import BarcodeScanner from "../(component)/barcode-scanner";
 import OrderCard from "../(component)/order-card";
 
 export default function Orders(props) {
@@ -12,7 +13,7 @@ export default function Orders(props) {
   return (
     <div>
       <h1>Orders!</h1>
-
+      <BarcodeScanner onDetect={console.log} onError={console.log} onClose={console.log} cls="mt-5" />
       <section>
         <h3>Store 1 name</h3>
         <ul>
