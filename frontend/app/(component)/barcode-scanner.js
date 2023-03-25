@@ -88,7 +88,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
         {/* <div className="absolute top-0 left-0 w-1/2 h-1/2 border translate-x-1/2 translate-y-1/2 "></div> */}
         <div className="absolute inset-0 w-full h-full flex justify-center items-center">
-          <div className="w-1/3 h-1/3 border"></div>
+          <div className="w-[300px] h-[150] border"></div>
         </div>
       </div>
       <div className=" mt-10">
