@@ -69,10 +69,11 @@ export default function Admin({ params, searchParams }) {
         </ul>
       </article>
 
-      <Modal title={content.scanner[lang]} open={showScanner} onCancel={() => setShowScanner(false)} center>
+      <Modal title={content.scanner[lang]} open={showScanner} center>
         <BarcodeScanner
           onDetect={handleSearch}
           onError={(e) => console.log("Scanner Error: >>> " + e)}
+          onClose={() => setShowScanner(false)}
           cls="mt-5"
         />
       </Modal>

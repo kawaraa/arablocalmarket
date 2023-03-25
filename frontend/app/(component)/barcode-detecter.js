@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { IconButton } from "./(styled)/button";
 
-export default function CustomBarcodeDetecter({ onDetect, onError, cls }) {
+export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls }) {
   const videoRef = useRef(null);
   const width = 500;
   const height = 250;
@@ -72,6 +73,14 @@ export default function CustomBarcodeDetecter({ onDetect, onError, cls }) {
 
   return (
     <div className={`overflow-hidden w-full h-50 flex justify-center items-center w-full ${cls || ""}`}>
+      {onClose && (
+        <IconButton
+          icon="close"
+          handler={() => onClose(stopStreams())}
+          label="Cancel and close the modal window"
+          cls="absolute top-4 right-4 print:hidden"
+        />
+      )}
       <video ref={videoRef} id="yourElement" className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
     </div>
   );

@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
+import { IconButton } from "./(styled)/button";
 
-export default function BarcodeScanner({ onDetect, onError, cls }) {
+export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
   const [borderSize, setBorderSize] = useState([]);
   const videoRef = useRef(null);
   const width = 500;
@@ -77,6 +78,15 @@ export default function BarcodeScanner({ onDetect, onError, cls }) {
     <div
       className={`overflow-hidden w-full h-50 flex justify-center items-center min-h-44 w-full ${cls || ""}`}>
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
+
+      {onClose && (
+        <IconButton
+          icon="close"
+          handler={() => onClose(stopStreams())}
+          label="Cancel and close the modal window"
+          cls="absolute top-4 right-4 print:hidden"
+        />
+      )}
       <div className="relative">
         <video ref={videoRef} id="yourElement" className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
 
