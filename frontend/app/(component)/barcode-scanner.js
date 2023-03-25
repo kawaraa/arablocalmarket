@@ -75,7 +75,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
   useEffect(() => stopStreams, []);
 
   return (
-    <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
+    <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full  ${cls || ""}`}>
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
       {onClose && (
@@ -87,7 +87,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         />
       )}
       <div className="relative">
-        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" />
+        <video ref={videoRef} className="w-[400px] bg-lbg dark:bg-cbg mirror" />
 
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
