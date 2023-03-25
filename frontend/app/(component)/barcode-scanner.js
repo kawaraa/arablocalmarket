@@ -14,8 +14,8 @@ export default function BarcodeScanner({ onDetect, onError }) {
     try {
       const constraints = {
         audio: false,
-        video: { facingMode: { exact: "environment" } },
-        advanced: [{ zoom: 500 }],
+        video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
+        advanced: [{ zoom: 300 }],
       };
       //  width: 1920, height: 1080,
       // { width: 1920, height: 1280 }, { aspectRatio: 1280 },
