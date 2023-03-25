@@ -15,7 +15,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const constraints = {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
-        // advanced: [{ zoom: 300 }],
+        advanced: [{ width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 }, { zoom: 300 }],
       };
       //  width: 1920, height: 1080,
       // { width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 },
@@ -45,8 +45,8 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const check = () => {
         if (!videoRef.current?.srcObject) return;
 
-        // ctx.drawImage(videoRef.current, 0, 0, width, height);
-        ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
+        ctx.drawImage(videoRef.current, 0, 0, width, height);
+        // ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
         const img = canvas.toDataURL();
         // "image/png" || "image/jpeg", 1.0
         console.log("AAA");
