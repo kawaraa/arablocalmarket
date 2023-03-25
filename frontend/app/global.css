@@ -53,6 +53,12 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
 } */
+
+video.mirror {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
 .fs:focus {
   outline: #9aa0a6 solid 1px;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

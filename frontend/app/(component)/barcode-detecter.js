@@ -81,7 +81,7 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
           cls="absolute top-4 right-4 print:hidden"
         />
       )}
-      <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
+      <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" />
     </div>
   );
 }
