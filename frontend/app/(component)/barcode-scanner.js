@@ -86,7 +86,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
           cls="absolute top-4 right-4 print:hidden"
         />
       )}
-      <div className="relative h-[900px]">
+      <div className="relative">
         <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
 
         <div
