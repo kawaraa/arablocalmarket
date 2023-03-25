@@ -14,10 +14,10 @@ export default function BarcodeScanner({ onDetect, onError }) {
     try {
       const constraints = {
         audio: false,
-        video: { width: 640, height: 480, facingMode: { exact: "environment" } },
+        video: { facingMode: { exact: "environment" } },
         advanced: [{ zoom: 500 }],
       };
-      //  width: 1920, height: 720,
+      //  width: 1920, height: 1080,
       // { width: 1920, height: 1280 }, { aspectRatio: 1280 },
       // zoom: true
 
