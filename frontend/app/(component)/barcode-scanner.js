@@ -14,10 +14,10 @@ export default function BarcodeScanner({ onDetect, onError }) {
     try {
       const constraints = {
         audio: false,
-        video: { facingMode: { exact: "environment" } },
+        video: { width: 1920, height: 720, facingMode: { exact: "environment" } },
         advanced: [{ zoom: 500 }],
       };
-      //  width: 1920, height: 1080,
+      //  width: 1920, height: 720,
       // { width: 1920, height: 1280 }, { aspectRatio: 1280 },
       // zoom: true
 
@@ -47,13 +47,11 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
         // ctx.drawImage(videoRef.current, 0, 0, width, height);
         ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
-        // const img = canvas.toDataURL();
+        const img = canvas.toDataURL();
         // "image/png" || "image/jpeg", 1.0
-        // setImage(img);
-        Quagga.decodeSingle(
-          { decoder: { readers }, src: canvas.toDataURL(), locate: false, multiple: false },
-          checkResult
-        );
+        console.log("AAA");
+        setImage(img);
+        Quagga.decodeSingle({ decoder: { readers }, src: img, locate: false, multiple: false }, checkResult);
       };
       check();
       // setInterval(() => check(), 500);
@@ -73,7 +71,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
     }
   };
 
-  useEffect(() => stopStreams);
+  useEffect(() => stopStreams, []);
 
   return (
     <div className="text-center min-h-44 w-full">
@@ -86,9 +84,9 @@ export default function BarcodeScanner({ onDetect, onError }) {
           <div className="w-1/3 h-1/3 border"></div>
         </div>
       </div>
-      {/* <div className=" mt-10">
+      <div className=" mt-10">
         <img src={image} alt="" className="w-full bg-bg2" />
-      </div> */}
+      </div>
     </div>
   );
 }
