@@ -4,8 +4,8 @@ import Script from "next/script";
 
 export default function CustomBarcodeDetecter({ onDetect, onError }) {
   const videoRef = useRef(null);
-  const width = 320;
-  const height = 240;
+  const width = 500;
+  const height = 250;
 
   const initializeScanner = async () => {
     if (videoRef.current?.srcObject) return;
@@ -38,9 +38,12 @@ export default function CustomBarcodeDetecter({ onDetect, onError }) {
       const check = async () => {
         if (!videoRef.current?.srcObject) return;
 
-        // setImage(canvas.toDataURL("image/png"));
-        ctx.drawImage(videoRef.current, 0, 0, width, height);
-        // ctx.drawImage(videoRef.current, 260, 150, 200, 200, 0, 0, 400, 400);
+        const x = (videoRef.current.videoWidth - width) / 2;
+        const y = (videoRef.current.videoHeight - height) / 2;
+        ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
+
+        const img = canvas.toDataURL();
+        setImage(canvas.toDataURL());
 
         const barcodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
         console.log(barcodes);

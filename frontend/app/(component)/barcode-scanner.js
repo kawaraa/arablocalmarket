@@ -3,9 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 
 export default function BarcodeScanner({ onDetect, onError }) {
+  const [borderSize, setBorderSize] = useState([]);
   const videoRef = useRef(null);
   const width = 500;
-  const height = 300;
+  const height = 250;
 
   const [image, setImage] = useState("");
 
@@ -16,11 +17,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
       };
-      //  width: 1920, height: 1080,
-      // { width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 },
-      // zoom: true || // advanced: [{ zoom: 300 }],
 
-      // const constraints = { audio: false, video: { facingMode: { exact: "environment" } } };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -29,11 +26,8 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-
-      videoRef.current.addEventListener("loadedmetadata", (e) => {
-        canvas.width = width;
-        canvas.height = height;
-      });
+      canvas.width = width;
+      canvas.height = height;
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -45,18 +39,29 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
       const check = () => {
         if (!videoRef.current?.srcObject) return;
-
-        console.log(canvas.width, videoRef.current.videoWidth);
-        console.log(canvas.height, videoRef.current.videoHeight);
-        // ctx.drawImage(videoRef.current, 0, 0, 640, 480);
-        // ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
         const x = (videoRef.current.videoWidth - width) / 2;
         const y = (videoRef.current.videoHeight - height) / 2;
         ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
-        const img = canvas.toDataURL(); // "image/jpeg", 1.0
-        setImage(img);
-        Quagga.decodeSingle({ decoder: { readers }, src: img, locate: false, multiple: false }, checkResult);
+
+        (height / videoRef.current.videoHeight) * 100;
+        if (!borderSize[0]) {
+          setBorderSize([
+            (width / videoRef.current.videoWidth) * 100,
+            (height / videoRef.current.videoHeight) * 100,
+          ]);
+        }
+        // console.log(videoRef.current.naturalWidth);
+        // console.log(videoRef.current.naturalHeight);
+        // console.log(videoRef.current.style.width, videoRef.current.style.height);
+
+        // canvas.toDataURL("image/jpeg", 1.0);
+        setImage(canvas.toDataURL());
+        Quagga.decodeSingle(
+          { decoder: { readers }, src: canvas.toDataURL(), locate: false, multiple: false },
+          checkResult
+        );
       };
+
       check();
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
@@ -84,7 +89,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
         {/* <div className="absolute top-0 left-0 w-1/2 h-1/2 border translate-x-1/2 translate-y-1/2 "></div> */}
         <div className="absolute inset-0 w-full h-full flex justify-center items-center">
-          <div className="w-1/2 h-1/3 border"></div>
+          <div className={`w-[${borderSize[0] || 0}%] h-[${borderSize[1] || 0}%] border duration-150`}></div>
         </div>
       </div>
       <div className=" mt-10">
