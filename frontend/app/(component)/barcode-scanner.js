@@ -15,7 +15,7 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const constraints = {
         audio: false,
         video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
-        advanced: [{ width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 }, { zoom: 300 }],
+        advanced: [{ zoom: 300 }],
       };
       //  width: 1920, height: 1080,
       // { width: 1920, height: 1080 }, { aspectRatio: 1.7777777778 },
@@ -30,12 +30,14 @@ export default function BarcodeScanner({ onDetect, onError }) {
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-      canvas.width = width;
-      canvas.height = height;
-      const period = 1000;
+
+      videoRef.current.addEventListener("loadedmetadata", (e) => {
+        // canvas.width = videoRef.current.videoWidth;
+        // canvas.height = videoRef.current.videoHeight;
+      });
 
       const checkResult = (result) => {
-        if (!result?.codeResult?.code) setTimeout(check, period);
+        if (!result?.codeResult?.code) setTimeout(check, 50);
         else {
           onDetect(result.codeResult.code);
           stopStreams();
@@ -45,11 +47,16 @@ export default function BarcodeScanner({ onDetect, onError }) {
       const check = () => {
         if (!videoRef.current?.srcObject) return;
 
-        ctx.drawImage(videoRef.current, 0, 0, width, height);
+        // console.log(canvas.width);
+        // console.log(canvas.height);
+        // ctx.drawImage(videoRef.current, 0, 0, width, height);
         // ctx.drawImage(videoRef.current, 210, 150, 300, 300, 0, 0, 400, 400);
+        const x = (videoRef.current.videoWidth - 300) / 2;
+        const y = (videoRef.current.videoHeight - 150) / 2;
+        ctx.drawImage(videoRef.current, x, y, 300, 150, 0, 0, 300, 150);
         const img = canvas.toDataURL();
         // "image/png" || "image/jpeg", 1.0
-        console.log("AAA");
+        // console.log("AAA");
         setImage(img);
         Quagga.decodeSingle({ decoder: { readers }, src: img, locate: false, multiple: false }, checkResult);
       };
