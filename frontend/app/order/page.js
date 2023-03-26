@@ -16,6 +16,9 @@ export default function Orders(props) {
       {/* <BarcodeScanner onDetect={console.log} onError={console.log} onClose={console.log} cls="mt-5" /> */}
       <section>
         <h3>Store 1 name</h3>
+
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" width="400" className="mirror"></video>
+
         <ul>
           {orders.map((o, i) => (
             <OrderCard {...o} key={i} />
