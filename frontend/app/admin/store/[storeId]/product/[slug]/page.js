@@ -57,13 +57,16 @@ export default function ProductById({ params, searchParams }) {
         <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
       </InputField>
 
-      <Textarea
-        editable={!!product}
-        name="description"
-        defaultValue={product?.description}
-        title={content.description.placeholder[lang]}
-        cls="mb-3 rounded-md"
-      />
+      <div>
+        <span className="block mt-3 font-semibold rq">{content.description.text[lang]}</span>
+        <Textarea
+          editable={!!product}
+          name="description"
+          defaultValue={product?.description}
+          title={content.description.placeholder[lang]}
+          cls="mb-3 rounded-md"
+        />
+      </div>
 
       <CategorySelect
         lang={lang}

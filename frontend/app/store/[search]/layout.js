@@ -19,20 +19,20 @@ export default function StoreLayout({ children, params, searchParams }) {
 
   return (
     <article>
-      <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 text-bg h-44 sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
+      <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
         <Image
           src={imageUrl}
           width="250"
           height="250"
           alt="Some description for the image"
-          className="block w-auto"
+          className="block w-full"
         />
         <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
-        <h1 className="absolute w-full top-8 px-8 text-xl font-bold flex items-center lazy-l">
+        <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
           <span className={`inline-block w-6 h-6 bg-${open ? "green" : "dt"} rounded-full mr-2`}></span>{" "}
           {name}
         </h1>
-        <StoreLinks />
+        <StoreLinks lang={lang} scroll="175" />
       </section>
 
       <div className="mt-3 pb-6 border-b-2 border-bc">

@@ -6,7 +6,7 @@ import StarRating from "./(styled)/rating";
 
 export default function ProductCard({ lang, link, currency, admin, ...p }) {
   const Tag = typeof link == "function" ? "div" : Link;
-  const newP = typeof link == "function" ? { onClick: () => link(p.id) } : { href: link };
+  const newP = typeof link == "function" ? { onClick: () => link(p) } : { href: link };
 
   return (
     <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
@@ -27,15 +27,8 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
           ) : (
             <div className="flex items-center">
               232
-              <span role="img" className="w-4 ml-1" title={content.stock[lang]}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 14 14"
-                  className="w-full "
-                  fill="currentColor"
-                  aria-hidden="true">
-                  <path d="m 12.666667,7.666665 -1.666667,0 0,2 -0.666667,-0.44375 -0.6666663,0.44375 0,-2 -1.6666667,0 c -0.1833333,0 -0.3333333,0.15 -0.3333333,0.33334 l 0,4 c 0,0.18333 0.15,0.33333 0.3333333,0.33333 l 4.666667,0 C 12.85,12.333335 13,12.183335 13,12.000005 l 0,-4 c 0,-0.18334 -0.15,-0.33334 -0.333333,-0.33334 z m -8.0000003,-1.33333 4.6666666,0 c 0.1833334,0 0.3333334,-0.15 0.3333334,-0.33333 l 0,-4 c 0,-0.18334 -0.15,-0.33334 -0.3333334,-0.33334 l -1.6666666,0 0,2 L 7,3.222915 l -0.6666667,0.44375 0,-2 -1.6666666,0 c -0.1833334,0 -0.3333334,0.15 -0.3333334,0.33334 l 0,4 c 0,0.18333 0.15,0.33333 0.3333334,0.33333 z M 6,7.666665 l -1.6666667,0 0,2 L 3.6666667,9.222915 3,9.666665 l 0,-2 -1.6666667,0 C 1.15,7.666665 1,7.816665 1,8.000005 l 0,4 c 0,0.18333 0.15,0.33333 0.3333333,0.33333 l 4.6666667,0 c 0.1833333,0 0.3333333,-0.15 0.3333333,-0.33333 l 0,-4 c 0,-0.18334 -0.15,-0.33334 -0.3333333,-0.33334 z" />
-                </svg>
+              <span role="img" className="w-[18px] ml-1" title={content.stock[lang]}>
+                <SvgIcon name="boxes" />
               </span>
             </div>
           )}

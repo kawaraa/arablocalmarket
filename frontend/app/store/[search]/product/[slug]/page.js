@@ -2,8 +2,9 @@
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { AppSessionContext } from "../../../../app-session-context";
+import { copyText } from "../../../../(service)/utilities";
 import SvgIcon from "../../../../(component)/(styled)/svg-icon";
-import { Button } from "../../../../(component)/(styled)/button";
+import { Button, IconButton } from "../../../../(component)/(styled)/button";
 import { useRouter } from "next/navigation";
 import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs";
 
@@ -38,6 +39,12 @@ export default function ProductBySlug({ params }) {
     router.push("/checkout");
   };
 
+  const handleShare = () => {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+    if (navigator.share) return navigator.share(window.location.href);
+    copyText(window.location.href, (copied) => alert((copied ? "Copied" : "Could not copy") + " store link"));
+  };
+
   useEffect(() => {
     const ops = new Set();
     product.variants.map((v) => ops.add(v.options[0]?.value));
@@ -49,7 +56,7 @@ export default function ProductBySlug({ params }) {
 
   return (
     <>
-      <div className="flex justify-center items-center h-32 ">
+      <div className="relative flex justify-center items-center h-32 ">
         <Image
           src={product.images[imgPreviewIndex].src}
           alt={product.name}
@@ -57,8 +64,15 @@ export default function ProductBySlug({ params }) {
           height="250"
           className="h-full w-auto"
         />
+        <IconButton
+          handler={handleShare}
+          title="Share"
+          icon="share"
+          aria-label="Share"
+          cls="absolute top-3 right-3 hover:text-pc"
+        />
       </div>
-      {/* <div className="flex my-5">
+      <div className="flex my-5">
         {product.images.map((img, i) => (
           <button
             className="overflow-hidden h-14 w-14 border border-bc mx-1 rounded-md"
@@ -67,7 +81,7 @@ export default function ProductBySlug({ params }) {
             <Image src={img.src} alt={product.name} width="250" height="250" className="h-auto w-full" />
           </button>
         ))}
-      </div> */}
+      </div>
 
       <div className="flex items-center">
         <h3 className="w-16">{product.variants[0].options[0].name || ""}</h3>

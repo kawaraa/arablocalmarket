@@ -8,23 +8,28 @@ import ProductCard from "../../(component)/product-card";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import BarcodeScanner from "../../(component)/barcode-scanner";
 import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
+import SelectProductPopup from "./(component)/select-product-popup";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
   const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
   const [foundProducts, setFoundProducts] = useState([]);
-
-  const [showScanner, setShowScanner] = useState(false);
   const [search, setSearch] = useState("");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [showScanner, setShowScanner] = useState(false);
+  const [clickedProduct, setClickedProduct] = useState(null);
 
   const handleSearch = async (searchText) => {
     if (showScanner) setShowScanner(false);
     setSearch(searchText);
   };
 
-  const selectProduct = () => {
-    console.log("A");
+  const addProduct = (p) => {
+    console.log("addProduct", p);
+    // selectedProducts
+    setSelectedProducts([]);
+    setClickedProduct(null);
   };
 
   // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
@@ -61,14 +66,21 @@ export default function Admin({ params, searchParams }) {
           </button>
         </div>
 
-        <h1 className="text-lg my-3 text-center font-medium lazy-l">
+        <h1 className="text-lg my-3 text-center font-medium">
           {content.h1[lang][0]} <span className="font-bold">( {foundProducts.length} )</span>{" "}
           {content.h1[lang][1]}
         </h1>
 
         <ul className="flex flex-wrap">
           {foundProducts.map((p, i) => (
-            <ProductCard lang={lang} currency={store.currency} admin {...p} link={selectProduct} key={i} />
+            <ProductCard
+              lang={lang}
+              currency={store.currency}
+              admin
+              {...p}
+              link={setClickedProduct}
+              key={i}
+            />
           ))}
         </ul>
       </article>
@@ -90,6 +102,12 @@ export default function Admin({ params, searchParams }) {
           />
         )}
       </Modal>
+
+      <SelectProductPopup
+        lang={lang}
+        open={!!clickedProduct}
+        onCancel={() => setClickedProduct(null)}
+        onAddProduct={addProduct}></SelectProductPopup>
     </>
   );
 }

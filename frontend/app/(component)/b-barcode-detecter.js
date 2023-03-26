@@ -96,7 +96,7 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
           icon="close"
           handler={() => onClose(stopStreams())}
           label="Cancel and close the modal window"
-          cls="absolute top-4 right-4 print:hidden"
+          cls="absolute top-4 right-4 hover:text-red print:hidden"
         />
       )}
 

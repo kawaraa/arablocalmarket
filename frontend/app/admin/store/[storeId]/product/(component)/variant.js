@@ -27,7 +27,7 @@ export default function Variant({ lang, number, onRemove, ...v }) {
         <h4 className="mb-2">
           {content.h4[lang]} ( {number} )
         </h4>
-        {number > 1 && <IconButton icon="close" size="7" handler={onRemove} />}
+        {number > 1 && <IconButton icon="close" size="7" handler={onRemove} cls="hover:text-red" />}
       </div>
 
       <InputField
@@ -51,7 +51,7 @@ export default function Variant({ lang, number, onRemove, ...v }) {
           required
           min="0"
           max="1000"
-          defaultValue={v.quantity + 1}
+          defaultValue={v.quantity || 0}
           label={content.quantity[lang]}
           cls="flex-col"
           inCls="w-14"
@@ -69,7 +69,12 @@ export default function Variant({ lang, number, onRemove, ...v }) {
               {content.options.value[lang]}
             </label>
             {index + 1 > 1 && (
-              <IconButton cls="!p-0" icon="close" size="3" handler={() => removeOption(index)} />
+              <IconButton
+                icon="close"
+                size="3"
+                handler={() => removeOption(index)}
+                cls="!p-0 hover:text-red"
+              />
             )}
           </div>
           <div className="flex ">
