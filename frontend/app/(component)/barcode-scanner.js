@@ -12,8 +12,8 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
   const initializeScanner = async () => {
     const scanCanvas = document.createElement("canvas");
-    const ctx = canvasRef.current.getContext("2d");
     const scanCtx = scanCanvas.getContext("2d");
+    const ctx = canvasRef.current.getContext("2d");
     const video = videoRef.current;
     video.autoplay = true;
 
@@ -34,27 +34,28 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
       scanCanvas.width = width;
       scanCanvas.height = height;
-
-      video.addEventListener("play", () => {
+      video.addEventListener("loadedmetadata", (event) => {
         canvasRef.current.width = video.videoWidth;
         canvasRef.current.height = video.videoHeight;
+      });
 
+      video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
         if (constraints.video !== true) {
           ctx.translate(video.videoWidth, 0);
           ctx.scale(-1, 1);
         }
-
         ctx.drawImage(video, 0, 0);
 
         (function loop() {
           if (video?.srcObject && !video.paused && !video.ended) {
-            console.log("AA");
             ctx.drawImage(video, 0, 0);
             setTimeout(loop, 1000 / 30); // drawing at 30fps
           }
         })();
       });
+
+      video.play();
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -101,7 +102,8 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
   useEffect(() => stopStreams, []);
 
   return (
-    <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
+    <div
+      className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${cls || ""}`}>
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
       {onClose && (
