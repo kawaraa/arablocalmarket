@@ -34,6 +34,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
       scanCanvas.width = width;
       scanCanvas.height = height;
+
       video.addEventListener("loadedmetadata", (event) => {
         canvasRef.current.width = video.videoWidth;
         canvasRef.current.height = video.videoHeight;
@@ -54,8 +55,6 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
           }
         })();
       });
-
-      video.play();
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -83,6 +82,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       };
 
       check();
+      video.play();
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();

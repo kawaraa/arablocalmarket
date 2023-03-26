@@ -7,7 +7,7 @@ import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import BarcodeScanner from "../../(component)/barcode-scanner";
-import BrowserBarcodeDetecter from "../../(component)/browser-barcode-detecter";
+import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);

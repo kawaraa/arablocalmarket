@@ -42,10 +42,12 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
       canvas.width = width;
       canvas.height = height;
 
-      video.addEventListener("play", () => {
+      video.addEventListener("loadedmetadata", (event) => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
+      });
 
+      video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
         if (constraints.video !== true) {
           ctx.translate(video.videoWidth, 0);
@@ -65,6 +67,7 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
       };
 
       check();
+      video.play();
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();
