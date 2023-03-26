@@ -46,6 +46,10 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         canvasRef.current.width = video.videoWidth;
         canvasRef.current.height = video.videoHeight;
         // ctx2.transform(-1, 0, 0, 1, 0, width);
+
+        ctx2.translate(width, 0);
+        ctx2.scale(-1, 1);
+
         ctx2.drawImage(video, 0, 0);
 
         (function loop() {
@@ -55,8 +59,6 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
           }
         })();
       });
-
-      // video.addEventListener("seeked", () => ctx2.drawImage(video, 0, 0));
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -70,7 +72,6 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         if (!video?.srcObject) return;
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
-        // ctx2.drawImage(video, 0, 0);
         ctx1.drawImage(video, x, y, width, height, 0, 0, width, height);
 
         (height / video.videoHeight) * 100;
