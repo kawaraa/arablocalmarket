@@ -10,8 +10,7 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
   const initializeScanner = async () => {
     if (videoRef.current?.srcObject) return;
     try {
-      const getUserMedia =
-        navigator.mediaDevices.getUserMedia ||
+      navigator.getUserMedia =
         navigator.getUserMedia ||
         navigator.webkitGetUserMedia ||
         navigator.mozGetUserMedia ||
@@ -27,7 +26,13 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
       };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
-      const stream = await getUserMedia(constraints);
+      let stream = null;
+      if (navigator.mediaDevices.getUserMedia) {
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+      } else {
+        stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+      }
+
       videoRef.current.srcObject = stream;
       videoRef.current.play();
 
@@ -81,7 +86,7 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
           cls="absolute top-4 right-4 print:hidden"
         />
       )}
-      <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg -scale-x-100" />
+      <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" />
     </div>
   );
 }

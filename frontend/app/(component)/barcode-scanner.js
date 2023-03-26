@@ -18,7 +18,13 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      let stream = null;
+      if (navigator.mediaDevices.getUserMedia) {
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+      } else {
+        stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+      }
+
       videoRef.current.srcObject = stream;
       videoRef.current.play();
 
