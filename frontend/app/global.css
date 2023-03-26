@@ -54,7 +54,7 @@
   z-index: 10;
 } */
 
-video.mirror {
+.mirror {
   transform: scaleX(-1);
   -webkit-transform: scaleX(-1);
   -moz-transform: scaleX(-1);

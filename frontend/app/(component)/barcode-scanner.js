@@ -4,13 +4,21 @@ import Script from "next/script";
 import { IconButton } from "./(styled)/button";
 
 export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
+  const [camera, setCamera] = useState(null);
   const [borderSize, setBorderSize] = useState([]);
-  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
 
   const initializeScanner = async () => {
-    if (videoRef.current?.srcObject) return;
+    const video = document.createElement("video");
+    const canvas1 = document.createElement("canvas");
+
+    const ctx1 = canvas1.getContext("2d");
+    const ctx2 = canvasRef.current.getContext("2d");
+    video.autoplay = true;
+    video.autoplay = true;
+
     try {
       const constraints = {
         audio: false,
@@ -19,19 +27,33 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       let stream = null;
-      if (navigator.mediaDevices.getUserMedia) {
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-      } else {
-        stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+      if (camera) stream = camera;
+      else {
+        if (navigator.mediaDevices.getUserMedia) {
+          stream = await navigator.mediaDevices.getUserMedia(constraints);
+        } else {
+          stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+        }
+        setCamera(stream);
       }
 
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
+      video.srcObject = stream;
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = width;
-      canvas.height = height;
+      canvas1.width = width;
+      canvas1.height = height;
+
+      video.addEventListener("play", function () {
+        canvasRef.current.width = video.videoWidth;
+        canvasRef.current.height = video.videoHeight;
+        ctx2.drawImage(video, 0, 0);
+
+        // (function loop() {
+        //     if (!$this.paused && !$this.ended) {
+        //         ctx.drawImage($this, 0, 0);
+        //         setTimeout(loop, 1000 / 30); // drawing at 30fps
+        //     }
+        // })();
+      });
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -42,21 +64,19 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       };
 
       const check = () => {
-        if (!videoRef.current?.srcObject) return;
-        const x = (videoRef.current.videoWidth - width) / 2;
-        const y = (videoRef.current.videoHeight - height) / 2;
-        ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
+        if (!video?.srcObject) return;
+        const x = (video.videoWidth - width) / 2;
+        const y = (video.videoHeight - height) / 2;
+        ctx2.drawImage(video, 0, 0);
+        ctx1.drawImage(video, x, y, width, height, 0, 0, width, height);
 
-        (height / videoRef.current.videoHeight) * 100;
+        (height / video.videoHeight) * 100;
         if (!borderSize[0]) {
-          setBorderSize([
-            (width / videoRef.current.videoWidth) * 100,
-            (height / videoRef.current.videoHeight) * 100,
-          ]);
+          setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100]);
         }
         // canvas.toDataURL("image/jpeg", 1.0);
         Quagga.decodeSingle(
-          { decoder: { readers }, src: canvas.toDataURL(), locate: false, multiple: false },
+          { decoder: { readers }, src: canvas1.toDataURL(), locate: false, multiple: false },
           checkResult
         );
       };
@@ -71,18 +91,17 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
   };
 
   const stopStreams = () => {
-    if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
+    if (camera) {
+      const tracks = camera.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
-      videoRef.current.srcObject = null;
     }
   };
 
-  // useEffect(() => stopStreams, []);
+  useEffect(() => stopStreams, []);
 
   return (
     <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
-      {/* <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script> */}
+      <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
       {onClose && (
         <IconButton
@@ -94,7 +113,8 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       )}
       <div className="relative">
         {/* <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" /> */}
-        <video src="https://www.w3schools.com/html/mov_bbb.mp4" width="400" className="mirror"></video>
+        {/* <video src="https://www.w3schools.com/html/mov_bbb.mp4" width="400" className="mirror"></video> */}
+        <canvas ref={canvasRef} className="mirror w-full"></canvas>
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
             borderSize[1] || 0
