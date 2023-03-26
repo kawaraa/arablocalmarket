@@ -1,17 +1,18 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { IconButton } from "./(styled)/button";
 
 export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls }) {
-  const [camera, setCamera] = useState(null);
   const videoRef = useRef(document.createElement("video"));
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
 
   const initializeScanner = async () => {
-    const ctx = canvasRef.current.getContext("2d");
-    videoRef.current.autoplay = true;
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const ctx = canvas.getContext("2d");
+    video.autoplay = true;
 
     try {
       navigator.getUserMedia =
@@ -30,38 +31,34 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
       };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
-      let stream = null;
-      if (camera) stream = camera;
-      else {
+      if (!video?.srcObject) {
         if (navigator.mediaDevices.getUserMedia) {
-          stream = await navigator.mediaDevices.getUserMedia(constraints);
+          video.srcObject = await navigator.mediaDevices.getUserMedia(constraints);
         } else {
-          stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+          video.srcObject = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
         }
-        setCamera(stream);
       }
 
-      videoRef.current.srcObject = stream;
-      canvasRef.current.width = width;
-      canvasRef.current.height = height;
+      canvas.width = width;
+      canvas.height = height;
 
-      videoRef.current.addEventListener("play", () => {
-        canvasRef.current.width = videoRef.current.videoWidth;
-        canvasRef.current.height = videoRef.current.videoHeight;
+      video.addEventListener("play", () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
 
         // Flip the video only on mobile / touch devices.
         if (constraints.video !== true) {
-          ctx.translate(videoRef.current.videoWidth, 0);
+          ctx.translate(video.videoWidth, 0);
           ctx.scale(-1, 1);
         }
 
-        ctx.drawImage(videoRef.current, 0, 0);
+        ctx.drawImage(video, 0, 0);
       });
 
       const check = async () => {
-        if (!videoRef.current?.srcObject || !canvasRef.current) return;
-        ctx.drawImage(videoRef.current, 0, 0);
-        const barCodes = await barcodeDetector.detect(canvasRef.current).catch((err) => console.log(err));
+        if (!video?.srcObject || !canvas) return;
+        ctx.drawImage(video, 0, 0);
+        const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
         if (!barCodes[0]) return check();
         onDetect(barCodes[0].rawValue);
         stopStreams();
@@ -77,11 +74,11 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
   };
 
   const stopStreams = () => {
-    console.log(videoRef.current);
     if (videoRef.current?.srcObject) {
       const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
     }
+    videoRef.current.srcObject = null;
   };
 
   useEffect(() => {
@@ -121,9 +118,3 @@ const formats = [
   "upc_a",
   "upc_e",
 ];
-
-// const ean = ["ean_reader", "ean_8_reader"];
-// const upc = ["upc_reader", "upc_e_reader"];
-// const codes = ["code_128_reader","code_39_reader","code_39_vin_reader",]
-// const other = ["codabar_reader","i2of5_reader"]
-// const  readers =  [...ean, ...upc, ...codes, ...other]

@@ -15,7 +15,6 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
     const ctx = canvasRef.current.getContext("2d");
     const scanCtx = scanCanvas.getContext("2d");
     const video = videoRef.current;
-
     video.autoplay = true;
 
     try {
@@ -135,9 +134,3 @@ const readers = [
   "codabar_reader",
   "i2of5_reader",
 ];
-
-// const ean = ["ean_reader", "ean_8_reader"];
-// const upc = ["upc_reader", "upc_e_reader"];
-// const codes = ["code_128_reader","code_39_reader","code_39_vin_reader",]
-// const other = ["codabar_reader","i2of5_reader"]
-// const  readers =  [...ean, ...upc, ...codes, ...other]
