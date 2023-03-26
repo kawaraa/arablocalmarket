@@ -103,7 +103,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
   return (
     <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
-      {/* <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script> */}
+      <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
       {onClose && (
         <IconButton
@@ -115,8 +115,8 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       )}
       <div className="relative">
         {/* <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" /> */}
-        <video src="https://www.w3schools.com/html/mov_bbb.mp4" className="mirror"></video>
-        {/* <canvas ref={canvasRef} className="mirror w-full"></canvas> */}
+        {/* <video src="https://www.w3schools.com/html/mov_bbb.mp4" className="mirror"></video> */}
+        <canvas ref={canvasRef} className="mirror w-full"></canvas>
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
             borderSize[1] || 0
