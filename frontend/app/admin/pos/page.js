@@ -7,9 +7,11 @@ import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import BarcodeScanner from "../../(component)/barcode-scanner";
+import BrowserBarcodeDetecter from "../../(component)/browser-barcode-detecter";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
+  const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
   const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
   const [foundProducts, setFoundProducts] = useState([]);
 
@@ -30,12 +32,14 @@ export default function Admin({ params, searchParams }) {
   useEffect(() => {
     setFoundProducts(store.products);
     document.title = content.title[lang] + " - ALM";
+
+    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
   return (
     <>
       <article>
-        <div className="flex fixed top-0 right-0 left-0 sm:mx-auto sm:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
+        <div className="flex fixed top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
           <SearchBox
             label={content.search[lang]}
             onSearch={setSearch}
@@ -70,12 +74,21 @@ export default function Admin({ params, searchParams }) {
       </article>
 
       <Modal title={content.scanner[lang]} open={showScanner} center>
-        <BarcodeScanner
-          onDetect={handleSearch}
-          onError={(e) => console.log("Scanner Error: >>> " + e)}
-          onClose={() => setShowScanner(false)}
-          cls="mt-5"
-        />
+        {browserSupportBarcodeScanner ? (
+          <BrowserBarcodeDetecter
+            onDetect={handleSearch}
+            onError={(e) => console.log("Scanner Error: >>> " + e)}
+            onClose={() => setShowScanner(false)}
+            cls="mt-5"
+          />
+        ) : (
+          <BarcodeScanner
+            onDetect={handleSearch}
+            onError={(e) => console.log("Scanner Error: >>> " + e)}
+            onClose={() => setShowScanner(false)}
+            cls="mt-5"
+          />
+        )}
       </Modal>
     </>
   );

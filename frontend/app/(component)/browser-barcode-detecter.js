@@ -1,14 +1,18 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IconButton } from "./(styled)/button";
 
-export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls }) {
-  const videoRef = useRef(null);
+export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls }) {
+  const [camera, setCamera] = useState(null);
+  const videoRef = useRef(document.createElement("video"));
+  const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
 
   const initializeScanner = async () => {
-    if (videoRef.current?.srcObject) return;
+    const ctx = canvasRef.current.getContext("2d");
+    videoRef.current.autoplay = true;
+
     try {
       navigator.getUserMedia =
         navigator.getUserMedia ||
@@ -17,8 +21,8 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
         navigator.msGetUserMedia;
 
       const barcodeDetector = new BarcodeDetector({ formats });
-      if (!barcodeDetector) throw new Error("Barcode Detector supported!");
-      else console.log("Barcode Detector is not supported by this browser.");
+      if (barcodeDetector) console.log("Barcode Detector supported!");
+      else throw new Error("Barcode Detector is not supported by this browser.");
 
       const constraints = {
         audio: false,
@@ -27,28 +31,37 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
       let stream = null;
-      if (navigator.mediaDevices.getUserMedia) {
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-      } else {
-        stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+      if (camera) stream = camera;
+      else {
+        if (navigator.mediaDevices.getUserMedia) {
+          stream = await navigator.mediaDevices.getUserMedia(constraints);
+        } else {
+          stream = await new Promise((res, rej) => navigator.getUserMedia(constraints, res, rej));
+        }
+        setCamera(stream);
       }
 
       videoRef.current.srcObject = stream;
-      videoRef.current.play();
+      canvasRef.current.width = width;
+      canvasRef.current.height = height;
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      canvas.width = width;
-      canvas.height = height;
+      videoRef.current.addEventListener("play", () => {
+        canvasRef.current.width = videoRef.current.videoWidth;
+        canvasRef.current.height = videoRef.current.videoHeight;
+
+        // Flip the video only on mobile / touch devices.
+        if (constraints.video !== true) {
+          ctx.translate(videoRef.current.videoWidth, 0);
+          ctx.scale(-1, 1);
+        }
+
+        ctx.drawImage(videoRef.current, 0, 0);
+      });
 
       const check = async () => {
-        if (!videoRef.current?.srcObject) return;
-
-        const x = (videoRef.current.videoWidth - width) / 2;
-        const y = (videoRef.current.videoHeight - height) / 2;
-        ctx.drawImage(videoRef.current, x, y, width, height, 0, 0, width, height);
-
-        const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
+        if (!videoRef.current?.srcObject || !canvasRef.current) return;
+        ctx.drawImage(videoRef.current, 0, 0);
+        const barCodes = await barcodeDetector.detect(canvasRef.current).catch((err) => console.log(err));
         if (!barCodes[0]) return check();
         onDetect(barCodes[0].rawValue);
         stopStreams();
@@ -64,10 +77,10 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
   };
 
   const stopStreams = () => {
+    console.log(videoRef.current);
     if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
+      const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
-      videoRef.current.srcObject = null;
     }
   };
 
@@ -86,7 +99,8 @@ export default function CustomBarcodeDetecter({ onDetect, onError, onClose, cls 
           cls="absolute top-4 right-4 print:hidden"
         />
       )}
-      <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" />
+
+      <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg mirror"></canvas>
     </div>
   );
 }
