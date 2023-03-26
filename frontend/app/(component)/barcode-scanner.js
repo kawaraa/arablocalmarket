@@ -47,13 +47,15 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         canvasRef.current.height = video.videoHeight;
         ctx2.drawImage(video, 0, 0);
 
-        // (function loop() {
-        //     if (!$this.paused && !$this.ended) {
-        //         ctx.drawImage($this, 0, 0);
-        //         setTimeout(loop, 1000 / 30); // drawing at 30fps
-        //     }
-        // })();
+        (function loop() {
+          if (!video.paused && !video.ended) {
+            ctx2.drawImage(video, 0, 0);
+            setTimeout(loop, 1000 / 30); // drawing at 30fps
+          }
+        })();
       });
+
+      // video.addEventListener("seeked", () => ctx2.drawImage(video, 0, 0));
 
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
@@ -67,7 +69,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         if (!video?.srcObject) return;
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
-        ctx2.drawImage(video, 0, 0);
+        // ctx2.drawImage(video, 0, 0);
         ctx1.drawImage(video, x, y, width, height, 0, 0, width, height);
 
         (height / video.videoHeight) * 100;
@@ -101,7 +103,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
   return (
     <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
-      <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
+      {/* <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script> */}
 
       {onClose && (
         <IconButton
@@ -113,8 +115,8 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       )}
       <div className="relative">
         {/* <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg mirror" /> */}
-        {/* <video src="https://www.w3schools.com/html/mov_bbb.mp4" width="400" className="mirror"></video> */}
-        <canvas ref={canvasRef} className="mirror w-full"></canvas>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" className="mirror"></video>
+        {/* <canvas ref={canvasRef} className="mirror w-full"></canvas> */}
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
             borderSize[1] || 0
