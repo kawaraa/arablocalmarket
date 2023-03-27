@@ -7,6 +7,7 @@ import SvgIcon from "../../../../(component)/(styled)/svg-icon";
 import { Button, IconButton } from "../../../../(component)/(styled)/button";
 import { useRouter } from "next/navigation";
 import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs";
+import VariantOptions from "../../../../(component)/variant-options";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Product Name / title - store name - ALM" };
@@ -18,9 +19,7 @@ export default function ProductBySlug({ params }) {
   const { lang } = useContext(AppSessionContext);
   const [imgPreviewIndex, setImgPreviewIndex] = useState(0);
   const [options, setOptions] = useState([]);
-  const [option1, setOption1] = useState("");
-  const [option2, setOption2] = useState("");
-  const [option3, setOption3] = useState("");
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
   const store = { id: "1", currency: "€" };
@@ -45,14 +44,28 @@ export default function ProductBySlug({ params }) {
     copyText(window.location.href, (copied) => alert((copied ? "Copied" : "Could not copy") + " store link"));
   };
 
+  const updateSelectedOptions = (index, value) => {
+    const options = [...selectedOptions];
+    options[index] = value;
+    setSelectedOptions(options);
+  };
+
   useEffect(() => {
-    const ops = new Set();
-    product.variants.map((v) => ops.add(v.options[0]?.value));
-    setOptions(Array.from(ops));
-    setOption1(product.variants[0].options[0]?.value);
-    setOption2(product.variants[0].options[1]?.value);
-    setOption3(product.variants[0].options[2]?.value);
-  }, []);
+    const options = {};
+
+    for (const variant of product.variants) {
+      const sV = variant.options.find((opt) => !selectedOptions[0] || selectedOptions.includes(opt.value));
+      variant.options.forEach((opt, i) => {
+        if (sV || i === 0) {
+          if (options[opt.name]) options[opt.name].add(opt.value);
+          else options[opt.name] = new Set([opt.value]);
+        }
+      });
+    }
+
+    Object.keys(options).forEach((name) => (options[name] = Array.from(options[name])));
+    setOptions(options);
+  }, [selectedOptions]);
 
   return (
     <>
@@ -83,77 +96,18 @@ export default function ProductBySlug({ params }) {
         ))}
       </div>
 
-      <div className="flex items-center">
-        <h3 className="w-16">{product.variants[0].options[0].name || ""}</h3>
-        <ul className="flex items-center">
-          {options.map((op, i) => (
-            <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
-              <input
-                type="radio"
-                id={op}
-                className="absolute inset-0 opacity-0 peer cursor-pointer"
-                onChange={() => setOption1(op)}
-                checked={op == option1}
-              />
-              <label
-                htmlFor={op}
-                className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
-                {op}
-              </label>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {Object.keys(options).map((name, i) => (
+        <VariantOptions
+          name={name}
+          values={options[name]}
+          onSelect={(v) => updateSelectedOptions(i, v)}
+          selectedOptions={selectedOptions}
+          label
+          key={i}
+        />
+      ))}
 
-      <div className="flex items-center mt-3">
-        <h3 className="w-16">{product.variants[0].options[1].name || ""}</h3>
-        <ul className="flex items-center">
-          {product.variants
-            .filter((v) => v.options[0]?.value == option1 && v.options[1]?.value)
-            .map((v, i) => (
-              <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
-                <input
-                  type="radio"
-                  id={v.options[1]?.value}
-                  className="absolute inset-0 opacity-0 peer cursor-pointer"
-                  onChange={() => setOption2(v.options[1]?.value)}
-                  checked={v.options[1]?.value == option2}
-                />
-                <label
-                  htmlFor={v.options[1]?.value}
-                  className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
-                  {v.options[1]?.value} {v.weight ? v.weight + v.weightUnit : ""}
-                </label>
-              </li>
-            ))}
-        </ul>
-      </div>
-
-      <div className="flex items-center mt-3">
-        <h3 className="w-16">{product.variants[0].options[2].name || ""}</h3>
-        <ul className="flex items-center">
-          {product.variants
-            .filter((v) => v.options[1]?.value == option2 && v.options[2]?.value)
-            .map((v, i) => (
-              <li className="overflow-hidden relative flex border border-bc rounded-md mx-1 text-sm" key={i}>
-                <input
-                  type="radio"
-                  id={v.options[2]?.value}
-                  className="absolute inset-0 opacity-0 peer cursor-pointer"
-                  onChange={() => setOption3(v.options[2]?.value)}
-                  checked={v.options[2]?.value == option3}
-                />
-                <label
-                  htmlFor={v.options[2]?.value}
-                  className="px-1 bg-dbg dark:bg-pc text-dt dark:text-t peer-checked:bg-red peer-checked:text-dt">
-                  {v.options[2]?.value}
-                </label>
-              </li>
-            ))}
-        </ul>
-      </div>
-
-      <div className="flex my-3">
+      <div className="mt-7 mb-3 flex justify-center items-center">
         <NumberInputWithControl
           name="quantity"
           value={quantity}
@@ -163,7 +117,7 @@ export default function ProductBySlug({ params }) {
           title="Quantity"
         />
 
-        <div className="ml-6 text-sm font-light">
+        <div className="absolute right-3 text-sm font-light">
           <span className="font-medium">{15}</span> in Stock
         </div>
       </div>

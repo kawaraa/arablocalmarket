@@ -16,7 +16,7 @@ export default function Admin({ params, searchParams }) {
   const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
   const [foundProducts, setFoundProducts] = useState([]);
   const [search, setSearch] = useState("");
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const [showScanner, setShowScanner] = useState(false);
   const [clickedProduct, setClickedProduct] = useState(null);
 
@@ -25,10 +25,10 @@ export default function Admin({ params, searchParams }) {
     setSearch(searchText);
   };
 
-  const addProduct = (p) => {
-    console.log("addProduct", p);
-    // selectedProducts
-    setSelectedProducts([]);
+  const addItem = (p) => {
+    console.log("addItem", p);
+    // selectedItems
+    setSelectedItems([]);
     setClickedProduct(null);
   };
 
@@ -40,6 +40,8 @@ export default function Admin({ params, searchParams }) {
 
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
+
+  console.log(clickedProduct);
 
   return (
     <>
@@ -78,6 +80,7 @@ export default function Admin({ params, searchParams }) {
               currency={store.currency}
               admin
               {...p}
+              image={p.images[0]}
               link={setClickedProduct}
               key={i}
             />
@@ -106,8 +109,10 @@ export default function Admin({ params, searchParams }) {
       <SelectProductPopup
         lang={lang}
         open={!!clickedProduct}
+        product={clickedProduct}
         onCancel={() => setClickedProduct(null)}
-        onAddProduct={addProduct}></SelectProductPopup>
+        onAddItem={addItem}
+      />
     </>
   );
 }
@@ -123,22 +128,73 @@ const content = {
 const fakeProducts = [
   {
     id: "321",
-    title: "Prepared food",
+    name: "Prepared food",
     description: "Some product rich text description",
-    image: "/burger-prepared-food-clipart.png",
+    images: [{ id: "282", src: "/burger-prepared-food-clipart.png" }],
     price: 12,
-    variants: 3,
+    variants: [],
     ratings: { stars: 3, total: 265 },
   },
-  { id: "6765", title: "Eggs", price: 12, image: "/dairy-clipart.png", variants: 31, starts: 3.5 },
-  { id: "982", title: "Beverages", price: 85, image: "/beverages-clipart.png", variants: 52, starts: 4.5 },
-  { id: "5367", title: "Snacks", price: 63, image: "/snacks-clipart.png", variants: 86, starts: 1.5 },
   {
     id: "12",
-    title: "dairy",
-    price: 12,
-    image: "/dairy-clipart.png",
-    variants: 25,
-    starts: 2.5,
+    name: "Chips 1",
+    category: "snack",
+    description:
+      "Welcome to our supermarket, where we are committed to providing you with a convenient and enjoyable shopping experience. We understand that grocery shopping can be a chore, which is why we have worked hard to create a space that is easy to navigate, well-stocked with a wide range of products, and staffed by friendly and knowledgeable team members.",
+    price: 23,
+    vendor: "Nutella",
+    featuredImageId: "id-3231",
+    ratings: { stars: 4, total: 7632 },
+    images: [
+      { id: "id-3231", src: "/produce-vegetables-clipart.png" },
+      { id: "id-8686", src: "/dairy-clipart.png" },
+    ],
+    variants: [
+      {
+        id: "11",
+        barcode: "34564321234",
+        imageId: "id-3231",
+        price: 13,
+        comparePrice: 0,
+        quantity: 15,
+        weight: 1,
+        weightUnit: "KG",
+        options: [
+          { name: "color", value: "red" },
+          { name: "size", value: "small" },
+          { name: "material", value: "plastic" },
+        ],
+      },
+      {
+        id: "22",
+        barcode: "974321234",
+        imageId: "id-8686",
+        price: 8,
+        comparePrice: 0,
+        quantity: 10,
+        weight: 2,
+        weightUnit: "KG",
+        options: [
+          { name: "color", value: "green" },
+          { name: "size", value: "small" },
+          { name: "material", value: "metals" },
+        ],
+      },
+      {
+        id: "22",
+        barcode: "974321234",
+        imageId: "id-8686",
+        price: 8,
+        comparePrice: 0,
+        quantity: 10,
+        weight: 2,
+        weightUnit: "KG",
+        options: [
+          { name: "color", value: "green" },
+          { name: "size", value: "large" },
+          { name: "material", value: "metals" },
+        ],
+      },
+    ],
   },
 ];
