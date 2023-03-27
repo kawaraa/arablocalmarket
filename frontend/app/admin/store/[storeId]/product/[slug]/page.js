@@ -111,11 +111,9 @@ export default function ProductById({ params, searchParams }) {
       </div>
 
       <div className="text-right">
-        <Button
-          text={!product ? content.create[lang] : content.save[lang]}
-          type="submit"
-          cls="w-full md:w-auto py-2"
-        />
+        <Button type="submit" cls="w-full md:w-auto py-2">
+          {!product ? content.create[lang] : content.save[lang]}
+        </Button>
       </div>
     </form>
   );

@@ -204,7 +204,9 @@ export default function NewStore({ params, searchParams }) {
       />
       <InputField type="text" name="vatNumber" label="VAT Number" placeholder="E.g. US52359525" full />
 
-      <Button text="Create" type="submit" cls="w-full my-5" />
+      <Button type="submit" cls="w-full my-5">
+        Create
+      </Button>
     </form>
   );
 }

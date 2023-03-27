@@ -245,7 +245,7 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
       {editable && (
         <label
           htmlFor={id}
-          className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
+          className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150 print:hidden`}>
           <SvgIcon name={changed ? "checkMark" : "edit"} />
         </label>
       )}

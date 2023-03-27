@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function LineItems({ favorite, bill, items, currency, cls }) {
   const isDiscount = (item) => (item.discount && item.discount > 0 ? true : false);
   return (
-    <ul dir="ltr" className={"mt-4 mb-1 space-y-3  print:!text-lg " + cls}>
+    <ul dir="ltr" className={"mt-4 mb-1 space-y-3 print:!text-lg " + cls}>
       {items.map((item, i) => (
         <li className="flex " key={i}>
           <div className="overflow-hidden w-14 max-h-14 flex items-center rounded-md">

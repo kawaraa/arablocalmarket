@@ -101,11 +101,13 @@ export default function Checkout({}) {
             <>
               <p className="mt-8 text-center text-sm">Seems you have added your address yet.</p>
               <Button
-                text={content.addressBtn[lang]}
                 icon="plus"
                 cls="mt-6 !flex w-40 mx-auto !py-2 !rounded-full"
                 handler={() => setAddressForm(true)}
-              />
+                >
+
+{content.addressBtn[lang]}
+              </Button>
             </>
           )}
 

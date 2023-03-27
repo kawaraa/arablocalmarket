@@ -67,13 +67,9 @@ export default function Signin({ a }) {
         </div>
 
         <div>
-          <Button
-            type="submit"
-            text={content.submit[lang]}
-            handler={null}
-            loading={false}
-            cls="w-full py-[7px] px-4"
-          />
+          <Button type="submit" handler={null} loading={false} cls="w-full py-[7px] px-4">
+            {content.submit[lang]}
+          </Button>
         </div>
 
         <div className="text-sm text-left">

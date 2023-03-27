@@ -1,7 +1,7 @@
 "use client";
 import SvgIcon from "./svg-icon";
 
-export default function Badge({ text, color, icon, cls }) {
+export default function Badge({ text, color, icon, cls, ...p }) {
   let c = (colors[color - 1] ? `bg-${colors[color - 1]} ` : `bg-[${color}] `) + cls;
   if (color == 8) c += " !text-bg";
 
@@ -13,7 +13,7 @@ export default function Badge({ text, color, icon, cls }) {
           <SvgIcon name={icon} />
         </span>
       )}
-      {text}
+      {text || p.children}
     </span>
   );
 }

@@ -3,12 +3,14 @@
 import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
 import Modal from "../../(component)/(styled)/modal";
+import { Button, IconButton } from "../../(component)/(styled)/button";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
 import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
 import BarcodeScanner from "../../(component)/barcode-scanner";
 import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
 import SelectProductPopup from "./(component)/select-product-popup";
+import OrderDetailsPopup from "../../(component)/order-details-popup";
 
 export default function Admin({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
@@ -19,6 +21,9 @@ export default function Admin({ params, searchParams }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showScanner, setShowScanner] = useState(false);
   const [clickedProduct, setClickedProduct] = useState(null);
+  const [showOrderDetails, setShowOrderDetails] = useState(null);
+
+  // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
 
   const handleSearch = async (searchText) => {
     if (showScanner) setShowScanner(false);
@@ -32,7 +37,10 @@ export default function Admin({ params, searchParams }) {
     setClickedProduct(null);
   };
 
-  // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
+  const handleStatusChange = ({ target: { value } }) => {
+    console.log(value);
+    setClickedOrder({ ...clickedOrder, status: value });
+  };
 
   useEffect(() => {
     setFoundProducts(store.products);
@@ -40,8 +48,6 @@ export default function Admin({ params, searchParams }) {
 
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
-
-  console.log(clickedProduct);
 
   return (
     <>
@@ -55,17 +61,16 @@ export default function Admin({ params, searchParams }) {
             inCls="p-2"
             cls="flex-1 "
           />
-
-          <button
+          <IconButton
             type="button"
-            onClick={() => setShowScanner(true)}
+            handler={() => setShowScanner(true)}
+            icon="scan"
             title="Show search filter"
             aria-label="Search filter"
             aria-expanded="true"
             aria-haspopup="dialog"
-            className="w-10 p-1 hover:text-pc transition">
-            <SvgIcon name="scan" />
-          </button>
+            cls="w-10 p-1 hover:text-pc transition"
+          />
         </div>
 
         <h1 className="text-lg my-3 text-center font-medium">
@@ -113,6 +118,24 @@ export default function Admin({ params, searchParams }) {
         onCancel={() => setClickedProduct(null)}
         onAddItem={addItem}
       />
+
+      <Button
+        handler={() => setShowOrderDetails(true)}
+        icon="cart"
+        cls="fixed bottom-10 right-8 !text-bg !p-0 w-10 h-10 !rounded-full"
+        iconCls="w-8">
+        <span className="absolute -top-3 -right-1 font-semibold text-red text-lg">
+          {selectedItems.length || 10}
+        </span>
+      </Button>
+
+      <OrderDetailsPopup
+        lang={lang}
+        open={showOrderDetails}
+        onClose={() => setShowOrderDetails(false)}
+        onStatusChange={handleStatusChange}
+        lineItems={selectedItems}
+        admin></OrderDetailsPopup>
     </>
   );
 }

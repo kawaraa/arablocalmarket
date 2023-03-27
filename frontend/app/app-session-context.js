@@ -110,7 +110,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       updateUser({ firstName: "Mr", lastName: "Tester", admin: true });
     }
 
-    window.setLoading(false);
+    if (window.setLoading) window.setLoading(false);
   }, []);
 
   // useEffect(() => {

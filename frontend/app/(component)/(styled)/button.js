@@ -3,7 +3,7 @@ import Link from "next/link";
 import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
-export function Button({ text, type = "button", icon, handler, loading, disabled, cls, iconCls, ...p }) {
+export function Button({ type = "button", icon, handler, loading, disabled, cls, iconCls, ...p }) {
   let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop transition-all duration-200 `;
   if (!disabled) c += "hover:bg-gradient-to-tl hover:from-pc2 ";
   if (loading) c += "cursor-progress ";
@@ -11,7 +11,7 @@ export function Button({ text, type = "button", icon, handler, loading, disabled
 
   return (
     <button type={type} onClick={handler} disabled={disabled} className={c} {...p}>
-      {text}
+      {p.children}
       {loading ? (
         <Loader size="18" />
       ) : (
@@ -26,7 +26,7 @@ export function Button({ text, type = "button", icon, handler, loading, disabled
   );
 }
 
-export function IconButton({ icon, size = "8", handler, disabled, label, cls }) {
+export function IconButton({ icon, size = "8", handler, disabled, label, cls, ...p }) {
   let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop duration-200 `;
   c += cls || "hover:text-pc";
 
@@ -38,6 +38,7 @@ export function IconButton({ icon, size = "8", handler, disabled, label, cls }) 
       title={label}
       aria-label={label}
       className={c}>
+      {p.children}
       {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
     </button>
   );

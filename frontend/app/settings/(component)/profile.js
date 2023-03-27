@@ -47,13 +47,9 @@ export default function Profile({ lang, firstName, lastName, address }) {
       <h3 className="text-lg font-medium mt-6 mb-2">Address</h3>
 
       {!adr ? (
-        <Button
-          type="submit"
-          text="New address"
-          icon="plus"
-          handler={() => setAddressForm(true)}
-          cls="w-full mt-3 "
-        />
+        <Button type="submit" icon="plus" handler={() => setAddressForm(true)} cls="w-full mt-3 ">
+          New address
+        </Button>
       ) : (
         <address
           onClick={() => setAddressForm(true)}

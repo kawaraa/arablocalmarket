@@ -1,0 +1,20 @@
+{
+  "print": { "en": "Print", "ar": "طباعة" },
+  "payment": {
+    "ON-DELIVERY": { "ar": "عند التسليم", "color": 1 },
+    "ONLINE": { "ar": "عبر الإنترنت", "color": 2 },
+    "CASH": { "ar": "نقدي", "color": 3 },
+    "CARD": { "ar": "بطاقة", "color": 4 },
+    "BANK": { "ar": "تحويل", "color": 5 }
+  },
+  "status": {
+    "PENDING": { "ar": "معلق", "color": 1 },
+    "PAID": { "ar": "مدفوع", "color": 2 },
+    "FAILED": { "ar": "فشل", "color": 3 },
+    "CANCELED": { "ar": "تم إلغاؤه", "color": 4 },
+    "SENT": { "ar": "تم إرساله", "color": 5 },
+    "DELIVERED": { "ar": "تم التوصيل", "color": 6 },
+    "RETURNED": { "ar": "تم إرجاعه", "color": 7 },
+    "ARCHIVED": { "ar": "مؤرشف", "color": 8 }
+  }
+}

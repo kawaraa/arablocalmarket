@@ -15,7 +15,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
 
       <Transition
         Tag={tag || "div"}
-        base={`z-9 fixed left-5 ${c} right-5 p-4 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
+        base={`z-9 fixed left-5 ${c} right-5 p-4 pt-10 overflow-hidden max-h-[90vh] rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
@@ -29,34 +29,34 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             icon="close"
             handler={onCancel}
             label="Cancel and close the modal window"
-            cls="absolute top-4 right-4 hover:text-red print:hidden"
+            cls="absolute top-3 right-3 hover:text-red print:hidden"
           />
         )}
-        <div className="block py-4 md:flex justify-start">
+        <div className="block pb-4 md:flex justify-start">
           {icon && (
             <div
-              className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 md:mr-2 rounded-full ${
+              className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 mb-3 md:mr-2 rounded-full ${
                 icon === "warning" ? "bg-lb text-red" : "bg-pc text-t"
               }`}>
               {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}
             </div>
           )}
 
-          <div className="flex-auto mt-3 md:text-left">
+          <div className="flex-auto md:text-left">
             <h2 className="mb-1 text-lg text-center print:text-3xl print:font-semibold">{title}</h2>
-            {p.children}
+            <div className="max-h-[65vh] overflow-scroll">{p.children}</div>
           </div>
         </div>
 
         {onApprove && (
-          <div className="pt-3 flex justify-end">
+          <div className="flex justify-end">
             <Button
               type={tag == "form" ? "submit" : ""}
-              text={okBtn}
               handler={onApprove}
               loading={loading}
-              cls="print:hidden w-full md:w-auto justify-center py-2"
-            />
+              cls="print:hidden w-full md:w-auto justify-center py-2">
+              {okBtn}
+            </Button>
           </div>
         )}
       </Transition>

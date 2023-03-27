@@ -22,7 +22,7 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
 
   useEffect(() => {
     const options = {};
-    if (product) {
+    if (product?.variants) {
       for (const variant of product.variants) {
         const sV = variant.options.find((opt) => !selectedOptions[0] || selectedOptions.includes(opt.value));
         variant.options.forEach((opt, i) => {
