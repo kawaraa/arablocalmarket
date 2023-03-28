@@ -120,16 +120,17 @@ export default function Navigation() {
             <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Dropdown
               event="click"
-              cls="ml-2"
+              cls="ml-2 "
               icon="bell"
               iconCls="w-[28px] md:w-8"
               btnCls="!rounded-full"
               title="View notifications">
               {user.notifications.map((note, i) => (
-                <li className="w-1/3 md:w-60 overflow-hidden" key={i}>
+                // border-lbg border-b-[1px] last:border-none
+                <li className="overflow-hidden even:bg-[#f8fafc]" key={i}>
                   <Link
                     href={"/order/" + note.meta?.path}
-                    className="block px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                    className="block w-60 md:w-72 break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {content.notifications[note.type][lang]}
                   </Link>
                 </li>
@@ -149,10 +150,10 @@ export default function Navigation() {
                     iconCls="w-full"
                   /> */}
               {content.userLinks.map((link, i) => (
-                <li key={i}>
+                <li className="even:bg-[#f8fafc]" key={i}>
                   <Link
                     href={link.path}
-                    className="block px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                    className="block whitespace-nowrap px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {link.text[lang]}
                   </Link>
                 </li>
