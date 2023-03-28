@@ -17,9 +17,6 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   // localStorage.cart.items.
   const cart = { items: [] };
-  const notifications = [
-    { title: { en: "aaa", ar: "aaaa" }, description: { en: "aaa", ar: "aaa" }, path: "1" },
-  ];
 
   // const [worker, setWorker] = useState(null);
   // const [showMessage, setShowMessage] = useState("");
@@ -107,7 +104,13 @@ export default function AppSessionContextProvider({ children, language, theme })
       // getUser("url")
       //   .then(({ jwt, user }) => updateUser(user))
       //   .catch(() => updateUser(null));
-      updateUser({ firstName: "Mr", lastName: "Tester", admin: true });
+
+      const notifications = [
+        { type: "NEW_ORDER", seen: false, meta: { path: "1" } },
+        { type: "DELIVERED", seen: false, meta: { path: "1" } },
+      ];
+      const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };
+      updateUser(ur);
     }
 
     if (window.setLoading) window.setLoading(false);
@@ -161,7 +164,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     user,
     updateUser,
     cart,
-    notifications,
     // location,
     // setLocation,
     requestNotificationPermission,

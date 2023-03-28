@@ -12,8 +12,7 @@ import Cookies from "../(service)/cookies";
 export default function Navigation() {
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-  const { lang, updateLang, themeMode, updateThemeMode, user, cart, notifications } =
-    useContext(AppSessionContext);
+  const { lang, updateLang, themeMode, updateThemeMode, user, cart } = useContext(AppSessionContext);
 
   const signinLink = content.navLinks[content.navLinks.length - 1];
 
@@ -126,12 +125,12 @@ export default function Navigation() {
               iconCls="w-[28px] md:w-8"
               btnCls="!rounded-full"
               title="View notifications">
-              {notifications.map((note, i) => (
-                <li key={i}>
+              {user.notifications.map((note, i) => (
+                <li className="w-1/3 md:w-60 overflow-hidden" key={i}>
                   <Link
-                    href={"/order/" + note.path}
+                    href={"/order/" + note.meta?.path}
                     className="block px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
-                    {note.description[lang]}
+                    {content.notifications[note.type][lang]}
                   </Link>
                 </li>
               ))}

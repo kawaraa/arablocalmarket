@@ -19,7 +19,7 @@ export default function Collapse({ children, title, checked, onCheck, cls, hCls 
       {onCheck ? (
         <div className={`${headerClass} justify-between rounded-${active ? "-t-lg" : "lg"} ${hCls} `}>
           <span className="mx-1">{title}</span>
-          <ToggleSwitch checked={checked} onCheck={onCheck} />
+          <ToggleSwitch cls="134231" checked={checked} onCheck={onCheck} />
         </div>
       ) : (
         <button

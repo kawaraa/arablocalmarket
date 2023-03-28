@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
 import {
   InputField,
@@ -17,18 +17,34 @@ import ImageUpload from "../../(component)/(styled)/upload-image";
 
 export default function NewStore({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
-  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [store, setStore] = useState(null);
+  const [file, setFile] = useState(null);
   const [days, setDays] = useState([]);
   const [deliver, setDeliver] = useState(false);
   const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
   const [onlinePayment, setOnlinePayment] = useState(null);
   const [status, setStatus] = useState(false);
+  const update = !!searchParams.id;
 
-  // console.log("NewStore: >>>", params, searchParams);
+  console.log("NewStore: >>>", params, searchParams.id);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (store) {
+        // update
+      } else {
+        // create
+      }
+    } catch (error) {
+      console.log("handleSubmit error: >>> ", error);
+    }
+    console.log("handleSubmit");
+  };
 
   const handleChange = (e) => {
-    setFile(e.target.files[0]);
+    // setFile(e.target.files[0]);
   };
 
   const addDay = ({ target: { name, checked } }) => {
@@ -41,34 +57,49 @@ export default function NewStore({ params, searchParams }) {
     console.log(day);
   };
 
+  const fetchStoreById = async (id) => {
+    // setStore(store)
+    // setDeliver(store.deliver);
+    // setDays(); // [{ name:"", open: "", close: "" }]
+    // setOnDeliveryPayment(); // cash: checked, card: checked
+    // setOnlinePayment(); // { card: checked, bank: {accountHolder:"", iban:"", bic:""} }
+  };
+
+  useEffect(() => {
+    fetchStoreById(searchParams.id);
+  }, [searchParams]);
+
   return (
-    <form className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
+    <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
       <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
 
       {/* cover */}
-      <ImageUpload id="store-cover" name="image" />
+      {!update && <ImageUpload id="store-cover" name="image" />}
 
-      <InputField
-        type="text"
-        name="name"
-        placeholder="E.g. alm-store"
-        required
-        min="4"
-        max="30"
-        full
-        cls="mb-2">
-        <span className="block mb-1 font-semibold rq">Store name</span>
-      </InputField>
+      {!update && (
+        <InputField
+          type="text"
+          name="name"
+          placeholder="E.g. alm-store"
+          required
+          min="4"
+          max="30"
+          full
+          cls="mb-2">
+          <span className="block mb-1 font-semibold rq">Store name</span>
+        </InputField>
+      )}
 
       <Textarea
         name="about"
+        defaultValue={store?.about}
         title="Write something about your store, E.g. Welcome to our supermarket, ..."
-        cls=""
+        cls="1"
       />
 
       <div className="my-6 md:flex md:justify-between">
         <div className="flex justify-between">
-          <CurrencySelect lang={lang} required cls="mx-0" />
+          <CurrencySelect lang={lang} required defaultValue={store?.currency} cls="mx-0" />
 
           <ToggleSwitch name="deliver" checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
             <div className="mx-3">Deliver</div>
@@ -77,7 +108,7 @@ export default function NewStore({ params, searchParams }) {
 
         {deliver && (
           <NumberInputWithControl
-            value={0}
+            defaultValue={store?.deliveryRate || 0}
             onChange={null}
             required
             cls="w-full md:w-auto my-3 md:my-0"
@@ -88,23 +119,26 @@ export default function NewStore({ params, searchParams }) {
       </div>
 
       <h6 className="mb-2  font-semibold rq">Store Address</h6>
-      <AddressInputs lang={lang} />
+      <AddressInputs lang={lang} {...(store?.address || {})} />
 
       <h6 className="font-semibold mt-7 rq">Working days</h6>
       <DaysCheckButtons lang={lang} checkedDays={days} onChange={addDay} />
+
       <div className="my-5">
         {days.map((d, i) => (
           <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
         ))}
       </div>
 
-      <ToggleSwitch
-        name="status"
-        checked={status}
-        onCheck={({ checked }) => setStatus(checked)}
-        cls="!flex my-6">
-        <div className="flex-1">This store will be open from now.</div>
-      </ToggleSwitch>
+      {!update && (
+        <ToggleSwitch
+          name="status"
+          checked={status}
+          onCheck={({ checked }) => setStatus(checked)}
+          cls="!flex my-6">
+          <div className="flex-1">This store will be open from now.</div>
+        </ToggleSwitch>
+      )}
 
       <h6 className="font-semibold mt-7 rq">Payment methods</h6>
       <Collapse
@@ -197,15 +231,23 @@ export default function NewStore({ params, searchParams }) {
       <InputField
         type="text"
         name="cocNumber"
+        defaultValue={store?.cocNumber}
         label="COC Number"
         placeholder="E.g. 9876543"
         full
         cls="mt-1 mb-3"
       />
-      <InputField type="text" name="vatNumber" label="VAT Number" placeholder="E.g. US52359525" full />
+      <InputField
+        type="text"
+        name="vatNumber"
+        defaultValue={store?.vatNumber}
+        label="VAT Number"
+        placeholder="E.g. US52359525"
+        full
+      />
 
-      <Button type="submit" cls="w-full my-5">
-        Create
+      <Button type="submit" cls="w-full my-5 !p-2">
+        {update ? "Save" : "Create"}
       </Button>
     </form>
   );

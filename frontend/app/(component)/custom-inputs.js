@@ -147,15 +147,16 @@ export function OpeningHoursSelect({ lang, ...p }) {
   );
 }
 export function DayOpeningHours({ lang, day, onDayUpdate }) {
-  const handleUpdate = () => {
-    onDayUpdate({ ...day, [e.target.name]: e.target.value });
+  const handleUpdate = ({ target }) => {
+    onDayUpdate({ ...day, [target.name]: target.value });
   };
+
   return (
     <div className="mb-2">
       <h6 className="font-semibold mb-1">{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
       <div className="flex justify-evenly">
-        <OpeningHoursSelect lang={lang} name="open" onChange={handleUpdate} />
-        <OpeningHoursSelect lang={lang} name="close" onChange={handleUpdate} />
+        <OpeningHoursSelect lang={lang} name="open" defaultValue={day?.open} onChange={handleUpdate} />
+        <OpeningHoursSelect lang={lang} name="close" defaultValue={day?.close} onChange={handleUpdate} />
       </div>
     </div>
   );

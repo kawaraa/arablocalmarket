@@ -45,7 +45,7 @@ export default function StoreById({ children, params }) {
           <SvgIcon name="logo" />
         </Link>
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-        <LinkButton href="/admin/new-store" cls="absolute bottom-2 left-5 ">
+        <LinkButton href={"/admin/new-store?id=" + id} cls="absolute bottom-2 left-5 ">
           Edit
         </LinkButton>
       </ImageUpload>
