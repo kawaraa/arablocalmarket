@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "name": {
       "pluginOptions": {},
       "type": "string",
       "required": true,
@@ -47,7 +47,7 @@
       "pluginOptions": {},
       "component": "product.variant",
       "required": true,
-      "max": 50,
+      "max": 10,
       "min": 1
     },
     "category": {

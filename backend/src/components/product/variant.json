@@ -20,7 +20,7 @@
       "type": "decimal",
       "required": true,
       "default": 0,
-      "min": 0
+      "min": 0.1
     },
     "comparePrice": {
       "type": "decimal",
@@ -32,26 +32,6 @@
       "type": "integer",
       "required": true,
       "min": 0
-    },
-    "weight": {
-      "type": "integer",
-      "required": true,
-      "default": 1
-    },
-    "weightUnit": {
-      "type": "enumeration",
-      "enum": [
-        "G",
-        "KG",
-        "OZ",
-        "LBS"
-      ],
-      "default": "G",
-      "required": true
-    },
-    "position": {
-      "type": "integer",
-      "required": true
     },
     "options": {
       "type": "component",

@@ -23,7 +23,7 @@
       "default": false,
       "required": true
     },
-    "sender": {
+    "meta": {
       "type": "json"
     }
   }
