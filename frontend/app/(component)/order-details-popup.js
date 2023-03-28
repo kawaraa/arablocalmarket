@@ -7,29 +7,26 @@ import LineItems from "./line-items";
 import { Textarea, ToggleSwitch } from "./(styled)/inputs";
 import { useState } from "react";
 
-export default function OrderDetails({ lang, open, onClose, onStatusChange, admin, printable, ...order }) {
+export default function OrderDetails({ lang, open, onClose, onStatusChange, admin, pos, ...order }) {
   const [print, setPrint] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleCheckout = () => {
+  const handleCheckout = (e) => {
     setLoading(true);
     try {
-      // Todo: checkout >>> fetch()
-      if (print) {
-        // Todo: print the order
-
-        // const printWindow = window.open("", "", "width=200,height=100");
-        // printWindow.document.write("<p>This window's name is: printWindow </p>");
-        // printWindow.print();
-        // printWindow.close();
-
-        window.print();
-        console.log("Printed");
+      if (pos) {
+        // Todo: checkout >>> fetch()
       }
-      // Todo: clear the items
+      // Todo: clear items from the localStorage
 
-      console.log();
-      // admin ? () => window.print() : null
+      if (print || !pos) {
+        const order = e.target.parentElement.parentElement.cloneNode(true);
+        document.body.innerHTML = "";
+        order.style.position = "static";
+        document.body.appendChild(order);
+        window.print();
+        location.reload();
+      }
     } catch (error) {
       console.log("handleCheckout Error: >>>", error);
     }
@@ -43,12 +40,12 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
       title={content.modalTitle[lang]}
       open={open}
       onCancel={onClose}
-      okBtn={printable ? shdCnt.checkout[lang] : shdCnt.print[lang]}
+      okBtn={pos ? shdCnt.checkout[lang] : shdCnt.print[lang]}
       onApprove={admin ? handleCheckout : null}
       loading={loading}>
       {order && order.lineItems && order.lineItems[0] && (
         <>
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center m-[1px] mb-8">
             {order.id && (
               <span className="text-sm font-semibold px-1 mr-3 border rounded print:text-3xl">
                 {order.id}
@@ -78,7 +75,7 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
             bill
             items={order.lineItems}
             currency={order.currency}
-            onRemove={printable ? order.onRemoveItem : null}
+            onRemove={pos ? order.onRemoveItem : null}
           />
 
           <p className="mt-3 pt-2 border-t-[1px] border-bc flex justify-between">
@@ -125,13 +122,14 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
               </p>
             </address>
           )}
-          {admin && <Textarea editable defaultValue={order.note} cls="mt-5" />}
 
-          {printable && (
+          {admin && <Textarea editable defaultValue={order.note} cls="mt-5 rounded-md" />}
+
+          {pos && (
             <ToggleSwitch
               checked={print}
               onCheck={(e) => setPrint(e.checked)}
-              cls="w-full mt-3 flex justify-between">
+              cls="w-full mt-3 flex justify-between print:hidden">
               <span className="ml-3 text-sm font-medium">Print after checkout</span>
               <span className="w-2"></span>
             </ToggleSwitch>

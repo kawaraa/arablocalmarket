@@ -18,7 +18,7 @@ export default function StoreProducts({ params, searchParams }) {
   return (
     <div>
       <LinkButton
-        link={content.createProduct.path.replace("storeId", store.id)}
+        href={content.createProduct.path.replace("storeId", store.id)}
         title={content.createProduct.text[lang]}
         icon="plus"
         // onClick={() => setLoading(true)}

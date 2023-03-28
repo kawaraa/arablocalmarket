@@ -10,7 +10,7 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
 
   const handleChange = (e) => {
     setFiles(!files);
-    if (onChange) onchange(e.target.file);
+    if (onChange) onChange(e.target.file);
   };
 
   const inputElement = (
@@ -43,7 +43,7 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
 
           <label
             htmlFor={idRf.current}
-            className="absolute top-5 right-5 bg-blur text-dt w-8 rounded-full cursor-pointer hover:text-red">
+            className="absolute top-5 left-5 bg-blur text-dt w-8 rounded-full cursor-pointer hover:text-red">
             <SvgIcon name="edit" />
             {inputElement}
           </label>

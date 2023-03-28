@@ -231,7 +231,7 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
   };
 
   return (
-    <div className="relative">
+    <div className="relative m-[1px]">
       <textarea
         dir="auto"
         id={idRf.current}

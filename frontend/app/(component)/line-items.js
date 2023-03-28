@@ -48,7 +48,7 @@ export default function LineItems({ favorite, bill, items, currency, onRemove, c
               </p>
             </div>
             {onRemove && (
-              <IconButton icon="bin" size="7" handler={onRemove} cls="hover:text-red print:hidden" />
+              <IconButton icon="bin" size="7" handler={() => onRemove(i)} cls="hover:text-red print:hidden" />
             )}
           </div>
         </li>

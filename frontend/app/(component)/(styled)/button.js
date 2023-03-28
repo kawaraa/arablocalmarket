@@ -44,12 +44,12 @@ export function IconButton({ icon, size = "8", handler, disabled, label, cls, ..
   );
 }
 
-export function LinkButton({ link, text, icon, cls, iconCls, ...p }) {
+export function LinkButton({ children, icon, cls, iconCls, ...p }) {
   let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-pc2 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all duration-150 `;
 
   return (
-    <Link href={link} className={c + (cls || "")} {...p}>
-      {text}
+    <Link className={c + (cls || "")} {...p}>
+      {children}
       {icon && (
         <span className={iconCls || "w-5"}> {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}</span>
       )}

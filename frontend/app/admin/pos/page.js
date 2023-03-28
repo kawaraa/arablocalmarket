@@ -28,12 +28,17 @@ export default function Admin({ params, searchParams }) {
     if (showScanner) setShowScanner(false);
     setSearch(searchText);
   };
-
+  console.log(selectedItems);
   const addItem = (p) => {
     console.log("addItem", p);
     // selectedItems
     setSelectedItems(fakeItems);
     setClickedProduct(null);
+  };
+  const removeItem = (index) => {
+    console.log("Removing item", index);
+    setSelectedItems(fakeItems.filter((_, i) => i !== index));
+    // if (!fakeItems[1]) setShowOrderDetails(false);
   };
 
   const handleStatusChange = ({ target: { value } }) => {
@@ -41,9 +46,6 @@ export default function Admin({ params, searchParams }) {
     setClickedOrder({ ...clickedOrder, status: value });
   };
 
-  const handleRemoveItem = () => {
-    // console.log("Removing item")
-  };
   useEffect(() => {
     setFoundProducts(store.products);
     document.title = content.title[lang] + " - ALM";
@@ -126,6 +128,7 @@ export default function Admin({ params, searchParams }) {
         open={showOrderDetails}
         onClose={() => setShowOrderDetails(false)}
         onStatusChange={handleStatusChange}
+        onRemoveItem={removeItem}
         lineItems={selectedItems}
         currency={"€"}
         discount={0}
@@ -134,8 +137,7 @@ export default function Admin({ params, searchParams }) {
         payment={{ type: "ON-DELIVERY", method: "CASH" }}
         note={""}
         admin
-        printable
-        onRemoveItem={handleRemoveItem}
+        pos
       />
 
       <Button

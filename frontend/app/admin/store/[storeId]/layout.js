@@ -7,6 +7,7 @@ import Tabs from "../../../(component)/(styled)/tabs";
 import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
+import { LinkButton } from "../../../(component)/(styled)/button";
 
 export default function StoreById({ children, params }) {
   const { lang } = useContext(AppSessionContext);
@@ -40,10 +41,13 @@ export default function StoreById({ children, params }) {
         <Link
           href={`/admin/pos?storeId=${id}`}
           title="Point of sale - Store mode"
-          className="absolute top-5 left-5 w-8">
+          className="absolute top-5 right-5 w-8">
           <SvgIcon name="logo" />
         </Link>
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
+        <LinkButton href="/admin/new-store" cls="absolute bottom-2 left-5 ">
+          Edit
+        </LinkButton>
       </ImageUpload>
 
       <section className="mt-5 mb-3 flex justify-between">

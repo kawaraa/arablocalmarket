@@ -15,7 +15,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
 
       <Transition
         Tag={tag || "div"}
-        base={`z-9 fixed left-5 ${c} right-5 p-4 pt-10 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
+        base={`z-9 fixed left-5 ${c} right-5 p-4 pt-10 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:overflow-auto print:static print:top-0 print:text-t`}
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
@@ -45,7 +45,9 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
 
           <div className="flex-auto md:text-left">
             <h2 className="mb-1 text-lg text-center print:text-3xl print:font-semibold">{title}</h2>
-            <div className="max-h-[65vh] overflow-scroll">{p.children}</div>
+            <div className="max-h-[65vh] overflow-scroll print:max-h-none print:overflow-auto">
+              {p.children}
+            </div>
           </div>
         </div>
 
