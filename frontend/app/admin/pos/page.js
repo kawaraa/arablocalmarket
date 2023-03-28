@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
 import Modal from "../../(component)/(styled)/modal";
 import { Button, IconButton } from "../../(component)/(styled)/button";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
 import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import BarcodeScanner from "../../(component)/barcode-scanner";
@@ -21,7 +20,7 @@ export default function Admin({ params, searchParams }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [showScanner, setShowScanner] = useState(false);
   const [clickedProduct, setClickedProduct] = useState(null);
-  const [showOrderDetails, setShowOrderDetails] = useState(null);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
 
   // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
 
@@ -33,7 +32,7 @@ export default function Admin({ params, searchParams }) {
   const addItem = (p) => {
     console.log("addItem", p);
     // selectedItems
-    setSelectedItems([]);
+    setSelectedItems(fakeItems);
     setClickedProduct(null);
   };
 
@@ -42,6 +41,9 @@ export default function Admin({ params, searchParams }) {
     setClickedOrder({ ...clickedOrder, status: value });
   };
 
+  const handleRemoveItem = () => {
+    // console.log("Removing item")
+  };
   useEffect(() => {
     setFoundProducts(store.products);
     document.title = content.title[lang] + " - ALM";
@@ -119,6 +121,23 @@ export default function Admin({ params, searchParams }) {
         onAddItem={addItem}
       />
 
+      <OrderDetailsPopup
+        lang={lang}
+        open={showOrderDetails}
+        onClose={() => setShowOrderDetails(false)}
+        onStatusChange={handleStatusChange}
+        lineItems={selectedItems}
+        currency={"€"}
+        discount={0}
+        total={120}
+        status={"PENDING"}
+        payment={{ type: "ON-DELIVERY", method: "CASH" }}
+        note={""}
+        admin
+        printable
+        onRemoveItem={handleRemoveItem}
+      />
+
       <Button
         handler={() => setShowOrderDetails(true)}
         icon="cart"
@@ -128,14 +147,6 @@ export default function Admin({ params, searchParams }) {
           {selectedItems.length || 10}
         </span>
       </Button>
-
-      <OrderDetailsPopup
-        lang={lang}
-        open={showOrderDetails}
-        onClose={() => setShowOrderDetails(false)}
-        onStatusChange={handleStatusChange}
-        lineItems={selectedItems}
-        admin></OrderDetailsPopup>
     </>
   );
 }
@@ -147,6 +158,16 @@ const content = {
   okBtn: { en: "Search", ar: "بحث" },
   scanner: { en: "Scan a product barcode", ar: "مسح رمز أو رقم المنتج" },
 };
+
+const fakeItems = [
+  {
+    title: "Prepared food - small",
+    image: "/produce-vegetables-clipart.png",
+    price: 12.5,
+    quantity: 2,
+    discount: 0,
+  },
+];
 
 const fakeProducts = [
   {

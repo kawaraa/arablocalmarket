@@ -1,4 +1,5 @@
 {
+  "checkout": { "en": "Checkout", "ar": "تاكيد الطلب" },
   "print": { "en": "Print", "ar": "طباعة" },
   "payment": {
     "ON-DELIVERY": { "ar": "عند التسليم", "color": 1 },

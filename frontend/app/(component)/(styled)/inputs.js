@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
 export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, full, ...p }) {
   const [changed, setChanged] = useState(false);
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
 
   const handleChange = (e) => {
     setChanged(true);
@@ -21,7 +21,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
       {children}
       {label && (
         <>
-          <label htmlFor={id} className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>
+          <label htmlFor={idRf.current} className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>
             {label}
           </label>
           <span className="w-1 h-1"></span>
@@ -34,7 +34,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           )}
 
           <input
-            id={id}
+            id={idRf.current}
             dir={p.type == "number" ? "ltr" : "auto"}
             placeholder={p.title}
             title={p.title}
@@ -63,7 +63,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   );
 }
 export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
   const numProp = { inputMode: "numeric", pattern: `\d*`, min: "1", max: "1000", step: "1" };
 
   return (
@@ -72,14 +72,14 @@ export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p 
         label
       ) : (
         <>
-          <label htmlFor={id}>{label}</label>
+          <label htmlFor={idRf.current}>{label}</label>
           <span className="w-2 h-2"></span>
         </>
       )}
 
       <div dir="ltr" className="flex-1 flex items-center">
         <input
-          id={id}
+          id={idRf.current}
           autoComplete="one"
           className="w-full pl-2 pr-10 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
           onChange={(e) => onChange(e.target.value)}
@@ -105,13 +105,13 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
   const checkSize = Math.round(+size / 3);
   const checkBorder = Math.round(+size / 5);
   const radius = p.type == "radio" ? "rounded-full" : "rounded";
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
 
   return (
-    <label htmlFor={id} className={`inline-flex justify-center items-center ${cls}`}>
+    <label htmlFor={idRf.current} className={`inline-flex justify-center items-center ${cls}`}>
       <div className={`relative w-[${size}px] h-[${size}px] flex justify-center items-center`}>
         <input
-          id={id}
+          id={idRf.current}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           className={`peer absolute top-0 left-0 w-full h-full appearance-none bg-bc dark:bg-cbg border border-bf ${radius} cursor-pointer`}
@@ -126,12 +126,14 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
 }
 
 export function CheckCard({ Tag = "label", children, cls, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
 
   return (
-    <Tag htmlFor={id} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
+    <Tag
+      htmlFor={idRf.current}
+      className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
-        id={id}
+        id={idRf.current}
         title={p.title || p.name}
         aria-label={p.title || p.name}
         className="absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs"
@@ -144,20 +146,21 @@ export function CheckCard({ Tag = "label", children, cls, ...p }) {
 
 export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p }) {
   const h = Math.round(+size / 2);
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
 
   return (
-    <label htmlFor={id} className={`inline-flex items-center cursor-pointer ${cls}`}>
+    <div className={`inline-flex items-center ${cls}`}>
       {children}
-      <div
+      <label
+        htmlFor={idRf.current}
         dir="ltr"
-        className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full`}>
+        className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full cursor-pointer`}>
         <input
           type="checkbox"
           checked={checked}
           onChange={handler}
-          id={id}
+          id={idRf.current}
           className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc dark:checked:bg-pc cursor-pointer focus:border-blue "
           {...p}
         />
@@ -165,29 +168,29 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
           className={`inline-block w-[${h - 2}px] h-[${
             h - 2
           }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
-      </div>
+      </label>
       {p.title && <span className="ml-3 text-sm font-medium">{p.title}</span>}
-    </label>
+    </div>
   );
 }
 
 // Todo: https://codepen.io/pen?&editors=001
 /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
 export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
   // const h = Math.round(+size / 2);
 
   return (
     <label
       dir="ltr"
-      htmlFor={id}
+      htmlFor={idRf.current}
       className="overflow-hidden relative inline-block w-auto h-[24px] cursor-pointer bg-[#121212] rounded-full">
       <input
         type="checkbox"
         checked={checked}
         onChange={handler}
-        id={id}
+        id={idRf.current}
         className="absolute inset-0 w-full h-full bg-[transparent] border border-bc rounded-full appearance-none fs"
         {...p}
       />
@@ -216,7 +219,7 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
 
 export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
   const [changed, setChanged] = useState(false);
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
 
   const handleChange = (e) => {
     setChanged(true);
@@ -231,7 +234,7 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
     <div className="relative">
       <textarea
         dir="auto"
-        id={id}
+        id={idRf.current}
         onChange={editable ? handleChange : onChange}
         onBlur={editable ? handleBlur : onBlur}
         title={p.title}
@@ -244,7 +247,7 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
         {...p}></textarea>
       {editable && (
         <label
-          htmlFor={id}
+          htmlFor={idRf.current}
           className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150 print:hidden`}>
           <SvgIcon name={changed ? "checkMark" : "edit"} />
         </label>
@@ -254,19 +257,19 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
 }
 
 export function Select({ children, label, cls, inCls, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
   // autoComplete="day"
 
   return (
     <div className={"inline-block mx-1 " + cls}>
       {label && (
-        <label htmlFor={id} className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>
+        <label htmlFor={idRf.current} className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>
           {label}
         </label>
       )}
 
       <select
-        id={id}
+        id={idRf.current}
         title={p.title}
         aria-label={p.title}
         className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
@@ -278,7 +281,7 @@ export function Select({ children, label, cls, inCls, ...p }) {
 }
 
 export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
-  const id = (Math.random() + "").replace("0.", "");
+  const idRf = useRef((Math.random() + "").replace("0.", ""));
   const handler = (n) => onChange && onChange(n);
 
   return (
@@ -287,7 +290,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
         label
       ) : (
         <>
-          <label htmlFor={id} className="text-sm">
+          <label htmlFor={idRf.current} className="text-sm">
             {label}
           </label>
           <span className="!h-2 !w-2"></span>
@@ -298,7 +301,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
         <input
           dir="ltr"
           type="number"
-          id={id}
+          id={idRf.current}
           onChange={(e) => handler(Math.round(+e.target.value || 0))}
           title={p.title || p.name}
           aria-label={p.title || p.name}

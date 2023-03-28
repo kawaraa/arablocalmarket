@@ -57,7 +57,7 @@ export default function Cart({ params, searchParams }) {
 }
 
 const content = {
-  checkoutBtn: { en: "Checkout", ar: "الدفع" },
+  checkoutBtn: { en: "Checkout", ar: "اتمام الطلب" },
   tabs: [
     { key: "2", path: "/cart", text: { en: "Shopping Cart", ar: "عناصر العربة" } },
     { key: "1", path: "/cart?tab=favorite", text: { en: "Favorite", ar: "المفضلة" } },

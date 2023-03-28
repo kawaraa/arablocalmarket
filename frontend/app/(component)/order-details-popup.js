@@ -4,16 +4,48 @@ import Modal from "./(styled)/modal";
 import Badge from "./(styled)/badge";
 import SvgIcon from "./(styled)/svg-icon";
 import LineItems from "./line-items";
-import { Textarea } from "./(styled)/inputs";
+import { Textarea, ToggleSwitch } from "./(styled)/inputs";
+import { useState } from "react";
 
-export default function OrderDetails({ lang, open, onClose, onStatusChange, admin, ...order }) {
+export default function OrderDetails({ lang, open, onClose, onStatusChange, admin, printable, ...order }) {
+  const [print, setPrint] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = () => {
+    setLoading(true);
+    try {
+      // Todo: checkout >>> fetch()
+      if (print) {
+        // Todo: print the order
+
+        // const printWindow = window.open("", "", "width=200,height=100");
+        // printWindow.document.write("<p>This window's name is: printWindow </p>");
+        // printWindow.print();
+        // printWindow.close();
+
+        window.print();
+        console.log("Printed");
+      }
+      // Todo: clear the items
+
+      console.log();
+      // admin ? () => window.print() : null
+    } catch (error) {
+      console.log("handleCheckout Error: >>>", error);
+    }
+
+    setLoading(false);
+    onClose();
+  };
+
   return (
     <Modal
       title={content.modalTitle[lang]}
       open={open}
       onCancel={onClose}
-      okBtn={shdCnt.print[lang]}
-      onApprove={admin ? () => window.print() : null}>
+      okBtn={printable ? shdCnt.checkout[lang] : shdCnt.print[lang]}
+      onApprove={admin ? handleCheckout : null}
+      loading={loading}>
       {order && order.lineItems && order.lineItems[0] && (
         <>
           <div className="flex justify-between items-center mb-8">
@@ -42,7 +74,12 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
             </label>
           </div>
 
-          <LineItems bill items={order.lineItems} currency={order.currency} />
+          <LineItems
+            bill
+            items={order.lineItems}
+            currency={order.currency}
+            onRemove={printable ? order.onRemoveItem : null}
+          />
 
           <p className="mt-3 pt-2 border-t-[1px] border-bc flex justify-between">
             {order?.payment && (
@@ -52,7 +89,7 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
               </span>
             )}
             <span className="text-lg font-semibold text-red print:text-3xl">
-              {order.discount && (
+              {+order.discount > 0 && (
                 <span className="mr-2 line-through">
                   {order.currency}
                   {order.discount + order.total}
@@ -88,14 +125,16 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
               </p>
             </address>
           )}
+          {admin && <Textarea editable defaultValue={order.note} cls="mt-5" />}
 
-          {admin && (
-            <Textarea
-              editable
-              defaultValue={order.note}
-              cls="mt-5 "
-              inCls="rounded-md text-xl border-[1px] border-bc"
-            />
+          {printable && (
+            <ToggleSwitch
+              checked={print}
+              onCheck={(e) => setPrint(e.checked)}
+              cls="w-full mt-3 flex justify-between">
+              <span className="ml-3 text-sm font-medium">Print after checkout</span>
+              <span className="w-2"></span>
+            </ToggleSwitch>
           )}
         </>
       )}

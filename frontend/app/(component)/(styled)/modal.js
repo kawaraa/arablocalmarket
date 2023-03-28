@@ -15,7 +15,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
 
       <Transition
         Tag={tag || "div"}
-        base={`z-9 fixed left-5 ${c} right-5 p-4 pt-10 overflow-hidden max-h-[90vh] rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
+        base={`z-9 fixed left-5 ${c} right-5 p-4 pt-10 overflow-hidden rounded-lg bg-bg dark:bg-dcbg md:min-w-[550px] md:max-w-xl mx-auto print:top-0 print:text-t`}
         enter="opacity-100 md:scale-100"
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
@@ -28,6 +28,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
           <IconButton
             icon="close"
             handler={onCancel}
+            disabled={!!loading}
             label="Cancel and close the modal window"
             cls="absolute top-3 right-3 hover:text-red print:hidden"
           />

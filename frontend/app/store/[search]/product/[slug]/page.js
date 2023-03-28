@@ -141,7 +141,9 @@ export default function ProductBySlug({ params }) {
           <SvgIcon name="cart" />
         </button>
 
-        <Button text={content.buyBtn[lang]} handler={handleBuy} cls="!text-lg font-medium shadow-none" />
+        <Button handler={handleBuy} cls="!text-lg font-medium shadow-none">
+          {content.buyBtn[lang]}
+        </Button>
       </div>
     </>
   );
