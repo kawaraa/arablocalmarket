@@ -3,8 +3,8 @@
 # environment variables file
 .env
 .env*.local
-google-storage.json
 variable.json
+alm-bucket.json
 
 # build
 build
@@ -62,7 +62,7 @@ $RECYCLE.BIN/
 *.pid.*
 
 # databases
-
+database
 *.sql
 *.sqlite
 *.sqlite3
