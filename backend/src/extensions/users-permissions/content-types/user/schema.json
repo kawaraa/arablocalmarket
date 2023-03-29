@@ -96,8 +96,7 @@
       "type": "component",
       "repeatable": true,
       "component": "user-information.warning",
-      "required": true,
-      "min": 0
+      "required": false
     },
     "notifications": {
       "type": "component",
