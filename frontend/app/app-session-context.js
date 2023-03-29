@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 // import { getUser } from "./(service)/api-provider";
-import Cookies from "./(service)/cookies";
+import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
 
 export const AppSessionContext = createContext();
@@ -110,7 +110,7 @@ export default function AppSessionContextProvider({ children, language, theme })
         { type: "DELIVERED", seen: false, meta: { path: "1" } },
       ];
       const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };
-      updateUser(ur);
+      // updateUser(ur);
     }
 
     if (window.setLoading) window.setLoading(false);

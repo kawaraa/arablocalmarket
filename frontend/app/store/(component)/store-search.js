@@ -1,7 +1,7 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import Cookies from "../../(service)/cookies";
+import { Cookies } from "../../(service)/utilities";
 import Modal from "../../(component)/(styled)/modal";
 import LeafletMap from "../../(component)/leaflet-map";
 import SearchBox from "../../(component)/(styled)/search-box";

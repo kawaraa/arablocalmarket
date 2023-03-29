@@ -7,7 +7,7 @@ import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
-import Cookies from "../(service)/cookies";
+import { Cookies } from "../(service)/utilities";
 
 export default function Navigation() {
   const pathName = usePathname();

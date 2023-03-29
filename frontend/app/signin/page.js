@@ -42,7 +42,7 @@ export default function Signin({ a }) {
             full
             title={content.email[lang]}
             autoComplete="email"
-            inCls="rounded-t-md cd_hr"
+            inCls="text-lg rounded-t-md cd_hr"
           />
 
           <InputField
@@ -54,7 +54,7 @@ export default function Signin({ a }) {
             full
             title={content.password[lang]}
             autoComplete="current-password"
-            inCls="rounded-b-md cd_hr"
+            inCls="text-lg rounded-b-md cd_hr"
           />
         </div>
 
@@ -67,7 +67,7 @@ export default function Signin({ a }) {
         </div>
 
         <div>
-          <Button type="submit" handler={null} loading={false} cls="w-full py-[7px] px-4">
+          <Button type="submit" handler={null} loading={false} cls="text-base w-full py-2">
             {content.submit[lang]}
           </Button>
         </div>

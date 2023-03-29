@@ -1,0 +1,4 @@
+{
+  "apiHost": "http://localhost:1337",
+  "signUp": "/api/auth/local/register"
+}

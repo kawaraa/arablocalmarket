@@ -42,7 +42,7 @@ export function PhoneInputField({ lang, ...p }) {
       required
       min="10"
       max="15"
-      pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+      pattern="^(\+|00|0)\d{10,13}$"
       autoComplete="tel"
       placeholder="E.g. +31639793297"
       title={content.phone[lang]}
