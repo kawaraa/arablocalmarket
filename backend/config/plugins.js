@@ -20,8 +20,8 @@ module.exports = ({ env }) => ({
         auth: { user: env("NODEMAILER_USER"), pass: env("NODEMAILER_PASS") },
       },
       settings: {
-        defaultFrom: "noreply@recipee.com",
-        defaultReplyTo: "noreply@recipee.com",
+        defaultFrom: "noreply@arablocalmarket.com",
+        defaultReplyTo: "info@arablocalmarket.com",
       },
     },
   },
