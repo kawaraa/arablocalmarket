@@ -25,7 +25,7 @@
       "default": "CASH",
       "required": true
     },
-    "value": {
+    "meta": {
       "type": "json",
       "required": false
     }

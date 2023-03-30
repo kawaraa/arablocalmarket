@@ -112,7 +112,7 @@
       "required": true,
       "default": "€-EUR"
     },
-    "deliveryRate": {
+    "deliveryCost": {
       "type": "decimal",
       "required": true,
       "min": 0,
