@@ -8,6 +8,7 @@ import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
 import { Cookies } from "../(service)/utilities";
+import EmptyState from "../(component)/(styled)/empty-state";
 
 export default function Navigation() {
   const pathName = usePathname();
@@ -135,6 +136,11 @@ export default function Navigation() {
                   </Link>
                 </li>
               ))}
+              {!user.notifications[0] && (
+                <li className="w-44">
+                  <EmptyState lang={lang} type="notification" />
+                </li>
+              )}
             </Dropdown>
             <Dropdown
               event="click"

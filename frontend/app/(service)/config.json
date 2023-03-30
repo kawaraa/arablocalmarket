@@ -2,5 +2,6 @@
   "apiHost": "http://localhost:1337",
   "signUp": "/api/auth/local/register",
   "signIn": "/api/auth/local",
-  "getUser": "/api/users/me?populate=*"
+  "getUser": "/api/users/me?populate=*",
+  "store": "/api/stores"
 }

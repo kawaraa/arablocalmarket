@@ -42,6 +42,7 @@ export default function StoreById({ children, params }) {
   return (
     <article>
       <ImageUpload
+        id="store-cover"
         imageUrl={imageUrl}
         onChange={handleChange}
         alt="Store cover image"

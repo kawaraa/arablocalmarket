@@ -16,7 +16,7 @@ export default function SignIn() {
     e.preventDefault();
     setLoading(true);
     const data = {};
-    new FormData(e.target).forEach((value, key) => (data[key] = value));
+    new FormData(e.target).forEach((value, key) => (data[key == "email" ? "identifier" : key] = value));
     // Todo: Adjust Strapi tp make return the jwt in the cookie as well with "HttpOnly"
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
     try {
@@ -50,13 +50,13 @@ export default function SignIn() {
         <div className="-space-y-px rounded-md shadow-sm">
           <InputField
             type="email"
-            name="identifier"
+            name="email"
             required
             min="10"
             max="30"
-            full
-            title={content.email[lang]}
             autoComplete="email"
+            title={content.email[lang]}
+            full
             inCls="text-lg rounded-t-md cd_hr"
           />
 
@@ -66,9 +66,9 @@ export default function SignIn() {
             required
             min="10"
             max="30"
-            full
-            title={content.password[lang]}
             autoComplete="current-password"
+            title={content.password[lang]}
+            full
             inCls="text-lg rounded-b-md cd_hr"
           />
         </div>

@@ -34,6 +34,7 @@ export default function ProductById({ params, searchParams }) {
       </h1>
 
       <ImageUpload
+        id="store-cover"
         imageUrl={product?.images[0]?.src}
         name="image"
         required

@@ -101,13 +101,15 @@ export function WeightInputField({ lang, label, ...p }) {
   );
 }
 
-export function CurrencySelect({ lang, ...p }) {
+export function CurrencySelect({ lang, label, ...p }) {
   return (
     <Select
+      name="currency"
       title={content.currencies.text[lang]}
       cls="flex items-center"
       inCls="mx-1 !p-[2px] rounded-full"
-      {...p}>
+      {...p}
+      label={!label ? null : content.currencies.text[lang]}>
       {content.currencies.values.map((currency, i) => (
         <option value={currency} key={i}>
           {currency}
@@ -116,29 +118,30 @@ export function CurrencySelect({ lang, ...p }) {
     </Select>
   );
 }
-export function DaysCheckButtons({ lang, checkedDays, ...p }) {
+export function DaysCheckButtons({ lang, checkedDays, onCheck, ...p }) {
   return (
     <div className="flex flex-wrap my-3">
       {content.day.values.map((d, i) => (
         <CheckCard
           type="checkbox"
-          name={d.en}
+          // name={d.en}
           checked={!!checkedDays.find(({ name }) => name == d.en)}
           key={i}
           cls="flex justify-center items-center flex-1 m-1 py-2 px-2 capitalize"
-          {...p}>
+          {...p}
+          onChange={(e) => onCheck({ name: d.en, checked: e.target.checked })}>
           {d[lang]}
         </CheckCard>
       ))}
     </div>
   );
 }
-export function OpeningHoursSelect({ lang, ...p }) {
+export function OpeningHoursSelect({ lang, time, ...p }) {
   return (
-    <Select title={content[p.name][lang]} cls="flex items-center" inCls="mx-1 !p-[2px] rounded-full" {...p}>
+    <Select title={content[time][lang]} cls="flex items-center" inCls="mx-1 !p-[2px] rounded-full" {...p}>
       {content.periods.map((period, i) =>
         content.times.map((time, ii) => (
-          <option value={time + "-" + period[lang]} key={i + ii}>
+          <option value={period.en + "-" + time} key={i + ii}>
             {time} {period[lang]}
           </option>
         ))
@@ -147,16 +150,19 @@ export function OpeningHoursSelect({ lang, ...p }) {
   );
 }
 export function DayOpeningHours({ lang, day, onDayUpdate }) {
-  const handleUpdate = ({ target }) => {
-    onDayUpdate({ ...day, [target.name]: target.value });
+  const updateOpen = ({ target }) => {
+    onDayUpdate({ ...day, open: target.value });
+  };
+  const updateClose = ({ target }) => {
+    onDayUpdate({ ...day, close: target.value });
   };
 
   return (
-    <div className="mb-2">
-      <h6 className="font-semibold mb-1">{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
+    <div className="mb-2 flex">
+      <h6 className="mb-1 w-[80px]">{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
       <div className="flex justify-evenly">
-        <OpeningHoursSelect lang={lang} name="open" defaultValue={day?.open} onChange={handleUpdate} />
-        <OpeningHoursSelect lang={lang} name="close" defaultValue={day?.close} onChange={handleUpdate} />
+        <OpeningHoursSelect lang={lang} time="open" defaultValue={day?.open} onChange={updateOpen} />
+        <OpeningHoursSelect lang={lang} time="close" defaultValue={day?.close} onChange={updateClose} />
       </div>
     </div>
   );

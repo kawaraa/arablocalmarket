@@ -16,7 +16,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <div dir="auto" className={"block " + (cls || "")}>
+    <div dir="auto" className={"flex " + (cls || "flex-col")}>
       {children}
       {label && (
         <>
@@ -138,7 +138,7 @@ export function CheckCard({ Tag = "label", children, cls, ...p }) {
   );
 }
 
-export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p }) {
+export function ToggleSwitch({ children, label, checked, onCheck, size = 50, cls, ...p }) {
   const h = Math.round(+size / 2);
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
 
@@ -162,7 +162,7 @@ export function ToggleSwitch({ children, checked, onCheck, size = 50, cls, ...p 
             h - 2
           }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
       </label>
-      {p.title && <span className="ml-3 text-sm font-medium">{p.title}</span>}
+      {label && <span className="ml-3 text-sm font-medium">{label}</span>}
     </div>
   );
 }
@@ -209,7 +209,7 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   );
 }
 
-export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
+export function Textarea({ children, editable, value, onChange, onBlur, cls, ...p }) {
   const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
@@ -223,6 +223,7 @@ export function Textarea({ editable, value, onChange, onBlur, cls, ...p }) {
 
   return (
     <div className="relative m-[1px]">
+      {children}
       <textarea
         dir="auto"
         id={cls}

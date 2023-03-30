@@ -6,7 +6,6 @@ import SvgIcon from "./svg-icon";
 export default function ImageUpload({ children, onChange, imageUrl, alt, fullHeight, cls, ...p }) {
   const [files, setFiles] = useState(false);
   const input = useRef(null);
-  const idRf = useRef((Math.random() + "").replace("0.", ""));
 
   const handleChange = (e) => {
     setFiles(!files);
@@ -19,7 +18,6 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
       type="file"
       accept="image/*"
       onChange={handleChange}
-      id={idRf.current}
       aria-label={p.title}
       className="w-0 h-0 hidden"
       {...p}
@@ -42,7 +40,7 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
           />
 
           <label
-            htmlFor={idRf.current}
+            htmlFor={p.id}
             className="absolute top-5 left-5 bg-blur text-dt w-8 rounded-full cursor-pointer hover:text-red">
             <SvgIcon name="edit" />
             {inputElement}
@@ -50,7 +48,7 @@ export default function ImageUpload({ children, onChange, imageUrl, alt, fullHei
         </>
       ) : (
         <label
-          htmlFor={idRf.current}
+          htmlFor={p.id}
           className="relative w-32 mx-auto p-3 border border-bc rounded-lg  cursor-pointer">
           <SvgIcon name="image" />
           {inputElement}

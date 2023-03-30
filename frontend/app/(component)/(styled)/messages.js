@@ -1,6 +1,7 @@
 "use client";
 import { Component } from "react";
 import TransitionContainer from "../../(layout)/transition-container";
+import Loader from "../../(layout)/loader";
 import SvgIcon from "./svg-icon";
 
 export default class Message extends Component {
@@ -27,10 +28,14 @@ export default class Message extends Component {
         time="300">
         {this.props.messages.map((msg, i) => (
           <div key={i}>
-            {content[msg.type] && (
-              <span className={`w-5 mt-[2px] text-bg rounded-full ${content[msg.type].cls}`}>
-                <SvgIcon name={content[msg.type].icon} />
-              </span>
+            {msg.type == "loading" ? (
+              <Loader size="18" />
+            ) : (
+              content[msg.type] && (
+                <span className={`w-5 mt-[2px] text-bg rounded-full ${content[msg.type].cls}`}>
+                  <SvgIcon name={content[msg.type].icon} />
+                </span>
+              )
             )}
             <span className="flex-1 mx-2">{msg.text}</span>
           </div>

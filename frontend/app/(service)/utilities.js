@@ -47,7 +47,7 @@ export function copyText(text = "", cb) {
 export function validateError(error) {
   console.log("validateError: >>> ", error);
   const lang = Cookies.get("lang") || "en";
-  const name = Object.keys(errors).find((errName) => error.toLowerCase().includes(errName));
+  const name = Object.keys(errors).find((errName) => error?.toLowerCase().includes(errName));
   return name ? errors[name][lang] : errors.wrong[lang];
 }
 
@@ -60,5 +60,9 @@ const errors = {
   "not confirmed": {
     en: "You can not sign in if you don't confirm your Email address",
     ar: "لا يمكنك تسجيل الدخول إذا لم تؤكد عنوان بريدك الإلكتروني",
+  },
+  "invalid identifier": {
+    en: "Invalid Email or Password",
+    ar: "البريد الإلكتروني أو كلمة السر خاطئة",
   },
 };

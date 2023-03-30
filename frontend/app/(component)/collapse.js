@@ -5,7 +5,7 @@ import Transition from "../(layout)/transitions";
 import { ToggleSwitch } from "./(styled)/inputs";
 import SvgIcon from "./(styled)/svg-icon";
 
-export default function Collapse({ children, title, checked, onCheck, cls, hCls }) {
+export default function Collapse({ children, title, checked, onCheck, name, id, cls, hCls }) {
   // if (accordion) console.log("This a accordion, means only one panel can be expanded at a time.");
   const [active, setActive] = useState(checked || false);
   const headerClass = "flex w-full bg-lbg dark:bg-cbg px-3 py-2";
@@ -19,7 +19,7 @@ export default function Collapse({ children, title, checked, onCheck, cls, hCls 
       {onCheck ? (
         <div className={`${headerClass} justify-between rounded-${active ? "-t-lg" : "lg"} ${hCls} `}>
           <span className="mx-1">{title}</span>
-          <ToggleSwitch cls="134231" checked={checked} onCheck={onCheck} />
+          <ToggleSwitch name={name} cls={id} checked={checked} onCheck={onCheck} />
         </div>
       ) : (
         <button

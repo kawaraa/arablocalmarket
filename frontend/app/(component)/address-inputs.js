@@ -41,7 +41,9 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           defaultValue={cy}
           required
           // autoComplete="country"
-          className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-l-md">
+          className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
+            lang == "en" ? "l-md py-2" : "r-md py-0"
+          }`}>
           <option value="">{content.country[lang]}</option>
           {renderCountries()}
         </select>
@@ -52,7 +54,9 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           required
           // autoComplete="country-name"
           defaultValue={p}
-          className="block bg-cbg w-1/2 px-3 py-2 card cd_hr fs rounded-r-md">
+          className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
+            lang == "en" ? "r-md py-2" : "l-md py-0"
+          }`}>
           <option value="">{content.province[lang]}</option>
           {renderProvinces()}
         </select>
@@ -65,7 +69,9 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           title={content.city[lang]}
           aria-label={content.city[lang]}
           // autoComplete="address-level2"
-          className="block bg-cbg w-1/2 px-2 py-1 card cd_hr fs rounded-l-md">
+          className={`block bg-cbg w-1/2 px-1 card cd_hr fs rounded-${
+            lang == "en" ? "l-md py-2" : "r-md py-0"
+          }`}>
           <option value="">{content.city[lang]}</option>
           {countries[cy]?.provinces[p]?.map((city, i) => (
             <option value={city} key={i}>
@@ -86,7 +92,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           title={content.postalCode[lang]}
           full
           cls="relative w-1/2 "
-          inCls="rounded-r-md"
+          inCls={`rounded-${lang == "en" ? "r-md py-2" : "l-md py-1"}`}
         />
       </div>
       <InputField
