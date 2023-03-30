@@ -7,6 +7,7 @@ export default function ProductCardButtons({ id, cls }) {
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
+    console.log("ProductCardButtons & product id: >>> ", id);
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
-
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import Modal from "../../(component)/(styled)/modal";
 import { Button, IconButton } from "../../(component)/(styled)/button";
@@ -12,7 +12,8 @@ import SelectProductPopup from "./(component)/select-product-popup";
 import OrderDetailsPopup from "../../(component)/order-details-popup";
 
 export default function Admin({ params, searchParams }) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
   const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
   const [foundProducts, setFoundProducts] = useState([]);
@@ -53,6 +54,11 @@ export default function Admin({ params, searchParams }) {
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
+  useEffect(() => {
+    if (!user) router.replace("/signin");
+  }, [user]);
+
+  if (!user) return null;
   return (
     <>
       <article>

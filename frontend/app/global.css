@@ -102,6 +102,10 @@
   transform-origin: top left;
   animation: lazy-l 0.5s ease-in 0.3s reverse backwards;
 }
+.msg {
+  animation: msg-top 0.3s ease-out reverse backwards;
+}
+
 @keyframes lazy-c {
   100% {
     opacity: 0;
@@ -120,5 +124,11 @@
     opacity: 0;
     /* transform: rotate(10deg) translate(-5%, 50%); */
     transform: translate(-20px, 30px);
+  }
+}
+@keyframes msg-top {
+  100% {
+    opacity: 0;
+    transform: translate(0, -50px);
   }
 }

@@ -39,7 +39,7 @@ export default function RootLayout({ children, searchParams }) {
             className="min-h-screen pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:min-h-fit"
             dir="auto">
             {children}
-            {/* {!language && <SelectLanguage selectedLanguage={false} />} */}
+            {!language && <SelectLanguage selected={false} />}
           </main>
         </AppSessionContextProvider>
 

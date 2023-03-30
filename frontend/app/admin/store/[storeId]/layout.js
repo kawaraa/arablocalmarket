@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../../../app-session-context";
 import Tabs from "../../../(component)/(styled)/tabs";
@@ -10,7 +11,8 @@ import ImageUpload from "../../../(component)/(styled)/upload-image";
 import { LinkButton } from "../../../(component)/(styled)/button";
 
 export default function StoreById({ children, params }) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
   const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -30,6 +32,12 @@ export default function StoreById({ children, params }) {
   useEffect(() => {
     setStatus(open);
   }, []);
+
+  useEffect(() => {
+    if (!user) router.replace("/signin");
+  }, [user]);
+
+  if (!user) return null;
 
   return (
     <article>

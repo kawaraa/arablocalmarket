@@ -27,7 +27,7 @@ export default function Variant({ lang, number, onRemove, ...v }) {
         <h4 className="mb-2">
           {content.h4[lang]} ( {number} )
         </h4>
-        {number > 1 && <IconButton icon="close" size="7" handler={onRemove} cls="hover:text-red" />}
+        {number > 1 && <IconButton icon="crossMark" size="7" handler={onRemove} cls="hover:text-red" />}
       </div>
 
       <InputField
@@ -70,7 +70,7 @@ export default function Variant({ lang, number, onRemove, ...v }) {
             </label>
             {index + 1 > 1 && (
               <IconButton
-                icon="close"
+                icon="crossMark"
                 size="3"
                 handler={() => removeOption(index)}
                 cls="!p-0 hover:text-red"

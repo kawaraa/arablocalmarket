@@ -93,7 +93,7 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
     <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
       {onClose && (
         <IconButton
-          icon="close"
+          icon="crossMark"
           handler={() => onClose(stopStreams())}
           label="Cancel and close the modal window"
           cls="absolute top-4 right-4 hover:text-red print:hidden"

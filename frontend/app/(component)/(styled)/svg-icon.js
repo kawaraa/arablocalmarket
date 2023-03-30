@@ -193,7 +193,7 @@ const icons = {
       <path d="m5,5l89.35,0m-89.35,44.82l89.35,0m-89.35,44.82l89.35,0" strokeLinecap="round" />
     </svg>
   ),
-  close: (
+  crossMark: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"

@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import messages from "../(layout)/json/messages.json";
@@ -10,42 +10,61 @@ import {
   PhoneInputField,
   PswInputField,
 } from "../(component)/custom-inputs";
-import { getURL, request } from "../(service)/api-provider";
+import { request } from "../(service)/api-provider";
 
-export default function Signup({ a }) {
+export default function Signup({ searchParams }) {
   const router = useRouter();
-  const { lang, user } = useContext(AppSessionContext);
+  const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
-  const checkConfirmation = async () => {
-    const response = await request("getUser").catch(() => null);
+  const checkConfirmation = async (data, times) => {
+    const response = await request("signIn", "POST", data).catch(() => null);
+    if (response?.user?.confirmed) {
+      window.localStorage.removeItem("accessToken");
+      window.localStorage.setItem("accessToken", response.jwt);
 
-    if (response?.confirm) return router.replace("/");
-    setTimeout(checkConfirmation, 1000);
+      const user = await request("getUser").catch(() => null);
+      if (user) updateUser(user);
+    } else if (times < 20) setTimeout(() => checkConfirmation(data, times + 1), 40000);
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = {};
     new FormData(e.target).forEach((value, key) => (data[key] = value));
-    // /auth/local/register
-    // Redirect the user to a page that show him that he needs to confirm his Email to be able to sign in.
     try {
       if (data.password != data.confirmPassword) throw new Error(messages.pswErr[lang]);
       delete data.confirmPassword;
       data.username = data.email.slice(0, data.email.indexOf("@"));
-      const response = await request("signUp", "POST", data);
-      response.jwt;
-      // checkConfirmation()
+
+      await request("signUp", "POST", data, null, { headers: { "Content-Type": "application/json" } });
+
+      addMessage({ type: "success", text: content.message[lang], duration: 5000 });
+
+      const { email, password } = data;
+      checkConfirmation({ identifier: email, password }, 1);
+
+      setTimeout(() => router.replace(window.location.href + "?status=confirm"), 2000);
     } catch (error) {
-      console.log(error);
-      //
+      addMessage({ type: "error", text: error.message, duration: 10000 });
     }
+
+    setLoading(false);
   };
 
-  if (user) {
-    router.push("/");
-    return null;
+  useEffect(() => {
+    if (user) router.replace(user?.myStores[0] ? "/admin/store" : "store");
+  }, [user]);
+
+  if (user) return null;
+  else if (searchParams.status == "confirm") {
+    return (
+      <article className="flex flex-col justify-center items-center h-[80vh]">
+        <h1 className="text-2xl mb-3">{content.confirmH1[lang]}</h1>
+        <p className="text-center">{content.confirmP[lang]}</p>
+      </article>
+    );
   }
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
@@ -69,7 +88,7 @@ export default function Signup({ a }) {
         </div>
 
         <div>
-          <Button type="submit" handler={null} loading={false} cls="!text-lg w-full py-2">
+          <Button type="submit" disabled={loading} loading={loading} cls="!text-lg w-full py-2">
             {content.submit[lang]}
           </Button>
         </div>
@@ -82,4 +101,10 @@ const content = {
   h1: { en: "Create a new account", ar: "انشاء حساب جديد" },
   // username: { en: "Username", ar: "اسم المستخدم" } ,
   submit: { en: "Create", ar: "إنشاء حساب" },
+  message: { en: "Your account has been created", ar: "لقد تم إنشاء حسابك" },
+  confirmH1: { en: "Signed up successfully!", ar: "تم التسجيل بنجاح!" },
+  confirmP: {
+    en: "We have sent you a confirmation Email, Please go to your Email inbox and confirm your Email address.",
+    ar: "لقد أرسلنا لك رسالة تأكيد بالبريد الإلكتروني ، يرجى الذهاب إلى صندوق البريد الإلكتروني الخاص بك وتأكيد عنوان بريدك الإلكتروني.",
+  },
 };

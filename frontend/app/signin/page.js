@@ -1,29 +1,44 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
-import { Button } from "../(component)/(styled)/button";
+import { request } from "../(service)/api-provider";
 import { InputField } from "../(component)/(styled)/inputs";
+import { Button } from "../(component)/(styled)/button";
 
-export default function Signin({ a }) {
+export default function SignIn() {
   const router = useRouter();
-  const { lang, user, updateUser } = useContext(AppSessionContext);
+  const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    // const {jwt, user} = await fetch("url");
-    // updateUser(user)
+    setLoading(true);
+    const data = {};
+    new FormData(e.target).forEach((value, key) => (data[key] = value));
     // Todo: Adjust Strapi tp make return the jwt in the cookie as well with "HttpOnly"
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
-    console.log("handleSignIn: ");
+    try {
+      const response = await request("signIn", "POST", data);
+      window.localStorage.removeItem("accessToken");
+      window.localStorage.setItem("accessToken", response.jwt);
+      const user = await request("getUser");
+      window.localStorage.setItem("user", JSON.stringify(user));
+      updateUser(user);
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 10000 });
+      window.localStorage.removeItem("accessToken");
+    }
+
+    setLoading(false);
   };
 
-  if (user) {
-    router.push("/");
-    return null;
-  }
+  useEffect(() => {
+    if (user) router.replace(user?.myStores[0] ? "/admin/store" : "store");
+  }, [user]);
+
+  if (user) return null;
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">
@@ -35,7 +50,7 @@ export default function Signin({ a }) {
         <div className="-space-y-px rounded-md shadow-sm">
           <InputField
             type="email"
-            name="email"
+            name="identifier"
             required
             min="10"
             max="30"
@@ -67,7 +82,7 @@ export default function Signin({ a }) {
         </div>
 
         <div>
-          <Button type="submit" handler={null} loading={false} cls="text-base w-full py-2">
+          <Button type="submit" disabled={loading} loading={loading} cls="text-base w-full py-2">
             {content.submit[lang]}
           </Button>
         </div>

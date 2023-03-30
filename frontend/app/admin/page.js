@@ -1,18 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 
 export default function Admin({ params, searchParams }) {
-  const { lang } = useContext(AppSessionContext);
-  const [activeTab, setActiveTab] = useState(null);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
+  // const [activeTab, setActiveTab] = useState(null);
+  // console.log("Todo, Show content based on this selected tab: >>>", activeTab);
 
   useEffect(() => {
     document.title = "Admin dashboard - ALM";
-  }, []);
+    if (!user) router.replace("/signin");
+  }, [user]);
 
-  console.log("Todo, Show content based on this selected tab: >>>", activeTab);
-
+  if (!user) return null;
   return (
     <article>
       <h1 className="mx-2 my-3">Admin dashboard</h1>

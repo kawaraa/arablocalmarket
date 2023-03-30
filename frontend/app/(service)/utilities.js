@@ -45,7 +45,7 @@ export function copyText(text = "", cb) {
 }
 
 export function validateError(error) {
-  console.log(error);
+  console.log("validateError: >>> ", error);
   const lang = Cookies.get("lang") || "en";
   const name = Object.keys(errors).find((errName) => error.toLowerCase().includes(errName));
   return name ? errors[name][lang] : errors.wrong[lang];
@@ -57,4 +57,8 @@ const errors = {
     ar: "حدث خطأ ما، يرجى المحاولة فى وقت لاحق",
   },
   "already taken": { en: "Email are already taken", ar: "البريد الإلكتروني مستخدم" },
+  "not confirmed": {
+    en: "You can not sign in if you don't confirm your Email address",
+    ar: "لا يمكنك تسجيل الدخول إذا لم تؤكد عنوان بريدك الإلكتروني",
+  },
 };

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { renderToString } from "react-dom/server";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function TransitionContainer({ Tag, children, base, enter, update, exit, time, ...p }) {
   const [elements, setElements] = useState(null);
@@ -15,8 +15,7 @@ export default function TransitionContainer({ Tag, children, base, enter, update
 
     return newChildren.filter((child) => child);
   };
-
-  const getClasses = (class1 = "", class2 = "") => ({ cls: `${class1} ${base} ${class2}` });
+  const getClasses = (cls1 = "", cls2 = "") => ({ className: `${cls1} ${base} ${cls2}` });
 
   const compareComponents = (component1, component2) => {
     if (component1 === component2) return true;
@@ -34,11 +33,14 @@ export default function TransitionContainer({ Tag, children, base, enter, update
     if (!elements) setElements(newChildren);
     else {
       if (elements.length < newChildren.length) {
+        // Then there are a new element.
         setActiveElement({ index: elements.length, class: enter });
         setElements(newChildren);
         setTimeout(() => setActiveElement({ index: -1, class: "" }), 20);
       } else {
         const index = elements.findIndex((child) => !newChildren.find((c) => compareComponents(child, c)));
+        // If index, then there is an element is updated.
+        // Else an element is removed.
 
         if (elements.length > newChildren.length) setActiveElement({ index, class: exit });
         else setActiveElement({ index, class: update });
@@ -52,7 +54,7 @@ export default function TransitionContainer({ Tag, children, base, enter, update
             setElements(newChildren);
             setShallowElements(null);
           }, 20);
-        }, time);
+        }, +time);
       }
     }
   }, [children]);

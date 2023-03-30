@@ -1,5 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
+import Messages from "./(component)/(styled)/messages";
+import { request } from "./(service)/api-provider";
 // import { getUser } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
@@ -7,9 +9,9 @@ import { Cookies } from "./(service)/utilities";
 export const AppSessionContext = createContext();
 
 export default function AppSessionContextProvider({ children, language, theme }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
-  const [errors, setErrors] = useState([]);
+  // const [errors, setErrors] = useState([]);
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
   const [user, setUser] = useState(null);
@@ -31,9 +33,9 @@ export default function AppSessionContextProvider({ children, language, theme })
   // const [profile, setProfile] = useState({});
   // const [editingField, setEditingField] = useState("");
 
+  const setAppLoading = (loading) => setLoading(loading) + window?.setLoading(loading);
   const addMessage = (msg) => setMessages([...messages, msg]);
-
-  const addError = (err) => setErrors([...errors, err]);
+  // const addError = (err) => setErrors([...errors, err]);
 
   const updateLang = (lang) => {
     Cookies.set("lang", lang);
@@ -84,9 +86,11 @@ export default function AppSessionContextProvider({ children, language, theme })
   // };
 
   const updateUser = (user) => {
+    setAppLoading(true);
     if (user) window.localStorage.setItem("user", JSON.stringify(user));
     else window.localStorage.removeItem("user");
     setUser(user);
+    setAppLoading(false);
   };
 
   useEffect(() => {
@@ -100,20 +104,10 @@ export default function AppSessionContextProvider({ children, language, theme })
     const user = JSON.parse(window.localStorage.getItem("user") || null);
     if (user) updateUser(user);
     else {
-      // Todo: here
-      // getUser("url")
-      //   .then(({ jwt, user }) => updateUser(user))
-      //   .catch(() => updateUser(null));
-
-      const notifications = [
-        { type: "NEW_ORDER", seen: false, meta: { path: "1" } },
-        { type: "DELIVERED", seen: false, meta: { path: "1" } },
-      ];
-      const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };
-      // updateUser(ur);
+      request("getUser")
+        .then((user) => updateUser(user))
+        .catch(() => setAppLoading(false));
     }
-
-    if (window.setLoading) window.setLoading(false);
   }, []);
 
   // useEffect(() => {
@@ -150,12 +144,10 @@ export default function AppSessionContextProvider({ children, language, theme })
   };
 
   const state = {
-    loading,
-    setLoading,
-    messages,
+    setAppLoading,
     addMessage,
-    errors,
-    addError,
+    // errors,
+    // addError,
     lang,
     updateLang,
     themeMode,
@@ -201,5 +193,17 @@ export default function AppSessionContextProvider({ children, language, theme })
     // setProfile,
   };
 
-  return <AppSessionContext.Provider value={state}>{children}</AppSessionContext.Provider>;
+  if (loading) return null;
+  return (
+    <AppSessionContext.Provider value={state}>
+      {children}
+      <Messages messages={messages} setMessages={setMessages} />
+    </AppSessionContext.Provider>
+  );
 }
+
+// const notifications = [
+//   { type: "NEW_ORDER", seen: false, meta: { path: "1" } },
+//   { type: "DELIVERED", seen: false, meta: { path: "1" } },
+// ];
+// const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };

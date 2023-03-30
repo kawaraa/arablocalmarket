@@ -192,7 +192,7 @@ const content = {
     { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/admin/new-store" },
     { text: { en: "Stores", ar: "المتاجر" }, path: "/admin/store?tab=my" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
-    { text: { en: "Logout", ar: "تسجيل خروج" }, path: "/logout" },
+    { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },
   ],
   notifications: {
     NEW_ORDER: { en: "You have a new order", ar: "لديك طلب جديد" },

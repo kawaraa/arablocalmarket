@@ -4,9 +4,9 @@ import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 
-export default function SelectLanguage({ SelectLanguage }) {
+export default function SelectLanguage({ selected }) {
   const { updateLang } = useContext(AppSessionContext);
-  const [open, setOpen] = useState(!SelectLanguage);
+  const [open, setOpen] = useState(!selected);
 
   const changeLanguage = (lang) => {
     updateLang(lang);

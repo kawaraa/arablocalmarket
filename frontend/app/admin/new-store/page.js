@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import {
   InputField,
@@ -16,7 +17,8 @@ import ImageUpload from "../../(component)/(styled)/upload-image";
 // import Tooltip from "../(component)/(styled)/tooltip";
 
 export default function NewStore({ params, searchParams }) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
   const [store, setStore] = useState(null);
   const [file, setFile] = useState(null);
@@ -69,6 +71,11 @@ export default function NewStore({ params, searchParams }) {
     fetchStoreById(searchParams.id);
   }, [searchParams]);
 
+  useEffect(() => {
+    if (!user) router.replace("/signin");
+  }, [user]);
+
+  if (!user) return null;
   return (
     <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
       <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>

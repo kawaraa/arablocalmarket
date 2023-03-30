@@ -26,7 +26,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         {...p}>
         {onCancel && (
           <IconButton
-            icon="close"
+            icon="crossMark"
             handler={onCancel}
             disabled={!!loading}
             label="Cancel and close the modal window"

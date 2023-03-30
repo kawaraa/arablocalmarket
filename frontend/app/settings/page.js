@@ -3,14 +3,18 @@ import { useContext, useEffect } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Profile from "./(component)/profile";
 import Account from "./(component)/account";
+import { useRouter } from "next/navigation";
 
 export default function Settings(props) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
 
   useEffect(() => {
     document.title = "Settings - ALM";
-  }, []);
+    if (!user) router.replace("/signin");
+  }, [user]);
 
+  if (!user) return null;
   return (
     <article className="mt-4 max-w-md mx-auto">
       {/* <h1 className="text-xl mb-6">Settings</h1> */}

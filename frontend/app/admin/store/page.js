@@ -1,21 +1,29 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Tabs from "../../(component)/(styled)/tabs";
 import { AppSessionContext } from "../../app-session-context";
 import StoreCard from "../../store/(component)/store-card";
 
 export default function Stores({ params, searchParams }) {
-  const { lang } = useContext(AppSessionContext);
+  const router = useRouter();
+  const { lang, user } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
 
   // console.log("Todo, Show stores based on this: >>> ", searchParams.tab);
   // console.log("Todo, Show content based on this selected tab: >>>", activeTab);
 
   useEffect(() => {
-    document.title = "Admin Stores - ALM";
-  }, []);
+    // Show stores based on this activeTab
+  }, [activeTab]);
 
+  useEffect(() => {
+    document.title = "Admin Stores - ALM";
+    if (!user) router.replace("/signin");
+  }, [user]);
+
+  if (!user) return null;
   return (
     <article className="relative pt-5 ">
       <Tabs
