@@ -40,12 +40,10 @@
     },
     "cocNumber": {
       "type": "string",
-      "unique": false,
-      "private": true
+      "unique": false
     },
     "vatNumber": {
-      "type": "string",
-      "private": true
+      "type": "string"
     },
     "stripeId": {
       "type": "string",

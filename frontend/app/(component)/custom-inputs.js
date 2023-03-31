@@ -125,7 +125,7 @@ export function DaysCheckButtons({ lang, checkedDays, onCheck, ...p }) {
         <CheckCard
           type="checkbox"
           // name={d.en}
-          checked={!!checkedDays.find(({ name }) => name == d.en)}
+          checked={!!checkedDays.find(({ day }) => day == d.en)}
           key={i}
           cls="flex justify-center items-center flex-1 m-1 py-2 px-2 capitalize"
           {...p}
@@ -159,7 +159,7 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
 
   return (
     <div className="mb-2 flex">
-      <h6 className="mb-1 w-[80px]">{content.day.values.find((d) => d.en == day.name)[lang]}</h6>
+      <h6 className="mb-1 w-[80px]">{content.day.values.find((d) => d.en == day.day)[lang]}</h6>
       <div className="flex justify-evenly">
         <OpeningHoursSelect lang={lang} time="open" defaultValue={day?.open} onChange={updateOpen} />
         <OpeningHoursSelect lang={lang} time="close" defaultValue={day?.close} onChange={updateClose} />

@@ -34,20 +34,20 @@ export default function Signup({ searchParams }) {
     const data = {};
     new FormData(e.target).forEach((value, key) => (data[key] = value));
     try {
-      if (data.password != data.confirmPassword) throw new Error(messages.pswErr[lang]);
+      const { email, password, confirmPassword, firstName, lastName } = data;
+      if (password != confirmPassword) throw new Error(messages.pswErr[lang]);
       delete data.confirmPassword;
-      data.username = data.email.slice(0, data.email.indexOf("@"));
+      data.username = (firstName + lastName + email.slice(0, email.indexOf("@"))).toLowerCase();
 
-      await request("signUp", "POST", data, null, { headers: { "Content-Type": "application/json" } });
+      await request("signUp", "POST", data);
 
-      addMessage({ type: "success", text: content.message[lang], duration: 5000 });
+      addMessage({ type: "success", text: content.message[lang], duration: 5 });
 
-      const { email, password } = data;
       checkConfirmation({ identifier: email, password }, 1);
 
       setTimeout(() => router.replace(window.location.href + "?status=confirm"), 2000);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 10000 });
+      addMessage({ type: "error", text: error.message, duration: 10 });
     }
 
     setLoading(false);

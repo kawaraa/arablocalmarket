@@ -15,12 +15,13 @@ import { Button } from "../../(component)/(styled)/button";
 import Collapse from "../../(component)/collapse";
 import ImageUpload from "../../(component)/(styled)/upload-image";
 import { request } from "../../(service)/api-provider";
+import Loader from "../../(layout)/loader";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const defaultTimes = { open: "AM-07.00", close: "PM-07.00" };
 
 export default function NewStore({ params, searchParams }) {
   const router = useRouter();
-  const { lang, user } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
   const [store, setStore] = useState(null);
   const [days, setDays] = useState([]);
@@ -33,6 +34,8 @@ export default function NewStore({ params, searchParams }) {
     e.preventDefault();
     const f = e.target;
     const payments = [];
+    const file = f.cover?.files[0];
+
     try {
       if (onDeliveryPayment) {
         for (let k in onDeliveryPayment) {
@@ -56,7 +59,6 @@ export default function NewStore({ params, searchParams }) {
         about: f.about.value,
         currency: f.currency.value,
         deliver: f.deliver.checked,
-        deliveryCost: f.deliveryCost.value,
         cocNumber: f.cocNumber.value,
         vatNumber: f.vatNumber.value,
         address: {
@@ -72,20 +74,23 @@ export default function NewStore({ params, searchParams }) {
         openingHours: days,
         payments,
       };
-      // new FormData(e.target).forEach((value, key) => (data[key] = value));
-      console.log("data: ", data);
-      // console.log("days: ", days);
-      // console.log("onDeliveryPayment: ", onDeliveryPayment);
-      // console.log("onlinePayment: ", onlinePayment);
 
-      if (store) {
-        // update
-        // const { id, attributes } = (await request("store", "PUT", data)).data;
+      if (f.deliveryCost) data.deliveryCost = f.deliveryCost.value;
+
+      let id = null;
+      if (!store) {
+        const formData = new FormData();
+        formData.append("files.cover", file, file.name);
+        formData.append("data", JSON.stringify(data));
+        id = (await request("store", "POST", formData)).data.id;
       } else {
-        // create
-        const { id, attributes } = (await request("store", "POST", data)).data;
+        delete data.name;
+        id = (await request("store", "PUT", JSON.stringify(data))).data.id;
       }
+
+      router.replace(`/admin/store/${id}/product`);
     } catch (error) {
+      addMessage({ type: "Error", text: error.message, duration: 15 });
       console.log("handleSubmit error: >>> ", error);
     }
   };
@@ -105,22 +110,39 @@ export default function NewStore({ params, searchParams }) {
   };
 
   const fetchStoreById = async (id) => {
-    // setStore(store)
-    // setDeliver(store.deliver);
-    // setDays(); // [{ name:"", open: "", close: "" }]
-    // setOnDeliveryPayment(); // cash: checked, card: checked
-    // setOnlinePayment(); // { card: checked, bank: {accountHolder:"", iban:"", bic:""} }
+    setLoading(true);
+    try {
+      const { attributes } = await request("store", "GET", { query: `/${searchParams.id}?populate=*` });
+
+      setStore(attributes);
+      setDeliver(attributes.deliver);
+      setDays(attributes.openingHours);
+
+      const onDeliveryPay = {};
+      const onlinePay = {};
+      attributes.payments.forEach((p) => {
+        if (p.type == "ONLINE") onlinePay[p.method.toLowerCase()] = p.meta;
+        else onDeliveryPay[p.method.toLowerCase()] = p.meta;
+      });
+      setOnDeliveryPayment(onDeliveryPay); // cash: checked, card: checked
+      setOnlinePayment(onlinePay); // { card: checked, bank: {accountHolder:"", iban:"", bic:""} }
+    } catch (error) {
+      addMessage({ type: "error", text: error.message });
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchStoreById(searchParams.id);
+    if (searchParams.id) fetchStoreById(searchParams.id);
   }, [searchParams]);
 
   useEffect(() => {
     if (!user) router.replace("/signin");
   }, [user]);
 
-  if (!user) return null;
+  // Todo: change this loading to elements loading effect
+  if (loading) return <Loader size="100" wrapperCls="z-10 flex justify-center items-center fixed inset-0" />;
+  else if (!user) return null;
   return (
     <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
       <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
@@ -129,7 +151,7 @@ export default function NewStore({ params, searchParams }) {
       {!update && (
         <ImageUpload
           id="store-cover"
-          name="image"
+          name="cover"
           alt={content.imgAlt[lang]}
           title={content.imgTitle[lang]}
         />
@@ -246,6 +268,7 @@ export default function NewStore({ params, searchParams }) {
           <InputField
             type="text"
             name="accountHolder"
+            defaultValue={onlinePayment?.bank?.accountHolder}
             label={content.bankInfo.holder[lang]}
             placeholder="E.g. John Doe"
             required
@@ -255,6 +278,7 @@ export default function NewStore({ params, searchParams }) {
           <InputField
             type="text"
             name="iban"
+            defaultValue={onlinePayment?.bank?.iban}
             label={content.bankInfo.number[lang]}
             placeholder="E.g. FI21 1234 5698 7654 3210"
             required
@@ -264,6 +288,7 @@ export default function NewStore({ params, searchParams }) {
           <InputField
             type="text"
             name="bic"
+            defaultValue={onlinePayment?.bank?.bic}
             label={content.bankInfo.bic[lang]}
             title="Bank Identifier Number"
             placeholder="E.g. BOHIUS77"

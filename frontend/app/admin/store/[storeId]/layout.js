@@ -44,7 +44,7 @@ export default function StoreById({ children, params }) {
       <ImageUpload
         id="store-cover"
         imageUrl={imageUrl}
-        onChange={handleChange}
+        onFile={handleChange}
         alt="Store cover image"
         title="Edit store cover">
         <Link

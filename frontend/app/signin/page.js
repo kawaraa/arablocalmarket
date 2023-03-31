@@ -27,7 +27,7 @@ export default function SignIn() {
       window.localStorage.setItem("user", JSON.stringify(user));
       updateUser(user);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 10000 });
+      addMessage({ type: "error", text: error.message, duration: 10 });
       window.localStorage.removeItem("accessToken");
     }
 
