@@ -12,7 +12,7 @@ import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
 import Loader from "../../../(layout)/loader";
 
-export default function StoreById({ children, params }) {
+export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ export default function StoreById({ children, params }) {
       const data = {};
       if (target?.name == "name") data.name = target.value;
       else data.open = target.checked;
-      await request("store", "PUT", { query: "/" + params.storeId, body: { data } });
+      await request("store", "PUT", { query: "/" + storeId, body: { data } });
       setTimeout(() => target?.blur(), 200);
     } catch (error) {
       addMessage({ type: "Error", text: error.message, duration: 15 });
@@ -38,7 +38,7 @@ export default function StoreById({ children, params }) {
     try {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
-      await request("store", "PUT", { query: "/" + params.storeId, body: formData });
+      await request("store", "PUT", { query: "/" + storeId, body: formData });
       addMessage({ type: "Success", text: "done", duration: 5 });
     } catch (error) {
       addMessage({ type: "Error", text: error.message, duration: 15 });
@@ -48,11 +48,11 @@ export default function StoreById({ children, params }) {
 
   const fetchStore = async () => {
     try {
-      const { id, attributes } = await request("store", "GET", {
-        query: "/" + params.storeId + "?populate=*",
-      });
+      const { id, attributes } = await request("store", "GET", { query: "/" + storeId + "?populate=*" });
       attributes.id = id;
-      attributes.image = { id: attributes.cover.data.id, ...attributes.cover.data.attributes };
+      if (attributes.cover?.data) {
+        attributes.image = { id: attributes.cover.data.id, ...attributes.cover.data.attributes };
+      }
       setStore(attributes);
     } catch (error) {
       addMessage({ type: "Error", text: error.message, duration: 15 });
@@ -71,18 +71,18 @@ export default function StoreById({ children, params }) {
       <article>
         <ImageUpload
           id="store-cover"
-          imageUrl={store.image.url}
+          imageUrl={store.image?.url}
           onFile={handleCoverChange}
           alt="Store cover image"
           title="Edit store cover">
           <Link
-            href={`/admin/pos?storeId=${params.storeId}`}
+            href={`/admin/pos?storeId=${storeId}`}
             title="Point of sale - Store mode"
             className="absolute top-5 right-5 w-8">
             <SvgIcon name="logo" />
           </Link>
           {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-          <LinkButton href={"/admin/new-store?id=" + params.storeId} cls="absolute bottom-2 left-5 ">
+          <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
             Edit
           </LinkButton>
         </ImageUpload>
@@ -107,7 +107,7 @@ export default function StoreById({ children, params }) {
           <Tabs
             tabs={content.tabs.map(({ key, path, text }) => ({
               key,
-              path: path.replace("storeId", params.storeId),
+              path: path.replace("storeId", storeId),
               text: text[lang],
             }))}
             cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
