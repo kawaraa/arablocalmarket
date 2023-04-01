@@ -35,6 +35,7 @@ export default function NewStore({ params, searchParams }) {
     const f = e.target;
     const payments = [];
     const file = f.cover?.files[0];
+    setLoading(true);
 
     try {
       if (onDeliveryPayment) {
@@ -85,14 +86,14 @@ export default function NewStore({ params, searchParams }) {
         id = (await request("store", "POST", formData)).data.id;
       } else {
         delete data.name;
-        id = (await request("store", "PUT", JSON.stringify(data))).data.id;
+        id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
       }
 
       router.replace(`/admin/store/${id}/product`);
     } catch (error) {
       addMessage({ type: "Error", text: error.message, duration: 15 });
-      console.log("handleSubmit error: >>> ", error);
     }
+    setLoading(false);
   };
 
   const addDay = ({ name, checked }) => {
@@ -112,8 +113,8 @@ export default function NewStore({ params, searchParams }) {
   const fetchStoreById = async (id) => {
     setLoading(true);
     try {
-      const { attributes } = await request("store", "GET", { query: `/${searchParams.id}?populate=*` });
-
+      const { id, attributes } = await request("store", "GET", { query: `/${searchParams.id}?populate=*` });
+      attributes.id = id;
       setStore(attributes);
       setDeliver(attributes.deliver);
       setDays(attributes.openingHours);
@@ -124,8 +125,8 @@ export default function NewStore({ params, searchParams }) {
         if (p.type == "ONLINE") onlinePay[p.method.toLowerCase()] = p.meta;
         else onDeliveryPay[p.method.toLowerCase()] = p.meta;
       });
-      setOnDeliveryPayment(onDeliveryPay); // cash: checked, card: checked
-      setOnlinePayment(onlinePay); // { card: checked, bank: {accountHolder:"", iban:"", bic:""} }
+      setOnDeliveryPayment(onDeliveryPay);
+      setOnlinePayment(onlinePay);
     } catch (error) {
       addMessage({ type: "error", text: error.message });
     }
@@ -140,188 +141,192 @@ export default function NewStore({ params, searchParams }) {
     if (!user) router.replace("/signin");
   }, [user]);
 
-  // Todo: change this loading to elements loading effect
-  if (loading) return <Loader size="100" wrapperCls="z-10 flex justify-center items-center fixed inset-0" />;
-  else if (!user) return null;
+  if (!user) return null;
   return (
-    <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
-      <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
+    <>
+      <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
+        <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
 
-      {/* cover */}
-      {!update && (
-        <ImageUpload
-          id="store-cover"
-          name="cover"
-          alt={content.imgAlt[lang]}
-          title={content.imgTitle[lang]}
-        />
-      )}
-
-      {!update && (
-        <InputField
-          type="text"
-          name="name"
-          placeholder={content.name.placeholder[lang]}
-          required
-          min="4"
-          max="30"
-          full
-          cls="mb-2 flex-col">
-          <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
-        </InputField>
-      )}
-
-      <Textarea name="about" defaultValue={store?.about} title={content.about.placeholder[lang]} cls="1">
-        <span className="block mb-1 font-semibold rq">{content.about[lang]}</span>
-      </Textarea>
-
-      <div className="my-6 md:flex md:justify-between">
-        <div className="flex justify-between">
-          <CurrencySelect lang={lang} label required defaultValue={store?.currency} cls="mx-0" />
-
-          <ToggleSwitch name="deliver" checked={deliver} onCheck={({ checked }) => setDeliver(checked)}>
-            <div className="mx-3">{content.delivery[lang]}</div>
-          </ToggleSwitch>
-        </div>
-
-        {deliver && (
-          <NumberInputWithControl
-            name="deliveryCost"
-            defaultValue={store?.deliveryCost || 0}
-            onChange={null}
-            required
-            cls="w-full md:w-auto my-3 md:my-0"
-            inCls="w-12"
-            label={<label className="flex-1 md:flex-initial md:mx-2 ">{content.deliveryCost[lang]}</label>}
+        {/* cover */}
+        {!update && (
+          <ImageUpload
+            id="store-cover"
+            name="cover"
+            alt={content.imgAlt[lang]}
+            title={content.imgTitle[lang]}
           />
         )}
-      </div>
 
-      <h6 className="mb-2  font-semibold rq">{content.address[lang]}</h6>
-      <AddressInputs lang={lang} {...(store?.address || {})} />
+        {!update && (
+          <InputField
+            type="text"
+            name="name"
+            placeholder={content.name.placeholder[lang]}
+            required
+            min="4"
+            max="30"
+            full
+            cls="mb-2 flex-col">
+            <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
+          </InputField>
+        )}
 
-      <h6 className="font-semibold mt-7 rq">{content.workdays[lang]}</h6>
-      <DaysCheckButtons lang={lang} checkedDays={days} onCheck={addDay} />
+        <Textarea name="about" defaultValue={store?.about} title={content.about.placeholder[lang]} cls="1">
+          <span className="block mb-1 font-semibold rq">{content.about[lang]}</span>
+        </Textarea>
 
-      <div className="my-5">
-        {days.map((d, i) => (
-          <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
-        ))}
-      </div>
+        <div className="my-6 md:flex md:justify-between">
+          <div className="flex justify-between">
+            <CurrencySelect lang={lang} label required defaultValue={store?.currency} cls="mx-0" />
 
-      <h6 className="font-semibold mt-7 rq">{content.payments[lang]}</h6>
-      <Collapse
-        onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
-        checked={!!onDeliveryPayment}
-        id="on-delivery-1313"
-        title={content.onDelivery[lang]}
-        cls="my-3"
-        hCls="rounded-t-lg">
-        <div>
+            <ToggleSwitch
+              name="deliver"
+              checked={deliver}
+              onChange={({ target }) => setDeliver(target.checked)}>
+              <div className="mx-3">{content.delivery[lang]}</div>
+            </ToggleSwitch>
+          </div>
+
+          {deliver && (
+            <NumberInputWithControl
+              name="deliveryCost"
+              defaultValue={store?.deliveryCost || 0}
+              required
+              cls="w-full md:w-auto my-3 md:my-0"
+              inCls="w-12"
+              label={<label className="flex-1 md:flex-initial md:mx-2 ">{content.deliveryCost[lang]}</label>}
+            />
+          )}
+        </div>
+
+        <h6 className="mb-2  font-semibold rq">{content.address[lang]}</h6>
+        <AddressInputs lang={lang} {...(store?.address || {})} />
+
+        <h6 className="font-semibold mt-7 rq">{content.workdays[lang]}</h6>
+        <DaysCheckButtons lang={lang} checkedDays={days} onCheck={addDay} />
+
+        <div className="my-5">
+          {days.map((d, i) => (
+            <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
+          ))}
+        </div>
+
+        <h6 className="font-semibold mt-7 rq">{content.payments[lang]}</h6>
+        <Collapse
+          onChange={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
+          checked={!!onDeliveryPayment}
+          id="on-delivery-1313"
+          title={content.onDelivery[lang]}
+          cls="my-3"
+          hCls="rounded-t-lg">
+          <div>
+            <ToggleSwitch
+              name="onDeliveryCash"
+              checked={!!onDeliveryPayment?.cash}
+              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, cash: target.checked })}
+              cls="!flex my-3">
+              <div className="flex-1">{content.cash[lang]}</div>
+            </ToggleSwitch>
+
+            <ToggleSwitch
+              name="onDeliveryCard"
+              checked={!!onDeliveryPayment?.card}
+              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, card: target.checked })}
+              cls="!flex my-3">
+              <div className="flex-1">{content.card[lang]}</div>
+            </ToggleSwitch>
+
+            <ToggleSwitch
+              name="onDeliveryBank"
+              checked={!!onDeliveryPayment?.bank}
+              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, bank: target.checked })}
+              cls="!flex my-3">
+              <div className="flex-1">{content.bank[lang]}</div>
+            </ToggleSwitch>
+          </div>
+        </Collapse>
+
+        <Collapse
+          onChange={({ target }) => setOnlinePayment(onlinePayment ? null : { card: target.checked })}
+          checked={!!onlinePayment?.card || !!onlinePayment?.bank}
+          id="online-1213"
+          title={content.online[lang]}
+          hCls="rounded-t-lg">
           <ToggleSwitch
-            name="onDeliveryCash"
-            checked={!!onDeliveryPayment?.cash}
-            onCheck={({ checked }) => setOnDeliveryPayment({ ...onDeliveryPayment, cash: checked })}
-            cls="!flex my-3">
-            <div className="flex-1">{content.cash[lang]}</div>
-          </ToggleSwitch>
-
-          <ToggleSwitch
-            name="onDeliveryCard"
-            checked={!!onDeliveryPayment?.card}
-            onCheck={({ checked }) => setOnDeliveryPayment({ ...onDeliveryPayment, card: checked })}
-            cls="!flex my-3">
+            name="onlineCard"
+            checked={!!onlinePayment?.card}
+            onChange={({ target }) => setOnlinePayment({ ...onlinePayment, card: target.checked })}
+            cls="!flex my-5">
             <div className="flex-1">{content.card[lang]}</div>
           </ToggleSwitch>
 
-          <ToggleSwitch
-            name="onDeliveryBank"
-            checked={!!onDeliveryPayment?.bank}
-            onCheck={({ checked }) => setOnDeliveryPayment({ ...onDeliveryPayment, bank: checked })}
-            cls="!flex my-3">
-            <div className="flex-1">{content.bank[lang]}</div>
-          </ToggleSwitch>
-        </div>
-      </Collapse>
-
-      <Collapse
-        onCheck={(e) => setOnlinePayment(onlinePayment ? null : { card: e.checked })}
-        checked={!!onlinePayment?.card || !!onlinePayment?.bank}
-        id="online-1213"
-        title={content.online[lang]}
-        hCls="rounded-t-lg">
-        <ToggleSwitch
-          name="onlineCard"
-          checked={!!onlinePayment?.card}
-          onCheck={({ checked }) => setOnlinePayment({ ...onlinePayment, card: checked })}
-          cls="!flex my-5">
-          <div className="flex-1">{content.card[lang]}</div>
-        </ToggleSwitch>
-
-        <Collapse
-          name="onlineBank"
-          checked={!!onlinePayment?.bank}
-          onCheck={(e) => setOnlinePayment({ ...onlinePayment, bank: e.checked })}
-          title={content.bank[lang]}
-          hCls="rounded-t-lg">
-          <h6 className="font-semibold">{content.bankInfo.title[lang]}</h6>
-          <InputField
-            type="text"
-            name="accountHolder"
-            defaultValue={onlinePayment?.bank?.accountHolder}
-            label={content.bankInfo.holder[lang]}
-            placeholder="E.g. John Doe"
-            required
-            full
-            cls="flex-col my-1"
-          />
-          <InputField
-            type="text"
-            name="iban"
-            defaultValue={onlinePayment?.bank?.iban}
-            label={content.bankInfo.number[lang]}
-            placeholder="E.g. FI21 1234 5698 7654 3210"
-            required
-            full
-            cls="flex-col my-1"
-          />
-          <InputField
-            type="text"
-            name="bic"
-            defaultValue={onlinePayment?.bank?.bic}
-            label={content.bankInfo.bic[lang]}
-            title="Bank Identifier Number"
-            placeholder="E.g. BOHIUS77"
-            required
-            full
-            cls="flex-col my-1"
-          />
+          <Collapse
+            name="onlineBank"
+            checked={!!onlinePayment?.bank}
+            onChange={(e) => setOnlinePayment({ ...onlinePayment, bank: e.checked })}
+            title={content.bank[lang]}
+            hCls="rounded-t-lg">
+            <h6 className="font-semibold">{content.bankInfo.title[lang]}</h6>
+            <InputField
+              type="text"
+              name="accountHolder"
+              defaultValue={onlinePayment?.bank?.accountHolder}
+              label={content.bankInfo.holder[lang]}
+              placeholder="E.g. John Doe"
+              required
+              full
+              cls="flex-col my-1"
+            />
+            <InputField
+              type="text"
+              name="iban"
+              defaultValue={onlinePayment?.bank?.iban}
+              label={content.bankInfo.number[lang]}
+              placeholder="E.g. FI21 1234 5698 7654 3210"
+              required
+              full
+              cls="flex-col my-1"
+            />
+            <InputField
+              type="text"
+              name="bic"
+              defaultValue={onlinePayment?.bank?.bic}
+              label={content.bankInfo.bic[lang]}
+              title="Bank Identifier Number"
+              placeholder="E.g. BOHIUS77"
+              required
+              full
+              cls="flex-col my-1"
+            />
+          </Collapse>
         </Collapse>
-      </Collapse>
 
-      <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
-      <InputField
-        type="text"
-        name="cocNumber"
-        defaultValue={store?.cocNumber}
-        label={content.cocNumber[lang]}
-        placeholder="E.g. 9876543"
-        full
-        cls="flex-col mt-1 mb-3"
-      />
-      <InputField
-        type="text"
-        name="vatNumber"
-        defaultValue={store?.vatNumber}
-        label={content.vatNumber[lang]}
-        placeholder="E.g. US52359525"
-        full
-      />
+        <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
+        <InputField
+          type="text"
+          name="cocNumber"
+          defaultValue={store?.cocNumber}
+          label={content.cocNumber[lang]}
+          placeholder="E.g. 9876543"
+          full
+          cls="flex-col mt-1 mb-3"
+        />
+        <InputField
+          type="text"
+          name="vatNumber"
+          defaultValue={store?.vatNumber}
+          label={content.vatNumber[lang]}
+          placeholder="E.g. US52359525"
+          full
+        />
 
-      <Button type="submit" cls="w-full my-5 !p-2">
-        {update ? "Save" : "Create"}
-      </Button>
-    </form>
+        <Button type="submit" cls="w-full my-5 !p-2">
+          {update ? "Save" : "Create"}
+        </Button>
+      </form>
+      {/* Todo: change this loading to elements loading effect */}
+      {loading && <Loader size="100" screen />}
+    </>
   );
 }
 

@@ -128,7 +128,7 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
           {pos && (
             <ToggleSwitch
               checked={print}
-              onCheck={(e) => setPrint(e.checked)}
+              onCheck={({ target }) => setPrint(target.checked)}
               cls="w-full mt-3 flex justify-between print:hidden">
               <span className="ml-3 text-sm font-medium">Print after checkout</span>
               <span className="w-2"></span>

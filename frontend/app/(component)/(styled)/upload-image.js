@@ -4,12 +4,12 @@ import Image from "next/image";
 import SvgIcon from "./svg-icon";
 
 export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeight, cls, ...p }) {
-  const [files, setFiles] = useState(false);
-  const input = useRef(null);
+  const [fileChanged, setFileChanged] = useState(false);
+  const inputRef = useRef(null);
 
   const handleChange = (e) => {
-    setFiles(!files);
-    if (onFile) onFile(e.target.file);
+    setFileChanged(!fileChanged);
+    if (onFile) onFile(e.target.files[0]);
   };
 
   return (
@@ -18,7 +18,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
         cls || "h-44"
       }`}>
       <input
-        ref={input}
+        ref={inputRef}
         type="file"
         accept="image/*"
         onChange={handleChange}
@@ -26,10 +26,10 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
         className="w-0 h-0 hidden"
         {...p}
       />
-      {input?.current?.files[0] || imageUrl ? (
+      {inputRef.current?.files[0] || imageUrl ? (
         <>
           <Image
-            src={input?.current?.files[0] ? URL.createObjectURL(input?.current?.files[0]) : imageUrl}
+            src={inputRef.current?.files[0] ? URL.createObjectURL(inputRef.current?.files[0]) : imageUrl}
             width="250"
             height="250"
             alt={alt}

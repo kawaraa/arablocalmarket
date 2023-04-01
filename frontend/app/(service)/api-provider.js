@@ -11,13 +11,19 @@ export async function request(url, method = "GET", data, type = "application/jso
   let body = null;
   let aUrl = getURL(url) || url;
 
+  const prepareBody = (data) => {
+    body = JSON.stringify(data);
+    headers["Content-Type"] = type;
+  };
+
   if (token) headers.Authorization = `Bearer ${token}`;
   if (data) {
-    if (data.query) aUrl += data.query;
-    else if (data.append) body = data;
+    if (data.append) body = data;
+    else if (!data.query) prepareBody(data);
     else {
-      body = JSON.stringify(data);
-      headers["Content-Type"] = type;
+      aUrl += data.query;
+      if (data.body?.append) body = data.body;
+      else if (data.body) prepareBody(data.body);
     }
   }
 

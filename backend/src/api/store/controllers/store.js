@@ -29,14 +29,13 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
     data.forEach((s) => delete s.attributes.cocNumber + delete s.attributes.vatNumber);
     return { data, meta };
   },
+
   async update(ctx) {
-    if (!ctx.state.user) throw new ForbiddenError("Only the owner of the store can update the store");
-    else {
-      const store = await strapi.db
-        .query("api::store.store")
-        .findOne({ select: ["id"], where: { owner: ctx.state.user.id } });
-      if (!store?.id) throw new ForbiddenError("Only the owner of the store can update the store");
-    }
+    const error = "Only the owner of the store can update the store";
+    const options = { select: ["id"], where: { id: ctx.params.id, owner: ctx.state.user.id } };
+
+    const store = await strapi.db.query("api::store.store").findOne(options);
+    if (store?.id != ctx.params.id) return ctx.unauthorized(error);
 
     return super.update(ctx);
   },

@@ -15,5 +15,5 @@ export default function Logout() {
     // Todo: use either Strapi or Next to clear the "HttpOnly" cookie.
   }, []);
 
-  return <Loader size="100" wrapperCls="z-10 flex justify-center items-center fixed inset-0" />;
+  return <Loader size="100" screen />;
 }

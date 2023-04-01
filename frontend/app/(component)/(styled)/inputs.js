@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
@@ -29,7 +29,9 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
       <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
         <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>
           {!full && (
-            <span className={(inCls || "") + " block opacity-0 px-2 py-1 pr-10"}>{p.defaultValue}</span>
+            <span className={(inCls || "") + " block opacity-0 px-2 py-1 pr-10"}>
+              {p.defaultValue || p.value}
+            </span>
           )}
 
           <input
@@ -53,9 +55,11 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
         </span>
 
         {editable && (
-          <span className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
+          <label
+            htmlFor={cls}
+            className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
             <SvgIcon name={changed ? "checkMark" : "edit"} />
-          </span>
+          </label>
         )}
       </span>
     </div>
@@ -138,9 +142,8 @@ export function CheckCard({ Tag = "label", children, cls, ...p }) {
   );
 }
 
-export function ToggleSwitch({ children, label, checked, onCheck, size = 50, cls, ...p }) {
+export function ToggleSwitch({ children, label, size = 50, cls, ...p }) {
   const h = Math.round(+size / 2);
-  const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
 
   return (
     <div className={`inline-flex items-center ${cls}`}>
@@ -151,8 +154,6 @@ export function ToggleSwitch({ children, label, checked, onCheck, size = 50, cls
         className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full cursor-pointer`}>
         <input
           type="checkbox"
-          checked={checked}
-          onChange={handler}
           id={cls}
           className="peer absolute top-0 left-0 w-full h-full appearance-none bg-lbg dark:bg-cbg rounded-full border border-bc checked:bg-pc dark:checked:bg-pc cursor-pointer focus:border-blue "
           {...p}
@@ -271,8 +272,8 @@ export function Select({ children, label, cls, inCls, ...p }) {
   );
 }
 
-export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
-  const handler = (n) => onChange && onChange(n);
+export function NumberInputWithControl({ label, cls, inCls, ...p }) {
+  const inputRef = useRef(null);
 
   return (
     <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
@@ -287,12 +288,18 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
         </>
       )}
       <div className="flex justify-center items-center">
-        <Button icon="minus" handler={() => handler(-1)} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
+        <Button
+          icon="minus"
+          handler={() => inputRef.current?.stepDown()}
+          cls="w-7 h-7 !p-0 !rounded-full"
+          iconCls="w-full"
+        />
         <input
+          ref={inputRef}
           dir="ltr"
           type="number"
           id={cls}
-          onChange={(e) => handler(Math.round(+e.target.value || 0))}
+          // onChange={(e) => onChange && onChange(Math.round(+e.target.value || 0))}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
@@ -301,7 +308,12 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           }`}
           {...p}
         />
-        <Button icon="plus" handler={() => handler(1)} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
+        <Button
+          icon="plus"
+          handler={() => inputRef.current?.stepUp()}
+          cls="w-7 h-7 !p-0 !rounded-full"
+          iconCls="w-full"
+        />
       </div>
     </div>
   );

@@ -17,6 +17,8 @@ export default function Navigation() {
 
   const signinLink = content.navLinks[content.navLinks.length - 1];
 
+  const initials = !user ? null : user.firstName[0] + user.lastName[0];
+
   useEffect(() => {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
@@ -144,7 +146,7 @@ export default function Navigation() {
             </Dropdown>
             <Dropdown
               event="click"
-              btnContent={<Avatar initial="a" />}
+              btnContent={<Avatar initial={initials} />}
               cls="ml-4"
               btnCls="!rounded-full shadow-md"
               title="View user menu">

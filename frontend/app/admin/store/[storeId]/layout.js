@@ -9,76 +9,114 @@ import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
 import { LinkButton } from "../../../(component)/(styled)/button";
+import { request } from "../../../(service)/api-provider";
+import Loader from "../../../(layout)/loader";
 
 export default function StoreById({ children, params }) {
   const router = useRouter();
-  const { lang, user } = useContext(AppSessionContext);
-  const [status, setStatus] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
+  const [loading, setLoading] = useState(true);
+  const [store, setStore] = useState(null);
 
-  // console.log("Todo: Show store based on this: ID or Title: ", params.storeId);
-
-  let imageUrl = "/img/store-2.png";
-  let id = 1;
-  let open = true;
-  let name = "Store name";
-
-  const handleChange = (file) => {
+  const handleChange = async ({ target }) => {
     setLoading(true);
-    console.log("File: >> ", file);
+    try {
+      const data = {};
+      if (target?.name == "name") data.name = target.value;
+      else data.open = target.checked;
+      await request("store", "PUT", { query: "/" + params.storeId, body: { data } });
+      setTimeout(() => target?.blur(), 200);
+    } catch (error) {
+      addMessage({ type: "Error", text: error.message, duration: 15 });
+    }
+    setLoading(false);
+  };
+
+  const handleCoverChange = async (file) => {
+    const formData = new FormData();
+    setLoading(true);
+    try {
+      formData.append("files.cover", file, file.name);
+      formData.append("data", JSON.stringify({}));
+      await request("store", "PUT", { query: "/" + params.storeId, body: formData });
+      addMessage({ type: "Success", text: "done", duration: 5 });
+    } catch (error) {
+      addMessage({ type: "Error", text: error.message, duration: 15 });
+    }
+    setLoading(false);
+  };
+
+  const fetchStore = async () => {
+    try {
+      const { id, attributes } = await request("store", "GET", {
+        query: "/" + params.storeId + "?populate=*",
+      });
+      attributes.id = id;
+      attributes.image = { id: attributes.cover.data.id, ...attributes.cover.data.attributes };
+      setStore(attributes);
+    } catch (error) {
+      addMessage({ type: "Error", text: error.message, duration: 15 });
+    }
     setLoading(false);
   };
 
   useEffect(() => {
-    setStatus(open);
-  }, []);
-
-  useEffect(() => {
     if (!user) router.replace("/signin");
+    else fetchStore();
   }, [user]);
 
-  if (!user) return null;
-
+  if (!user || !store) return null;
   return (
-    <article>
-      <ImageUpload
-        id="store-cover"
-        imageUrl={imageUrl}
-        onFile={handleChange}
-        alt="Store cover image"
-        title="Edit store cover">
-        <Link
-          href={`/admin/pos?storeId=${id}`}
-          title="Point of sale - Store mode"
-          className="absolute top-5 right-5 w-8">
-          <SvgIcon name="logo" />
-        </Link>
-        {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-        <LinkButton href={"/admin/new-store?id=" + id} cls="absolute bottom-2 left-5 ">
-          Edit
-        </LinkButton>
-      </ImageUpload>
+    <>
+      <article>
+        <ImageUpload
+          id="store-cover"
+          imageUrl={store.image.url}
+          onFile={handleCoverChange}
+          alt="Store cover image"
+          title="Edit store cover">
+          <Link
+            href={`/admin/pos?storeId=${params.storeId}`}
+            title="Point of sale - Store mode"
+            className="absolute top-5 right-5 w-8">
+            <SvgIcon name="logo" />
+          </Link>
+          {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
+          <LinkButton href={"/admin/new-store?id=" + params.storeId} cls="absolute bottom-2 left-5 ">
+            Edit
+          </LinkButton>
+        </ImageUpload>
 
-      <section className="mt-5 mb-3 flex justify-between">
-        <InputField editable defaultValue={name} title="Edit name" inCls="rounded-md text-xl font-bold" />
+        <section className="mt-5 mb-3 flex justify-between">
+          <InputField
+            editable
+            name="name"
+            defaultValue={store.name}
+            onBlur={handleChange}
+            title="Edit name"
+            cls="store-name"
+            inCls="rounded-md text-xl font-bold"
+          />
 
-        <ToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)}>
-          <span className="mx-2">Open</span>
-        </ToggleSwitch>
-      </section>
+          <ToggleSwitch name="open" defaultValue={store.open} onChange={handleChange}>
+            <span className="mx-2">Open</span>
+          </ToggleSwitch>
+        </section>
 
-      <div className="pb-6 border-b-2 border-bc">
-        <Tabs
-          tabs={content.tabs.map(({ key, path, text }) => ({
-            key,
-            path: path.replace("storeId", id),
-            text: text[lang],
-          }))}
-          cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
-        />
-        <section className="">{children}</section>
-      </div>
-    </article>
+        <div className="pb-6 border-b-2 border-bc">
+          <Tabs
+            tabs={content.tabs.map(({ key, path, text }) => ({
+              key,
+              path: path.replace("storeId", params.storeId),
+              text: text[lang],
+            }))}
+            cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
+          />
+          <section className="">{children}</section>
+        </div>
+      </article>
+      {loading && <Loader size="100" screen />}
+    </>
   );
 }
 

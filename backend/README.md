@@ -57,4 +57,10 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 ---
 
+## Strapi Resources
+
+- Errors: https://github.com/jshttp/http-errors#list-of-all-constructors
+
+---
+
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
