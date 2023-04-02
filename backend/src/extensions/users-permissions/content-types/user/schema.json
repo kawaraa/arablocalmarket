@@ -125,7 +125,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product",
-      "inversedBy": "favorites"
+      "mappedBy": "favorites"
     }
   }
 }

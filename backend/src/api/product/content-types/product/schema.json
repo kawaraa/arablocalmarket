@@ -12,6 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "storeId": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100,
+      "minLength": 1
+    },
     "name": {
       "pluginOptions": {},
       "type": "string",
@@ -27,34 +33,26 @@
       "pluginOptions": {},
       "type": "string"
     },
-    "featuredImageId": {
-      "pluginOptions": {},
-      "type": "string"
-    },
-    "images": {
+    "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "videos"
-      ],
+      "allowedTypes": ["images", "videos"],
       "pluginOptions": {}
-    },
-    "variants": {
-      "type": "component",
-      "repeatable": true,
-      "pluginOptions": {},
-      "component": "product.variant",
-      "required": true,
-      "max": 10,
-      "min": 1
     },
     "category": {
       "pluginOptions": {},
       "type": "string",
       "maxLength": 20,
       "minLength": 1
+    },
+    "variants": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.variant",
+      "required": true,
+      "max": 10,
+      "min": 1
     },
     "ratings": {
       "type": "component",
@@ -65,7 +63,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "favoriteProducts"
+      "inversedBy": "favoriteProducts"
     }
   }
 }

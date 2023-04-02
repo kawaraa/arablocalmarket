@@ -31,14 +31,23 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   },
 
   async update(ctx) {
-    const error = "Only the owner of the store can update the store";
     const id = ctx.params.id;
-    const options = { where: { id, owner: ctx.state.user.id }, populate: true };
+    const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
 
     const store = await strapi.db.query("api::store.store").findOne(options);
-    if (store?.id != id) return ctx.unauthorized(error);
+    if (store?.id != id) return ctx.unauthorized();
+    if (ctx.request.files && store.cover) strapi.plugins.upload.services.upload.remove(store.cover);
 
-    strapi.plugins.upload.services.upload.remove(store.cover);
     return super.update(ctx);
+  },
+
+  async delete(ctx) {
+    const id = ctx.params.id;
+    const options = { select: ["id"], where: { id, owner: ctx.state.user.id } };
+
+    const store = await strapi.db.query("api::store.store").findOne(options);
+    if (store?.id != id) return ctx.unauthorized();
+
+    return super.delete(ctx);
   },
 }));

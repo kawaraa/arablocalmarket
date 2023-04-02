@@ -17,14 +17,19 @@ export default function StoreById({ children, params: { storeId } }) {
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
   const [store, setStore] = useState(null);
+  const image = store?.image?.url || "/market-store-grocery-cartoon.jpg";
 
   const handleChange = async ({ target }) => {
     setLoading(true);
     try {
       const data = {};
       if (target?.name == "name") data.name = target.value;
-      else data.open = target.checked;
+      else {
+        data.open = target.checked;
+        setStore({ ...store, open: target.checked });
+      }
       await request("store", "PUT", { query: "/" + storeId, body: { data } });
+
       setTimeout(() => target?.blur(), 200);
     } catch (error) {
       addMessage({ type: "Error", text: error.message, duration: 15 });
@@ -71,7 +76,7 @@ export default function StoreById({ children, params: { storeId } }) {
       <article>
         <ImageUpload
           id="store-cover"
-          imageUrl={store.image?.url}
+          imageUrl={image}
           onFile={handleCoverChange}
           alt="Store cover image"
           title="Edit store cover">
@@ -98,7 +103,7 @@ export default function StoreById({ children, params: { storeId } }) {
             inCls="rounded-md text-xl font-bold"
           />
 
-          <ToggleSwitch name="open" defaultValue={store.open} onChange={handleChange}>
+          <ToggleSwitch name="open" checked={store.open} onChange={handleChange}>
             <span className="mx-2">Open</span>
           </ToggleSwitch>
         </section>

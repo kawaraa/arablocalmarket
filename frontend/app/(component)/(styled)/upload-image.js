@@ -23,7 +23,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
         accept="image/*"
         onChange={handleChange}
         aria-label={p.title}
-        className="w-0 h-0 hidden"
+        className="peer w-0 h-0 opacity-0"
         {...p}
       />
       {inputRef.current?.files[0] || imageUrl ? (
@@ -45,7 +45,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
       ) : (
         <label
           htmlFor={p.id}
-          className="relative w-32 mx-auto p-3 border border-bc rounded-lg  cursor-pointer">
+          className="relative w-32 mx-auto p-3 border border-bc rounded-lg hover:border-bf peer-focus:border-red cursor-pointer">
           <SvgIcon name="image" />
           <div className="w-6 mx-auto">
             <SvgIcon name="download" />

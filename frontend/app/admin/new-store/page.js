@@ -34,7 +34,7 @@ export default function NewStore({ params, searchParams }) {
     e.preventDefault();
     const f = e.target;
     const payments = [];
-    const file = f.cover?.files[0];
+    const file = f.cover.files[0];
     setLoading(true);
 
     try {

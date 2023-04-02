@@ -20,7 +20,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
       {children}
       {label && (
         <>
-          <label htmlFor={cls} className={`block text-sm mt-2 ${p.required ? "rq" : ""}`}>
+          <label htmlFor={cls} className={`flex text-sm whitespace-nowrap ${p.required ? "rq" : ""}`}>
             {label}
           </label>
           <span className="w-1 h-1"></span>
@@ -65,7 +65,8 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
     </div>
   );
 }
-export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p }) {
+export function InputWithSelect({ label, options, onChange, cls, ...p }) {
+  const selectRef = useRef();
   const numProp = { inputMode: "numeric", pattern: `\d*`, min: "1", max: "1000", step: "1" };
 
   return (
@@ -79,26 +80,28 @@ export function InputWithSelect({ label, options, onChange, onSelect, cls, ...p 
         </>
       )}
 
-      <div dir="ltr" className="flex-1 flex items-center">
+      <div dir="ltr" className="flex-1 flex items-stretch">
         <input
           id={cls}
           autoComplete="one"
-          className="w-full pl-2 pr-10 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
-          onChange={(e) => onChange(e.target.value)}
+          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
+          onChange={(e) => onChange(e.target.value + "-" + (selectRef.current?.value || ""))}
           {...(p.type == "number" ? numProp : {})}
           {...p}
         />
-        <Select
-          name="suffix"
-          onChange={(e) => onSelect(e.target.value)}
-          cls="!m-0 rounded-r-md"
-          inCls="!py-0 rounded-r-md ">
+
+        <select
+          ref={selectRef}
+          name={(p.name || "") + "-" + "suffix"}
+          title={p.title}
+          aria-label={p.title}
+          className="h-[100%] bg-cbg w-auto px-2 py-1 card cd_hr fs rounded-r-md">
           {options.map((op, i) => (
             <option value={op.key} key={i}>
               {op.text}
             </option>
           ))}
-        </Select>
+        </select>
       </div>
     </div>
   );
@@ -249,11 +252,11 @@ export function Textarea({ children, editable, value, onChange, onBlur, cls, ...
   );
 }
 
-export function Select({ children, label, cls, inCls, ...p }) {
-  // autoComplete="day"
+export function Select({ children, label, cls, inCls, onChange, value, defaultValue, ...p }) {
+  const [v, setV] = useState(defaultValue || value);
 
   return (
-    <div className={"inline-block mx-1 " + cls}>
+    <div className={"inline-block " + cls}>
       {label && (
         <label htmlFor={cls} className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>
           {label}
@@ -262,8 +265,10 @@ export function Select({ children, label, cls, inCls, ...p }) {
 
       <select
         id={cls}
+        onChange={(e) => (onChange ? onChange(e) : setV(e.target.value))}
         title={p.title}
         aria-label={p.title}
+        value={v}
         className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
         {...p}>
         {children}

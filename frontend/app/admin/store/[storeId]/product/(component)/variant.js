@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, IconButton } from "../../../../../(component)/(styled)/button";
 import { InputField, NumberInputWithControl, Select } from "../../../../../(component)/(styled)/inputs";
 import { PriceInputField, WeightInputField } from "../../../../../(component)/custom-inputs";
 
-export default function Variant({ lang, number, onRemove, ...v }) {
+export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
   const [options, setOptions] = useState(v.options || [{ name: "WEIGHT" }]);
 
   const removeOption = (index) => {
@@ -20,7 +20,10 @@ export default function Variant({ lang, number, onRemove, ...v }) {
     setOptions([...options, { name }]);
   };
 
-  //  imageId,
+  useEffect(() => {
+    onUpdate({ options });
+  }, [options]);
+
   return (
     <div className="relative my-3 card p-2 rounded">
       <div className="flex justify-between">
@@ -34,32 +37,19 @@ export default function Variant({ lang, number, onRemove, ...v }) {
         type="text"
         name="barcode"
         disabled={!!v.barcode}
+        label={content.barcode.text[lang]}
         placeholder={v.barcode || content.barcode.placeholder[lang]}
+        onChange={(e) => onUpdate({ barcode: e.target.value })}
         required
         min="4"
         max="25"
         full
-        cls="mb-2 ">
-        <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span>
+        cls="items-center mb-3 ">
+        {/* <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span> */}
       </InputField>
 
-      <div dir="ltr" className="flex items-end mb-8">
-        <PriceInputField lang={lang} defaultValue={v.price} full cls="flex-1 mr-2" />
-        <PriceInputField lang={lang} compare defaultValue={v.comparePrice} full cls="flex-1 mr-2" />
-        <NumberInputWithControl
-          name="quantity"
-          required
-          min="0"
-          max="1000"
-          defaultValue={v.quantity || 0}
-          label={content.quantity[lang]}
-          cls="flex-col"
-          inCls="w-14"
-        />
-      </div>
-
       {options.map((o, index) => (
-        <div className="relative pt-2 my-3 border-t-[1px] border-bc" key={index}>
+        <div className="relative pt-2 my-3" key={index}>
           <div className="flex relative">
             <label htmlFor={"name-" + index} className="w-32 mb-1 text-sm rq">
               {content.options.name[lang]}
@@ -80,11 +70,10 @@ export default function Variant({ lang, number, onRemove, ...v }) {
           <div className="flex ">
             <Select
               id={"name-" + index}
-              name="name"
               onChange={(e) => handleChangeOption(index, "name", e.target.value)}
               defaultValue={o.name}
-              cls="flex w-32 !m-0 rounded-lg"
-              inCls="flex-auto !p-0 rounded-lg">
+              cls="flex w-32 rounded-lg"
+              inCls="!w-32 flex-auto !p-0 rounded-lg">
               {Object.keys(content.options.values).map((op, i) => (
                 <option value={op} disabled={!!options.find((o) => o.name == op)} key={i}>
                   {content.options.values[op][lang] || op}
@@ -94,14 +83,19 @@ export default function Variant({ lang, number, onRemove, ...v }) {
             <span className="w-2"></span>
 
             {o.name === "WEIGHT" ? (
-              <WeightInputField defaultValue={o.value} lang={lang} cls="" />
+              <WeightInputField
+                lang={lang}
+                required
+                defaultValue={o.value}
+                onChange={(v) => handleChangeOption(index, "value", v)}
+                cls="items-stretch"
+              />
             ) : (
               <InputField
-                id={"value-" + index}
-                onChange={(e) => handleChangeOption(index, "value", e.target.value)}
-                defaultValue={o.value}
                 type="text"
-                name="value"
+                id={"value-" + index}
+                defaultValue={o.value}
+                onChange={(e) => handleChangeOption(index, "value", e.target.value)}
                 required
                 min="1"
                 max="10"
@@ -119,6 +113,37 @@ export default function Variant({ lang, number, onRemove, ...v }) {
           <Button icon="plus" handler={handleAddOption} cls="!p-0 !rounded-full" />
         </div>
       )}
+
+      <div dir="ltr" className="flex my-5">
+        <PriceInputField
+          lang={lang}
+          defaultValue={v.price}
+          onChange={(e) => onUpdate({ price: e.target.value })}
+          full
+          cls="items-center"
+        />
+        <span className="w-2 h-2"></span>
+        <PriceInputField
+          lang={lang}
+          compare
+          defaultValue={v.comparePrice}
+          onChange={(e) => onUpdate({ comparePrice: e.target.value })}
+          full
+          cls="items-center"
+        />
+      </div>
+
+      <NumberInputWithControl
+        name="quantity"
+        required
+        min="0"
+        max="1000"
+        defaultValue={v.quantity || 0}
+        onChange={(e) => onUpdate({ quantity: e.target.value })}
+        label={content.quantity[lang]}
+        cls="items-center my-5"
+        inCls="w-14"
+      />
     </div>
   );
 }
@@ -127,7 +152,8 @@ const content = {
   h4: { en: "Variant", ar: "صنف" },
   quantity: { en: "Quantity", ar: "الكمية" },
   barcode: {
-    text: { en: "UPC / EAN Barcode", ar: "رمز / رقم المنتج" },
+    text: { en: "Barcode", ar: "رقم المنتج" },
+    // text: { en: "UPC / EAN Barcode", ar: "رمز / رقم المنتج" },
     placeholder: { en: "E.g. 875674398784", ar: "مثال, 875674398784" },
   },
   options: {

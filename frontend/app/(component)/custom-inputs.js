@@ -138,7 +138,11 @@ export function DaysCheckButtons({ lang, checkedDays, onCheck, ...p }) {
 }
 export function OpeningHoursSelect({ lang, time, ...p }) {
   return (
-    <Select title={content[time][lang]} cls="flex items-center" inCls="mx-1 !p-[2px] rounded-full" {...p}>
+    <Select
+      title={content[time][lang]}
+      cls="mx-1 flex items-center"
+      inCls="mx-1 !p-[2px] rounded-full"
+      {...p}>
       {content.periods.map((period, i) =>
         content.times.map((time, ii) => (
           <option value={period.en + "-" + time} key={i + ii}>
@@ -171,6 +175,7 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
 export function CategorySelect({ lang, ...p }) {
   return (
     <Select
+      name="category"
       label={content.categories.text[lang]}
       cls="flex items-center"
       inCls="mx-1 !p-[2px] rounded-full"
