@@ -94,8 +94,8 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
       {onClose && (
         <IconButton
           icon="crossMark"
-          handler={() => onClose(stopStreams())}
-          label="Cancel and close the modal window"
+          onClick={() => onClose(stopStreams())}
+          title="Cancel and close the modal window"
           cls="absolute top-4 right-4 hover:text-red print:hidden"
         />
       )}

@@ -1,5 +1,4 @@
 "use client";
-
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -32,7 +31,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
       setTimeout(() => target?.blur(), 200);
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
     setLoading(false);
   };
@@ -44,23 +43,24 @@ export default function StoreById({ children, params: { storeId } }) {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
       await request("store", "PUT", { query: "/" + storeId, body: formData });
-      addMessage({ type: "Success", text: "done", duration: 5 });
+      addMessage({ type: "success", text: "done", duration: 5 });
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
     setLoading(false);
   };
 
   const fetchStore = async () => {
     try {
-      const { id, attributes } = await request("store", "GET", { query: "/" + storeId + "?populate=*" });
+      const { id, attributes } = (await request("store", "GET", { query: "/" + storeId + "?populate=*" }))
+        ?.data;
       attributes.id = id;
       if (attributes.cover?.data) {
         attributes.image = { id: attributes.cover.data.id, ...attributes.cover.data.attributes };
       }
       setStore(attributes);
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
     setLoading(false);
   };

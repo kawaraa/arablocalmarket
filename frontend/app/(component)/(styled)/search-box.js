@@ -1,20 +1,24 @@
 "use client";
+import { useRef } from "react";
 import SvgIcon from "./svg-icon";
 
-export default function SearchBox({ label, onSearch, search, onFinish, cls, inCls }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
+export default function SearchBox({ label, onSearch, search, onBlur, onFinish, cls, inCls }) {
+  const inputRef = useRef();
+
+  const handleFinish = () => {
     // Hide the keyboard.
-    e.target.search.setAttribute("readonly", true);
-    setTimeout(() => e.target.search.removeAttribute("readonly"), 200);
-    if (onFinish) onFinish(e.target.search.value || "");
+    inputRef.current?.setAttribute("readonly", true);
+    setTimeout(() => inputRef.current?.removeAttribute("readonly"), 200);
+    if (onFinish) onFinish(inputRef.current?.value || "");
   };
 
   return (
-    <form onSubmit={handleSubmit} className={"relative flex items-center " + cls}>
+    <div className={"relative flex items-center " + cls}>
       <input
+        ref={inputRef}
         onChange={(e) => onSearch && onSearch(e.target.value)}
-        value={search}
+        onBlur={onBlur && handleFinish}
+        defaultValue={search}
         type="search"
         name="search"
         autoComplete="search"
@@ -24,9 +28,12 @@ export default function SearchBox({ label, onSearch, search, onFinish, cls, inCl
         }`}
       />
 
-      <button className="absolute right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
+      <button
+        type="button"
+        onClick={handleFinish}
+        className="absolute right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
         <SvgIcon name={"search"} />
       </button>
-    </form>
+    </div>
   );
 }

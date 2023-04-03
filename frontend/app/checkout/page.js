@@ -103,7 +103,7 @@ export default function Checkout({}) {
               <Button
                 icon="plus"
                 cls="mt-6 !flex w-40 mx-auto !py-2 !rounded-full"
-                handler={() => setAddressForm(true)}>
+                onClick={() => setAddressForm(true)}>
                 {content.addressBtn[lang]}
               </Button>
             </>

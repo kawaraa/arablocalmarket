@@ -1,11 +1,47 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { countries } from "k-utilities";
 import { InputField } from "./(styled)/inputs";
+import LeafletMap from "./leaflet-map";
 
-export function AddressInputs({ lang, line1, line2, city, postalCode, province = "", country = "" }) {
-  const [p, setP] = useState(province || "");
-  const [cy, setCy] = useState(country || "");
+export default function AddressInputs({ lang, map, onError, ...adr }) {
+  const [country, setCountry] = useState(adr.country || "netherlands");
+  const [province, setProvince] = useState(adr.province);
+  const [city, setCity] = useState(adr.city);
+  const [postalCode, setPostalCode] = useState(adr.postalCode);
+  const [line1, setLine1] = useState(adr.line1);
+  const [line2, setLine2] = useState(adr.line2);
+  const [lat, setLat] = useState(adr.lat || "");
+  const [lng, setLng] = useState(adr.lng || "");
+
+  const handleUpdate = (lat, lng, adrName) => {
+    if (lat) setLat(lat);
+    if (lng) setLng(lng);
+    if (adrName) {
+      setLine1(adrName?.split(",")[0] || "");
+      const cy = Object.keys(countries).find((cy) => adrName?.includes(cy));
+      if (cy) {
+        setCountry(cy);
+        const py = Object.keys(countries[cy].provinces).find((p) => adrName?.includes(p));
+        if (py) {
+          setProvince(py);
+          const city = Object.keys(countries[cy].provinces[py]).find((c) => adrName?.includes(c));
+          if (city) setCity(city);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (adr.country) setCountry(adr.country || "netherlands");
+    if (adr.province) setProvince(adr.province);
+    if (adr.city) setCity(adr.city);
+    if (adr.postalCode) setPostalCode(adr.postalCode);
+    if (adr.line1) setLine1(adr.line1);
+    if (adr.line2) setLine2(adr.line2);
+    if (adr.lat) setLat(adr.lat);
+    if (adr.lng) setLng(adr.lng);
+  }, [adr.country]);
 
   const renderCountries = () => {
     const options = [];
@@ -21,8 +57,8 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
 
   const renderProvinces = () => {
     const options = [];
-    if (!countries[cy]) return options;
-    for (const p in countries[cy].provinces) {
+    if (!countries[country]) return options;
+    for (const p in countries[country].provinces) {
       options.push(
         <option value={p} key={p}>
           {p}
@@ -34,11 +70,27 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
 
   return (
     <div className="space-y-3">
+      {map && (
+        <>
+          <LeafletMap
+            lang={lang}
+            coordinates={[lat || 0, lng || 0]}
+            onLocate={({ lat, lng, display_name }) =>
+              handleUpdate(lat, lng, display_name?.toLowerCase() || "")
+            }
+            requestUserLocation={true}
+            onError={onError}
+          />
+          <input type="hidden" name="lat" value={lat || ""} />
+          <input type="hidden" name="lng" value={lng || ""} />
+        </>
+      )}
+
       <div className="flex">
         <select
           name="country"
-          onChange={(e) => setCy(e.target.value)}
-          defaultValue={cy}
+          value={country || ""}
+          onChange={(e) => setCountry(e.target.value)}
           required
           // autoComplete="country"
           className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
@@ -50,10 +102,10 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
 
         <select
           name="province"
-          onChange={(e) => setP(e.target.value)}
+          value={province || ""}
+          onChange={(e) => setProvince(e.target.value)}
           required
           // autoComplete="country-name"
-          defaultValue={p}
           className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
             lang == "en" ? "r-md py-2" : "l-md py-0"
           }`}>
@@ -65,7 +117,8 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         <select
           name="city"
           required
-          defaultValue={city}
+          value={city || ""}
+          onChange={(e) => setCity(e.target.value)}
           title={content.city[lang]}
           aria-label={content.city[lang]}
           // autoComplete="address-level2"
@@ -73,7 +126,7 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
             lang == "en" ? "l-md py-2" : "r-md py-0"
           }`}>
           <option value="">{content.city[lang]}</option>
-          {countries[cy]?.provinces[p]?.map((city, i) => (
+          {countries[country]?.provinces[province]?.map((city, i) => (
             <option value={city} key={i}>
               {city}
             </option>
@@ -86,13 +139,14 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
           required
           min="4"
           max="10"
-          defaultValue={postalCode}
+          value={postalCode || ""}
+          onChange={(e) => setPostalCode(e.target.value)}
           autoComplete="postal-code"
           placeholder={content.postalCode[lang]}
           title={content.postalCode[lang]}
           full
           cls="relative w-1/2 "
-          inCls={`rounded-${lang == "en" ? "r-md py-2" : "l-md py-1"}`}
+          inCls={`rounded-${lang == "en" ? "r-md py-[7px]" : "l-md py-1"}`}
         />
       </div>
       <InputField
@@ -101,7 +155,8 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         required
         min="2"
         max="150"
-        defaultValue={line1}
+        value={line1 || ""}
+        onChange={(e) => setLine1(e.target.value)}
         autoComplete="address-line1"
         placeholder={content.line1[lang]}
         title={content.line1[lang]}
@@ -113,7 +168,8 @@ export function AddressInputs({ lang, line1, line2, city, postalCode, province =
         name="line2"
         min="0"
         max="150"
-        defaultValue={line2}
+        value={line2 || ""}
+        onChange={(e) => setLine2(e.target.value)}
         autoComplete="address-line2"
         placeholder={content.line2[lang]}
         title={content.line2[lang]}

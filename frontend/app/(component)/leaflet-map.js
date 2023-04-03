@@ -4,37 +4,35 @@ import SvgIcon from "./(styled)/svg-icon";
 import SearchBox from "./(styled)/search-box";
 import Loader from "../(layout)/loader";
 
-export default function Map({ coordinates, onLocate, requestUserLocation, onError }) {
+export default function LeafletMap({ lang, coordinates, onLocate, requestUserLocation, onError }) {
   const [search, setSearch] = useState("");
   const [permissionGranted, setPermissionGranted] = useState(false);
-  const [requestingLocation, setRequestingLocation] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleAddressSearch = async () => {
     const q = search.trim();
 
     try {
       if (!q) throw new Error("Please enter a location.");
-      setRequestingLocation(true);
+      setLoading(true);
       const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=jsonv2`;
       const response = await fetch(url);
 
-      if (!response.ok) throw new Error("No results found.");
-
+      if (!response.ok) throw new Error(content.notFoundErr[lang]);
       const data = await response.json();
-      if (data.length === 0) throw new Error("No results found.");
+      if (data.length === 0) throw new Error(content.notFoundErr[lang]);
 
       const address = data[0];
-
       window.L.newMap.marker.setLatLng([address.lat, address.lon]);
       window.L.newMap.setView([address.lat, address.lon], 13);
       address.lat = (+address.lat).toFixed(6);
       address.lng = (+address.lon).toFixed(6);
       onLocate(address);
     } catch (error) {
-      alert("Error: " + error.message);
+      onError && onError(error.message);
     }
 
-    setRequestingLocation(false);
+    setLoading(false);
   };
 
   const initializeMap = (Map) => {
@@ -55,24 +53,24 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
       onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
     });
 
-    onLocationPermissionAsk();
+    // onLocationPermissionAsk();
   };
 
   const onLocationPermissionAsk = () => {
     if (window.L.newMap && requestUserLocation) {
-      setRequestingLocation(true);
+      setLoading(true);
 
       window.L.newMap.addEventListener("locationfound", (e) => {
-        console.log("locationfound: ", e);
+        // console.log("locationfound: ", e);
         onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
         setPermissionGranted(true);
-        setRequestingLocation(false);
+        setLoading(false);
       });
 
       window.L.newMap.addEventListener("locationerror", (e) => {
-        if (onError) onError();
+        if (onError) onError(content.permissionErr[lang]);
         setPermissionGranted(false);
-        setRequestingLocation(false);
+        setLoading(false);
       });
 
       window.L.newMap.locate({ enableHighAccuracy: true });
@@ -99,15 +97,11 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
 
   return (
     <div className="relative pt-2">
+      {/* <Script src="/map/leaflet.js" onLoad={() => initializeMap(window.L)}></Script> */}
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
       <link rel="stylesheet" href="/map/leaflet.css" />
 
-      <SearchBox
-        label="Search for a location"
-        onSearch={setSearch}
-        search={search}
-        onFinish={handleAddressSearch}
-      />
+      <SearchBox label="Search for a location" onSearch={setSearch} onFinish={handleAddressSearch} onBlur />
 
       <div className="relative overflow-hidden mt-3 rounded-lg">
         <div id="map" className="w-full h-64 rounded-lg"></div>
@@ -127,10 +121,16 @@ export default function Map({ coordinates, onLocate, requestUserLocation, onErro
           </div>
         )}
 
-        {requestingLocation && (
-          <Loader size="40" wrapperCls="z-9 absolute inset-0 !m-0 bg-blur" cls="text-dt" />
-        )}
+        {loading && <Loader size="40" wrapperCls="z-9 absolute inset-0 !m-0 bg-blur" cls="text-dt" />}
       </div>
     </div>
   );
 }
+
+const content = {
+  permissionErr: {
+    en: "Could not access your location, please turn your location on or give access permission to your location.",
+    ar: "تعذر الوصول إلى موقعك ، يرجى تشغيل موقعك أو منح إذن الوصول إلى موقعك",
+  },
+  notFoundErr: { en: "No results found", ar: "لم يتم العثور على نتائج" },
+};

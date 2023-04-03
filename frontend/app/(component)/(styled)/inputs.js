@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
@@ -6,12 +6,12 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
-    setChanged(true);
+    if (editable) setChanged(true);
     if (onChange) onChange(e);
   };
 
   const handleBlur = (e) => {
-    setChanged(false);
+    if (editable) setChanged(false);
     if (onBlur) onBlur(e);
   };
 
@@ -46,8 +46,8 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
               editable ? "pr-10" : "card " + (p.disabled ? "" : "cd_hr")
             } fs ${inCls || "rounded-md"}`}
             {...p}
-            onChange={editable ? handleChange : onChange}
-            onBlur={editable ? handleBlur : onBlur}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
           {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
           Please provide a valid email address.
@@ -65,9 +65,10 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
     </div>
   );
 }
-export function InputWithSelect({ label, options, onChange, cls, ...p }) {
+export function InputWithSelect({ label, options, value, onChange, cls, ...p }) {
   const selectRef = useRef();
   const numProp = { inputMode: "numeric", pattern: `\d*`, min: "1", max: "1000", step: "1" };
+  const values = value?.split("-") || [];
 
   return (
     <div className={`flex items-center w-auto ${cls || ""}`}>
@@ -83,16 +84,18 @@ export function InputWithSelect({ label, options, onChange, cls, ...p }) {
       <div dir="ltr" className="flex-1 flex items-stretch">
         <input
           id={cls}
+          {...(p.type == "number" ? numProp : {})}
+          defaultValue={values[0]}
+          onChange={(e) => onChange(e.target.value + "-" + (selectRef.current?.value || ""))}
           autoComplete="one"
           className="w-full px-2 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
-          onChange={(e) => onChange(e.target.value + "-" + (selectRef.current?.value || ""))}
-          {...(p.type == "number" ? numProp : {})}
           {...p}
         />
 
         <select
           ref={selectRef}
           name={(p.name || "") + "-" + "suffix"}
+          defaultValue={values[1]}
           title={p.title}
           aria-label={p.title}
           className="h-[100%] bg-cbg w-auto px-2 py-1 card cd_hr fs rounded-r-md">
@@ -213,15 +216,15 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   );
 }
 
-export function Textarea({ children, editable, value, onChange, onBlur, cls, ...p }) {
+export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
   const [changed, setChanged] = useState(false);
 
   const handleChange = (e) => {
-    setChanged(true);
+    if (editable) setChanged(true);
     if (onChange) onChange(e);
   };
   const handleBlur = (e) => {
-    setChanged(false);
+    if (editable) setChanged(false);
     if (onBlur) onBlur(e);
   };
 
@@ -231,8 +234,8 @@ export function Textarea({ children, editable, value, onChange, onBlur, cls, ...
       <textarea
         dir="auto"
         id={cls}
-        onChange={editable ? handleChange : onChange}
-        onBlur={editable ? handleBlur : onBlur}
+        onChange={handleChange}
+        onBlur={handleBlur}
         title={p.title}
         aria-label={p.title}
         placeholder={p.title}
@@ -254,6 +257,10 @@ export function Textarea({ children, editable, value, onChange, onBlur, cls, ...
 
 export function Select({ children, label, cls, inCls, onChange, value, defaultValue, ...p }) {
   const [v, setV] = useState(defaultValue || value);
+
+  useEffect(() => {
+    setV(defaultValue || value);
+  }, [defaultValue, value]);
 
   return (
     <div className={"inline-block " + cls}>
@@ -295,7 +302,7 @@ export function NumberInputWithControl({ label, cls, inCls, ...p }) {
       <div className="flex justify-center items-center">
         <Button
           icon="minus"
-          handler={() => inputRef.current?.stepDown()}
+          onClick={() => inputRef.current?.stepDown()}
           cls="w-7 h-7 !p-0 !rounded-full"
           iconCls="w-full"
         />
@@ -315,26 +322,11 @@ export function NumberInputWithControl({ label, cls, inCls, ...p }) {
         />
         <Button
           icon="plus"
-          handler={() => inputRef.current?.stepUp()}
+          onClick={() => inputRef.current?.stepUp()}
           cls="w-7 h-7 !p-0 !rounded-full"
           iconCls="w-full"
         />
       </div>
     </div>
   );
-  // return (
-  //   <div className="relative h-10 w-32 flex rounded-lg mx-3 bg-[#d1d5db]">
-  //     <input
-  //       type="number"
-  //       className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-[transparent] outline-none"
-  //       name="quantity"
-  //     />
-  //     <button className="absolute top-0 left-0 h-full w-8 text-2xl flex justify-center items-center bg-[#d1d5db] hover:bg-[#9ca3af] rounded-l cursor-pointer fs">
-  //       -
-  //     </button>
-  //     <button className="absolute top-0 right-0 h-full w-8 text-2xl flex justify-center items-center bg-[#d1d5db] hover:bg-[#9ca3af] rounded-r cursor-pointer fs">
-  //       +
-  //     </button>
-  //   </div>
-  // );
 }

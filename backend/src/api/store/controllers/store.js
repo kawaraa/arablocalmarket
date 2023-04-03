@@ -10,18 +10,20 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   },
 
   async findOne(ctx) {
-    const { data, meta } = await super.find(ctx);
+    const result = await super.findOne(ctx);
+    if (!result) ctx.notFound();
     let owner = false;
 
     if (ctx.state.user) {
-      const store = await strapi.db
-        .query("api::store.store")
-        .findOne({ select: ["id"], where: { owner: ctx.state.user.id } });
-      owner = store?.id ? true : false;
+      const options = { select: ["id"], where: { owner: ctx.state.user.id } };
+      owner = (await strapi.db.query("api::store.store").findOne(options))?.id ? true : false;
     }
 
-    if (!owner) data.forEach((s) => delete s.attributes.cocNumber + delete s.attributes.vatNumber);
-    return data[0];
+    if (!owner) {
+      delete result.data.attributes.cocNumber;
+      delete result.data.attributes.vatNumber;
+    }
+    return result;
   },
 
   async find(ctx) {

@@ -27,9 +27,9 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         {onCancel && (
           <IconButton
             icon="crossMark"
-            handler={onCancel}
+            onClick={onCancel}
             disabled={!!loading}
-            label="Cancel and close the modal window"
+            title="Cancel and close the modal window"
             cls="absolute top-3 right-3 hover:text-red print:hidden"
           />
         )}
@@ -55,7 +55,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
           <div className="flex justify-end">
             <Button
               type={tag == "form" ? "submit" : ""}
-              handler={onApprove}
+              onClick={onApprove}
               loading={loading}
               cls="print:hidden w-full md:w-auto justify-center py-2">
               {okBtn}

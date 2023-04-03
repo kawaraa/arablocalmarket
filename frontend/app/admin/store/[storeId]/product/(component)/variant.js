@@ -30,7 +30,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
         <h4 className="mb-2">
           {content.h4[lang]} ( {number} )
         </h4>
-        {number > 1 && <IconButton icon="crossMark" size="7" handler={onRemove} cls="hover:text-red" />}
+        {number > 1 && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="hover:text-red" />}
       </div>
 
       <InputField
@@ -62,7 +62,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
               <IconButton
                 icon="crossMark"
                 size="3"
-                handler={() => removeOption(index)}
+                onClick={() => removeOption(index)}
                 cls="!p-0 hover:text-red"
               />
             )}
@@ -86,7 +86,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
               <WeightInputField
                 lang={lang}
                 required
-                defaultValue={o.value}
+                value={o.value}
                 onChange={(v) => handleChangeOption(index, "value", v)}
                 cls="items-stretch"
               />
@@ -110,7 +110,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
 
       {options.length < 3 && (
         <div className="text-right mt-3">
-          <Button icon="plus" handler={handleAddOption} cls="!p-0 !rounded-full" />
+          <Button icon="plus" onClick={handleAddOption} cls="!p-0 !rounded-full" />
         </div>
       )}
 

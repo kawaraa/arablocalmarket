@@ -78,10 +78,9 @@ export default function ProductBySlug({ params }) {
           className="h-full w-auto"
         />
         <IconButton
-          handler={handleShare}
-          title="Share"
           icon="share"
-          aria-label="Share"
+          onClick={handleShare}
+          title="Share"
           cls="absolute top-3 right-3 hover:text-pc"
         />
       </div>
@@ -141,7 +140,7 @@ export default function ProductBySlug({ params }) {
           <SvgIcon name="cart" />
         </button>
 
-        <Button handler={handleBuy} cls="!text-lg font-medium shadow-none">
+        <Button onClick={handleBuy} cls="!text-lg font-medium shadow-none">
           {content.buyBtn[lang]}
         </Button>
       </div>

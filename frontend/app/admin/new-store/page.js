@@ -9,7 +9,7 @@ import {
   Textarea,
   ToggleSwitch,
 } from "../../(component)/(styled)/inputs";
-import { AddressInputs } from "../../(component)/address-inputs";
+import AddressInputs from "../../(component)/address-inputs";
 import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(component)/custom-inputs";
 import { Button } from "../../(component)/(styled)/button";
 import Collapse from "../../(component)/collapse";
@@ -30,14 +30,33 @@ export default function NewStore({ params, searchParams }) {
   const [onlinePayment, setOnlinePayment] = useState(null);
   const update = !!searchParams.id;
 
+  const handleError = (text) => {
+    addMessage({ type: "error", text, duration: 15 });
+  };
+  const addDay = ({ name, checked }) => {
+    const newDays = days.filter((d) => d.day !== name);
+    if (!checked) setDays(newDays);
+    else if (checked && days.length == newDays.length) setDays([...days, { day: name, ...defaultTimes }]);
+  };
+
+  const updateDay = (day) => {
+    const copy = [...days];
+    const index = copy.findIndex((d) => d.day == day.name);
+    copy[index].open = day.open;
+    copy[index].close = day.close;
+    setDays(copy);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const f = e.target;
     const payments = [];
-    const file = f.cover.files[0];
+    const file = f.cover?.files[0];
     setLoading(true);
 
     try {
+      if (!f.lat.value || !f.lng.value) throw new Error(content.error[lang]);
+
       if (onDeliveryPayment) {
         for (let k in onDeliveryPayment) {
           if (onDeliveryPayment[k]) {
@@ -69,8 +88,8 @@ export default function NewStore({ params, searchParams }) {
           postalCode: f.city.value,
           province: f.province.value,
           country: f.country.value,
-          currentLat: 0,
-          currentLng: 0,
+          currentLat: f.lat.value,
+          currentLng: f.lng.value,
         },
         openingHours: days,
         payments,
@@ -91,33 +110,20 @@ export default function NewStore({ params, searchParams }) {
 
       router.replace(`/admin/store/${id}/product`);
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
     setLoading(false);
   };
 
-  const addDay = ({ name, checked }) => {
-    const newDays = days.filter((d) => d.day !== name);
-    if (!checked) setDays(newDays);
-    else if (checked && days.length == newDays.length) setDays([...days, { day: name, ...defaultTimes }]);
-  };
-
-  const updateDay = (day) => {
-    const copy = [...days];
-    const index = copy.findIndex((d) => d.day == day.name);
-    copy[index].open = day.open;
-    copy[index].close = day.close;
-    setDays(copy);
-  };
-
-  const fetchStoreById = async (id) => {
+  const fetchStoreById = async (storeId) => {
     setLoading(true);
     try {
-      const { id, attributes } = await request("store", "GET", { query: `/${searchParams.id}?populate=*` });
+      const { id, attributes } = (await request("store", "GET", { query: `/${storeId}?populate=*` })).data;
       attributes.id = id;
       setStore(attributes);
       setDeliver(attributes.deliver);
       setDays(attributes.openingHours);
+      setAddress(attributes.address);
 
       const onDeliveryPay = {};
       const onlinePay = {};
@@ -145,7 +151,9 @@ export default function NewStore({ params, searchParams }) {
   return (
     <>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
-        <h1 className="text-xl text-center my-2">{content.h1[lang]}</h1>
+        <h1 className="text-xl text-center my-2">
+          {update ? content.updateH1[lang] : content.createH1[lang]}
+        </h1>
 
         {/* cover */}
         {!update && (
@@ -179,10 +187,7 @@ export default function NewStore({ params, searchParams }) {
           <div className="flex justify-between">
             <CurrencySelect lang={lang} label required defaultValue={store?.currency} cls="mx-0" />
 
-            <ToggleSwitch
-              name="deliver"
-              checked={deliver}
-              onChange={({ target }) => setDeliver(target.checked)}>
+            <ToggleSwitch name="deliver" checked={deliver} onChange={(e) => setDeliver(e.target.checked)}>
               <div className="mx-3">{content.delivery[lang]}</div>
             </ToggleSwitch>
           </div>
@@ -200,7 +205,7 @@ export default function NewStore({ params, searchParams }) {
         </div>
 
         <h6 className="mb-2  font-semibold rq">{content.address[lang]}</h6>
-        <AddressInputs lang={lang} {...(store?.address || {})} />
+        <AddressInputs lang={lang} {...(store?.address || {})} map onError={handleError} />
 
         <h6 className="font-semibold mt-7 rq">{content.workdays[lang]}</h6>
         <DaysCheckButtons lang={lang} checkedDays={days} onCheck={addDay} />
@@ -213,7 +218,7 @@ export default function NewStore({ params, searchParams }) {
 
         <h6 className="font-semibold mt-7 rq">{content.payments[lang]}</h6>
         <Collapse
-          onChange={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
+          onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
           checked={!!onDeliveryPayment}
           id="on-delivery-1313"
           title={content.onDelivery[lang]}
@@ -223,23 +228,23 @@ export default function NewStore({ params, searchParams }) {
             <ToggleSwitch
               name="onDeliveryCash"
               checked={!!onDeliveryPayment?.cash}
-              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, cash: target.checked })}
-              cls="!flex my-3">
+              onChange={(e) => setOnDeliveryPayment({ ...onDeliveryPayment, cash: e.target.checked })}
+              cls="!flex my-3 cash">
               <div className="flex-1">{content.cash[lang]}</div>
             </ToggleSwitch>
 
             <ToggleSwitch
               name="onDeliveryCard"
               checked={!!onDeliveryPayment?.card}
-              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, card: target.checked })}
-              cls="!flex my-3">
+              onChange={(e) => setOnDeliveryPayment({ ...onDeliveryPayment, card: e.target.checked })}
+              cls="!flex my-3 card">
               <div className="flex-1">{content.card[lang]}</div>
             </ToggleSwitch>
 
             <ToggleSwitch
               name="onDeliveryBank"
               checked={!!onDeliveryPayment?.bank}
-              onChange={({ target }) => setOnDeliveryPayment({ ...onDeliveryPayment, bank: target.checked })}
+              onChange={(e) => setOnDeliveryPayment({ ...onDeliveryPayment, bank: e.target.checked })}
               cls="!flex my-3">
               <div className="flex-1">{content.bank[lang]}</div>
             </ToggleSwitch>
@@ -247,7 +252,7 @@ export default function NewStore({ params, searchParams }) {
         </Collapse>
 
         <Collapse
-          onChange={({ target }) => setOnlinePayment(onlinePayment ? null : { card: target.checked })}
+          onCheck={(e) => setOnlinePayment(onlinePayment ? null : { card: e.target.checked })}
           checked={!!onlinePayment?.card || !!onlinePayment?.bank}
           id="online-1213"
           title={content.online[lang]}
@@ -255,7 +260,7 @@ export default function NewStore({ params, searchParams }) {
           <ToggleSwitch
             name="onlineCard"
             checked={!!onlinePayment?.card}
-            onChange={({ target }) => setOnlinePayment({ ...onlinePayment, card: target.checked })}
+            onChange={(e) => setOnlinePayment({ ...onlinePayment, card: e.target.checked })}
             cls="!flex my-5">
             <div className="flex-1">{content.card[lang]}</div>
           </ToggleSwitch>
@@ -263,7 +268,7 @@ export default function NewStore({ params, searchParams }) {
           <Collapse
             name="onlineBank"
             checked={!!onlinePayment?.bank}
-            onChange={(e) => setOnlinePayment({ ...onlinePayment, bank: e.checked })}
+            onCheck={(e) => setOnlinePayment({ ...onlinePayment, bank: e.target.checked })}
             title={content.bank[lang]}
             hCls="rounded-t-lg">
             <h6 className="font-semibold">{content.bankInfo.title[lang]}</h6>
@@ -321,7 +326,7 @@ export default function NewStore({ params, searchParams }) {
         />
 
         <Button type="submit" cls="w-full my-5 !p-2">
-          {update ? "Save" : "Create"}
+          {update ? content.saveBtn[lang] : content.createBtn[lang]}
         </Button>
       </form>
       {/* Todo: change this loading to elements loading effect */}
@@ -331,7 +336,8 @@ export default function NewStore({ params, searchParams }) {
 }
 
 const content = {
-  h1: { en: "Create store", ar: "إنشاء متجر" },
+  createH1: { en: "Create store", ar: "إنشاء متجر" },
+  updateH1: { en: "Update store", ar: "تحديث المتجر" },
   imgAlt: { en: "Store cover image", ar: "صورة الغلاف المخزن" },
   imgTitle: { en: "Upload the store cover image", ar: "قم بتحميل صورة غلاف المتجر" },
   name: { en: "Store name", ar: "اسم المتجر", placeholder: { en: "E.g. alm-store", ar: "alm-store ,مثال" } },
@@ -362,4 +368,10 @@ const content = {
   businessInfo: { en: "Business info", ar: "معلومات العمل التجارة" },
   cocNumber: { en: "COC Number", ar: "رقم السجل التجاري" },
   vatNumber: { en: "Tax ID / VAT Number", ar: "الرقم الضريبي" },
+  createBtn: { en: "Create", ar: "إنشاء" },
+  saveBtn: { en: "Save", ar: "حفظ" },
+  error: {
+    en: "Please locate your store location on the map so your customers can find your it",
+    ar: "يرجى تحديد موقع متجرك على الخريطة حتى يتمكن الزبائن من العثور عليه",
+  },
 };

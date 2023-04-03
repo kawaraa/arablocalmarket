@@ -73,10 +73,9 @@ export default function Admin({ params, searchParams }) {
           />
           <IconButton
             type="button"
-            handler={() => setShowScanner(true)}
+            onClick={() => setShowScanner(true)}
             icon="scan"
             title="Show search filter"
-            aria-label="Search filter"
             aria-expanded="true"
             aria-haspopup="dialog"
             cls="w-10 p-1 hover:text-pc transition"
@@ -147,7 +146,7 @@ export default function Admin({ params, searchParams }) {
       />
 
       <Button
-        handler={() => setShowOrderDetails(true)}
+        onClick={() => setShowOrderDetails(true)}
         icon="cart"
         cls="fixed bottom-10 right-8 !text-bg !p-0 w-10 h-10 !rounded-full"
         iconCls="w-8">

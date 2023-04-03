@@ -2,19 +2,19 @@
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import Variant from "../(component)/variant";
-import { Button } from "../../../../../(component)/(styled)/button";
+import { Button, IconButton, LinkButton } from "../../../../../(component)/(styled)/button";
 import { InputField, Textarea } from "../../../../../(component)/(styled)/inputs";
 import ImageUpload from "../../../../../(component)/(styled)/upload-image";
 import { CategorySelect } from "../../../../../(component)/custom-inputs";
 import Loader from "../../../../../(layout)/loader";
 import { request } from "../../../../../(service)/api-provider";
 import { AppSessionContext } from "../../../../../app-session-context";
-
 // Todo: preview the product
 
 export default function ProductById({ params }) {
   const router = useRouter();
   const { lang, addMessage } = useContext(AppSessionContext);
+  const [initialLoading, setInitialLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [variants, setVariants] = useState([{}]);
@@ -43,46 +43,44 @@ export default function ProductById({ params }) {
         variants,
       };
 
+      const formData = new FormData();
       if (!file) body = { data };
       else {
-        const formData = new FormData();
         formData.append("files.image", file, file.name);
         formData.append("data", JSON.stringify(data));
         body = formData;
       }
 
       if (!product) {
-        console.log("create");
         id = (await request("product", "POST", body)).data.id;
       } else {
-        console.log("update");
-
         id = (await request("product", "PUT", { query: "/" + product.id, body })).data.id;
       }
 
-      router.replace(`/store/${params.storeId}/product${id}`); // params
-      // router.replace(window.location.pathname.replace("new", id));
+      addMessage({ type: "success", text: "", duration: 5 });
+      // router.replace(`/store/${params.storeId}/product${id}`);
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
     setLoading(false);
   };
 
   const fetchProduct = async (id) => {
-    setLoading(true);
+    setInitialLoading(true);
     try {
-      const { data } = await request("product", "GET", { query: "/" + id + "?populate=*" });
+      const { data } = await request("product", "GET", {
+        query: "/" + id + "?populate[image]=*&populate[rating]=*&populate[variants][populate]=*",
+      });
       data.attributes.id = data.id;
       data.attributes.image.data.attributes.id = data.attributes.image.data.id;
       data.attributes.image = data.attributes.image.data.attributes;
       setProduct(data.attributes);
       setVariants(data.attributes.variants);
     } catch (error) {
-      addMessage({ type: "Error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 15 });
     }
-    setLoading(false);
+    setInitialLoading(false);
   };
-  console.log(product);
 
   useEffect(() => {
     if (params.slug.toLowerCase() != "new") fetchProduct(params.slug);
@@ -90,11 +88,18 @@ export default function ProductById({ params }) {
     window.scroll(0, 230);
   }, []);
 
+  if (initialLoading) return <Loader size="100" screen />;
   return (
     <>
       <form onSubmit={handleSubmit} dir="auto" className="mb-10">
-        <h1 className="text-xl font-semibold text-center mb-3">
+        <h1 className="flex justify-center text-xl font-semibold mb-3">
           {!product ? content.createH1[lang] : content.updateH1[lang]}
+          {product && (
+            <IconButton
+              icon="eye"
+              onClick={() => router.push(`/store/${params.storeId}/product/${params.slug}`)}
+            />
+          )}
         </h1>
 
         <ImageUpload
@@ -109,7 +114,6 @@ export default function ProductById({ params }) {
         />
 
         <InputField
-          editable={!!product}
           type="text"
           name="name"
           required
@@ -117,13 +121,12 @@ export default function ProductById({ params }) {
           placeholder={content.name.placeholder[lang]}
           min="4"
           max="25"
-          full={!product}
+          full
           cls="flex-col my-5 text-lg font-semibold ">
           <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
         </InputField>
 
         <Textarea
-          editable={!!product}
           name="description"
           defaultValue={product?.description}
           title={content.description.placeholder[lang]}
@@ -139,12 +142,11 @@ export default function ProductById({ params }) {
         />
 
         <InputField
-          editable={!!product}
           name="vendor"
           defaultValue={product?.vendor}
           label={content.vendor.text[lang]}
           placeholder={content.vendor.placeholder[lang]}
-          full={!product || !product?.vendor}
+          full
           cls="flex-col my-5"
         />
 
@@ -163,7 +165,7 @@ export default function ProductById({ params }) {
 
           {variants.length < 20 && (
             <div className="text-right">
-              <Button icon="plus" handler={() => setVariants([...variants, {}])} cls="!p-0" iconCls="w-8" />
+              <Button icon="plus" onClick={() => setVariants([...variants, {}])} cls="!p-0" iconCls="w-8" />
             </div>
           )}
         </div>
