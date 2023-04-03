@@ -23,12 +23,20 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
       delete result.data.attributes.cocNumber;
       delete result.data.attributes.vatNumber;
     }
+
+    result.data.attributes.ratings = getStars(result.data.attributes.ratings);
     return result;
   },
 
   async find(ctx) {
     const { data, meta } = await super.find(ctx);
-    data.forEach((s) => delete s.attributes.cocNumber + delete s.attributes.vatNumber);
+    const getStars = strapi.service("api::store.store").calculateStars;
+
+    data.forEach((s) => {
+      delete s.attributes.cocNumber;
+      delete s.attributes.vatNumber;
+      s.attributes.ratings = getStars(s.attributes.ratings);
+    });
     return { data, meta };
   },
 

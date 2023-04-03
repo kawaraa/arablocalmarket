@@ -20,7 +20,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
 
       if (!response.ok) throw new Error(content.notFoundErr[lang]);
       const data = await response.json();
-      if (data.length === 0) throw new Error(content.notFoundErr[lang]);
+      if (!data[0]) throw new Error(content.notFoundErr[lang]);
 
       const address = data[0];
       window.L.newMap.marker.setLatLng([address.lat, address.lon]);
@@ -40,14 +40,17 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
     const attribution = "&copy; OpenStreetMap contributors";
 
     if ((Map && !Map.newMap) || !Map.newMap._mapPane) {
-      Map.newMap = Map.map("map").setView(coordinates, 6);
+      Map.newMap = Map.map("map").setView(
+        [coordinates[0] || 52, coordinates[1] || 4],
+        coordinates[0] ? 6 : 1
+      );
     }
 
     // Add the base map tiles (OpenStreetMap)
     L.tileLayer(OpenStreetMapTileUrl, { attribution }).addTo(Map.newMap);
 
     // Add a marker to the map at the user's selected location
-    Map.newMap.marker = L.marker(coordinates).addTo(Map.newMap);
+    Map.newMap.marker = L.marker([coordinates[0] || 52, coordinates[1] || 4]).addTo(Map.newMap);
 
     Map.newMap.on("click", (e) => {
       onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
@@ -79,7 +82,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
 
   useEffect(() => {
     if (window.L?.newMap?.marker && coordinates) {
-      window.L.newMap.setView([coordinates[0], coordinates[1]], 13);
+      window.L.newMap.setView([coordinates[0], coordinates[1]]);
       window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
     }
   }, [coordinates]);
@@ -101,7 +104,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
       <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
       <link rel="stylesheet" href="/map/leaflet.css" />
 
-      <SearchBox label="Search for a location" onSearch={setSearch} onFinish={handleAddressSearch} onBlur />
+      <SearchBox label="Search for a location" onSearch={setSearch} onFinish={handleAddressSearch} />
 
       <div className="relative overflow-hidden mt-3 rounded-lg">
         <div id="map" className="w-full h-64 rounded-lg"></div>

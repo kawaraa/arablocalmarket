@@ -1,27 +1,32 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Cookies } from "../../(service)/utilities";
 import Modal from "../../(component)/(styled)/modal";
 import LeafletMap from "../../(component)/leaflet-map";
 import SearchBox from "../../(component)/(styled)/search-box";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
+import { AppSessionContext } from "../../app-session-context";
 
 export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const router = useRouter();
   const pathname = usePathname();
-
+  const { lang, addMessage } = useContext(AppSessionContext);
   const [showFilter, setShowFilter] = useState(false);
   const [position, setPosition] = useState(coordinates);
   const [range, setRange] = useState("0.5");
   const [search, setSearch] = useState(text || "");
 
-  const handleSearch = async (searchText) => {
+  const handleSearch = async () => {
     Cookies.set("coordinates", `${position[0]}:${position[1]}`);
     Cookies.set("range", range);
     router.push(`${pathname}?search=${search}`);
     if (showFilter) setShowFilter(false);
   };
+
+  useEffect(() => {
+    if (position[0] == 0) setTimeout(() => setShowFilter(true), 1500);
+  }, []);
 
   return (
     <>
@@ -68,12 +73,13 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
             />
           </svg>
         }>
-        <div className="text-left">
+        <div className="text-left m-1">
           <LeafletMap
+            lang={lang}
             coordinates={position}
             onLocate={({ lat, lng }) => setPosition([lat, lng])}
             requestUserLocation={true}
-            onError={() => alert("Could not access your location, please turn your location on.")}
+            onError={(err) => addMessage({ type: "error", text: err, duration: 15 })}
           />
 
           <label

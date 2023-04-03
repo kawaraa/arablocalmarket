@@ -3,39 +3,10 @@ import { useEffect, useState } from "react";
 import { InputField } from "../../(component)/(styled)/inputs";
 import { EmailInputField, PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
 
-export default function Profile({ lang, username, email, phone }) {
-  const [urName, setUrName] = useState(username);
-  const [eml, setEml] = useState(email);
-  const [phn, setPhn] = useState(phone);
-  const [loading, setLoading] = useState(false);
-
-  const updateUsername = (e) => {
-    console.log(e.target.value);
-    setUrName(e.target.value);
-  };
-
-  const updateEmail = (e) => {
-    console.log(e.target.value);
-    setEml(e.target.value);
-  };
-
-  const updatePhone = (e) => {
-    console.log(e.target.value);
-    setEml(e.target.value);
-  };
-
-  const updatePassword = (e) => {
-    console.log(e.target.value);
-    setEml(e.target.value);
-  };
-
-  useEffect(() => {
-    document.title = "Settings - ALM";
-  }, []);
-
+export default function Account({ lang, username, email, phone, handleUpdate }) {
   return (
     <section>
-      <h3 className="text-lg font-medium mb-2 mt-6">Account</h3>
+      <h3 className="text-lg font-semibold mb-2 mt-6">Account</h3>
       <InputField
         editable
         full
@@ -44,20 +15,39 @@ export default function Profile({ lang, username, email, phone }) {
         required
         min="4"
         max="15"
-        defaultValue={urName}
-        onBlur={updateUsername}
+        defaultValue={username || ""}
+        onBlur={(e) => handleUpdate({ username: e.target.value })}
         cls="mb-2"
       />
 
-      <EmailInputField editable full defaultValue={eml} onBlur={updateEmail} cls="mb-2" />
-      <PhoneInputField editable full defaultValue={phn} onBlur={updatePhone} cls="mb-2" />
+      <EmailInputField
+        editable
+        full
+        defaultValue={email || ""}
+        onBlur={(e) => handleUpdate({ email: e.target.value })}
+        cls="mb-2 13"
+      />
+
+      <PhoneInputField
+        editable
+        full
+        defaultValue={phone || ""}
+        onBlur={(e) => handleUpdate({ phone: e.target.value })}
+        cls="mb-2 242"
+      />
 
       {/* <div>
         Phone number : visible
         <input type="checkbox" />
       </div> */}
 
-      <PswInputField editable full placeholder="********" onBlur={updatePassword} cls="mb-2" />
+      <PswInputField
+        editable
+        full
+        placeholder="********"
+        onBlur={(e) => handleUpdate({ password: e.target.value })}
+        cls="mb-2 656"
+      />
 
       {/* <div>2AF Switch button</div> */}
     </section>

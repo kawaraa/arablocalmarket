@@ -13,13 +13,12 @@ import Loader from "../../../(layout)/loader";
 
 export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
-  const { lang, user, addMessage } = useContext(AppSessionContext);
-  const [loading, setLoading] = useState(true);
+  const { lang, setAppLoading, user, addMessage } = useContext(AppSessionContext);
   const [store, setStore] = useState(null);
   const image = store?.image?.url || "/market-store-grocery-cartoon.jpg";
 
   const handleChange = async ({ target }) => {
-    setLoading(true);
+    setAppLoading(true);
     try {
       const data = {};
       if (target?.name == "name") data.name = target.value;
@@ -33,12 +32,12 @@ export default function StoreById({ children, params: { storeId } }) {
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }
-    setLoading(false);
+    setAppLoading(false);
   };
 
   const handleCoverChange = async (file) => {
     const formData = new FormData();
-    setLoading(true);
+    setAppLoading(true);
     try {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
@@ -47,10 +46,11 @@ export default function StoreById({ children, params: { storeId } }) {
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }
-    setLoading(false);
+    setAppLoading(false);
   };
 
   const fetchStore = async () => {
+    setAppLoading(true);
     try {
       const { id, attributes } = (await request("store", "GET", { query: "/" + storeId + "?populate=*" }))
         ?.data;
@@ -62,7 +62,7 @@ export default function StoreById({ children, params: { storeId } }) {
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }
-    setLoading(false);
+    setAppLoading(false);
   };
 
   useEffect(() => {
@@ -72,56 +72,53 @@ export default function StoreById({ children, params: { storeId } }) {
 
   if (!user || !store) return null;
   return (
-    <>
-      <article>
-        <ImageUpload
-          id="store-cover"
-          imageUrl={image}
-          onFile={handleCoverChange}
-          alt="Store cover image"
-          title="Edit store cover">
-          <Link
-            href={`/admin/pos?storeId=${storeId}`}
-            title="Point of sale - Store mode"
-            className="absolute top-5 right-5 w-8">
-            <SvgIcon name="logo" />
-          </Link>
-          {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-          <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
-            Edit
-          </LinkButton>
-        </ImageUpload>
+    <article>
+      <ImageUpload
+        id="store-cover"
+        imageUrl={image}
+        onFile={handleCoverChange}
+        alt="Store cover image"
+        title="Edit store cover">
+        <Link
+          href={`/admin/pos?storeId=${storeId}`}
+          title="Point of sale - Store mode"
+          className="absolute top-5 right-5 w-8">
+          <SvgIcon name="logo" />
+        </Link>
+        {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
+        <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
+          Edit
+        </LinkButton>
+      </ImageUpload>
 
-        <section className="mt-5 mb-3 flex justify-between">
-          <InputField
-            editable
-            name="name"
-            defaultValue={store.name}
-            onBlur={handleChange}
-            title="Edit name"
-            cls="store-name"
-            inCls="rounded-md text-xl font-bold"
-          />
+      <section className="mt-5 mb-3 flex justify-between">
+        <InputField
+          editable
+          name="name"
+          defaultValue={store.name}
+          onBlur={handleChange}
+          title="Edit name"
+          cls="store-name"
+          inCls="rounded-md text-xl font-bold"
+        />
 
-          <ToggleSwitch name="open" checked={store.open} onChange={handleChange}>
-            <span className="mx-2">Open</span>
-          </ToggleSwitch>
-        </section>
+        <ToggleSwitch name="open" checked={store.open} onChange={handleChange}>
+          <span className="mx-2">Open</span>
+        </ToggleSwitch>
+      </section>
 
-        <div className="pb-6 border-b-2 border-bc">
-          <Tabs
-            tabs={content.tabs.map(({ key, path, text }) => ({
-              key,
-              path: path.replace("storeId", storeId),
-              text: text[lang],
-            }))}
-            cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
-          />
-          <section className="">{children}</section>
-        </div>
-      </article>
-      {loading && <Loader size="100" screen />}
-    </>
+      <div className="pb-6 border-b-2 border-bc">
+        <Tabs
+          tabs={content.tabs.map(({ key, path, text }) => ({
+            key,
+            path: path.replace("storeId", storeId),
+            text: text[lang],
+          }))}
+          cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
+        />
+        <section className="">{children}</section>
+      </div>
+    </article>
   );
 }
 

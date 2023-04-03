@@ -1,17 +1,19 @@
+"use Client";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import SvgIcon from "./svg-icon";
 
 export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, full, ...p }) {
-  const [changed, setChanged] = useState(false);
+  const inputRef = useRef(null);
+  const [icon, setIcon] = useState("edit");
 
   const handleChange = (e) => {
-    if (editable) setChanged(true);
+    if (editable) setIcon("checkMark");
     if (onChange) onChange(e);
   };
 
   const handleBlur = (e) => {
-    if (editable) setChanged(false);
+    if (editable) setTimeout(() => setIcon("edit"), 200);
     if (onBlur) onBlur(e);
   };
 
@@ -35,6 +37,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           )}
 
           <input
+            ref={inputRef}
             id={cls}
             dir={p.type == "number" ? "ltr" : "auto"}
             placeholder={p.title}
@@ -48,6 +51,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
             {...p}
             onChange={handleChange}
             onBlur={handleBlur}
+            onClick={(e) => e.preventDefault()}
           />
           {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
           Please provide a valid email address.
@@ -55,11 +59,11 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
         </span>
 
         {editable && (
-          <label
-            htmlFor={cls}
-            className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}>
-            <SvgIcon name={changed ? "checkMark" : "edit"} />
-          </label>
+          <Button
+            onClick={() => icon == "edit" && inputRef.current?.focus()}
+            icon={icon}
+            className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}
+          />
         )}
       </span>
     </div>

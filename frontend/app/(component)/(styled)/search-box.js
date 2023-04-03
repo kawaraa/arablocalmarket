@@ -5,7 +5,8 @@ import SvgIcon from "./svg-icon";
 export default function SearchBox({ label, onSearch, search, onBlur, onFinish, cls, inCls }) {
   const inputRef = useRef();
 
-  const handleFinish = () => {
+  const handleFinish = (e) => {
+    e.preventDefault();
     // Hide the keyboard.
     inputRef.current?.setAttribute("readonly", true);
     setTimeout(() => inputRef.current?.removeAttribute("readonly"), 200);

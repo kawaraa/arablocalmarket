@@ -76,10 +76,11 @@
       "required": true,
       "unique": true
     },
-    "addresses": {
+    "address": {
       "type": "component",
-      "repeatable": true,
-      "component": "user-information.address"
+      "repeatable": false,
+      "component": "user-information.address",
+      "required": false
     },
     "cart": {
       "type": "component",

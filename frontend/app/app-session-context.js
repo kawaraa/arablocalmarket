@@ -33,7 +33,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   // const [profile, setProfile] = useState({});
   // const [editingField, setEditingField] = useState("");
 
-  const setAppLoading = (loading) => setLoading(loading) + window?.setLoading(loading);
+  const setAppLoading = (loading) => window?.setLoading(loading);
   const addMessage = (msg) => setMessages([...messages, msg]);
   // const addError = (err) => setErrors([...errors, err]);
 
@@ -87,9 +87,11 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const updateUser = (user) => {
     setAppLoading(true);
+    setLoading(true);
     if (user) window.localStorage.setItem("user", JSON.stringify(user));
     else window.localStorage.removeItem("user");
     setUser(user);
+    setLoading(false);
     setAppLoading(false);
   };
 
@@ -101,13 +103,9 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     updateThemeMode(Cookies.get("themeMode") || themeMode);
 
-    const user = JSON.parse(window.localStorage.getItem("user") || null);
-    if (user) updateUser(user);
-    else {
-      request("getUser")
-        .then((user) => updateUser(user))
-        .catch(() => setAppLoading(false));
-    }
+    request("getUser")
+      .catch(() => JSON.parse(window.localStorage.getItem("user") || null))
+      .then((user) => updateUser(user));
   }, []);
 
   // useEffect(() => {

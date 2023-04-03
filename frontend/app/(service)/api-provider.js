@@ -5,6 +5,22 @@ export function getURL(key) {
   return config.apiHost + config[key];
 }
 
+export async function serverRequest(url, method = "GET", data, type = "application/json", arg = {}) {
+  let aUrl = getURL(url) || url;
+  const headers = { "Content-Type": type };
+  let body = null;
+
+  if (data) {
+    if (data.token) headers.Authorization = `Bearer ${data.token}`;
+    if (data.query) aUrl += data.query;
+    if (data.body) body = JSON.stringify(data.body);
+  }
+
+  const response = await fetch(aUrl, { method, body, headers, ...arg });
+  if (response?.ok) return response.json();
+  throw new Error(await response?.text());
+}
+
 export async function request(url, method = "GET", data, type = "application/json", arg = {}) {
   const token = window.localStorage.getItem("accessToken");
   const headers = {};

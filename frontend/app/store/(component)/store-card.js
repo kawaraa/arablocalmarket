@@ -17,7 +17,7 @@ export default function StoreCard({ Tag, admin, link, name, imageUrl, open, cls,
     <Tag
       className={
         "relative p-1 text-t dark:text-dt lazy-c " +
-        (cls || "w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:flex-1 2xl:!min-w-[300px] last:!max-w-[300px]")
+        (cls || "w-[100%] sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:flex-1 2xl:!min-w-[300px] md:last:max-w-[300px]")
       }
       // style={getCssDelay()}
     >

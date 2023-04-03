@@ -3,48 +3,46 @@ import { useEffect, useState } from "react";
 import { Button } from "../../(component)/(styled)/button";
 import Modal from "../../(component)/(styled)/modal";
 import { NameInputField } from "../../(component)/custom-inputs";
-import { AddressInputs } from "../../(component)/address-inputs";
+import AddressInputs from "../../(component)/address-inputs";
 
-export default function Profile({ lang, firstName, lastName, address }) {
-  const [ftName, setFtName] = useState(firstName);
-  const [ltName, setLtName] = useState(lastName);
+export default function Profile({ lang, firstName, lastName, address, handleUpdate, setMessage }) {
   const [adr, setAdr] = useState(address || {});
   const [addressForm, setAddressForm] = useState(false);
   const [addressLoading, setAddressLoading] = useState(false);
 
-  const changeFirstName = (e) => {
-    console.log(e.target.value);
-    setFtName(e.target.value);
-  };
-
-  const changeLastName = (e) => {
-    console.log(e.target.value);
-    setLtName(e.target.value);
-  };
-
-  const updateAddress = (e) => {
+  const updateAddress = async (e) => {
     e.preventDefault();
-    const data = {};
+    const address = {};
     setAddressLoading(true);
-    new FormData(e.target).forEach((value, key) => (data[key] = value));
-    setAdr(data);
+    new FormData(e.target).forEach((value, key) => key != "search" && (address[key] = value));
+    await handleUpdate({ address });
+    setAdr(address);
     setAddressLoading(false);
     setAddressForm(false);
   };
 
-  useEffect(() => {
-    document.title = "Settings - ALM";
-  }, []);
-
   return (
     <section>
-      <h3 className="text-lg font-medium mb-3">Profile</h3>
+      <h3 className="text-lg font-semibold mb-3">Profile</h3>
       <div className="flex ">
-        <NameInputField editable full first defaultValue={ftName} onBlur={changeFirstName} cls="mr-2" />
-        <NameInputField editable full defaultValue={ltName} onBlur={changeLastName} />
+        <NameInputField
+          editable
+          full
+          first
+          defaultValue={firstName || ""}
+          onBlur={(e) => handleUpdate({ firstName: e.target.value })}
+          cls="mr-2"
+        />
+        <NameInputField
+          editable
+          full
+          defaultValue={lastName || ""}
+          onBlur={(e) => handleUpdate({ lastName: e.target.value })}
+          cls="1231"
+        />
       </div>
 
-      <h3 className="text-lg font-medium mt-6 mb-2">Address</h3>
+      <h3 className="text-lg font-semibold mt-6 mb-2">Address</h3>
 
       {!adr ? (
         <Button type="submit" icon="plus" onClick={() => setAddressForm(true)} cls="w-full mt-3 ">
@@ -72,7 +70,14 @@ export default function Profile({ lang, firstName, lastName, address }) {
         onApprove={() => {}}
         loading={addressLoading}
         open={addressForm}>
-        <AddressInputs lang={lang} {...adr} />
+        <div className="m-1">
+          <AddressInputs
+            lang={lang}
+            map
+            {...adr}
+            onError={(err) => setMessage({ type: "error", text: err, duration: 10 })}
+          />
+        </div>
       </Modal>
     </section>
   );

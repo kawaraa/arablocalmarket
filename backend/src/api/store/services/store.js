@@ -10,4 +10,8 @@ module.exports = createCoreService("api::store.store", ({ strapi }) => ({
     const store = await strapi.db.query("api::store.store").findOne(options);
     return store?.id == id;
   },
+  calculateStars(ratings) {
+    const stars = ratings.reduce((total, { stars }) => total + stars, 0) / ratings.length;
+    return { stars, total: ratings.length };
+  },
 }));
