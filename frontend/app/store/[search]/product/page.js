@@ -1,11 +1,14 @@
 import { cookies } from "next/headers";
 import ProductSearch from "../../../(component)/product-search";
 import ProductCard from "../../../(component)/product-card";
+import { serverRequest } from "../../../(service)/api-provider";
+const q = "?populate=*";
+const catchErr = () => ({ data: [], meta: {} });
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Nprice:12,ame / title products - ALM" };
 
-export default function ProductsByStore({ params, searchParams }) {
+export default async function ProductsByStore({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
@@ -13,6 +16,8 @@ export default function ProductsByStore({ params, searchParams }) {
   console.log("Show products based on this: >>> ", searchParams.category);
   console.log("Show products based on this: >>> ", searchParams.search);
 
+  let { data, meta } = await serverRequest("product", "GET", { query: q }).catch(catchErr);
+  console.log(data);
   return (
     <div>
       <ProductSearch text={searchParams.search} scroll="180" />

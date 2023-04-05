@@ -121,12 +121,6 @@
       "target": "api::order.order",
       "mappedBy": "store"
     },
-    "favorites": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::favorite.favorite",
-      "mappedBy": "stores"
-    },
     "workers": {
       "type": "relation",
       "relation": "manyToMany",
@@ -141,6 +135,12 @@
     },
     "meta": {
       "type": "json"
+    },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::customer.customer",
+      "mappedBy": "favoriteStores"
     }
   }
 }

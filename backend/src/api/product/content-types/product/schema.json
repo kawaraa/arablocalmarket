@@ -57,17 +57,17 @@
       "max": 10,
       "min": 1
     },
-    "favorites": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::favorite.favorite",
-      "mappedBy": "products"
-    },
     "ratings": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::rating.rating",
       "mappedBy": "product"
+    },
+    "favorites": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::customer.customer",
+      "mappedBy": "favoriteProducts"
     }
   }
 }

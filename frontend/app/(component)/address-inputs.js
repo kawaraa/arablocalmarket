@@ -6,13 +6,13 @@ import LeafletMap from "./leaflet-map";
 
 export default function AddressInputs({ lang, map, onError, ...adr }) {
   const [country, setCountry] = useState(adr.country || "netherlands");
-  const [province, setProvince] = useState(adr.province);
-  const [city, setCity] = useState(adr.city);
-  const [postalCode, setPostalCode] = useState(adr.postalCode);
-  const [line1, setLine1] = useState(adr.line1);
-  const [line2, setLine2] = useState(adr.line2);
-  const [lat, setLat] = useState(adr.lat || "");
-  const [lng, setLng] = useState(adr.lng || "");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [line1, setLine1] = useState("");
+  const [line2, setLine2] = useState("");
+  const [lat, setLat] = useState(52.4); // Amsterdam coordinates
+  const [lng, setLng] = useState(4.9);
 
   const handleUpdate = (lat, lng, adrName) => {
     if (lat) setLat(lat);
@@ -39,8 +39,8 @@ export default function AddressInputs({ lang, map, onError, ...adr }) {
     if (adr.postalCode) setPostalCode(adr.postalCode);
     if (adr.line1) setLine1(adr.line1);
     if (adr.line2) setLine2(adr.line2);
-    if (adr.lat) setLat(adr.lat);
-    if (adr.lng) setLng(adr.lng);
+    if (adr.currentLat) setLat(adr.currentLat);
+    if (adr.currentLng) setLng(adr.currentLng);
   }, [adr.country]);
 
   const renderCountries = () => {

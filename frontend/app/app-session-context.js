@@ -11,17 +11,14 @@ export const AppSessionContext = createContext();
 export default function AppSessionContextProvider({ children, language, theme }) {
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
-  // const [errors, setErrors] = useState([]);
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
   const [user, setUser] = useState(null);
-  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
 
   // localStorage.cart.items.
   const cart = { items: [] };
 
   // const [worker, setWorker] = useState(null);
-  // const [showMessage, setShowMessage] = useState("");
   // const [posts, setPosts] = useState([]);
   // const [editingPost, setEditingPost] = useState("");
   // const [conversations, setConversations] = useState([]);
@@ -35,7 +32,6 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const setAppLoading = (loading) => window?.setLoading(loading);
   const addMessage = (msg) => setMessages([...messages, msg]);
-  // const addError = (err) => setErrors([...errors, err]);
 
   const updateLang = (lang) => {
     Cookies.set("lang", lang);
@@ -54,6 +50,22 @@ export default function AppSessionContextProvider({ children, language, theme })
     setThemeMode(mode);
   };
 
+  const fetchUser = async () => {
+    try {
+      const user = await request("getUser");
+      // const q = `?filters[userId][$eq]=${user.id}&populate[]=`;
+      // const customer = await request("customer", "GET", { query: q });
+      // console.log(customer)
+
+      const q = `?filters[user][$eq]=${user.id}&populate[stores]=id&&populate[products]=id`;
+      const favorites = await request("favorite", "GET", { query: q });
+      console.log(favorites);
+      updateUser(user);
+    } catch (error) {
+      const user = JSON.parse(window.localStorage.getItem("user") || null);
+    }
+  };
+
   // const addPost = (post) => setPosts([post, ...posts]); // posts.splice(0, 0, detail);
   // const updatePost = (post) => {
   //   const index = posts.findIndex((p) => p.id === post.id);
@@ -61,11 +73,6 @@ export default function AppSessionContextProvider({ children, language, theme })
   //   setPosts(posts);
   // };
   // const removePost = (id) => setPosts(posts.filter((post) => post.id !== id));
-
-  // const popMessage = (message) => {
-  //   setShowMessage(message);
-  //   setTimeout(() => setShowMessage(""), 2000);
-  // };
 
   // const openConversation = (conversation) => {
   //   const index = conversations.findIndex((con) => con.id === conversation.id);
@@ -103,9 +110,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     updateThemeMode(Cookies.get("themeMode") || themeMode);
 
-    request("getUser")
-      .catch(() => JSON.parse(window.localStorage.getItem("user") || null))
-      .then((user) => updateUser(user));
+    fetchUser();
   }, []);
 
   // useEffect(() => {
@@ -144,25 +149,17 @@ export default function AppSessionContextProvider({ children, language, theme })
   const state = {
     setAppLoading,
     addMessage,
-    // errors,
-    // addError,
     lang,
     updateLang,
     themeMode,
     updateThemeMode,
-
     user,
     updateUser,
     cart,
-    // location,
-    // setLocation,
     requestNotificationPermission,
 
     // worker,
     // setWorker,
-
-    // showMessage,
-    // popMessage,
     // posts,
     // setPosts,
     // addPost,

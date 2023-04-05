@@ -18,6 +18,12 @@
       "target": "api::store.store",
       "inversedBy": "orders"
     },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "orders"
+    },
     "discount": {
       "type": "decimal",
       "required": true,
@@ -62,12 +68,6 @@
     "payment": {
       "type": "json",
       "required": true
-    },
-    "customer": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::customer.customer",
-      "inversedBy": "orders"
     }
   }
 }

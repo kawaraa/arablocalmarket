@@ -9,12 +9,13 @@ import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
 import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
+const q = "?fields=name,open&populate=cover";
 
 export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
   const { lang, setAppLoading, user, addMessage } = useContext(AppSessionContext);
   const [store, setStore] = useState(null);
-  const image = store?.image?.url || "/market-store-grocery-cartoon.jpg";
+  const image = store?.cover.data.attributes?.url || "/market-store-grocery-cartoon.jpg";
 
   const handleChange = async ({ target }) => {
     setAppLoading(true);
@@ -51,8 +52,9 @@ export default function StoreById({ children, params: { storeId } }) {
   const fetchStore = async () => {
     setAppLoading(true);
     try {
-      const store = await request("store", "GET", { query: "/" + storeId + "?populate=*" });
-      setStore(store);
+      const { data } = await request("store", "GET", { query: `/${storeId}${q}` });
+      data.attributes.id = data.id;
+      setStore(data.attributes);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }

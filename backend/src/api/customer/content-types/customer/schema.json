@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "userId": {
+    "user": {
       "type": "string",
       "required": true,
       "maxLength": 100,
@@ -42,6 +42,18 @@
       "relation": "manyToMany",
       "target": "api::store.store",
       "mappedBy": "workers"
+    },
+    "favoriteStores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::store.store",
+      "inversedBy": "favorites"
+    },
+    "favoriteProducts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "inversedBy": "favorites"
     }
   }
 }

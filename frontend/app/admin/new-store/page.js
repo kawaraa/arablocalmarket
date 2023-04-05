@@ -16,7 +16,9 @@ import Collapse from "../../(component)/collapse";
 import ImageUpload from "../../(component)/(styled)/upload-image";
 import { request } from "../../(service)/api-provider";
 // import Tooltip from "../(component)/(styled)/tooltip";
-const defaultTimes = { open: "AM-07.00", close: "PM-07.00" };
+const q =
+  "?fields=owner,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
+const openingHour = { open: "AM-07.00", close: "PM-07.00" };
 
 export default function NewStore({ params, searchParams }) {
   const router = useRouter();
@@ -34,7 +36,7 @@ export default function NewStore({ params, searchParams }) {
   const addDay = ({ name, checked }) => {
     const newDays = days.filter((d) => d.day !== name);
     if (!checked) setDays(newDays);
-    else if (checked && days.length == newDays.length) setDays([...days, { day: name, ...defaultTimes }]);
+    else if (checked && days.length == newDays.length) setDays([...days, { day: name, ...openingHour }]);
   };
 
   const updateDay = (day) => {
@@ -100,13 +102,13 @@ export default function NewStore({ params, searchParams }) {
         const formData = new FormData();
         formData.append("files.cover", file, file.name);
         formData.append("data", JSON.stringify(data));
-        // id = (await request("store", "POST", formData)).data.id;
+        id = (await request("store", "POST", formData)).data.id;
       } else {
         delete data.name;
-        // id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
+        id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
       }
 
-      // router.replace(`/admin/store/${id}/product`);
+      router.replace(`/admin/store/${id}/product`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }
@@ -116,12 +118,11 @@ export default function NewStore({ params, searchParams }) {
   const fetchStoreById = async (storeId) => {
     setAppLoading(true);
     try {
-      const { id, attributes } = (await request("store", "GET", { query: `/${storeId}?populate=*` })).data;
+      const { id, attributes } = (await request("store", "GET", { query: `/${storeId}${q}` })).data;
       attributes.id = id;
       setStore(attributes);
       setDeliver(attributes.deliver);
       setDays(attributes.openingHours);
-      setAddress(attributes.address);
 
       const onDeliveryPay = {};
       const onlinePay = {};

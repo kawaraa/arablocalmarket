@@ -33,7 +33,6 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async update(ctx) {
     const id = ctx.params.id;
     const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
-
     const store = await strapi.db.query("api::store.store").findOne(options);
     if (!store?.id || store?.id != id) return ctx.unauthorized();
     if (ctx.request.files && store.cover) strapi.plugins.upload.services.upload.remove(store.cover);
@@ -43,10 +42,8 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
 
   async delete(ctx) {
     const id = ctx.params.id;
-    const options = { select: ["id"], where: { id, owner: ctx.state.user.id } };
-
-    const store = await strapi.db.query("api::store.store").findOne(options);
-    if (!store?.id || store?.id != id) return ctx.unauthorized();
+    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, ctx.params.id);
+    if (!owner) return ctx.unauthorized();
 
     return super.delete(ctx);
   },

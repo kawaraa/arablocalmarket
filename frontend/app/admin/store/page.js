@@ -5,27 +5,25 @@ import { AppSessionContext } from "../../app-session-context";
 import Tabs from "../../(component)/(styled)/tabs";
 import StoreCard from "../../store/(component)/store-card";
 import EmptyState from "../../(component)/(styled)/empty-state";
-import { serverRequest } from "../../(service)/api-provider";
-// const q = "?filters[owner][$eq]=31";
-// const q = "?filters[workers][][$contains]=32";
-// const q = "?filters[$or][0][owner][$eq]=userId&filters[$or][1][workers][$contains]=userId&populate=*";
-// const q = "?filters[userId][$eq]=31&populate=*";
-const q = "?filters[userId][$eq]=31&populate=*";
+import { request } from "../../(service)/api-provider";
 
 export default function Stores() {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
-  const [stores, setStores] = useState([]);
-  const result = stores.filter((s) => (activeTab?.key == "work" ? s.owner != user.id : s.owner == user.id));
+  const [myStores, setMyStores] = useState([]);
+  const [workStores, setWorkStores] = useState([]);
+  const result = activeTab?.key == "work" ? workStores : myStores;
 
   const fetchStores = async () => {
     try {
-      const q1 = "?filters[owner][$eq]=31&populate=*";
-      const { data, meta } = await serverRequest("store", "GET", { query: q1 });
-      // const { data, meta } = await serverRequest("customer", "GET", { query: q2 });
-      console.log(data);
-      setStores(data);
+      const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open&populate=cover,orders,workers,ratings,favorites`;
+      const res = await request("store", "GET", { query: q1 });
+      setMyStores(res.data);
+
+      const q2 = `?filters[userId][$eq]=${user.id}&fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites`;
+      const { data, meta } = await request("customer", "GET", { query: q2 });
+      setWorkStores(data[0].attributes.workStores.data.map((d) => ({ ...d.attributes, id: d.id })));
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 10 });
     }
@@ -45,7 +43,7 @@ export default function Stores() {
         onTabChange={setActiveTab}
         cls="z-1 sticky top-14 md:top-16 bg-bg dark:bg-dbg"
       />
-      {/* user[key][0] */}
+
       {!result[0] ? (
         <div className="h-[60vh] w-full flex items-center">
           <EmptyState type="no" />
@@ -59,7 +57,7 @@ export default function Stores() {
               admin
               link={`/admin/store/${store.id}`}
               name={store.name}
-              imageUrl={store.cover.url}
+              imageUrl={store.cover.data.attributes.url}
               totalOrders={store.orders}
               employees={store.workers}
               ratings={store.ratings}
