@@ -9,7 +9,6 @@ import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
 import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
-import Loader from "../../../(layout)/loader";
 
 export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
@@ -52,13 +51,8 @@ export default function StoreById({ children, params: { storeId } }) {
   const fetchStore = async () => {
     setAppLoading(true);
     try {
-      const { id, attributes } = (await request("store", "GET", { query: "/" + storeId + "?populate=*" }))
-        ?.data;
-      attributes.id = id;
-      if (attributes.cover?.data) {
-        attributes.image = { id: attributes.cover.data.id, ...attributes.cover.data.attributes };
-      }
-      setStore(attributes);
+      const store = await request("store", "GET", { query: "/" + storeId + "?populate=*" });
+      setStore(store);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 15 });
     }

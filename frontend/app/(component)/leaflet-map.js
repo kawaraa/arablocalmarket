@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Script from "next/script";
 import SvgIcon from "./(styled)/svg-icon";
@@ -27,7 +28,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
       window.L.newMap.setView([address.lat, address.lon], 13);
       address.lat = (+address.lat).toFixed(6);
       address.lng = (+address.lon).toFixed(6);
-      onLocate(address);
+      onLocate && onLocate(address);
     } catch (error) {
       onError && onError(error.message);
     }
@@ -52,9 +53,11 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
     // Add a marker to the map at the user's selected location
     Map.newMap.marker = L.marker([coordinates[0] || 52, coordinates[1] || 4]).addTo(Map.newMap);
 
-    Map.newMap.on("click", (e) => {
-      onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
-    });
+    if (onLocate) {
+      Map.newMap.on("click", (e) => {
+        onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
+      });
+    }
 
     // onLocationPermissionAsk();
   };
@@ -100,11 +103,14 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
 
   return (
     <div className="relative pt-2">
-      {/* <Script src="/map/leaflet.js" onLoad={() => initializeMap(window.L)}></Script> */}
-      <Script src="https://unpkg.com/leaflet/dist/leaflet.js" onLoad={() => initializeMap(window.L)}></Script>
+      <Script src="/map/leaflet.js" onReady={() => initializeMap(window.L)}></Script>
+      {/* <Script
+        src="https://unpkg.com/leaflet/dist/leaflet.js"
+        onReady={() => initializeMap(window.L)}></Script> */}
       <link rel="stylesheet" href="/map/leaflet.css" />
-
-      <SearchBox label="Search for a location" onSearch={setSearch} onFinish={handleAddressSearch} />
+      {onLocate && (
+        <SearchBox label={content.searchLabel[lang]} onSearch={setSearch} onFinish={handleAddressSearch} />
+      )}
 
       <div className="relative overflow-hidden mt-3 rounded-lg">
         <div id="map" className="w-full h-64 rounded-lg"></div>
@@ -131,6 +137,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
 }
 
 const content = {
+  searchLabel: { en: "Search for a location", ar: "ابحث عن موقعا" },
   permissionErr: {
     en: "Could not access your location, please turn your location on or give access permission to your location.",
     ar: "تعذر الوصول إلى موقعك ، يرجى تشغيل موقعك أو منح إذن الوصول إلى موقعك",

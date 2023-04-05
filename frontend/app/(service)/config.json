@@ -3,6 +3,7 @@
   "signUp": "/api/auth/local/register",
   "signIn": "/api/auth/local",
   "getUser": "/api/users/me?populate=*",
+  "customer": "/api/customers",
   "store": "/api/stores",
   "product": "/api/products"
 }

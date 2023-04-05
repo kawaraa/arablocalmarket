@@ -1,4 +1,23 @@
 {
+  "periods": [
+    { "en": "AM", "ar": "صباحًا" },
+    { "en": "PM", "ar": "مساءً" }
+  ],
+  "open": { "en": "Opens", "ar": "يفتح" },
+  "close": { "en": "Closes", "ar": "يغلق" },
+  "day": {
+    "en": "Day",
+    "ar": "يوم",
+    "values": [
+      { "en": "monday", "ar": "الإثنين" },
+      { "en": "tuesday", "ar": "الثلاثاء" },
+      { "en": "wednesday", "ar": "الأربعاء" },
+      { "en": "thursday", "ar": "الخميس" },
+      { "en": "friday", "ar": "الجمعة" },
+      { "en": "saturday", "ar": "السبت" },
+      { "en": "sunday", "ar": "الأحد" }
+    ]
+  },
   "checkout": { "en": "Checkout", "ar": "تاكيد الطلب" },
   "print": { "en": "Print", "ar": "طباعة" },
   "payment": {

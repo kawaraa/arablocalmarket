@@ -12,15 +12,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "customer": {
+    "store": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
+      "target": "api::store.store",
       "inversedBy": "orders"
-    },
-    "addressId": {
-      "type": "string",
-      "required": true
     },
     "discount": {
       "type": "decimal",
@@ -59,9 +55,19 @@
       "required": true,
       "min": 1
     },
+    "address": {
+      "type": "json",
+      "required": true
+    },
     "payment": {
       "type": "json",
       "required": true
+    },
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "orders"
     }
   }
 }

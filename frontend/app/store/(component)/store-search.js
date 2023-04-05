@@ -43,7 +43,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
         </button>
 
         <SearchBox
-          label="Search for a store"
+          label={content.searchLabel[lang]}
           onSearch={setSearch}
           search={search}
           onFinish={handleSearch}
@@ -52,7 +52,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
       </div>
 
       <Modal
-        title="Select a location"
+        title={content.title[lang]}
         okBtn="Save"
         open={showFilter}
         onApprove={handleSearch}
@@ -85,8 +85,8 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
           <label
             htmlFor="default-range"
             dir="auto"
-            className="block mt-2 mb-1 text-sm text-t font-medium dark:text-dt">
-            Location range: {range} KM
+            className="block mt-5 mb-1 text-sm text-t font-medium dark:text-dt">
+            {content.range[lang][0]}: {range} {content.range[lang][1]}
           </label>
           <input
             id="default-range"
@@ -103,3 +103,9 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
     </>
   );
 }
+
+const content = {
+  searchLabel: { en: "Search for a store", ar: "ابحث عن متجر" },
+  title: { en: "Select a location", ar: "اختر موقعا" },
+  range: { en: ["Location range", "KM"], ar: ["نطاق الموقع", "كم"] },
+};

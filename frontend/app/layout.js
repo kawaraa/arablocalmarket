@@ -10,6 +10,9 @@ export default function RootLayout({ children, searchParams }) {
   const language = cookieStore.get("lang")?.value || searchParams?.lang;
   const lang = language || "en";
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
+  // Todo: Change the description language based on the IP address.
+  // Todo: If it's possible, change the html lang based on the IP address.
+  // Todo: If it's possible, change the html className based on the IP address.
 
   return (
     <html lang={lang} className={`scroll-smooth group ${themeMode}`}>

@@ -4,15 +4,7 @@ import { getCssDelay } from "../../(service)/style-methods";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import { StoreCustomerInfo, StoreAdminInfo } from "./store-card-info";
 
-export default function StoreCard({ Tag, admin, link, name, imageUrl, open, cls, ...s }) {
-  // let dst = +distance;
-  // let measuringUnit = "KM";
-
-  // if (dst < 1) {
-  //   dst = dst * 1000;
-  //   measuringUnit = "M";
-  // }
-
+export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open, cls, ...s }) {
   return (
     <Tag
       className={
@@ -22,15 +14,16 @@ export default function StoreCard({ Tag, admin, link, name, imageUrl, open, cls,
       // style={getCssDelay()}
     >
       <Link href={link} className="relative block w-full bg-cbg card cd_hr rounded-xl duration-200">
-        <p className={`overflow-hidden absolute top-5 -right-1 w-8 md:w-10 text-${open ? "green" : "t"}`}>
+        <p className={`overflow-hidden absolute top-10 -right-1 w-14  text-${open ? "green" : "t"}`}>
           <SvgIcon name="tag" />
-          <span className="absolute inset-0 inline-flex justify-end items-center pr-[4px] text-[6px] md:text-[8px] text-dt">
-            {open ? "Open" : "Closed"}
+          <span className="absolute top-0 right-0 bottom-0 left-2 inline-flex justify-center items-center text-[11px] font-semibold  text-dt">
+            {content[open ? "open" : "close"][lang]}
           </span>
         </p>
         <h2 className="p-3 font-medium">{name}</h2>
         <div className="overflow-hidden w-ful h-auto sm:h-72 flex items-center">
           <Image
+            priority
             src={imageUrl}
             width="150"
             height="150"
@@ -39,8 +32,10 @@ export default function StoreCard({ Tag, admin, link, name, imageUrl, open, cls,
           />
         </div>
 
-        {admin ? <StoreAdminInfo {...s} /> : <StoreCustomerInfo {...s} />}
+        {admin ? <StoreAdminInfo {...s} /> : <StoreCustomerInfo lang={lang} {...s} />}
       </Link>
     </Tag>
   );
 }
+
+const content = { open: { en: "Open", ar: "مفتوح" }, close: { en: "Closed", ar: "مغلق" } };

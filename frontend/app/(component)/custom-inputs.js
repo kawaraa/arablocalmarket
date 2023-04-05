@@ -1,5 +1,6 @@
 "use client";
 import categories from "../(layout)/json/categories.json";
+import shdCnt from "../(layout)/json/shared-content.json";
 import { CheckCard, InputField, InputWithSelect, Select } from "./(styled)/inputs";
 
 export function NameInputField({ lang, first, ...p }) {
@@ -121,7 +122,7 @@ export function CurrencySelect({ lang, label, ...p }) {
 export function DaysCheckButtons({ lang, checkedDays, onCheck, ...p }) {
   return (
     <div className="flex flex-wrap my-3">
-      {content.day.values.map((d, i) => (
+      {shdCnt.day.values.map((d, i) => (
         <CheckCard
           type="checkbox"
           // name={d.en}
@@ -138,12 +139,8 @@ export function DaysCheckButtons({ lang, checkedDays, onCheck, ...p }) {
 }
 export function OpeningHoursSelect({ lang, time, ...p }) {
   return (
-    <Select
-      title={content[time][lang]}
-      cls="mx-1 flex items-center"
-      inCls="mx-1 !p-[2px] rounded-full"
-      {...p}>
-      {content.periods.map((period, i) =>
+    <Select label={shdCnt[time][lang]} cls="mx-1 flex items-center" inCls="mx-1 !p-[2px] rounded-full" {...p}>
+      {shdCnt.periods.map((period, i) =>
         content.times.map((time, ii) => (
           <option value={period.en + "-" + time} key={i + ii}>
             {time} {period[lang]}
@@ -162,8 +159,8 @@ export function DayOpeningHours({ lang, day, onDayUpdate }) {
   };
 
   return (
-    <div className="mb-2 flex">
-      <h6 className="mb-1 w-[80px]">{content.day.values.find((d) => d.en == day.day)[lang]}</h6>
+    <div className="mb-2">
+      <h6 className="mb-1 w-[80px]">{shdCnt.day.values.find((d) => d.en == day.day)[lang]}</h6>
       <div className="flex justify-evenly">
         <OpeningHoursSelect lang={lang} time="open" defaultValue={day?.open} onChange={updateOpen} />
         <OpeningHoursSelect lang={lang} time="close" defaultValue={day?.close} onChange={updateClose} />
@@ -211,25 +208,7 @@ const content = {
     text: { en: "Category", ar: "الفئة" },
     values: categories,
   },
-  day: {
-    en: "Day",
-    ar: "يوم",
-    values: [
-      { en: "monday", ar: "الإثنين" },
-      { en: "tuesday", ar: "الثلاثاء" },
-      { en: "wednesday", ar: "الأربعاء" },
-      { en: "thursday", ar: "الخميس" },
-      { en: "friday", ar: "الجمعة" },
-      { en: "saturday", ar: "السبت" },
-      { en: "sunday", ar: "الأحد" },
-    ],
-  },
-  open: { en: "Opens", ar: "يفتح" },
-  close: { en: "Closes", ar: "يغلق" },
-  periods: [
-    { en: "AM", ar: "صباحًا" },
-    { en: "PM", ar: "مساءً" },
-  ],
+
   times: [
     "01.00",
     "01.15",

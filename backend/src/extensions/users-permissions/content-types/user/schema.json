@@ -87,12 +87,6 @@
       "repeatable": true,
       "component": "product.cart-item"
     },
-    "orders": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::order.order",
-      "mappedBy": "customer"
-    },
     "warnings": {
       "type": "component",
       "repeatable": true,
@@ -103,30 +97,6 @@
       "type": "component",
       "repeatable": true,
       "component": "user-information.notification"
-    },
-    "myStores": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::store.store",
-      "mappedBy": "owner"
-    },
-    "workStores": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::store.store",
-      "mappedBy": "employees"
-    },
-    "favoriteStores": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::store.store",
-      "inversedBy": "favorites"
-    },
-    "favoriteProducts": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "mappedBy": "favorites"
     }
   }
 }

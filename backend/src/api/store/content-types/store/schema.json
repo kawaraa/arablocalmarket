@@ -12,6 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "owner": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100,
+      "minLength": 1
+    },
     "name": {
       "type": "string",
       "required": true,
@@ -19,18 +25,6 @@
     },
     "about": {
       "type": "text"
-    },
-    "owner": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "myStores"
-    },
-    "employees": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "workStores"
     },
     "address": {
       "type": "component",
@@ -121,16 +115,32 @@
       "default": false,
       "required": true
     },
-    "ratings": {
-      "type": "component",
-      "repeatable": true,
-      "component": "product.rating"
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "store"
     },
     "favorites": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "favoriteStores"
+      "target": "api::favorite.favorite",
+      "mappedBy": "stores"
+    },
+    "workers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::customer.customer",
+      "inversedBy": "workStores"
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
+      "mappedBy": "store"
+    },
+    "meta": {
+      "type": "json"
     }
   }
 }

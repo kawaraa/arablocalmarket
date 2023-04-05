@@ -4,7 +4,13 @@
 // https://www.youtube.com/watch?v=2ZwiiY6tnmw
 
 // module.exports = (plugin) => {
-//   /*******************************  CUSTOM CONTROLERS  ********************************/
+/*******************************  CUSTOM CONTROLERS  ********************************/
+
+//   plugin.controllers.user.me = async (ctx) => {
+//     console.log("AAAA");
+//     return {};
+//   };
+
 //   plugin.controllers.user.updateMe = async (ctx) => {
 //     console.log("User: >>> ", ctx.state.user);
 //     console.log("Data: >>> ", ctx.request.body);
@@ -23,7 +29,7 @@
 //       });
 //   };
 
-//   /*******************************  CUSTOM ROUTES  ********************************/
+/*******************************  CUSTOM ROUTES  ********************************/
 //   plugin.routes["content-api"].routes.push({
 //     method: "PUT",
 //     path: "/users/me",

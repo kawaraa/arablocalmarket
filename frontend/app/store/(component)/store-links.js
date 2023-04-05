@@ -1,25 +1,45 @@
 "use client";
-
-import { useEffect, useState } from "react";
+import Script from "next/script";
+import { useContext, useEffect, useState } from "react";
 import Modal from "../../(component)/(styled)/modal";
 import StarRating from "../../(component)/(styled)/rating";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import { copyText } from "../../(service)/utilities";
-
+import { AppSessionContext } from "../../app-session-context";
 const liCls =
-  "w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
-export default function StoreLinks({ lang, phone, scroll }) {
-  const [showRatingInput, setShowRatingInput] = useState(false);
-  const [stars, setStars] = useState(0);
+  "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
 
-  const handleShare = () => {
-    // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
-    if (navigator.share) return navigator.share(window.location.href);
-    copyText(window.location.href, (copied) => alert((copied ? "Copied" : "Could not copy") + " store link"));
+export default function StoreLinks({ lang, name = "", about = "", phone, ratings, scroll }) {
+  const { user, addMessage } = useContext(AppSessionContext);
+  const [showQR, setShowQR] = useState(false);
+  const [showRatingInput, setShowRatingInput] = useState(false);
+  const [stars, setStars] = useState(ratings.userStars);
+
+  const handleShare = (e) => {
+    e.preventDefault();
+    if (navigator.share) {
+      return navigator.share({ title: name + " - ALM", text: about, url: window.location.href });
+    }
+    copyText(window.location.href, (copied) => {
+      const type = copied ? "success" : "error";
+      addMessage({ type, text: content.share[type][lang], duration: 10 });
+    });
   };
 
   const handleRating = async (stars) => {
+    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 10 });
+    // Todo: sent the rating to the backend
     setShowRatingInput(false);
+  };
+
+  const addToFavorite = async (e) => {
+    e.preventDefault();
+    if (!user) return addMessage({ type: "warning", text: content.favoriteErr[lang], duration: 10 });
+    // Todo: Add store to the singed in user favorite in the backend
+  };
+
+  const generateStoreQR = () => {
+    new QRCode(document.getElementById("qrcode"), window.location.href);
   };
 
   useEffect(() => {
@@ -30,22 +50,31 @@ export default function StoreLinks({ lang, phone, scroll }) {
     <>
       <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-bg text-2xl font-bold lazy-c">
         <li className={liCls}>
-          <a className="block w-6" href="tel:+4733378901">
+          <a className="block w-6" href={`tel:${phone}`}>
             <SvgIcon name="phone" />
           </a>
         </li>
         <li className={liCls}>
-          <a href="https://wa.me/+905365646833" target="_blank" title="WhatsApp" aria-label="WhatsApp">
+          <a href={`https://wa.me/:${phone}`} target="_blank" title="WhatsApp" aria-label="WhatsApp">
             <SvgIcon name="whatsapp" />
           </a>
         </li>
         <li className={liCls}>
-          <a href="#" title="Show QR Code" aria-label="Show QR Code">
+          <a
+            href="#"
+            onClick={(e) => e.preventDefault() + setShowQR(true)}
+            title="Show QR Code"
+            aria-label="Show QR Code">
             <SvgIcon name="qr" />
           </a>
         </li>
         <li className={liCls}>
-          <a href="#" title="Add to favorite" aria-label="Add to favorite" className="fill-none p-[2px]">
+          <a
+            href="#"
+            onClick={addToFavorite}
+            title="Add to favorite"
+            aria-label="Add to favorite"
+            className="fill-none p-[2px]">
             <SvgIcon name="favorite" />
           </a>
         </li>
@@ -55,11 +84,22 @@ export default function StoreLinks({ lang, phone, scroll }) {
           </a>
         </li>
         <li className={liCls}>
-          <a href="#" title="Rate store" aria-label="Rate store" onClick={() => setShowRatingInput(true)}>
+          <a
+            href="#"
+            title={content.rateH[lang]}
+            aria-label={content.rateH[lang]}
+            onClick={(e) => e.preventDefault() + setShowRatingInput(true)}>
             &#9733;
           </a>
+          {ratings.total && <sub className="absolute -right-1 bottom-0 text-xs text-bg">{ratings.total}</sub>}
         </li>
       </ul>
+
+      <Modal open={showQR} onCancel={() => setShowQR(false)} center>
+        <div id="qrcode" className="flex justify-center "></div>
+
+        <Script src="/qr-generator/index.js" onReady={generateStoreQR}></Script>
+      </Modal>
 
       <Modal
         open={showRatingInput}
@@ -79,4 +119,16 @@ export default function StoreLinks({ lang, phone, scroll }) {
 const content = {
   rateH: { en: "Rating", ar: "التقييم" },
   rateOk: { en: "Save", ar: "حفظ" },
+  favoriteErr: {
+    en: "Only signed in users can add a store to favorite",
+    ar: "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة",
+  },
+  share: {
+    success: { en: "Copied store link", ar: "تم نسخ رابط المتجر" },
+    error: { en: "Could not copy store link", ar: "تعذر نسخ رابط المتجر" },
+  },
+  rateErr: {
+    en: "Only signed in users can rate the store",
+    ar: "فقط المستخدمين الذين سجلوا الدخول يمكنهم تقييم المتجر",
+  },
 };

@@ -13,7 +13,7 @@ export default function StarRating({ stars = 0, onRate, cls }) {
           type="range"
           min="0"
           max="5"
-          step="0.5"
+          step="1"
           value={stars}
           className="overflow-hidden absolute inset-0 h-1/1 w-1/1 appearance-none cursor-pointer opacity-0"
         />

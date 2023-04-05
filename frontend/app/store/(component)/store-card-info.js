@@ -1,23 +1,29 @@
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import StarRating from "../../(component)/(styled)/rating";
 
-export const StoreCustomerInfo = ({ description, ratings, distance }) => {
+export const StoreCustomerInfo = ({ lang, about, ratings, distance }) => {
+  // let dst = +distance;
+  // let measuringUnit = "KM";
+
+  // if (dst < 1) {
+  //   dst = dst * 1000;
+  //   measuringUnit = "M";
+  // }
+
   return (
     <section dir="auto" className="p-3">
-      <div className="flex justify-end items-center">
-        <span className="w-4 text-red fill-none">
-          <SvgIcon name="heart" />
-        </span>
-      </div>
-      <p className="text-sm mb-1">{description}</p>
+      <p className="text-sm mb-1">{about}</p>
 
       <p className="flex justify-between items-center">
         <span>
           <StarRating stars={ratings.stars} cls="text-md lg:text-base" />
-          <span className="text-xs mx-1 ">{ratings.total}</span>
+          <span className="text-sm mx-1 ">{ratings.total}</span>
         </span>
         <span>
-          <strong className="text-sm">{distance}</strong>
+          <strong className="text-sm">
+            {/* distance.unit */}
+            {distance.length} {content.unit[lang]}
+          </strong>
         </span>
       </p>
     </section>
@@ -65,3 +71,4 @@ export const StoreAdminInfo = ({ totalOrders, employees, favorites, ratings }) =
     </section>
   );
 };
+const content = { unit: { en: "km", ar: "كم" } };
