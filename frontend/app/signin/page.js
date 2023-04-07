@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
-import { request } from "../(service)/api-provider";
+import { fetchUser, request } from "../(service)/api-provider";
 import { InputField } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 
@@ -23,9 +23,14 @@ export default function SignIn() {
       const response = await request("signIn", "POST", data);
       window.localStorage.removeItem("accessToken");
       window.localStorage.setItem("accessToken", response.jwt);
-      const user = await request("getUser");
-      window.localStorage.setItem("user", JSON.stringify(user));
-      updateUser(user);
+
+      const customer = JSON.parse(window.localStorage.getItem("customer"));
+      await request("customer", "POST", { data: { customer } }).catch(() => null);
+      window.localStorage.removeItem("customer");
+
+      updateUser(await fetchUser());
+
+      // Todo: merge the carts stored in the browser with user carts
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 10 });
       window.localStorage.removeItem("accessToken");
@@ -35,7 +40,7 @@ export default function SignIn() {
   };
 
   useEffect(() => {
-    if (user) router.replace(user?.myStores[0] ? "/admin/store" : "store");
+    if (user) router.replace(user.myStores[0] ? "/admin/store" : "store");
   }, [user]);
 
   if (user) return null;

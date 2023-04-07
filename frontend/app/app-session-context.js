@@ -1,8 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 import Messages from "./(component)/(styled)/messages";
-import { request } from "./(service)/api-provider";
-// import { getUser } from "./(service)/api-provider";
+import { fetchUser } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
 
@@ -50,22 +49,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     setThemeMode(mode);
   };
 
-  const fetchUser = async () => {
-    try {
-      const user = await request("getUser");
-      // const q = `?filters[userId][$eq]=${user.id}&populate[]=`;
-      // const customer = await request("customer", "GET", { query: q });
-      // console.log(customer)
-
-      const q = `?filters[user][$eq]=${user.id}&populate[stores]=id&&populate[products]=id`;
-      const favorites = await request("favorite", "GET", { query: q });
-      console.log(favorites);
-      updateUser(user);
-    } catch (error) {
-      const user = JSON.parse(window.localStorage.getItem("user") || null);
-    }
-  };
-
   // const addPost = (post) => setPosts([post, ...posts]); // posts.splice(0, 0, detail);
   // const updatePost = (post) => {
   //   const index = posts.findIndex((p) => p.id === post.id);
@@ -110,7 +93,14 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     updateThemeMode(Cookies.get("themeMode") || themeMode);
 
-    fetchUser();
+    fetchUser()
+      .then(updateUser)
+      .catch(() => {
+        const user = JSON.parse(window.localStorage.getItem("user") || null);
+        if (user) return updateUser(user);
+        setLoading(false);
+        setAppLoading(false);
+      });
   }, []);
 
   // useEffect(() => {

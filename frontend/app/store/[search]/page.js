@@ -29,7 +29,7 @@ export default async function StoreOverview({ params, searchParams }) {
       <p dir="auto" className="flex items-center text-lg">
         <span className="">{content.delivery[lang][0]}:</span>
         <strong className="mx-2">
-          {store.deliver ? store.deliveryCost + store.currency.split("-")[0] : content.delivery[lang][1]}
+          {store.deliver ? store.currency.split("-")[0] + store.deliveryCost : content.delivery[lang][1]}
         </strong>
       </p>
 

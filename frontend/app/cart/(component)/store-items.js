@@ -32,7 +32,7 @@ export default function StoreItems({ favorite, onCheck, ...store }) {
         </a>
       </div>
 
-      <LineItems favorite={favorite} items={store.lineItems} currency={store.currency} />
+      <LineItems favorite={favorite} items={store.items} currency={store.currency} />
     </section>
   );
 }

@@ -63,11 +63,23 @@
     },
     "address": {
       "type": "json",
-      "required": true
+      "required": false
     },
     "payment": {
       "type": "json",
       "required": true
+    },
+    "delivery": {
+      "type": "string",
+      "required": true,
+      "maxLength": 10,
+      "minLength": 4
+    },
+    "currency": {
+      "type": "string",
+      "required": true,
+      "maxLength": 10,
+      "minLength": 1
     }
   }
 }

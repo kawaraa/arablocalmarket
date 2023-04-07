@@ -139,7 +139,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, ...v }) {
         min="0"
         max="1000"
         defaultValue={v.quantity || 0}
-        onChange={(e) => onUpdate({ quantity: e.target.value })}
+        onChange={(num) => onUpdate({ quantity: num })}
         label={content.quantity[lang]}
         cls="items-center my-5"
         inCls="w-14"

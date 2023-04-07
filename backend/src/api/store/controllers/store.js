@@ -5,13 +5,14 @@ const { createCoreController } = require("@strapi/strapi").factories;
 module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async create(ctx) {
     const { data, meta } = await super.create(ctx);
-    await strapi.service("api::store.store").update(data.id, { data: { owner: ctx.state.user.id } });
+    const m = JSON.stringify({ phone: ctx.state.user.phone });
+    await strapi.service("api::store.store").update(data.id, { data: { owner: ctx.state.user.id, meta: m } });
     return { data, meta };
   },
 
   async findOne(ctx) {
     const result = await super.findOne(ctx);
-    if (!result) ctx.notFound();
+    if (!result || !result.data) ctx.notFound();
 
     result.data.attributes = strapi
       .service("api::store.store")
@@ -41,7 +42,6 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   },
 
   async delete(ctx) {
-    const id = ctx.params.id;
     const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, ctx.params.id);
     if (!owner) return ctx.unauthorized();
 

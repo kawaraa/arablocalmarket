@@ -4,7 +4,7 @@ import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
 export function Button({ children, type = "button", icon, loading, disabled, cls, iconCls, ...p }) {
-  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop transition-all duration-200 `;
+  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop transition-all transition `;
   if (!disabled) c += "hover:bg-gradient-to-tl hover:from-pc2 ";
   if (loading) c += "cursor-progress ";
   c += cls || "";
@@ -27,7 +27,7 @@ export function Button({ children, type = "button", icon, loading, disabled, cls
 }
 
 export function IconButton({ children, icon, size = "8", cls, ...p }) {
-  let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop duration-200 `;
+  let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop transition `;
   c += cls || "hover:text-pc";
   const t = p.title || p.name;
 
@@ -40,7 +40,7 @@ export function IconButton({ children, icon, size = "8", cls, ...p }) {
 }
 
 export function LinkButton({ children, icon, cls, iconCls, ...p }) {
-  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-pc2 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all duration-150 `;
+  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-pc2 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all transition `;
 
   return (
     <Link className={c + (cls || "")} {...p}>

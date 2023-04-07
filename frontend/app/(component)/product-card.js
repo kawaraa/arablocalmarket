@@ -4,7 +4,7 @@ import ProductCardButtons from "./product-card-buttons";
 import SvgIcon from "./(styled)/svg-icon";
 import StarRating from "./(styled)/rating";
 
-export default function ProductCard({ lang, link, currency, admin, ...p }) {
+export default function ProductCard({ lang, link, currency, id, admin, p }) {
   const Tag = typeof link == "function" ? "div" : Link;
   const newP = typeof link == "function" ? { onClick: () => link(p) } : { href: link };
 
@@ -13,17 +13,24 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
       <Tag {...newP} className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
         <h3 className="text-center mt-2">{p.name}</h3>
         <div className="overflow-hidden h-40 flex justify-center items-center">
-          <Image src={p.image?.src} alt={p.name} width="250" height="250" className="max-h-36 w-auto" />
+          <Image
+            // Todo: find a default product image
+            src={p.image.data?.attributes?.url || "/legumes-grains-clipart.png"}
+            alt={p.name}
+            width="250"
+            height="250"
+            className="max-h-36 w-auto"
+          />
         </div>
 
-        <div className="flex justify-between items-center">
+        <div className={`flex justify-end items-center`}>
           <strong className="text-red text-lg">
             {currency}
-            {p.price}
+            {p.variants.sort()[0].price}
           </strong>
 
           {!admin ? (
-            <ProductCardButtons id={p.id} cls="fill-none" />
+            <ProductCardButtons productId={id} />
           ) : (
             <div className="flex items-center">
               232
@@ -33,6 +40,7 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
             </div>
           )}
         </div>
+
         {/* Use icon for the number of the variants */}
         {admin && (
           <div className="flex justify-between items-center mt-1">
@@ -49,8 +57,8 @@ export default function ProductCard({ lang, link, currency, admin, ...p }) {
         )}
 
         <div>
-          <StarRating stars={3} cls="text-md md:text-lg" />
-          {admin && <span className="text-xs mx-1">{324}</span>}
+          <StarRating stars={p.ratings.stars} cls="text-md md:text-lg" />
+          {admin && <span className="text-xs mx-1">{p.ratings.total}</span>}
         </div>
       </Tag>
     </li>

@@ -3,6 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
+import { request } from "../../(service)/api-provider";
 import {
   InputField,
   NumberInputWithControl,
@@ -14,7 +15,7 @@ import { CurrencySelect, DayOpeningHours, DaysCheckButtons } from "../../(compon
 import { Button } from "../../(component)/(styled)/button";
 import Collapse from "../../(component)/collapse";
 import ImageUpload from "../../(component)/(styled)/upload-image";
-import { request } from "../../(service)/api-provider";
+import shdCnt from "../../(layout)/json/shared-content.json";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const q =
   "?fields=owner,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
@@ -267,12 +268,12 @@ export default function NewStore({ params, searchParams }) {
           onCheck={(e) => setOnlinePayment({ ...onlinePayment, bank: e.target.checked })}
           title={content.bank[lang]}
           hCls="rounded-t-lg">
-          <h6 className="font-semibold">{content.bankInfo.title[lang]}</h6>
+          <h6 className="font-semibold">{shdCnt.bankInfo.title[lang]}</h6>
           <InputField
             type="text"
             name="accountHolder"
             defaultValue={onlinePayment?.bank?.accountHolder}
-            label={content.bankInfo.holder[lang]}
+            label={shdCnt.bankInfo.holder[lang]}
             placeholder="E.g. John Doe"
             required
             full
@@ -282,7 +283,7 @@ export default function NewStore({ params, searchParams }) {
             type="text"
             name="iban"
             defaultValue={onlinePayment?.bank?.iban}
-            label={content.bankInfo.number[lang]}
+            label={shdCnt.bankInfo.number[lang]}
             placeholder="E.g. FI21 1234 5698 7654 3210"
             required
             full
@@ -292,8 +293,8 @@ export default function NewStore({ params, searchParams }) {
             type="text"
             name="bic"
             defaultValue={onlinePayment?.bank?.bic}
-            label={content.bankInfo.bic[lang]}
-            title="Bank Identifier Number"
+            label={shdCnt.bankInfo.bic[lang]}
+            // title="Bank Identifier Number" // Todo: Add a tooltip
             placeholder="E.g. BOHIUS77"
             required
             full
@@ -352,12 +353,6 @@ const content = {
   cash: { en: "Accept cash payment", ar: "قبول الدفع النقدي" },
   card: { en: "Accept credit card payment", ar: "قبول الدفع ببطاقة الائتمان" },
   bank: { en: "Accept bank transfer payment", ar: "قبول الدفع عن طريق التحويل المصرفي" },
-  bankInfo: {
-    title: { en: "Bank account info", ar: "معلومات الحساب المصرفي" },
-    holder: { en: "Account holder", ar: "صاحب الحساب" },
-    number: { en: "Account Number / IBAN", ar: "رقم حساب" },
-    bic: { en: "BIC / Swift", ar: "رمز BIC / Swift" },
-  },
   businessInfo: { en: "Business info", ar: "معلومات العمل التجارة" },
   cocNumber: { en: "COC Number", ar: "رقم السجل التجاري" },
   vatNumber: { en: "Tax ID / VAT Number", ar: "الرقم الضريبي" },

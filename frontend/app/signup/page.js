@@ -75,16 +75,38 @@ export default function Signup({ searchParams }) {
         </div>
 
         <div className="flex -space-x-px shadow-sm">
-          <NameInputField full lang={lang} first cls="1 relative w-1/2" inCls="text-lg rounded-l-md" />
-          <NameInputField full lang={lang} cls="2 relative w-1/2" inCls="text-lg rounded-r-md" />
+          <NameInputField
+            full
+            lang={lang}
+            first
+            cls="1 relative w-1/2"
+            inCls={`text-lg rounded-${lang == "ar" ? "r" : "l"}-md`}
+          />
+          <NameInputField
+            full
+            lang={lang}
+            cls="2 relative w-1/2"
+            inCls={`text-lg rounded-${lang == "ar" ? "l" : "r"}-md`}
+          />
         </div>
 
         <EmailInputField full lang={lang} cls="3 relative shadow-sm" inCls="text-lg rounded-md" />
         <PhoneInputField full lang={lang} cls="4 relative shadow-sm" inCls="text-lg rounded-md" />
 
         <div className="flex -space-x-px shadow-sm">
-          <PswInputField full lang={lang} cls="5 relative w-1/2" inCls="py-[6px] rounded-l-md" />
-          <PswInputField full lang={lang} confirm cls="6 relative w-1/2" inCls="py-[6px] rounded-r-md" />
+          <PswInputField
+            full
+            lang={lang}
+            cls="5 relative w-1/2"
+            inCls={`py-[6px] rounded-${lang == "ar" ? "r" : "l"}-md`}
+          />
+          <PswInputField
+            full
+            lang={lang}
+            confirm
+            cls="6 relative w-1/2"
+            inCls={`py-[6px] rounded-${lang == "ar" ? "l" : "r"}-md`}
+          />
         </div>
 
         <div>

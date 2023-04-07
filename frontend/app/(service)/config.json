@@ -6,5 +6,6 @@
   "customer": "/api/customers",
   "store": "/api/stores",
   "product": "/api/products",
-  "favorite": "/api/favorites"
+  "favorite": "/api/favorites",
+  "order": "/api/orders"
 }

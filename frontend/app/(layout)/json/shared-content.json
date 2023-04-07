@@ -36,5 +36,16 @@
     "DELIVERED": { "ar": "تم التوصيل", "color": 6 },
     "RETURNED": { "ar": "تم إرجاعه", "color": 7 },
     "ARCHIVED": { "ar": "مؤرشف", "color": 8 }
+  },
+  "bankInfo": {
+    "title": { "en": "Bank account info", "ar": "معلومات الحساب المصرفي" },
+    "holder": { "en": "Account holder", "ar": "صاحب الحساب" },
+    "number": { "en": "Account Number / IBAN", "ar": "رقم حساب" },
+    "bic": { "en": "BIC / Swift", "ar": "رمز BIC / Swift" }
+  },
+  "noItemErr": { "en": "Please select an item first", "ar": "الرجاء تحديد عنصر أولا" },
+  "favErr": {
+    "en": "Only signed in users can add a store to favorite",
+    "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة"
   }
 }

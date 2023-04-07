@@ -27,6 +27,10 @@ export default function Cart({ params, searchParams }) {
     setSelectedStore(storeCarts[0]);
   }, [activeTab]);
 
+  useEffect(() => {
+    window.localStorage.removeItem("checkoutItems");
+  }, []);
+
   return (
     <article className="pb-14">
       <h1 className="text-xl text-center my-6">

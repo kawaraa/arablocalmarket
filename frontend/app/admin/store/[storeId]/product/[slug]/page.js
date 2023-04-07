@@ -68,7 +68,7 @@ export default function ProductById({ params }) {
     setInitialLoading(true);
     try {
       const { data } = await request("product", "GET", {
-        query: "/" + id + "?populate[image]=*&populate[rating]=*&populate[variants][populate]=*",
+        query: "/" + id + "?populate[image]=*&populate[variants][populate]=*&populate[rating]=*",
       });
       data.attributes.id = data.id;
       data.attributes.image.data.attributes.id = data.attributes.image.data.id;

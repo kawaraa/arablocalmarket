@@ -5,7 +5,7 @@ import { InputField } from "./(styled)/inputs";
 import LeafletMap from "./leaflet-map";
 
 export default function AddressInputs({ lang, map, onError, ...adr }) {
-  const [country, setCountry] = useState(adr.country || "netherlands");
+  const [country, setCountry] = useState();
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");

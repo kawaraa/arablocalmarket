@@ -137,14 +137,14 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
   );
 }
 
-export function CheckCard({ Tag = "label", children, cls, ...p }) {
+export function CheckCard({ Tag = "label", children, cls, inCls, ...p }) {
   return (
     <Tag htmlFor={cls} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
         id={cls}
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className="absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs"
+        className={`absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs ${inCls}`}
         {...p}
       />
       {children}
@@ -288,8 +288,14 @@ export function Select({ children, label, cls, inCls, onChange, value, defaultVa
   );
 }
 
-export function NumberInputWithControl({ label, cls, inCls, ...p }) {
+export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
   const inputRef = useRef(null);
+
+  const ch = (param) => {
+    if (param == "up") inputRef.current.stepUp();
+    if (param == "down") inputRef.current.stepDown();
+    onChange && onChange(+inputRef.current.value);
+  };
 
   return (
     <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
@@ -304,32 +310,22 @@ export function NumberInputWithControl({ label, cls, inCls, ...p }) {
         </>
       )}
       <div className="flex justify-center items-center">
-        <Button
-          icon="minus"
-          onClick={() => inputRef.current?.stepDown()}
-          cls="w-7 h-7 !p-0 !rounded-full"
-          iconCls="w-full"
-        />
+        <Button icon="minus" onClick={() => ch("down")} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
         <input
           ref={inputRef}
           dir="ltr"
           type="number"
           id={cls}
-          // onChange={(e) => onChange && onChange(Math.round(+e.target.value || 0))}
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
           className={`appearance-none text-center font-semibold md:-mr-3 bg-[transparent] text-lg ${
-            inCls || "w-10"
+            inCls || "w-12"
           }`}
           {...p}
+          onChange={(e) => ch(+e.target.value)}
         />
-        <Button
-          icon="plus"
-          onClick={() => inputRef.current?.stepUp()}
-          cls="w-7 h-7 !p-0 !rounded-full"
-          iconCls="w-full"
-        />
+        <Button icon="plus" onClick={() => ch("up")} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
       </div>
     </div>
   );

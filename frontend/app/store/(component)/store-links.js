@@ -4,8 +4,9 @@ import { useContext, useEffect, useState } from "react";
 import Modal from "../../(component)/(styled)/modal";
 import StarRating from "../../(component)/(styled)/rating";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
-import { copyText } from "../../(service)/utilities";
 import { AppSessionContext } from "../../app-session-context";
+import { ShareButton } from "../../(component)/share-button";
+import shdCnt from "../../(layout)/json/shared-content.json";
 const liCls =
   "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
 
@@ -15,17 +16,6 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
   const [showRatingInput, setShowRatingInput] = useState(false);
   const [stars, setStars] = useState(ratings.userStars);
 
-  const handleShare = (e) => {
-    e.preventDefault();
-    if (navigator.share) {
-      return navigator.share({ title: name + " - ALM", text: about, url: window.location.href });
-    }
-    copyText(window.location.href, (copied) => {
-      const type = copied ? "success" : "error";
-      addMessage({ type, text: content.share[type][lang], duration: 10 });
-    });
-  };
-
   const handleRating = async (stars) => {
     if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 10 });
     // Todo: sent the rating to the backend
@@ -34,7 +24,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
 
   const addToFavorite = async (e) => {
     e.preventDefault();
-    if (!user) return addMessage({ type: "warning", text: content.favoriteErr[lang], duration: 10 });
+    if (!user) return addMessage({ type: "warning", text: shdCnt.favoriteErr[lang], duration: 10 });
     // Todo: Add store to the singed in user favorite in the backend
   };
 
@@ -79,9 +69,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
           </a>
         </li>
         <li className={liCls}>
-          <a href="#" onClick={handleShare} title="Share" aria-label="Share">
-            <SvgIcon name="share" />
-          </a>
+          <ShareButton title={name} text={about} />
         </li>
         <li className={liCls}>
           <a
@@ -119,10 +107,6 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
 const content = {
   rateH: { en: "Rating", ar: "التقييم" },
   rateOk: { en: "Save", ar: "حفظ" },
-  favoriteErr: {
-    en: "Only signed in users can add a store to favorite",
-    ar: "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة",
-  },
   share: {
     success: { en: "Copied store link", ar: "تم نسخ رابط المتجر" },
     error: { en: "Could not copy store link", ar: "تعذر نسخ رابط المتجر" },
