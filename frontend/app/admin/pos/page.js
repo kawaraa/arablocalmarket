@@ -10,13 +10,14 @@ import BarcodeScanner from "../../(component)/barcode-scanner";
 import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
 import SelectProductPopup from "./(component)/select-product-popup";
 import OrderDetailsPopup from "../../(component)/order-details-popup";
+import { request } from "../../(service)/api-provider";
 
-export default function Admin({ params, searchParams }) {
+export default function POS({ params, searchParams }) {
   const router = useRouter();
-  const { lang, user } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
-  const [store, setStore] = useState({ id: "", currency: "€", products: fakeProducts });
-  const [foundProducts, setFoundProducts] = useState([]);
+  const [store, setStore] = useState(null);
+  const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [showScanner, setShowScanner] = useState(false);
@@ -29,7 +30,7 @@ export default function Admin({ params, searchParams }) {
     if (showScanner) setShowScanner(false);
     setSearch(searchText);
   };
-  console.log(selectedItems);
+
   const addItem = (p) => {
     console.log("addItem", p);
     // selectedItems
@@ -47,30 +48,49 @@ export default function Admin({ params, searchParams }) {
     setClickedOrder({ ...clickedOrder, status: value });
   };
 
+  const fetchProducts = async (id) => {
+    try {
+      const { data } = await request("product", "GET", { query: `?filters[storeId][$eq]=${id}&populate=*` });
+
+      setProducts(
+        data.map((d) => {
+          d.attributes.id = d.id;
+          return d.attributes;
+        })
+      );
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+  };
+
   useEffect(() => {
-    setFoundProducts(store.products);
+    if (!user) router.replace("/signin");
+    else {
+      const store = user.myStores.find((s) => s.id == searchParams.storeId);
+      if (store) {
+        store.currency = store.currency.split("-")[0];
+        setStore(store);
+        fetchProducts(store.id);
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
     document.title = content.title[lang] + " - ALM";
 
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
-  useEffect(() => {
-    if (!user) router.replace("/signin");
-  }, [user]);
+  const foundProducts = products;
 
-  if (!user) return null;
+  // console.log(selectedItems);
+  // console.log("store: >>> ", store);
+  console.log("products: >>> ", products);
+  if (!user || !store) return null;
   return (
     <>
       <article>
-        <div className="flex fixed top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
-          <SearchBox
-            label={content.search[lang]}
-            onSearch={setSearch}
-            search={search}
-            // onFinish={handleSearch}
-            inCls="p-2"
-            cls="flex-1 "
-          />
+        <div className="flex items-center fixed top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
           <IconButton
             type="button"
             onClick={() => setShowScanner(true)}
@@ -78,7 +98,16 @@ export default function Admin({ params, searchParams }) {
             title="Show search filter"
             aria-expanded="true"
             aria-haspopup="dialog"
-            cls="w-10 p-1 hover:text-pc transition"
+            cls="w-12 p-1 hover:text-pc transition"
+          />
+          <span className="w-1"></span>
+          <SearchBox
+            label={content.search[lang]}
+            onSearch={setSearch}
+            search={search}
+            // onFinish={handleSearch}
+            inCls="p-2"
+            cls="flex-1 "
           />
         </div>
 
@@ -91,11 +120,10 @@ export default function Admin({ params, searchParams }) {
           {foundProducts.map((p, i) => (
             <ProductCard
               lang={lang}
-              currency={store.currency}
-              admin
-              {...p}
-              image={p.images[0]}
               link={setClickedProduct}
+              currency={store.currency}
+              product={p}
+              admin
               key={i}
             />
           ))}
@@ -120,22 +148,22 @@ export default function Admin({ params, searchParams }) {
         )}
       </Modal>
 
-      <SelectProductPopup
+      {/* <SelectProductPopup
         lang={lang}
         open={!!clickedProduct}
         product={clickedProduct}
         onCancel={() => setClickedProduct(null)}
         onAddItem={addItem}
-      />
+      /> */}
 
-      <OrderDetailsPopup
+      {/* <OrderDetailsPopup
         lang={lang}
         open={showOrderDetails}
         onClose={() => setShowOrderDetails(false)}
         onStatusChange={handleStatusChange}
         onRemoveItem={removeItem}
         lineItems={selectedItems}
-        currency={"€"}
+        currency={store.currency}
         discount={0}
         total={120}
         status={"PENDING"}
@@ -153,7 +181,7 @@ export default function Admin({ params, searchParams }) {
         <span className="absolute -top-3 -right-1 font-semibold text-red text-lg">
           {selectedItems.length || 10}
         </span>
-      </Button>
+      </Button> */}
     </>
   );
 }

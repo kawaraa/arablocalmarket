@@ -28,9 +28,11 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
 
     return { data, meta };
   },
+
   async find(ctx) {
     ctx.unauthorized();
   },
+
   async update(ctx) {
     const options = { where: { user: ctx.state.user.id }, select: ["id"] };
     ctx.params.id = (await strapi.db.query("api::customer.customer").findOne(options)).id;

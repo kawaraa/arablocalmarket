@@ -4,14 +4,13 @@ import OrderDetailsPopup from "../../../(component)/order-details-popup";
 import OrderCard from "../../../(component)/order-card";
 import { AppSessionContext } from "../../../app-session-context";
 import { request } from "../../../(service)/api-provider";
+import shdCnt from "../../../(layout)/json/shared-content.json";
 
 export default function StoreOrders({ params, searchParams }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [clickedOrder, setClickedOrder] = useState(null);
   const [openOrder, setOpenOrder] = useState(false);
   const [orders, setOrders] = useState([]);
-
-  // console.log("Vew and update store by ID: >>>", params, searchParams);
 
   const clearSelectedOrder = () => {
     setOpenOrder(false);
@@ -23,15 +22,24 @@ export default function StoreOrders({ params, searchParams }) {
     setTimeout(() => setOpenOrder(true), 300);
   };
 
-  const handleStatusChange = ({ target: { value } }) => {
-    // console.log(value);
-    setClickedOrder({ ...clickedOrder, status: value });
+  const handleChange = async ({ name, value }) => {
+    setAppLoading(true);
+    try {
+      const body = { data: { [name]: value } };
+      await request("order", "PUT", { query: `/${clickedOrder?.id}`, body });
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+
+    setClickedOrder({ ...clickedOrder, [name]: value });
+    setAppLoading(false);
   };
 
   const fetchOrders = async () => {
     setAppLoading(true);
     try {
-      const query = `?filters[store][owner][$eq]=${user.id}&populate=customer,lineItems,payment`;
+      const query = `?filters[store][owner][$eq]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*`;
       const { data } = await request("order", "GET", { query });
       data.forEach((d) => (d.attributes.currency = d.attributes.currency.split("-")[0]));
       setOrders(data);
@@ -58,7 +66,7 @@ export default function StoreOrders({ params, searchParams }) {
         lang={lang}
         open={openOrder}
         onClose={clearSelectedOrder}
-        onStatusChange={handleStatusChange}
+        onChange={handleChange}
         {...clickedOrder}
         admin></OrderDetailsPopup>
     </div>

@@ -71,7 +71,7 @@ export default async function ProductsByStore({ params, searchParams }) {
               <ProductCard
                 lang={lang}
                 currency={currency[0]}
-                p={p.attributes}
+                product={p.attributes}
                 id={p.id}
                 link={`/store/${storeId}/product/${p.id}`}
                 key={i}

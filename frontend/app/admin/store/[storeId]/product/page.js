@@ -1,20 +1,49 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
 // import ProductSearch from "../../../../(component)/product-search";
 import ProductCard from "../../../../(component)/product-card";
 import { LinkButton } from "../../../../(component)/(styled)/button";
+import { request } from "../../../../(service)/api-provider";
 
 export default function StoreProducts({ params, searchParams }) {
-  const { lang } = useContext(AppSessionContext);
-  const store = { id: "1", currency: "€", products };
+  const router = useRouter();
+  const { lang, user, addMessage } = useContext(AppSessionContext);
+  const [store, setStore] = useState(null);
+  const [products, setProducts] = useState([]);
 
-  console.log("Show products based on this: >>> ", params);
+  const fetchProducts = async (id) => {
+    try {
+      const { data } = await request("product", "GET", { query: `?filters[storeId][$eq]=${id}&populate=*` });
+      setProducts(
+        data.map((d) => {
+          d.attributes.id = d.id;
+          return d.attributes;
+        })
+      );
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+  };
+
+  useEffect(() => {
+    if (!user) router.replace("/signin");
+    else {
+      const store = user.myStores.find((s) => s.id == params.storeId);
+      if (store) {
+        store.currency = store.currency.split("-")[0];
+        setStore(store);
+        fetchProducts(store.id);
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     document.title = "Admin store products - ALM";
   }, []);
-
+  console.log(products[0]);
+  if (!user || !store) return null;
   return (
     <div>
       <LinkButton
@@ -28,16 +57,16 @@ export default function StoreProducts({ params, searchParams }) {
 
       {/* <ProductSearch text={searchParams.search} /> */}
 
-      <h2 className="text-lg mb-3 font-medium lazy-l">
+      <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}
       </h2>
       <ul className="flex flex-wrap">
-        {store.products.map((p, i) => (
+        {products.map((p, i) => (
           <ProductCard
             lang={lang}
             currency={store.currency}
             admin
-            {...p}
+            product={p}
             link={`/admin/store/${store.id}/product/${p.id}`}
             key={i}
           />

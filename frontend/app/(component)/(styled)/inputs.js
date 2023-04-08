@@ -1,7 +1,6 @@
 "use Client";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
-import SvgIcon from "./svg-icon";
 
 export function InputField({ children, label, editable, cls, inCls, onChange, onBlur, full, ...p }) {
   const inputRef = useRef(null);
@@ -62,7 +61,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           <Button
             onClick={() => icon == "edit" && inputRef.current?.focus()}
             icon={icon}
-            className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150`}
+            className={`absolute right-0 w-[34px] p-1 cursor-pointer hover:text-red transition`}
           />
         )}
       </span>
@@ -221,14 +220,16 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
 }
 
 export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
-  const [changed, setChanged] = useState(false);
+  const inputRef = useRef(null);
+  const [icon, setIcon] = useState("edit");
 
   const handleChange = (e) => {
-    if (editable) setChanged(true);
+    if (editable) setIcon("checkMark");
     if (onChange) onChange(e);
   };
+
   const handleBlur = (e) => {
-    if (editable) setChanged(false);
+    if (editable) setTimeout(() => setIcon("edit"), 200);
     if (onBlur) onBlur(e);
   };
 
@@ -237,6 +238,7 @@ export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
       {children}
       <textarea
         dir="auto"
+        ref={inputRef}
         id={cls}
         onChange={handleChange}
         onBlur={handleBlur}
@@ -249,11 +251,11 @@ export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
         } fs ${"rounded-md " + cls}`}
         {...p}></textarea>
       {editable && (
-        <label
-          htmlFor={cls}
-          className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red duration-150 print:hidden`}>
-          <SvgIcon name={changed ? "checkMark" : "edit"} />
-        </label>
+        <Button
+          onClick={() => icon == "edit" && inputRef.current?.focus()}
+          icon={icon}
+          className={`absolute right-0 bottom-0 w-[34px] p-1 cursor-pointer hover:text-red transition print:hidden`}
+        />
       )}
     </div>
   );

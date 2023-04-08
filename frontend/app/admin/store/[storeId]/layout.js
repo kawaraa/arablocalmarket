@@ -9,6 +9,7 @@ import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
 import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
+import shdCnt from "../../../(layout)/json/shared-content.json";
 const q = "?fields=name,open&populate=cover";
 
 export default function StoreById({ children, params: { storeId } }) {
@@ -42,7 +43,7 @@ export default function StoreById({ children, params: { storeId } }) {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
       await request("store", "PUT", { query: "/" + storeId, body: formData });
-      addMessage({ type: "success", text: content.done[lang], duration: 2 });
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -125,5 +126,4 @@ const content = {
     { key: "4", path: "/admin/store/storeId/employee", text: { en: "Employees", ar: "الموظفون" } },
     { key: "5", path: "/admin/store/storeId/customer", text: { en: "Customers", ar: "الزبائن" } },
   ],
-  done: { en: "Done", ar: "تم" },
 };

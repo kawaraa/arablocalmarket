@@ -17,14 +17,14 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
     <div className={"relative flex items-center " + cls}>
       <input
         ref={inputRef}
+        type="search"
+        name="search"
         onChange={(e) => onSearch && onSearch(e.target.value)}
         onBlur={onBlur && handleFinish}
         defaultValue={search}
-        type="search"
-        name="search"
         autoComplete="search"
         placeholder={label}
-        className={`w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-200 ${
+        className={`w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-150 ${
           inCls || ""
         }`}
       />
@@ -32,7 +32,7 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
       <button
         type="button"
         onClick={handleFinish}
-        className="absolute right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-200">
+        className="absolute right-2 w-5 text-black cursor-pointer hover:text-red peer-hover:right-1 duration-150">
         <SvgIcon name={"search"} />
       </button>
     </div>

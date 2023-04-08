@@ -7,7 +7,7 @@ import LineItems from "./line-items";
 import { Textarea, ToggleSwitch } from "./(styled)/inputs";
 import { useState } from "react";
 
-export default function OrderDetails({ lang, open, onClose, onStatusChange, admin, pos, ...order }) {
+export default function OrderDetails({ lang, open, onClose, onChange, admin, pos, ...order }) {
   const [print, setPrint] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -58,9 +58,9 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
                 cls="text-sm"
               />
               <select
-                name="orderStatus"
+                name="status"
                 id="order-status"
-                onChange={onStatusChange}
+                onChange={({ target }) => onChange(target)}
                 className="absolute inset-0 appearance-none text-[transparent] bg-[transparent] rounded-full print:hidden">
                 {Object.keys(shdCnt.status).map((k, i) => (
                   <option value={k} key={i}>
@@ -124,7 +124,15 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
             </address>
           )}
 
-          {admin && <Textarea editable defaultValue={order.note} cls="mt-5 rounded-md" />}
+          {admin && (
+            <Textarea
+              editable
+              name="note"
+              defaultValue={order.note}
+              onBlur={({ target }) => onChange(target)}
+              cls="mt-5 rounded-md"
+            />
+          )}
 
           {pos && (
             <ToggleSwitch

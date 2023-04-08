@@ -51,7 +51,7 @@ export async function request(url, method = "GET", data, type = "application/jso
 export async function fetchUser() {
   const user = await request("getUser");
 
-  const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open&populate=cover,orders,workers,ratings,favorites`;
+  const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
   user.myStores = (await request("store", "GET", { query: q1 })).data;
 
   const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores]=*&populate[favoriteProducts][populate]=image,variants`;
