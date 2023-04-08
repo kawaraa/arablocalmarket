@@ -21,8 +21,11 @@ export default function Cart({ params, searchParams }) {
   const deleteFromCart = (storeId, index) => {
     const copy = [...carts];
     copy.forEach((c) => c.id == storeId && c.items.splice(index, 1));
+    const c = copy.filter((c) => !!c.items[0]);
 
-    setCarts(copy.filter((c) => !!c.items[0]));
+    window.localStorage.setItem("carts", JSON.stringify(c));
+
+    setCarts(c);
 
     if (user) {
       // Todo: remove the item from the backend
@@ -53,51 +56,6 @@ export default function Cart({ params, searchParams }) {
     router.push("/checkout");
   };
 
-  const fetchItems = async () => {
-    setAppLoading(true);
-    try {
-      setFavoriteProducts(user?.favoriteProducts || []);
-
-      const productIds = new Set();
-      let carts = JSON.parse(window.localStorage.getItem("carts"));
-      if (!carts && user) carts = user.carts;
-
-      if (carts) {
-        carts.forEach((cart) =>
-          cart.items.forEach((item) => productIds.add("filters[id][$in]=" + item.productNumber))
-        );
-
-        const q = "&populate[image]=*&populate[variants][populate]=*";
-        const { data } = await request("product", "GET", {
-          query: `?${Array.from(productIds).join("&")}${q}`,
-        });
-
-        carts = carts.filter((cart) => {
-          cart.items = cart.items.filter((item) => {
-            const { attributes } = data.find((d) => d.id == item.productNumber) || {};
-            if (!attributes) return null;
-            const variant = attributes.variants.find((v) => (v.barcode = item.barcode));
-            if (!variant) return null;
-            item.title = attributes.name + " " + variant.options.map((o) => o.value).join(" - ");
-            item.image = attributes.image.data.attributes.url;
-            item.price = variant.price;
-            item.discount = attributes.discount || 0;
-            cart.total = 0;
-            cart.total += +variant.price * +item.quantity;
-            return item;
-          });
-          cart.currency = cart.currency.split("-")[0];
-          return !!cart.items[0];
-        });
-
-        setCarts(carts);
-      }
-    } catch (err) {
-      addMessage({ type: "error", text: err.message, duration: 5 });
-    }
-    setAppLoading(false);
-  };
-
   useEffect(() => {
     document.title = (activeTab?.text || "Shipping Cart") + " - ALM";
     setSelectedStore(null);
@@ -105,11 +63,17 @@ export default function Cart({ params, searchParams }) {
 
   useEffect(() => {
     window.localStorage.removeItem("checkoutItems");
-    fetchItems();
+
+    setAppLoading(true);
+    setFavoriteProducts(user?.favoriteProducts || []);
+    let carts = JSON.parse(window.localStorage.getItem("carts"));
+    if (!carts && user) carts = user.carts;
+    if (carts) setCarts(carts);
+    setAppLoading(false);
   }, []);
 
   const results = favorite ? favoriteProducts || [] : carts;
-
+  console.log(favoriteProducts);
   return (
     <article className="pb-14">
       <h1 className="text-xl text-center my-6">
@@ -154,7 +118,7 @@ export default function Cart({ params, searchParams }) {
           className="fixed bottom-0 right-0 left-0 h-12 flex justify-center items-center bg-pc text-t text-lg font-medium hover:text-red duration-200">
           <span className="text-red mx-2">
             {selectedStore?.currency}
-            {selectedStore?.total}
+            {selectedStore?.items?.reduce((t, i) => t + +i.price * +i.quantity, 0)}
           </span>
           {content.checkoutBtn[lang]}
         </button>

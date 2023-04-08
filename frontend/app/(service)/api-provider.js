@@ -75,9 +75,10 @@ export async function fetchUser() {
         s.total = 0;
         s.total += +variants[0].price;
         return {
+          productNumber: p.id,
+          barcode: variants[0].barcode,
           title: name,
           image: image.data?.attributes?.url,
-          barcode: variants[0].barcode,
           price: variants[0].price,
           discount: p.discount || 0,
         };

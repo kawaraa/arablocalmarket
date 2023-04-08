@@ -22,12 +22,13 @@ export default function ActionButtons({}) {
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
     if (!items || !items[0]) return showWarning();
 
-    const { storeId, storeName, phone, currency, productNumber, barcode, quantity } = items[0];
-    const item = { productNumber, barcode, quantity };
-    const newCart = { id: storeId, name: storeName, phone, currency, items: [item] };
+    const { phone, currency, productNumber, barcode, quantity, title, image, price, discount } = items[0];
+    const item = { productNumber, barcode, title, image, price, discount, quantity };
+    const newCart = { id: items[0].storeId, name: items[0].storeName, phone, currency, items: [item] };
+    newCart.currency = currency.split("-")[0];
 
     const carts = JSON.parse(window.localStorage.getItem("carts")) || [];
-    const cartIndex = carts.findIndex((c) => c.id == storeId);
+    const cartIndex = carts.findIndex((c) => c.id == items[0].storeId);
 
     if (cartIndex < 0) carts.push(newCart);
     else {

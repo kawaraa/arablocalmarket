@@ -6,7 +6,7 @@ import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs"
 import { AppSessionContext } from "../../../../app-session-context";
 import shsCnt from "../../../../(layout)/json/shared-content.json";
 
-export default function Options({ store, id, variants, name, image }) {
+export default function Options({ store, id, variants, name, image, discount }) {
   const { lang, addMessage } = useContext(AppSessionContext);
   const [options, setOptions] = useState({});
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -26,7 +26,10 @@ export default function Options({ store, id, variants, name, image }) {
         currency: store.currency,
         productNumber: id,
         barcode: variant.barcode,
+        title: name + " " + variant.options.map((o) => o.value).join(" - "),
+        image: image.data?.attributes?.url,
         price: variant.price,
+        discount: discount || 0,
         quantity,
       };
 
