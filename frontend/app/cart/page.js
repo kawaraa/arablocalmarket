@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import Tabs from "../(component)/(styled)/tabs";
 import StoreItems from "./(component)/store-items";
-import { request } from "../(service)/api-provider";
 import EmptyState from "../(component)/(styled)/empty-state";
 
 export default function Cart({ params, searchParams }) {
@@ -43,9 +42,10 @@ export default function Cart({ params, searchParams }) {
   const handleCheckout = () => {
     if (!selectedStore) return addMessage({ type: "warning", text: content.noItems[lang], duration: 2 });
 
-    const items = selectedStore.items.map(({ productNumber, barcode, price, quantity }) => ({
+    const items = selectedStore.items.map(({ productNumber, barcode, title, price, quantity }) => ({
       storeId: selectedStore.id,
       productNumber,
+      title,
       price,
       barcode,
       quantity,
@@ -73,7 +73,7 @@ export default function Cart({ params, searchParams }) {
   }, []);
 
   const results = favorite ? favoriteProducts || [] : carts;
-  console.log(favoriteProducts);
+
   return (
     <article className="pb-14">
       <h1 className="text-xl text-center my-6">
@@ -86,14 +86,6 @@ export default function Cart({ params, searchParams }) {
       {favorite
         ? favoriteProducts.map((s, i) => (
             <StoreItems favorite={favorite} {...s} onRemove={deleteFromFavorite} key={i} />
-            // <LineItems
-            //   favorite={favorite}
-            //   items={user?.favoriteProducts}
-            //   currency={store.currency}
-            //   storeId={store.id}
-            //   onRemove={onRemove}
-            //   key={i}
-            // />
           ))
         : carts.map((s, i) => (
             <StoreItems

@@ -35,6 +35,10 @@
       "required": true,
       "default": 0,
       "min": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "required": true
     }
   }
 }

@@ -27,7 +27,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
         productNumber: id,
         barcode: variant.barcode,
         title: name + " " + variant.options.map((o) => o.value).join(" - "),
-        image: image.data?.attributes?.url,
+        imageUrl: image.data?.attributes?.url,
         price: variant.price,
         discount: discount || 0,
         quantity,

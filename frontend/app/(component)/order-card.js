@@ -16,7 +16,7 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
             <span className="inline-block w-3.5 mr-2">
               <SvgIcon name="avatar" />
             </span>
-            {order.customer.firstName} {order.customer.lastName}
+            {order.customer?.name}
           </h3>
         )}
 

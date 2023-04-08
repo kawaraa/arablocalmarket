@@ -26,11 +26,61 @@
     "about": {
       "type": "text"
     },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
     "address": {
       "type": "component",
       "repeatable": false,
       "component": "user-information.address",
       "required": true
+    },
+    "openingHours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-information.opening-hours",
+      "max": 7,
+      "min": 0
+    },
+    "payments": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user-information.payment-method",
+      "required": true,
+      "min": 1
+    },
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": ["$-USD", "€-EUR", "£-GBP", "$-AUD", "$-CAD", "CHF-CHF", "₺-TRY"],
+      "required": true,
+      "default": "€-EUR"
+    },
+    "deliver": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "deliveryCost": {
+      "type": "decimal",
+      "required": true,
+      "min": 0,
+      "default": 0
+    },
+    "whatsAppOrder": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "meta": {
+      "type": "json"
     },
     "cocNumber": {
       "type": "string",
@@ -51,69 +101,10 @@
     },
     "subscriptionStatus": {
       "type": "enumeration",
-      "enum": [
-        "TRIAL",
-        "ACTIVE",
-        "CANCELED",
-        "INCOMPLETE",
-        "EXPIRED",
-        "UNPAID"
-      ],
+      "enum": ["TRIAL", "ACTIVE", "CANCELED", "INCOMPLETE", "EXPIRED", "UNPAID"],
       "default": "TRIAL",
       "required": true,
       "private": true
-    },
-    "openingHours": {
-      "type": "component",
-      "repeatable": true,
-      "component": "user-information.opening-hours",
-      "max": 7,
-      "min": 0
-    },
-    "payments": {
-      "type": "component",
-      "repeatable": true,
-      "component": "user-information.payment-method",
-      "required": true,
-      "min": 1
-    },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "deliver": {
-      "type": "boolean",
-      "default": false,
-      "required": true
-    },
-    "currency": {
-      "type": "enumeration",
-      "enum": [
-        "$-USD",
-        "€-EUR",
-        "£-GBP",
-        "$-AUD",
-        "$-CAD",
-        "CHF-CHF",
-        "₺-TRY"
-      ],
-      "required": true,
-      "default": "€-EUR"
-    },
-    "deliveryCost": {
-      "type": "decimal",
-      "required": true,
-      "min": 0,
-      "default": 0
-    },
-    "open": {
-      "type": "boolean",
-      "default": false,
-      "required": true
     },
     "orders": {
       "type": "relation",
@@ -132,9 +123,6 @@
       "relation": "oneToMany",
       "target": "api::rating.rating",
       "mappedBy": "store"
-    },
-    "meta": {
-      "type": "json"
     },
     "favorites": {
       "type": "relation",

@@ -10,7 +10,7 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
         <li className="flex " key={i}>
           <div className="overflow-hidden w-12 max-h-12 flex items-center rounded-md">
             <Image
-              src={item.image}
+              src={item.imageUrl}
               alt={"Product title goes here"}
               width="150"
               height="150"

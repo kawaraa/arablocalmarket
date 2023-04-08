@@ -96,29 +96,30 @@ export default function OrderDetails({ lang, open, onClose, onStatusChange, admi
               {order.total}
             </span>
           </p>
-          {admin && order.customer && (
+          {admin && order.address && (
             <address dir="ltr" className="relative card mt-5 px-2 py-1 rounded-md print:text-3xl print:mt-20">
               <h6 className="font-medium">
-                {order.customer.firstName} {order.customer.lastName}
+                {order.firstName} {order.lastName}
               </h6>
               <a
                 href={
                   "http://maps.google.com/?q=" +
-                  (order.customer.address.currentLat
-                    ? `${order.customer.address.currentLat},${order.customer.address.currentLng}`
-                    : `${order.customer.address.line1},${order.customer.address.line2 || ""},${
-                        order.customer.address.postalCode
-                      },${order.customer.address.city},${order.customer.address.country}`)
+                  (order.address?.currentLat
+                    ? `${order.address.currentLat},${order.address.currentLng}`
+                    : `${order.address.line1},${order.address.line2 || ""},${order.address.postalCode},${
+                        order.address.city
+                      },${order.address.country}`)
                 }
+                rel="noreferrer"
                 target="_blank"
                 className="w-8 absolute top-2 right-2 text-pc2 hover:text-red">
                 <SvgIcon name="location" />
               </a>
               <p>
-                {order.customer.address.line1} {order.customer.address.line2 || ""},<br />
-                {order.customer.address.postalCode} {order.customer.address.city},
+                {order.address.line1} {order.address.line2 || ""},<br />
+                {order.address.postalCode} {order.address.city},
                 <br />
-                {order.customer.address.province} {order.customer.address.country}
+                {order.address.province} {order.address.country}
               </p>
             </address>
           )}

@@ -59,4 +59,21 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     await strapi.service("api::order.order").create(ctx.request.body);
     return ctx.request.body;
   },
+
+  async findOne(ctx) {
+    const { data, meta } = await super.findOne(ctx);
+    console.log(data);
+    // if (ctx.state.user.id != data.id) ctx.unauthorized();
+    return { data, meta };
+  },
+
+  async find(ctx) {
+    const fn = strapi.service("api::order.order").normalizeCustomer;
+    const { data, meta } = await super.find(ctx);
+    data.forEach((d) => (d.attributes.customer = fn(d.attributes.customer)));
+    console.log(data);
+    // if (ctx.state.user.id != data.id) ctx.unauthorized();
+    return { data, meta };
+  },
+  async update(ctx) {},
 }));

@@ -8,10 +8,10 @@ import { Button } from "../(component)/(styled)/button";
 import { CheckInput, CheckCard } from "../(component)/(styled)/inputs";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import AddressInputs from "../(component)/address-inputs";
-import Badge from "../(component)/(styled)/badge";
 import { NameInputField, PhoneInputField } from "../(component)/custom-inputs";
-import shdCnt from "../(layout)/json/shared-content.json";
-const q = "?fields=name,deliver,deliveryCost,currency,meta&populate=payments";
+import OnDeliveryPaymentMethods from "./(component)/on-delivery-payment-methods";
+import OnlinePaymentMethods from "./(component)/online-payment-methods";
+const q = "?fields=name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=payments";
 
 export default function Checkout({}) {
   const router = useRouter();
@@ -26,6 +26,31 @@ export default function Checkout({}) {
   const [paymentType, setPaymentType] = useState();
   const [paymentMethod, setPaymentMethod] = useState();
   const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
+
+  const validateOrder = () => {
+    if (!deliveryMethod) {
+      setLoading(false);
+      setConfirmCheckout(false);
+      return addMessage({ type: "warning", text: content.deliveryErr[lang], duration: 4 });
+    }
+    if (deliveryMethod == "delivery" && !address) {
+      setLoading(false);
+      setConfirmCheckout(false);
+      return addMessage({ type: "warning", text: content.adrErr[lang], duration: 4 });
+    }
+    if (!paymentMethod) {
+      setLoading(false);
+      setConfirmCheckout(false);
+      return addMessage({ type: "warning", text: content.payErr[lang], duration: 4 });
+    }
+
+    if (!store.payments.find((p) => p.type == paymentType && p.method == paymentMethod)) {
+      setLoading(false);
+      setConfirmCheckout(false);
+      return addMessage({ type: "warning", text: content.payNotSupportErr[lang], duration: 4 });
+    }
+    return true;
+  };
 
   const handleCreateAddress = (e) => {
     e.preventDefault();
@@ -43,31 +68,42 @@ export default function Checkout({}) {
     setAddressForm(false);
   };
 
+  const sendOrderViawhatsApp = (e) => {
+    if (!validateOrder()) return e.preventDefault();
+
+    let total = 0;
+
+    const its = items.reduce((t, it, i) => {
+      total += +it.price * +it.quantity;
+      return t + `\n*${i + 1}-* ${it.barcode}: ${it.title} *(${store.currency}${it.price} × ${it.quantity})*`;
+    }, "");
+    const payment = content.paymentMethods[paymentType == "ONLINE" ? "online" : "onDelivery"];
+    const deliveryMethods = content.deliveryMethods.find((p) => p.text.en == deliveryMethod);
+    let adr = null;
+    if (address) {
+      adr = `
+${address.firstName} ${address.lastName}
+${address.line1} ${address.line2 || ""}
+${address.postalCode} ${address.city}
+${address.province}, ${address.country}`;
+    }
+
+    e.target.href =
+      `https://api.whatsapp.com/send/?phone=${store.id}&text=` +
+      whatsAppOrder[lang](
+        its,
+        total,
+        deliveryMethods.text[lang],
+        payment.text[lang],
+        payment.methods[paymentMethod][lang],
+        adr
+      );
+  };
+
   const handleBuy = async () => {
     setLoading(true);
     try {
-      if (!deliveryMethod) {
-        setLoading(false);
-        setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.deliveryErr[lang], duration: 4 });
-      }
-      if (deliveryMethod == "delivery" && !address) {
-        setLoading(false);
-        setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.adrErr[lang], duration: 4 });
-      }
-      if (!paymentMethod) {
-        setLoading(false);
-        setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.payErr[lang], duration: 4 });
-      }
-
-      if (!store.payments.find((p) => p.type == paymentType && p.method == paymentMethod)) {
-        setLoading(false);
-        setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.payNotSupportErr[lang], duration: 4 });
-      }
-
+      if (!validateOrder()) return;
       const lineItems = items.map(({ productNumber, barcode, quantity }) => ({
         productNumber,
         barcode,
@@ -98,6 +134,7 @@ export default function Checkout({}) {
     try {
       const res = await request("store", "GET", { query: `/${items[0].storeId}${q}` });
       res.data.attributes.id = res.data.id;
+      res.data.attributes.currency = res.data.attributes.currency.split("-")[0];
       res.data.attributes.payments.forEach((p) => {
         p.method = p.method.toLowerCase();
         if (p.method == "cash") p.color = 5;
@@ -232,11 +269,11 @@ export default function Checkout({}) {
           </CheckInput>
         </div>
 
-        <section className="card px-2 py-3 mt-4 rounded-md lazy-c">
-          {/* <p className="pb-3 mt-6 mb-3 mx-2 ">{content.paymentMethods.p[lang]}</p> */}
+        <section className="min-h-[250px] card px-2 py-3 mt-4 rounded-md lazy-c">
           {paymentType === "ON-DELIVERY" ? (
             <OnDeliveryPaymentMethods
               lang={lang}
+              cnt={content}
               payments={store.payments}
               paymentMethod={paymentMethod}
               selectPayment={setPaymentMethod}
@@ -244,34 +281,28 @@ export default function Checkout({}) {
           ) : (
             <>
               <div className="flex lazy-c">
-                <CheckCard
-                  type="radio"
-                  name="payment"
-                  checked={paymentMethod == "card"}
-                  onChange={() => setPaymentMethod("card")}
-                  title="Credit card and other online payment methods"
-                  aria-label="Credit card and other online payment methods"
-                  cls="!h-10 mx-1 flex justify-center items-center">
-                  <span className="h-[25px] mx-1">
-                    <SvgIcon name="creditCard" />
-                  </span>
-                  {content.paymentMethods.online.methods.card[lang]}
-                </CheckCard>
-                <CheckCard
-                  type="radio"
-                  name="payment"
-                  checked={paymentMethod == "bank"}
-                  onChange={() => setPaymentMethod("bank")}
-                  title="Make a bank transfer to the seller bank's account"
-                  aria-label="Make a bank transfer to the seller bank's account"
-                  cls="!h-10 mx-1 flex justify-center items-center">
-                  <span className="h-[25px]">
-                    <SvgIcon name="bank" />
-                  </span>
-                  {content.paymentMethods.online.methods.bank[lang]}
-                </CheckCard>
+                {Object.keys(content.paymentMethods.online.methods).map((method, i) => (
+                  <CheckCard
+                    type="radio"
+                    name="payment"
+                    checked={paymentMethod == method}
+                    onChange={() => setPaymentMethod(method)}
+                    title={content.paymentMethods.online.methods[method].title[lang]}
+                    cls="!h-10 mx-1 flex justify-center items-center"
+                    key={i}>
+                    <span className={`h-[25px] ${method != "card" ? "" : "mx-1"}`}>
+                      <SvgIcon name={method == "card" ? "creditCard" : "bank"} />
+                    </span>
+                    {content.paymentMethods.online.methods[method][lang]}
+                  </CheckCard>
+                ))}
               </div>
-              <OnlinePaymentMethods lang={lang} payments={store.payments} selected={paymentMethod} />
+              <OnlinePaymentMethods
+                lang={lang}
+                cnt={content}
+                payments={store.payments}
+                selected={paymentMethod}
+              />
             </>
           )}
         </section>
@@ -284,15 +315,22 @@ export default function Checkout({}) {
           dir="ltr"
           className="flex-1 flex justify-center items-center bg-pc text-t text-lg font-medium hover:text-red transition">
           <span className="text-red mx-2">
-            {store.currency.split("-")[0]}
+            {store.currency}
             {items.reduce((total, item) => total + item.price * item.quantity, 0)}
           </span>
           {content.payBtn[lang]}
         </button>
-        {!store.whatsappOrder && (
-          <button className="w-12 px-2 bg-pc hover:text-red border-l-[1px] border-blur transition">
+        {store.whatsAppOrder && store.meta?.phone && (
+          <a
+            onClick={sendOrderViawhatsApp}
+            href={`https://api.whatsapp.com/send/?phone=${store.meta.phone}&text=`}
+            rel="noreferrer"
+            target="_blank"
+            alt={content.whatsAppSand[lang]}
+            title={content.whatsAppSand[lang]}
+            className="w-12 flex px-2 bg-pc hover:text-red border-l-[1px] border-blur transition">
             <SvgIcon name="whatsapp" />
-          </button>
+          </a>
         )}
       </div>
 
@@ -310,97 +348,12 @@ export default function Checkout({}) {
   );
 }
 
-const OnDeliveryPaymentMethods = ({ lang, payments, paymentMethod, selectPayment }) => {
-  const methods = payments
-    .filter((p) => p.type == "ON-DELIVERY")
-    .map((p, i) => (
-      <CheckCard
-        type="radio"
-        name="payment"
-        checked={paymentMethod == p.method}
-        onChange={() => selectPayment(p.method)}
-        title="Make a bank transfer to the seller bank's account"
-        aria-label="Make a bank transfer to the seller bank's account"
-        cls="mx-1 !p-0 w-initial !rounded-full flex"
-        inCls="!rounded-full"
-        key={i}>
-        <Badge
-          text={content.paymentMethods.onDelivery.methods[p.method][lang]}
-          icon={p.icon || p.method}
-          color={p.color}
-          cls="!m-0 !py-1 !px-2"
-        />
-      </CheckCard>
-    ));
-  return methods[0] ? (
-    <>
-      <p className="pb-3 mt-6 mb-3 mx-2 ">{content.paymentMethods.p[lang]}</p>
-      <div className="mb-3 flex lazy-c">{methods}</div>
-    </>
-  ) : (
-    <p className="w-full mt-6 mb-3 text-orange text-center">{content.noOnDeliveryPay[lang]}</p>
-  );
-};
-
-const OnlinePaymentMethods = ({ lang, user, payments, selected }) => {
-  const cardMethod = payments.find((p) => p.type == "ONLINE" && p.method == "card");
-  const bankMethod = payments.find((p) => p.type == "ONLINE" && p.method == "bank");
-
-  return (
-    <>
-      <div className="mb-3 lazy-c">
-        {selected == "card" ? (
-          <div className="lazy-c">
-            <p className="mt-8 text-center text-orange">{content.noOnlinePay[lang]}</p>
-            {/* {!cardMethod.meta ? (
-              <p className="mt-8 text-center text-orange">{content.noOnlinePay[lang]}</p>
-            ) : (
-              <>
-              Todo: here goes the third party payment provider form E.g. Stripe.
-              Payment provider Form
-              </>
-            )} */}
-          </div>
-        ) : !bankMethod.meta ? (
-          <p className="mt-8 text-center text-orange">{content.noBankPay[lang]}</p>
-        ) : !user && bankMethod.meta?.private ? (
-          <p className="mt-8 text-center text-orange">{content.noBankPayPrivate[lang]}</p>
-        ) : (
-          <dl className="mt-6 lazy-c">
-            <dt className="">{shdCnt.bankInfo.holder[lang]}</dt>
-            <dd className=" flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.accountHolder}
-              <span className="inline-block w-6">
-                <SvgIcon name="copy" />
-              </span>
-            </dd>
-            <dt className="">{shdCnt.bankInfo.number[lang]}</dt>
-            <dd className="flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.iban}
-              <span className="inline-block w-6">
-                <SvgIcon name="copy" />
-              </span>
-            </dd>
-            <dt className="">{shdCnt.bankInfo.bic[lang]}</dt>
-            <dd className="flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.bic}
-              <span className="inline-block w-6">
-                <SvgIcon name="copy" />
-              </span>
-            </dd>
-          </dl>
-        )}
-      </div>
-    </>
-  );
-};
-
 const content = {
   h1: { en: "items", ar: "عناصر" },
   deliveryH3: { en: "Please select delivery method", ar: "الرجاء تحديد طريقة التسليم" },
   noDelivery: { en: "This store does not have delivery", ar: "هذا المتجر لا يوجد لديه توصيل" },
   deliveryMethods: [
-    { text: { en: "pickup", ar: "التقط" }, icon: "personPushingCart", cls: "" },
+    { text: { en: "pickup", ar: "التقاط" }, icon: "personPushingCart", cls: "" },
     { text: { en: "delivery", ar: "توصيل" }, icon: "foodDeliverBike", cls: "p-1" },
   ],
   addressH3: { en: "Saved Addresses", ar: "العناوين المحفوظة" },
@@ -431,8 +384,22 @@ const content = {
     online: {
       text: { en: "Online", ar: "عبر الإنترنت" },
       methods: {
-        card: { en: "Credit card", ar: "بطاقة إئتمان" },
-        bank: { en: "Bank Transfer", ar: "التحويل المصرفي" },
+        card: {
+          en: "Credit card",
+          ar: "بطاقة إئتمان",
+          title: {
+            en: "Credit card and other online payment methods",
+            ar: "بطاقة الائتمان وطرق الدفع الأخرى عبر الإنترنت",
+          },
+        },
+        bank: {
+          en: "Bank Transfer",
+          ar: "التحويل المصرفي",
+          title: {
+            en: "Bank transfer to the seller bank's account",
+            ar: "التحويل البنكي لحساب البائع البنكي",
+          },
+        },
       },
     },
   },
@@ -465,4 +432,37 @@ const content = {
     ],
   },
   confirmBtn: { en: "Yes", ar: "نعم" },
+  whatsAppSand: { en: "Send the order via WhatsApp", ar: "أرسل الطلب عبر الواتساب" },
+};
+
+const whatsAppOrder = {
+  en: (items, total, deliveryMethod, type, method, address) => `Hi!
+I would like to order the following items.
+
+${items}
+
+*Total:* ${total}
+
+*Delivery type:* ${deliveryMethod}
+
+*Payment method:* ${type} - ${method}
+
+${!address ? "" : "*Address:*"}
+${address || ""}
+`,
+
+  ar: (items, total, deliveryMethod, type, method, address) => `مرحبا!
+أود أن أطلب العناصر التالية.
+
+${items}
+
+المجموع:* ${total}*
+
+نوع التوصيل:* ${deliveryMethod}*
+
+طريقة الدفع:* ${type} - ${method}*
+
+${!address ? "" : "*العنوان:*"}
+${address || ""}
+`,
 };

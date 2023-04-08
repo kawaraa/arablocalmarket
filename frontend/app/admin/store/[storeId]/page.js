@@ -3,12 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import OrderDetailsPopup from "../../../(component)/order-details-popup";
 import OrderCard from "../../../(component)/order-card";
 import { AppSessionContext } from "../../../app-session-context";
+import { request } from "../../../(service)/api-provider";
 
 export default function StoreOrders({ params, searchParams }) {
-  const { lang, user } = useContext(AppSessionContext);
+  const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [clickedOrder, setClickedOrder] = useState(null);
   const [openOrder, setOpenOrder] = useState(false);
-  const orders = fakeOrders;
+  const [orders, setOrders] = useState([]);
 
   // console.log("Vew and update store by ID: >>>", params, searchParams);
 
@@ -27,15 +28,29 @@ export default function StoreOrders({ params, searchParams }) {
     setClickedOrder({ ...clickedOrder, status: value });
   };
 
+  const fetchOrders = async () => {
+    setAppLoading(true);
+    try {
+      const query = `?filters[store][owner][$eq]=${user.id}&populate=customer,lineItems,payment`;
+      const { data } = await request("order", "GET", { query });
+      data.forEach((d) => (d.attributes.currency = d.attributes.currency.split("-")[0]));
+      setOrders(data);
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+    setAppLoading(false);
+  };
+
   useEffect(() => {
-    // document.title = "Admin Store orders - ALM";
+    document.title = "Admin Store orders - ALM"; // Todo: translate
+    fetchOrders();
   }, []);
 
   return (
     <div>
       <ul className="print:hidden">
         {orders.map((o, i) => (
-          <OrderCard lang={lang} {...o} onClick={selectOrder} admin key={i} />
+          <OrderCard lang={lang} id={o.id} {...o.attributes} onClick={selectOrder} admin key={i} />
         ))}
       </ul>
 
@@ -51,106 +66,3 @@ export default function StoreOrders({ params, searchParams }) {
 }
 
 const content = {};
-
-// { accountHolder: "Mr Tester", acountNumber: "ING06B887823483542", bic: "FJENKXX" }
-const fakeLineItem = {
-  productNumber: "1324",
-  barcode: "435672546457",
-  title: "Tea - small",
-  image: "/burger-prepared-food-clipart.png",
-  price: 12,
-  discount: 0,
-  quantity: 1,
-};
-const fakeCustomer = {
-  firstName: "Mr",
-  lastName: "Tester",
-  phone: "",
-  address: {
-    line1: "Street 1",
-    line2: "B",
-    city: "Amsterdam",
-    postalCode: "1017 EE",
-    province: "North Holland",
-    country: "Netherlands",
-    currentLat: "52.370216",
-    currentLng: "4.895168",
-  },
-};
-
-const fakeOrders = [
-  {
-    id: 131,
-    customer: fakeCustomer,
-    lineItems: [fakeLineItem, fakeLineItem, fakeLineItem],
-    payment: {
-      id: 4,
-      type: "ON-DELIVERY",
-      value: null,
-      method: "CASH",
-    },
-    total: 120,
-    currency: "€",
-    status: "PENDING",
-  },
-  {
-    id: 435,
-    customer: fakeCustomer,
-    lineItems: [fakeLineItem],
-    payment: {
-      id: 4,
-      type: "ONLINE",
-      value: null,
-      method: "CASH",
-    },
-    total: 30,
-    currency: "€",
-    status: "PAID",
-  },
-  {
-    id: 564,
-    customer: fakeCustomer,
-    lineItems: [fakeLineItem, fakeLineItem],
-    payment: {
-      id: 4,
-      type: "ONLINE",
-      value: null,
-      method: "CARD",
-    },
-    total: 20,
-    currency: "€",
-    status: "FAILED",
-  },
-  {
-    id: 923,
-    customer: fakeCustomer,
-    lineItems: [fakeLineItem, fakeLineItem, fakeLineItem, fakeLineItem],
-    payment: {
-      id: 4,
-      type: "ON-DELIVERY",
-      value: {
-        bic: "FJENKXX",
-        acountNumber: "ING06B887823483542",
-        accountHolder: "Mr Tester",
-      },
-      method: "BANK",
-    },
-    total: 20,
-    currency: "€",
-    status: "CANCELED",
-  },
-  {
-    id: 763,
-    customer: fakeCustomer,
-    lineItems: [fakeLineItem, fakeLineItem],
-    payment: {
-      id: 4,
-      type: "ON-DELIVERY",
-      value: null,
-      method: "CASH",
-    },
-    total: 20,
-    currency: "€",
-    status: "SENT",
-  },
-];

@@ -55,7 +55,8 @@ export async function fetchUser() {
   user.myStores = (await request("store", "GET", { query: q1 })).data;
 
   const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores]=*&populate[favoriteProducts][populate]=image,variants`;
-  const { attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
+  const { id, attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
+  user.customerId = id;
   user.workStores = attributes.workStores.data;
   user.favoriteStores = attributes.favoriteStores.data;
   user.cart = attributes.cart;
@@ -78,7 +79,7 @@ export async function fetchUser() {
           productNumber: p.id,
           barcode: variants[0].barcode,
           title: name,
-          image: image.data?.attributes?.url,
+          imageUrl: image.data?.attributes?.url,
           price: variants[0].price,
           discount: p.discount || 0,
         };
