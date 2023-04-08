@@ -26,10 +26,7 @@ export default function Options({ store, id, variants, name, image }) {
         currency: store.currency,
         productNumber: id,
         barcode: variant.barcode,
-        image: image.data?.attributes?.url,
-        title: `${name} - ${sp.join(" - ")}`,
         price: variant.price,
-        discount: variant.discount || 0,
         quantity,
       };
 
@@ -45,7 +42,7 @@ export default function Options({ store, id, variants, name, image }) {
 
   const updateQuantity = (num) => {
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
-    if (!items) return addMessage({ type: "warning", text: shsCnt.noItemErr[lang], duration: 7 });
+    if (!items) return addMessage({ type: "warning", text: shsCnt.noItemErr[lang], duration: 4 });
     items[0].quantity = num < 1 ? 1 : num <= maxQuantity ? num : maxQuantity;
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
     setQuantity(items[0].quantity);

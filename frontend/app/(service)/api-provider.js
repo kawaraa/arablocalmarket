@@ -51,15 +51,40 @@ export async function request(url, method = "GET", data, type = "application/jso
 export async function fetchUser() {
   const user = await request("getUser");
 
-  const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[favoriteStores][fields]=id&&populate[favoriteProducts][fields]=id`;
-  const { attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
-  user.favoriteStores = attributes.favoriteStores.data.map(({ id }) => id);
-  user.favoriteProducts = attributes.favoriteProducts.data.map(({ id }) => id);
-  user.workStores = attributes.workStores.data;
-
   const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open&populate=cover,orders,workers,ratings,favorites`;
-  const res = await request("store", "GET", { query: q1 });
-  user.myStores = res.data;
+  user.myStores = (await request("store", "GET", { query: q1 })).data;
+
+  const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores]=*&populate[favoriteProducts][populate]=image,variants`;
+  const { attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
+  user.workStores = attributes.workStores.data;
+  user.favoriteStores = attributes.favoriteStores.data;
+  user.cart = attributes.cart;
+
+  const ps = attributes.favoriteProducts.data;
+  const ids = ps.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
+  const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
+
+  stores.forEach((s) => {
+    s.currency = s.currency.split("-")[0];
+    s.phone = s.meta.phone;
+    delete s.meta;
+    s.items = ps
+      .filter((p) => p.attributes.storeId == s.id)
+      .map((p) => {
+        const { name, image, variants } = p.attributes;
+        s.total = 0;
+        s.total += +variants[0].price;
+        return {
+          title: name,
+          image: image.data?.attributes?.url,
+          barcode: variants[0].barcode,
+          price: variants[0].price,
+          discount: p.discount || 0,
+        };
+      });
+  });
+
+  user.favoriteProducts = stores;
 
   return user;
 }

@@ -30,7 +30,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
       setTimeout(() => target?.blur(), 200);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -42,9 +42,9 @@ export default function StoreById({ children, params: { storeId } }) {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
       await request("store", "PUT", { query: "/" + storeId, body: formData });
-      addMessage({ type: "success", text: "done", duration: 5 });
+      addMessage({ type: "success", text: content.done[lang], duration: 2 });
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -56,7 +56,7 @@ export default function StoreById({ children, params: { storeId } }) {
       data.attributes.id = data.id;
       setStore(data.attributes);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -125,4 +125,5 @@ const content = {
     { key: "4", path: "/admin/store/storeId/employee", text: { en: "Employees", ar: "الموظفون" } },
     { key: "5", path: "/admin/store/storeId/customer", text: { en: "Customers", ar: "الزبائن" } },
   ],
+  done: { en: "Done", ar: "تم" },
 };

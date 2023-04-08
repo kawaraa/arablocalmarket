@@ -32,7 +32,7 @@ export default function SignIn() {
 
       // Todo: merge the carts stored in the browser with user carts
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 10 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
       window.localStorage.removeItem("accessToken");
     }
 

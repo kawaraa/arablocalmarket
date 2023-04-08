@@ -17,14 +17,14 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
   const [stars, setStars] = useState(ratings.userStars);
 
   const handleRating = async (stars) => {
-    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 10 });
+    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 4 });
     // Todo: sent the rating to the backend
     setShowRatingInput(false);
   };
 
   const addToFavorite = async (e) => {
     e.preventDefault();
-    if (!user) return addMessage({ type: "warning", text: shdCnt.favoriteErr[lang], duration: 10 });
+    if (!user) return addMessage({ type: "warning", text: shdCnt.favoriteErr[lang], duration: 4 });
     // Todo: Add store to the singed in user favorite in the backend
   };
 

@@ -36,7 +36,7 @@ export default function Checkout({}) {
       // Todo: Save the address if the user is signed in
       setAddress(data);
     } catch (err) {
-      addMessage({ type: "error", text: err.message, duration: 15 });
+      addMessage({ type: "error", text: err.message, duration: 5 });
     }
 
     setLoading(false);
@@ -49,32 +49,31 @@ export default function Checkout({}) {
       if (!deliveryMethod) {
         setLoading(false);
         setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.deliveryErr[lang], duration: 10 });
+        return addMessage({ type: "warning", text: content.deliveryErr[lang], duration: 4 });
       }
       if (deliveryMethod == "delivery" && !address) {
         setLoading(false);
         setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.adrErr[lang], duration: 10 });
+        return addMessage({ type: "warning", text: content.adrErr[lang], duration: 4 });
       }
       if (!paymentMethod) {
         setLoading(false);
         setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.payErr[lang], duration: 10 });
+        return addMessage({ type: "warning", text: content.payErr[lang], duration: 4 });
       }
 
       if (!store.payments.find((p) => p.type == paymentType && p.method == paymentMethod)) {
         setLoading(false);
         setConfirmCheckout(false);
-        return addMessage({ type: "warning", text: content.payNotSupportErr[lang], duration: 10 });
+        return addMessage({ type: "warning", text: content.payNotSupportErr[lang], duration: 4 });
       }
 
-      const lineItems = items.map(({ productNumber, barcode, title, price, quantity }) => ({
+      const lineItems = items.map(({ productNumber, barcode, quantity }) => ({
         productNumber,
         barcode,
-        title,
-        price,
         quantity,
       }));
+
       const order = {
         storeId: store.id,
         lineItems,
@@ -83,11 +82,12 @@ export default function Checkout({}) {
         address,
       };
 
+      order.customer = JSON.parse(window.localStorage.getItem("customer")) || null;
       const { customer } = (await request("order", "POST", { data: order })).data;
-      window.localStorage.setItem("customer", JSON.stringify(customer));
+      if (!user) window.localStorage.setItem("customer", JSON.stringify(customer));
       router.replace("/checkout/success");
     } catch (err) {
-      addMessage({ type: "error", text: err.message, duration: 15 });
+      addMessage({ type: "error", text: err.message, duration: 5 });
       router.replace("/checkout/error");
     }
     setLoading(false);
@@ -109,7 +109,7 @@ export default function Checkout({}) {
       });
       setStore(res.data.attributes);
     } catch (err) {
-      addMessage({ type: "error", text: err.message, duration: 15 });
+      addMessage({ type: "error", text: err.message, duration: 5 });
     }
   };
 
@@ -120,9 +120,12 @@ export default function Checkout({}) {
   }, []);
 
   if (!store || !items || !items[0]) return null;
-
   return (
     <article className="py-8">
+      <h1 className="mb-4 text-xl font-medium text-center">
+        {content.h1[lang]} ( {items.length} )
+      </h1>
+
       <h3 className="mb-4 text-lg font-medium">{content.deliveryH3[lang]}</h3>
 
       <section className="flex justify-center items-center lazy-c">
@@ -203,7 +206,7 @@ export default function Checkout({}) {
               <AddressInputs
                 lang={lang}
                 map
-                onError={(text) => addMessage({ type: "error", text, duration: 15 })}
+                onError={(text) => addMessage({ type: "error", text, duration: 5 })}
               />
             </div>
           </Modal>
@@ -393,6 +396,7 @@ const OnlinePaymentMethods = ({ lang, user, payments, selected }) => {
 };
 
 const content = {
+  h1: { en: "items", ar: "عناصر" },
   deliveryH3: { en: "Please select delivery method", ar: "الرجاء تحديد طريقة التسليم" },
   noDelivery: { en: "This store does not have delivery", ar: "هذا المتجر لا يوجد لديه توصيل" },
   deliveryMethods: [

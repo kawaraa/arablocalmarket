@@ -32,7 +32,7 @@ export default function NewStore({ params, searchParams }) {
   const update = !!searchParams.id;
 
   const handleError = (text) => {
-    addMessage({ type: "error", text, duration: 15 });
+    addMessage({ type: "error", text, duration: 5 });
   };
   const addDay = ({ name, checked }) => {
     const newDays = days.filter((d) => d.day !== name);
@@ -111,7 +111,7 @@ export default function NewStore({ params, searchParams }) {
 
       router.replace(`/admin/store/${id}/product`);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -134,7 +134,7 @@ export default function NewStore({ params, searchParams }) {
       setOnDeliveryPayment(onDeliveryPay);
       setOnlinePayment(onlinePay);
     } catch (error) {
-      addMessage({ type: "error", text: error.message });
+      addMessage({ type: "error", text: error.message , duration:5});
     }
     setAppLoading(false);
   };

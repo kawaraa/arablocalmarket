@@ -41,13 +41,13 @@ export default function Signup({ searchParams }) {
 
       await request("signUp", "POST", data);
 
-      addMessage({ type: "success", text: content.message[lang], duration: 5 });
+      addMessage({ type: "success", text: content.message[lang], duration: 3 });
 
       checkConfirmation({ identifier: email, password }, 1);
 
       setTimeout(() => router.replace(window.location.href + "?status=confirm"), 2000);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 10 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
 
     setLoading(false);

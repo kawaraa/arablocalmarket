@@ -4,45 +4,148 @@ import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import Tabs from "../(component)/(styled)/tabs";
 import StoreItems from "./(component)/store-items";
+import { request } from "../(service)/api-provider";
+import EmptyState from "../(component)/(styled)/empty-state";
 
 export default function Cart({ params, searchParams }) {
   const router = useRouter();
-  const { loading, setLoading, lang, user } = useContext(AppSessionContext);
+  const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
-  const storeCarts = fakeStores;
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [carts, setCarts] = useState([]);
 
   const tabs = content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }));
   const favorite = activeTab?.path?.includes("favorite");
 
-  const handleCheckout = () => {
-    console.log("handleCheckout");
+  const deleteFromCart = (storeId, index) => {
+    const copy = [...carts];
+    copy.forEach((c) => c.id == storeId && c.items.splice(index, 1));
 
-    // if('Uer is not selected the store show a warning.')
+    setCarts(copy.filter((c) => !!c.items[0]));
+
+    if (user) {
+      // Todo: remove the item from the backend
+    }
+  };
+
+  const deleteFromFavorite = (storeId, index) => {
+    if (!user?.favoriteProducts) return;
+    const copy = [...user.favoriteProducts];
+    copy.forEach((c) => c.id == storeId && c.items.splice(index, 1));
+    // Todo: remove the item from the backend
+    setFavoriteProducts(copy.filter((c) => !!c.items[0]));
+  };
+
+  const handleCheckout = () => {
+    if (!selectedStore) return addMessage({ type: "warning", text: content.noItems[lang], duration: 2 });
+
+    const items = selectedStore.items.map(({ productNumber, barcode, price, quantity }) => ({
+      storeId: selectedStore.id,
+      productNumber,
+      price,
+      barcode,
+      quantity,
+    }));
+
+    window.localStorage.setItem("checkoutItems", JSON.stringify(items));
+    window.localStorage.setItem("carts", JSON.stringify(carts.filter((c) => c.id != selectedStore.id)));
     router.push("/checkout");
+  };
+
+  const fetchItems = async () => {
+    setAppLoading(true);
+    try {
+      setFavoriteProducts(user?.favoriteProducts || []);
+
+      const productIds = new Set();
+      let carts = JSON.parse(window.localStorage.getItem("carts"));
+      if (!carts && user) carts = user.carts;
+
+      if (carts) {
+        carts.forEach((cart) =>
+          cart.items.forEach((item) => productIds.add("filters[id][$in]=" + item.productNumber))
+        );
+
+        const q = "&populate[image]=*&populate[variants][populate]=*";
+        const { data } = await request("product", "GET", {
+          query: `?${Array.from(productIds).join("&")}${q}`,
+        });
+
+        carts = carts.filter((cart) => {
+          cart.items = cart.items.filter((item) => {
+            const { attributes } = data.find((d) => d.id == item.productNumber) || {};
+            if (!attributes) return null;
+            const variant = attributes.variants.find((v) => (v.barcode = item.barcode));
+            if (!variant) return null;
+            item.title = attributes.name + " " + variant.options.map((o) => o.value).join(" - ");
+            item.image = attributes.image.data.attributes.url;
+            item.price = variant.price;
+            item.discount = attributes.discount || 0;
+            cart.total = 0;
+            cart.total += +variant.price * +item.quantity;
+            return item;
+          });
+          cart.currency = cart.currency.split("-")[0];
+          return !!cart.items[0];
+        });
+
+        setCarts(carts);
+      }
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+    setAppLoading(false);
   };
 
   useEffect(() => {
     document.title = (activeTab?.text || "Shipping Cart") + " - ALM";
-    setSelectedStore(storeCarts[0]);
+    setSelectedStore(null);
   }, [activeTab]);
 
   useEffect(() => {
     window.localStorage.removeItem("checkoutItems");
+    fetchItems();
   }, []);
+
+  const results = favorite ? favoriteProducts || [] : carts;
 
   return (
     <article className="pb-14">
       <h1 className="text-xl text-center my-6">
         {activeTab?.text}
-        <span className="font-bold"> ( {selectedStore?.lineItems.length} )</span>
+        <span className="font-bold"> ( {selectedStore?.items.length || 0} )</span>
       </h1>
 
       <Tabs tabs={tabs} onTabChange={setActiveTab} />
 
-      {storeCarts.map((s, i) => (
-        <StoreItems favorite={favorite} {...s} onCheck={setSelectedStore} key={i} />
-      ))}
+      {favorite
+        ? favoriteProducts.map((s, i) => (
+            <StoreItems favorite={favorite} {...s} onRemove={deleteFromFavorite} key={i} />
+            // <LineItems
+            //   favorite={favorite}
+            //   items={user?.favoriteProducts}
+            //   currency={store.currency}
+            //   storeId={store.id}
+            //   onRemove={onRemove}
+            //   key={i}
+            // />
+          ))
+        : carts.map((s, i) => (
+            <StoreItems
+              favorite={favorite}
+              {...s}
+              onCheck={setSelectedStore}
+              onRemove={deleteFromCart}
+              key={i}
+            />
+          ))}
+
+      {!results[0] && (
+        <div className="flex items-center h-[60vh]">
+          <EmptyState lang={lang} type="no" />
+        </div>
+      )}
 
       {!favorite && (
         <button
@@ -61,51 +164,10 @@ export default function Cart({ params, searchParams }) {
 }
 
 const content = {
-  checkoutBtn: { en: "Checkout", ar: "اتمام الطلب" },
   tabs: [
     { key: "2", path: "/cart", text: { en: "Shopping Cart", ar: "عناصر العربة" } },
     { key: "1", path: "/cart?tab=favorite", text: { en: "Favorite", ar: "المفضلة" } },
   ],
+  checkoutBtn: { en: "Checkout", ar: "اتمام الطلب" },
+  noItems: { en: "Please select items", ar: "الرجاء تحديد العناصر" },
 };
-
-const fakeItems = [
-  {
-    image: "/bread-clipart.png",
-    title: "Tea - small",
-    currency: "€",
-    price: 10.5,
-    discount: 0,
-    quantity: 2,
-    favorite: false,
-  },
-  {
-    image: "/burger-prepared-food-clipart.png",
-    title: "Tea - large",
-    currency: "€",
-    price: 20.5,
-    discount: 0,
-    quantity: 1,
-    favorite: false,
-  },
-  {
-    image: "/bread-clipart.png",
-    title: "Green Tea - small",
-    currency: "€",
-    price: 10.5,
-    quantity: 2,
-    favorite: true,
-  },
-  {
-    image: "/burger-prepared-food-clipart.png",
-    title: "Green Tea - large",
-    currency: "€",
-    price: 20.5,
-    quantity: 1,
-    favorite: true,
-  },
-];
-
-const fakeStores = [
-  { id: "1", name: "Store 1", currency: "€", phone: "+905365646833", lineItems: fakeItems, total: 31 },
-  { id: "2", name: "Store 1", currency: "€", lineItems: fakeItems, total: 31 },
-];

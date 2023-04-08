@@ -82,11 +82,6 @@
       "component": "user-information.address",
       "required": false
     },
-    "cart": {
-      "type": "component",
-      "repeatable": true,
-      "component": "product.cart-item"
-    },
     "warnings": {
       "type": "component",
       "repeatable": true,

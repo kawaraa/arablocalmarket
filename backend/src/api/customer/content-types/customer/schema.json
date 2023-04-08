@@ -54,6 +54,11 @@
       "relation": "manyToMany",
       "target": "api::product.product",
       "inversedBy": "favorites"
+    },
+    "cart": {
+      "type": "component",
+      "repeatable": true,
+      "component": "product.cart-item"
     }
   }
 }

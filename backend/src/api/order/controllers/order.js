@@ -39,10 +39,16 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
       if (ctx.request.body.data.address) {
         name = ctx.request.body.data.address.firstName + " " + ctx.request.body.data.address.lastName;
       }
-      const customer = await strapi
-        .service("api::customer.customer")
-        .create({ data: { user: "visitor-" + crypto.randomBytes(16).toString("base64"), name } });
-      ctx.request.body.data.customer = customer.id;
+      if (ctx.request.body.data.customer) {
+        ctx.request.body.data.customer = await strapi
+          .service("api::customer.customer")
+          .findOne(ctx.request.body.data.customer.id);
+      }
+      if (!ctx.request.body.data.customer) {
+        ctx.request.body.data.customer = await strapi
+          .service("api::customer.customer")
+          .create({ data: { user: "visitor-" + crypto.randomBytes(16).toString("base64"), name } });
+      }
     }
 
     ctx.request.body.data.store = store.id;

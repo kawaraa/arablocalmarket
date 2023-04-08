@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IconButton } from "./(styled)/button";
 
-export default function LineItems({ favorite, bill, items, currency, onRemove, cls }) {
+export default function LineItems({ favorite, bill, storeId, items, currency, onRemove, cls }) {
   return (
     <ul dir="ltr" className={"mt-4 mb-1 space-y-3 print:!text-lg " + cls}>
       {items.map((item, i) => (
@@ -48,7 +48,15 @@ export default function LineItems({ favorite, bill, items, currency, onRemove, c
               </p>
             </div>
             {onRemove && (
-              <IconButton icon="bin" size="7" onClick={() => onRemove(i)} cls="hover:text-red print:hidden" />
+              <>
+                <span className="w-2"></span>
+                <IconButton
+                  icon="bin"
+                  size="7"
+                  onClick={() => onRemove(storeId, i)}
+                  cls="hover:text-red print:hidden"
+                />
+              </>
             )}
           </div>
         </li>

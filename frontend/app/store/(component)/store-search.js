@@ -79,7 +79,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
             coordinates={position}
             onLocate={({ lat, lng }) => setPosition([lat, lng])}
             requestUserLocation={true}
-            onError={(err) => addMessage({ type: "error", text: err, duration: 15 })}
+            onError={(text) => addMessage({ type: "error", text, duration: 5 })}
           />
 
           <label

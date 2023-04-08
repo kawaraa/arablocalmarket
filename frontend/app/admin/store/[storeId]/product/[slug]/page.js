@@ -56,10 +56,10 @@ export default function ProductById({ params }) {
         id = (await request("product", "PUT", { query: "/" + product.id, body })).data.id;
       }
 
-      addMessage({ type: "success", text: "", duration: 5 });
+      addMessage({ type: "success", text:content.done[lang], duration: 2 });
       // router.replace(`/store/${params.storeId}/product${id}`);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -76,7 +76,7 @@ export default function ProductById({ params }) {
       setProduct(data.attributes);
       setVariants(data.attributes.variants);
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 15 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setInitialLoading(false);
   };
@@ -199,4 +199,5 @@ const content = {
   variant: { en: "Variants", ar: "الاصناف" },
   create: { en: "Create", ar: "إنشاء" },
   save: { en: "Save", ar: "حفظ" },
+  done: { en: "Done", ar: "تم" },
 };

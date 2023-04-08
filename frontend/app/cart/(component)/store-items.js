@@ -3,7 +3,7 @@ import { CheckInput } from "../../(component)/(styled)/inputs";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import LineItems from "../../(component)/line-items";
 
-export default function StoreItems({ favorite, onCheck, ...store }) {
+export default function StoreItems({ favorite, onCheck, onRemove, ...store }) {
   const hCls = "hover:text-pc2 duration-150";
 
   return (
@@ -32,7 +32,13 @@ export default function StoreItems({ favorite, onCheck, ...store }) {
         </a>
       </div>
 
-      <LineItems favorite={favorite} items={store.items} currency={store.currency} />
+      <LineItems
+        favorite={favorite}
+        items={store.items}
+        currency={store.currency}
+        storeId={store.id}
+        onRemove={onRemove}
+      />
     </section>
   );
 }

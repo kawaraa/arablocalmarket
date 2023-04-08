@@ -14,7 +14,7 @@ export function ShareButton({ title, text, cls }) {
     }
     copyText(window.location.href, (copied) => {
       const type = copied ? "success" : "error";
-      addMessage({ type, text: content[type][lang], duration: 10 });
+      addMessage({ type, text: content[type][lang], duration: 2 });
     });
   };
 

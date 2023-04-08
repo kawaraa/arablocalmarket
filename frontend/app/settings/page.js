@@ -15,9 +15,9 @@ export default function Settings(props) {
       if (!data.address) setAppLoading(true);
       console.log("changeFirstName:>>> ", data);
       if (!data.address) setAppLoading(false);
-      addMessage({ type: "success", text: "done", duration: 5 });
+      addMessage({ type: "success", text: content.done[lang], duration: 2 });
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 10 });
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
   };
 
@@ -38,6 +38,7 @@ export default function Settings(props) {
 
 const content = {
   h1: { en: "Settings", ar: "إعدادات" },
+  done: { en: "Done", ar: "تم" },
 };
 
 const fakeAddress = {
