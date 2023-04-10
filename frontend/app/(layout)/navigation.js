@@ -19,6 +19,9 @@ export default function Navigation() {
 
   const initials = !user ? null : user.firstName[0] + user.lastName[0];
 
+  // const itemsNumber = user?.cart.length || window.localStorage.getItem("carts")
+
+  console.log(user);
   useEffect(() => {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
