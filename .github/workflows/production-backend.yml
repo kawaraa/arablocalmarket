@@ -6,31 +6,31 @@ name: production-backend
 on:
   push:
     branches: ["main"]
-    # path:
-    #   paths:
-    #     - "backend/**"
-    #   paths-ignore:
-    #     - "frontend/**"
+    path:
+      paths:
+        - "backend/**"
+      paths-ignore:
+        - "frontend/**"
   pull_request:
     branches: ["main"]
-    # path:
-    #   paths:
-    #     - "backend/**"
-    #   paths-ignore:
-    #     - "frontend/**"
+    path:
+      paths:
+        - "backend/**"
+      paths-ignore:
+        - "frontend/**"
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [18.x]
-  #   defaults:
-  #     run:
-  #       working-directory: ./backend
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: npm i
-  #     - run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run build
 
   deployment:
     runs-on: ["self-hosted", "Linux", "X64", "production-backend"]
@@ -43,8 +43,9 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v3
-      # - run: rm ~/.pm2/logs/*
+      - run: rm ~/.pm2/logs/*
+      - run: cp ~/actions-runner/_work/arablocalmarket/.env .env
+      - run: cp ~/actions-runner/_work/arablocalmarket/alm-bucket.json alm-bucket.json
       - run: npm i --production
-      - run: npx pm2 start server.js --name app
-#     - run: npx pm2 restart app --cron-restart="0 23 * * *"
-
+      # - run: npx pm2 start server.js --name app # only for the first deployment
+      - run: npx pm2 restart app --cron-restart="0 23 * * *"
