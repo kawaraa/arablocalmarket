@@ -29,7 +29,6 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v3
-      # - working-directory: ./backend
       - run: ls
       - run: npm ci
       - run: npm run build
@@ -46,9 +45,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       # - run: rm ~/.pm2/logs/*
-      # - working-directory: ./backend
       - run: ls
-      - run: npm instal --production
+      - run: npm i --production
       - run: npx pm2 start server.js --name app
 #     - run: npx pm2 restart app --cron-restart="0 23 * * *"
 
