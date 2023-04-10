@@ -54,11 +54,11 @@ export async function fetchUser() {
   const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
   user.myStores = (await request("store", "GET", { query: q1 })).data;
 
-  const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores]=*&populate[favoriteProducts][populate]=image,variants`;
+  const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores][populate]=owner,cover,ratings&populate[favoriteProducts][populate]=image,variants`;
   const { id, attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
   user.customerId = id;
-  user.workStores = attributes.workStores.data;
-  user.favoriteStores = attributes.favoriteStores.data;
+  user.workStores = attributes.workStores.data.map(removeAttributes);
+  user.favoriteStores = attributes.favoriteStores.data.map(removeAttributes);
   user.cart = attributes.cart;
 
   const ps = attributes.favoriteProducts.data;
@@ -89,4 +89,9 @@ export async function fetchUser() {
   user.favoriteProducts = stores;
 
   return user;
+}
+
+export function removeAttributes(data) {
+  data.attributes.id = data.id;
+  return data.attributes;
 }

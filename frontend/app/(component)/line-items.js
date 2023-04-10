@@ -5,7 +5,7 @@ import { IconButton } from "./(styled)/button";
 
 export default function LineItems({ favorite, bill, storeId, items, currency, onRemove, cls }) {
   return (
-    <ul dir="ltr" className={"mt-4 mb-1 space-y-3 print:!text-lg " + cls}>
+    <ul className={"mt-4 mb-1 space-y-3 print:!text-lg " + cls}>
       {items.map((item, i) => (
         <li className="flex " key={i}>
           <div className="overflow-hidden w-12 max-h-12 flex items-center rounded-md">
@@ -17,7 +17,8 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
               className="w-full"
             />
           </div>
-          <div className="flex-1 ml-2 flex">
+          <span className="w-2 h-2"></span>
+          <div className="flex-1 flex">
             <div className="overflow-hidden flex-1 ml-2">
               <Link
                 href={`/store/${storeId}/product/${item.productNumber}`}

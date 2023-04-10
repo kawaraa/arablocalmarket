@@ -30,7 +30,8 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
   },
 
   async find(ctx) {
-    const storeId = ctx.query.filters?.orders?.store?.id?.$eq;
+    let storeId = ctx.query.filters?.orders?.store?.id?.$eq;
+    if (!storeId) storeId = ctx.query.filters?.workStores?.id?.$eq;
     if (!storeId) return ctx.unauthorized();
 
     const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);

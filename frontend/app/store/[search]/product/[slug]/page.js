@@ -45,6 +45,7 @@ export default async function ProductBySlug({ params }) {
 
       <div className="relative ">
         <Options store={store} {...product} />
+
         <div className="absolute right-3 bottom-0 text-sm font-light">
           <span id="product-stock" className="font-medium">
             {product.variants[0].quantity}

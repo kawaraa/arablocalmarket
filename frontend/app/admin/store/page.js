@@ -37,15 +37,16 @@ export default function Stores() {
             <StoreCard
               lang={lang}
               Tag="li"
-              admin
+              admin={activeTab?.key != "favorite"}
               link={`/admin/store/${store.id}`}
               name={store.name}
-              imageUrl={store.cover.data.attributes.url}
+              imageUrl={store.cover.data?.attributes.url}
               totalOrders={store.orders}
               employees={store.workers}
               ratings={store.ratings}
               favorites={store.favorites}
               open={store.open}
+              distance={{ length: 0, unit: "KM" }}
               cls="w-full sm:w-1/2 xl:w-1/3"
               key={i}
             />

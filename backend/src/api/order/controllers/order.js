@@ -74,6 +74,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     const { data, meta } = await super.find(ctx);
 
     let owner = false;
+    if (!data || !data[0]) owner = true;
     data.forEach((d) => {
       const isOwner = ctx.state.user.id == d.attributes.store?.data?.attributes?.owner;
       if (isOwner || ctx.state.user.id == d.attributes.customer?.user) owner = true;

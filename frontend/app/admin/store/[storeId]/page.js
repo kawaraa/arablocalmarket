@@ -6,7 +6,7 @@ import { AppSessionContext } from "../../../app-session-context";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 
-export default function StoreOrders({ params, searchParams }) {
+export default function StoreOrders({}) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [clickedOrder, setClickedOrder] = useState(null);
   const [openOrder, setOpenOrder] = useState(false);
@@ -17,7 +17,7 @@ export default function StoreOrders({ params, searchParams }) {
     setTimeout(() => setClickedOrder(null), 300);
   };
 
-  const selectOrder = (order) => {
+  const previewOrder = (order) => {
     setClickedOrder(order);
     setTimeout(() => setOpenOrder(true), 300);
   };
@@ -41,7 +41,12 @@ export default function StoreOrders({ params, searchParams }) {
     try {
       const query = `?filters[store][owner][$eq]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*`;
       const { data } = await request("order", "GET", { query });
-      data.forEach((d) => (d.attributes.currency = d.attributes.currency.split("-")[0]));
+      data.forEach((d) => {
+        if (d.attributes.customer?.name?.toLowerCase().includes("pos") && lang != "en") {
+          d.attributes.customer.name = shdCnt.customerName[lang];
+        }
+        d.attributes.currency = d.attributes.currency.split("-")[0];
+      });
       setOrders(data);
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
@@ -55,10 +60,10 @@ export default function StoreOrders({ params, searchParams }) {
   }, []);
 
   return (
-    <div>
+    <>
       <ul className="print:hidden">
         {orders.map((o, i) => (
-          <OrderCard lang={lang} id={o.id} {...o.attributes} onClick={selectOrder} admin key={i} />
+          <OrderCard lang={lang} id={o.id} {...o.attributes} onClick={previewOrder} admin key={i} />
         ))}
       </ul>
 
@@ -68,8 +73,9 @@ export default function StoreOrders({ params, searchParams }) {
         onClose={clearSelectedOrder}
         onChange={handleChange}
         {...clickedOrder}
-        admin></OrderDetailsPopup>
-    </div>
+        admin
+      />
+    </>
   );
 }
 

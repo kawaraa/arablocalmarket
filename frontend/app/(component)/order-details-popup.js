@@ -9,7 +9,7 @@ import SvgIcon from "./(styled)/svg-icon";
 import LineItems from "./line-items";
 import { Textarea, ToggleSwitch } from "./(styled)/inputs";
 
-export default function OrderDetails({ open, onClose, onChange, onRemoveItem, admin, pos, ...order }) {
+export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveItem, admin, pos, ...order }) {
   const { lang, addMessage } = useContext(AppSessionContext);
   const [print, setPrint] = useState(false);
   const [loading, setLoading] = useState(false);

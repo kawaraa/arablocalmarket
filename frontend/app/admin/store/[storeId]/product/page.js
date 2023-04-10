@@ -45,7 +45,7 @@ export default function StoreProducts({ params, searchParams }) {
 
   const foundProducts = products;
 
-  if (!user || !store) return null;
+  if (!store) return null;
   return (
     <div>
       <LinkButton
