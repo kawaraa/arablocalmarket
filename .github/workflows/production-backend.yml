@@ -47,5 +47,6 @@ jobs:
       - run: cp ~/actions-runner/_work/arablocalmarket/.env .env
       - run: cp ~/actions-runner/_work/arablocalmarket/alm-bucket.json alm-bucket.json
       - run: npm i --production
+      - run: npm run build
       # - run: npx pm2 start server.js --name app # only for the first deployment
       - run: npx pm2 restart app --cron-restart="0 23 * * *"
