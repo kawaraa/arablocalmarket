@@ -1,9 +1,9 @@
 "use client";
 import { useContext } from "react";
-import SvgIcon from "./(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
+import SvgIcon from "./(styled)/svg-icon";
 
-export default function ProductCardButtons({ productId }) {
+export default function ProductCardButtons({ productId, variantsNumber, title, admin }) {
   const { user } = useContext(AppSessionContext);
 
   const handleAddToFavorite = (e) => {
@@ -17,9 +17,18 @@ export default function ProductCardButtons({ productId }) {
   return (
     <>
       <span className="flex-1"></span>
-      <button className={`w-5 hover:text-red ${getCls()}`} onClick={handleAddToFavorite}>
-        <SvgIcon name="heart" />
-      </button>
+      {admin ? (
+        <div className="flex items-center">
+          {variantsNumber}
+          <span role="img" className="w-[18px] ml-1" title={title}>
+            <SvgIcon name="boxes" />
+          </span>
+        </div>
+      ) : (
+        <button className={`w-5 hover:text-red ${getCls()}`} onClick={handleAddToFavorite}>
+          <SvgIcon name="heart" />
+        </button>
+      )}
     </>
   );
 }

@@ -8,54 +8,57 @@ import shsCnt from "../../../../(layout)/json/shared-content.json";
 
 export default function Options({ store, id, variants, name, image, discount }) {
   const { lang, addMessage } = useContext(AppSessionContext);
+  const [item, setItem] = useState({ options: [], quantity: 1 });
   const [options, setOptions] = useState({});
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-  const [maxQuantity, setMaxQuantity] = useState(variants[0].quantity);
 
-  const updateSelectedOptions = (index, value) => {
-    const sp = [...selectedOptions];
-    sp[index] = value;
+  let index = variants.findIndex(
+    (v) => v.options.filter((o) => item.options.includes(o.value)).length == item.options.length
+  );
+  if (index < 0) index = 0;
 
-    if (sp.length == Object.keys(options).length) {
-      const variant = variants.find((v) => v.options.filter((o) => sp.includes(o.value)).length == sp.length);
-      const item = {
-        storeId: store.id,
-        storeName: store.name,
-        phone: store.meta?.phone,
-        currency: store.currency,
-        productNumber: id,
-        barcode: variant.barcode,
-        title: name + " " + variant.options.map((o) => o.value).join(" - "),
-        imageUrl: image.data?.attributes?.url,
-        price: variant.price,
-        discount: discount || 0,
-        quantity,
-      };
+  const updateItemOptions = (optionIndex, value) => {
+    const variant = variants[index];
+    const copy = { ...item };
+    copy.options[optionIndex] = value;
 
-      window.localStorage.setItem("checkoutItems", JSON.stringify([item]));
-      document.getElementById("product-price").innerHTML = variant.price;
-      document.getElementById("product-stock").innerHTML = variant.quantity;
+    const checkoutItem = {
+      storeId: store.id,
+      storeName: store.name,
+      phone: store.meta?.phone,
+      currency: store.currency,
+      productNumber: id,
+      barcode: variant.barcode,
+      title: name + " " + variant.options.map((o) => o.value).join(" - "),
+      imageUrl: image.data?.attributes.formats.thumbnail.url,
+      price: variant.price,
+      discount: discount || 0,
+      quantity: copy.quantity,
+    };
 
-      setMaxQuantity(variant.quantity);
-    }
+    window.localStorage.setItem("checkoutItems", JSON.stringify([checkoutItem]));
+    document.getElementById("product-price").innerHTML = variant.price;
+    document.getElementById("product-stock").innerHTML = +variant.quantity - +copy.quantity;
 
-    setSelectedOptions(sp);
+    setItem(copy);
   };
 
-  const updateQuantity = (num) => {
+  const updateItemQuantity = (num) => {
+    const stock = variants[index].quantity;
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
     if (!items) return addMessage({ type: "warning", text: shsCnt.noItemErr[lang], duration: 4 });
-    items[0].quantity = num < 1 ? 1 : num <= maxQuantity ? num : maxQuantity;
+
+    items[0].quantity = num < 1 ? 1 : num > stock ? stock : num;
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
-    setQuantity(items[0].quantity);
+
+    const copy = { ...item };
+    copy.quantity = num < 1 ? 1 : num > stock ? stock : num;
+    setItem(copy);
   };
 
   useEffect(() => {
     const options = {};
-
     for (const variant of variants) {
-      const sV = variant.options.find((opt) => !selectedOptions[0] || selectedOptions.includes(opt.value));
+      const sV = variant.options.find((opt) => !item.options[0] || item.options.includes(opt.value));
       variant.options.forEach((opt, i) => {
         if (sV || i === 0) {
           if (options[opt.name]) options[opt.name].add(opt.value);
@@ -66,9 +69,14 @@ export default function Options({ store, id, variants, name, image, discount }) 
 
     Object.keys(options).forEach((name) => (options[name] = Array.from(options[name])));
     setOptions(options);
-  }, [selectedOptions]);
+  }, [item.options]);
 
   useEffect(() => {
+    if (variants) {
+      const copy = { ...item };
+      copy.options[0] = variants[index].options[0].value;
+      setItem(copy);
+    }
     window.localStorage.removeItem("checkoutItems");
     if (window.localStorage.getItem("checkoutItems")) window.localStorage.removeItem("checkoutItems");
   }, []);
@@ -79,19 +87,19 @@ export default function Options({ store, id, variants, name, image, discount }) 
         <VariantOptions
           name={name}
           values={options[name]}
-          onSelect={(value) => updateSelectedOptions(i, value)}
-          selectedOptions={selectedOptions}
+          onSelect={(value) => updateItemOptions(i, value)}
+          selectedOptions={item.options}
           label
           key={i}
         />
       ))}
       <NumberInputWithControl
         name="quantity"
-        value={quantity}
+        value={item.quantity}
         step="1"
         min="1"
-        max={maxQuantity}
-        onChange={updateQuantity}
+        max={variants[index].quantity}
+        onChange={updateItemQuantity}
         title="Quantity"
         cls="mt-7 mb-3 !flex justify-center"
       />

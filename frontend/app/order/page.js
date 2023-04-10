@@ -1,9 +1,10 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import { request } from "../(service)/api-provider";
 import OrderCard from "../(component)/order-card";
+// import ComboBox from "../(component)/combobox";
 
 export default function Orders(props) {
   const router = useRouter();
@@ -26,15 +27,15 @@ export default function Orders(props) {
 
   useEffect(() => {
     document.title = "Admin Orders - ALM";
-    if (!user) router.replace("/signin");
-    else fetchOrders();
+    // if (!user) router.replace("/signin");
+    // else fetchOrders();
   }, [user]);
 
   if (!user) return null;
   return (
     <div>
       <h1 className="">Orders!</h1>
-
+      {/* <ComboBox /> */}
       <section>
         <h3>Store 1 name</h3>
 

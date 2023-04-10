@@ -19,6 +19,9 @@
       { "en": "sunday", "ar": "الأحد" }
     ]
   },
+  "variants": { "en": "Variants", "ar": "اصناف" },
+  "stock": { "en": "In stock", "ar": "في المخزن" },
+  "add": { "en": "Add", "ar": "أضف" },
   "checkout": { "en": "Checkout", "ar": "تاكيد الطلب" },
   "print": { "en": "Print", "ar": "طباعة" },
   "payment": {

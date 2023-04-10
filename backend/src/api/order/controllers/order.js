@@ -5,36 +5,35 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
+    const posOrder = ctx.request.body.data?.customer?.id == 32;
     const oldItems = ctx.request.body.data.lineItems;
 
     const store = await strapi.service("api::store.store").findOne(ctx.request.body.data.storeId);
 
+    if (posOrder && store?.owner != ctx.state.user?.id) ctx.unauthorized();
+
     const { results } = await strapi.service("api::product.product").find({
       filters: { id: oldItems.map(({ productNumber }) => productNumber) },
-      populate: { variants: { populate: { options: true } } },
+      populate: { image: true, variants: { populate: { options: true } } },
     });
 
-    const items = [];
     for (const product of results) {
-      const it = oldItems.find((item) => item.productNumber == product.id);
-      if (!it) continue;
+      const index = oldItems.findIndex((item) => item.productNumber == product.id);
+      if (index < 0) continue;
       for (const variant of product.variants) {
-        if (it.barcode != variant.barcode) continue;
-        items.push({
-          productNumber: product.id + "",
-          barcode: variant.barcode,
-          title: product.name + " " + variant.options.map((op) => op.value).join(" - "),
-          price: variant.price,
-          discount: variant.discount || 0,
-          quantity: it.quantity,
-        });
+        if (oldItems[index].barcode != variant.barcode) continue;
+        oldItems[index].productNumber = product.id + "";
+        oldItems[index].title = product.name + " " + variant.options.map((op) => op.value).join(" - ");
+        oldItems[index].price = variant.price;
+        oldItems[index].discount = variant.discount || 0;
+        oldItems[index].imageUrl = product.image.formats.thumbnail.url;
       }
     }
 
-    if (ctx.state.user) {
+    if (!posOrder && ctx.state.user) {
       const options = { where: { user: ctx.state.user.id }, select: ["id"] };
       ctx.request.body.data.customer = (await strapi.db.query("api::customer.customer").findOne(options)).id;
-    } else {
+    } else if (!posOrder) {
       let name = "Visitor";
       if (ctx.request.body.data.address) {
         name = ctx.request.body.data.address.firstName + " " + ctx.request.body.data.address.lastName;
@@ -52,9 +51,9 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     }
 
     ctx.request.body.data.store = store.id;
-    ctx.request.body.data.lineItems = items;
+    ctx.request.body.data.lineItems = oldItems;
     ctx.request.body.data.currency = store.currency;
-    ctx.request.body.data.total = items.reduce((total, item) => total + item.price * item.quantity, 0);
+    ctx.request.body.data.total = oldItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     await strapi.service("api::order.order").create(ctx.request.body);
     return ctx.request.body;

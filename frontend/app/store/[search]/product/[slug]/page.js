@@ -3,6 +3,7 @@ import ActionButtons, { Stock } from "../(component)/action-buttons";
 import Options from "../(component)/options";
 import { serverRequest } from "../../../../(service)/api-provider";
 import { ShareButton } from "../../../../(component)/share-button";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
 // import Images from "../(component)/images";
 const q = "?fields=name,currency,meta";
 const q1 =
@@ -48,7 +49,7 @@ export default async function ProductBySlug({ params }) {
           <span id="product-stock" className="font-medium">
             {product.variants[0].quantity}
           </span>{" "}
-          <span className="sr-only">in stock</span>
+          {/* <span className="sr-only"> {shdCnt.stock[lang]}</span> */}
           <Stock />
         </div>
       </div>

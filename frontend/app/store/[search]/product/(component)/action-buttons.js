@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
 import { Button, IconButton } from "../../../../(component)/(styled)/button";
@@ -75,11 +75,10 @@ export default function ActionButtons({}) {
 
 export function Stock() {
   const { lang } = useContext(AppSessionContext);
-  return content.stock[lang];
+  return shdCnt.stock[lang];
 }
 
 const content = {
-  stock: { en: "in stock", ar: "في المخزون" },
   buyBtn: { en: "Buy", ar: "شراء" },
   addedToCart: { en: "Added new item to the cart", ar: "تمت إضافة عنصر جديد إلى سلة التسوق" },
   addedToFav: { en: "Added new item to the favorite", ar: "تمت إضافة عنصر جديد إلى المفضلة" },

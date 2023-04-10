@@ -86,7 +86,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();
-      if (error.message == "Permission denied") onError("Can not access camera.");
+      if (error.message == "Permission denied") onError(content.permissionErr[lang]);
       else onError(error.message);
     }
   };
@@ -124,6 +124,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
     </div>
   );
 }
+const content = { permissionErr: { en: "Could not access camera.", ar: "تعذر الوصول إلى الكاميرا" } };
 
 const readers = [
   "ean_reader",

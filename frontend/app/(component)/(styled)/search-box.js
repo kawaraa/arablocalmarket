@@ -7,10 +7,9 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
 
   const handleFinish = (e) => {
     e.preventDefault();
-    // Hide the keyboard.
-    inputRef.current?.setAttribute("readonly", true);
+    inputRef.current?.setAttribute("readonly", true); // This will hide the keyboard.
     setTimeout(() => inputRef.current?.removeAttribute("readonly"), 200);
-    if (onFinish) onFinish(inputRef.current?.value || "");
+    if (onFinish) onFinish(inputRef.current?.value.toLowerCase() || "");
   };
 
   return (
@@ -19,7 +18,7 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
         ref={inputRef}
         type="search"
         name="search"
-        onChange={(e) => onSearch && onSearch(e.target.value)}
+        onChange={(e) => onSearch && onSearch(e.target.value.toLowerCase() || "")}
         onBlur={onBlur && handleFinish}
         defaultValue={search}
         autoComplete="search"

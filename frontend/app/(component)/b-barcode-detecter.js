@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { IconButton } from "./(styled)/button";
 
-export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls }) {
+export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClose, cls }) {
   const videoRef = useRef(document.createElement("video"));
   const canvasRef = useRef(null);
   const width = 500;
@@ -71,7 +71,7 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
     } catch (error) {
       console.error(`${error.name}: ${error.message}`);
       stopStreams();
-      if (error.message == "Permission denied") onError("Can not access camera.");
+      if (error.message == "Permission denied") onError(content.permissionErr[lang]);
       else onError(error.message);
     }
   };
@@ -104,6 +104,8 @@ export default function BrowserBarcodeDetecter({ onDetect, onError, onClose, cls
     </div>
   );
 }
+
+const content = { permissionErr: { en: "Could not access camera.", ar: "تعذر الوصول إلى الكاميرا" } };
 
 const formats = [
   "aztec",

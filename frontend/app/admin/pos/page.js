@@ -2,56 +2,74 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
+import { request } from "../../(service)/api-provider";
 import Modal from "../../(component)/(styled)/modal";
 import { Button, IconButton } from "../../(component)/(styled)/button";
 import SearchBox from "../../(component)/(styled)/search-box";
 import ProductCard from "../../(component)/product-card";
 import BarcodeScanner from "../../(component)/barcode-scanner";
 import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
-import SelectProductPopup from "./(component)/select-product-popup";
+import ProductPopup from "./(component)/product-popup";
 import OrderDetailsPopup from "../../(component)/order-details-popup";
-import { request } from "../../(service)/api-provider";
 
 export default function POS({ params, searchParams }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
-  const [store, setStore] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [search, setSearch] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
   const [showScanner, setShowScanner] = useState(false);
+  const [store, setStore] = useState(null);
+  // const [customers, setCustomers] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [order, setOrder] = useState({
+    lineItems: [],
+    status: "PENDING",
+    payment: { type: "ON-DELIVERY", method: "CASH" },
+    delivery: "pickup",
+    note: "",
+  });
+  const [search, setSearch] = useState("");
   const [clickedProduct, setClickedProduct] = useState(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
 
-  // console.log("Todo: Show store based on this: >>> storeId: ", searchParams.storeId);
+  const onScanErr = () => addMessage({ type: "error", text: err.message, duration: 5 });
 
-  const handleSearch = async (searchText) => {
+  const handleBarcodeDetect = async (barcode) => {
+    if (!barcode) return addMessage({ type: "warning", text: content.noItem[lang], duration: 2.5 });
+    const p = products.find((p) => {
+      const variant = p.variants.find((v) => v.barcode == barcode);
+      if (variant) {
+        const newItem = { productNumber: p.id, barcode: variant.barcode, price: variant.price, quantity: 1 };
+        newItem.title = `${p.name} ${item.options.join(" - ")}`;
+        newItem.imageUrl = p.image.data?.attributes.formats.thumbnail.url;
+
+        addItem(newItem);
+      }
+    });
+    if (!p) addMessage({ type: "warning", text: content.noItem[lang], duration: 2.5 });
+    setSearch(barcode);
     if (showScanner) setShowScanner(false);
-    setSearch(searchText);
   };
 
-  const addItem = (p) => {
-    console.log("addItem", p);
-    // selectedItems
-    setSelectedItems(fakeItems);
-    setClickedProduct(null);
+  const addItem = (newItem) => {
+    setOrder({ ...order, lineItems: [...order.lineItems, newItem] });
+    if (clickedProduct) setClickedProduct(null);
   };
-  const removeItem = (index) => {
-    console.log("Removing item", index);
-    setSelectedItems(fakeItems.filter((_, i) => i !== index));
-    // if (!fakeItems[1]) setShowOrderDetails(false);
+  const removeItem = (index, all) => {
+    const copy = { ...order };
+    if (all) copy.lineItems = [];
+    else copy.lineItems.splice(index, 1);
+    setOrder(copy);
+    if (!copy.lineItems[0]) setShowOrderDetails(false);
   };
 
-  const handleStatusChange = ({ target: { value } }) => {
-    console.log(value);
-    setClickedOrder({ ...clickedOrder, status: value });
+  const handleChange = ({ name, value }) => {
+    setOrder({ ...order, [name]: value });
   };
 
   const fetchProducts = async (id) => {
     try {
-      const { data } = await request("product", "GET", { query: `?filters[storeId][$eq]=${id}&populate=*` });
-
+      const query = `?filters[storeId][$eq]=${id}&populate[image]=*&populate[variants][populate]=*&populate[favorites]=*&populate[ratings]=*`;
+      const { data } = await request("product", "GET", { query });
       setProducts(
         data.map((d) => {
           d.attributes.id = d.id;
@@ -63,6 +81,22 @@ export default function POS({ params, searchParams }) {
     }
   };
 
+  // This customer used to query the stores customers
+  // const fetchCustomers = async (id) => {
+  //   try {
+  //     const CustomersQuery = `?filters[orders][store][id][$eq]=${id}&fields=user,name`;
+  //     const { data } = await request("customer", "GET", { query: CustomersQuery });
+  //     setCustomers(
+  //       data.map(({ id, attributes }) => {
+  //         attributes.id = id;
+  //         return attributes;
+  //       })
+  //     );
+  //   } catch (err) {
+  //     addMessage({ type: "error", text: err.message, duration: 5 });
+  //   }
+  // };
+
   useEffect(() => {
     if (!user) router.replace("/signin");
     else {
@@ -71,6 +105,7 @@ export default function POS({ params, searchParams }) {
         store.currency = store.currency.split("-")[0];
         setStore(store);
         fetchProducts(store.id);
+        // fetchCustomers(store.id);
       }
     }
   }, [user]);
@@ -81,11 +116,13 @@ export default function POS({ params, searchParams }) {
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
-  const foundProducts = products;
+  const foundProducts = products.filter(
+    (p) =>
+      p.name.toLowerCase().includes(search) ||
+      p.description?.toLowerCase().includes(search) ||
+      p.variants.find((v) => v.barcode.includes(search))
+  );
 
-  // console.log(selectedItems);
-  // console.log("store: >>> ", store);
-  console.log("products: >>> ", products);
   if (!user || !store) return null;
   return (
     <>
@@ -95,7 +132,7 @@ export default function POS({ params, searchParams }) {
             type="button"
             onClick={() => setShowScanner(true)}
             icon="scan"
-            title="Show search filter"
+            title={content.scanBtn[lang]}
             aria-expanded="true"
             aria-haspopup="dialog"
             cls="w-12 p-1 hover:text-pc transition"
@@ -105,7 +142,6 @@ export default function POS({ params, searchParams }) {
             label={content.search[lang]}
             onSearch={setSearch}
             search={search}
-            // onFinish={handleSearch}
             inCls="p-2"
             cls="flex-1 "
           />
@@ -116,7 +152,7 @@ export default function POS({ params, searchParams }) {
           {content.h1[lang][1]}
         </h1>
 
-        <ul className="flex flex-wrap">
+        <ul dir="ltr" className="flex flex-wrap">
           {foundProducts.map((p, i) => (
             <ProductCard
               lang={lang}
@@ -125,6 +161,7 @@ export default function POS({ params, searchParams }) {
               product={p}
               admin
               key={i}
+              priority={i < 10}
             />
           ))}
         </ul>
@@ -133,42 +170,43 @@ export default function POS({ params, searchParams }) {
       <Modal title={content.scanner[lang]} open={showScanner} center>
         {browserSupportBarcodeScanner ? (
           <BrowserBarcodeDetecter
-            onDetect={handleSearch}
-            onError={(e) => console.log("Scanner Error: >>> " + e)}
+            lang={lang}
+            onDetect={handleBarcodeDetect}
+            onError={onScanErr}
             onClose={() => setShowScanner(false)}
             cls="mt-5"
           />
         ) : (
           <BarcodeScanner
-            onDetect={handleSearch}
-            onError={(e) => console.log("Scanner Error: >>> " + e)}
+            lang={lang}
+            onDetect={handleBarcodeDetect}
+            onError={onScanErr}
             onClose={() => setShowScanner(false)}
             cls="mt-5"
           />
         )}
       </Modal>
 
-      {/* <SelectProductPopup
+      <ProductPopup
         lang={lang}
         open={!!clickedProduct}
         product={clickedProduct}
         onCancel={() => setClickedProduct(null)}
+        setMsg={addMessage}
         onAddItem={addItem}
-      /> */}
+      />
 
-      {/* <OrderDetailsPopup
-        lang={lang}
+      <OrderDetailsPopup
         open={showOrderDetails}
         onClose={() => setShowOrderDetails(false)}
-        onStatusChange={handleStatusChange}
+        onChange={handleChange}
         onRemoveItem={removeItem}
-        lineItems={selectedItems}
         currency={store.currency}
+        // customers={customers}
+        {...order}
+        storeId={store.id}
+        total={order.lineItems.reduce((t, it) => t + +it.price * +it.quantity, 0)}
         discount={0}
-        total={120}
-        status={"PENDING"}
-        payment={{ type: "ON-DELIVERY", method: "CASH" }}
-        note={""}
         admin
         pos
       />
@@ -176,12 +214,12 @@ export default function POS({ params, searchParams }) {
       <Button
         onClick={() => setShowOrderDetails(true)}
         icon="cart"
-        cls="fixed bottom-10 right-8 !text-bg !p-0 w-10 h-10 !rounded-full"
+        cls="fixed bottom-10 right-8 !text-bg !p-0 w-12 h-12 !rounded-full"
         iconCls="w-8">
-        <span className="absolute -top-3 -right-1 font-semibold text-red text-lg">
-          {selectedItems.length || 10}
+        <span className="absolute -top-2 -right-1 px-1 leading-6 font-semibold text-bg text-lg bg-blur rounded-lg">
+          {order.lineItems.length}
         </span>
-      </Button> */}
+      </Button>
     </>
   );
 }
@@ -192,88 +230,6 @@ const content = {
   search: { en: "Search for a product", ar: "ابحث عن منتج" },
   okBtn: { en: "Search", ar: "بحث" },
   scanner: { en: "Scan a product barcode", ar: "مسح رمز أو رقم المنتج" },
+  scanBtn: { en: "Show barcode scanner", ar: "إظهار ماسح الباركود" },
+  noItem: { en: "No item found", ar: "لم يتم العثور على أي عنصر" },
 };
-
-const fakeItems = [
-  {
-    title: "Prepared food - small",
-    image: "/produce-vegetables-clipart.png",
-    price: 12.5,
-    quantity: 2,
-    discount: 0,
-  },
-];
-
-const fakeProducts = [
-  {
-    id: "321",
-    name: "Prepared food",
-    description: "Some product rich text description",
-    images: [{ id: "282", src: "/burger-prepared-food-clipart.png" }],
-    price: 12,
-    variants: [],
-    ratings: { stars: 3, total: 265 },
-  },
-  {
-    id: "12",
-    name: "Chips 1",
-    category: "snack",
-    description:
-      "Welcome to our supermarket, where we are committed to providing you with a convenient and enjoyable shopping experience. We understand that grocery shopping can be a chore, which is why we have worked hard to create a space that is easy to navigate, well-stocked with a wide range of products, and staffed by friendly and knowledgeable team members.",
-    price: 23,
-    vendor: "Nutella",
-    featuredImageId: "id-3231",
-    ratings: { stars: 4, total: 7632 },
-    images: [
-      { id: "id-3231", src: "/produce-vegetables-clipart.png" },
-      { id: "id-8686", src: "/dairy-clipart.png" },
-    ],
-    variants: [
-      {
-        id: "11",
-        barcode: "34564321234",
-        imageId: "id-3231",
-        price: 13,
-        comparePrice: 0,
-        quantity: 15,
-        weight: 1,
-        weightUnit: "KG",
-        options: [
-          { name: "color", value: "red" },
-          { name: "size", value: "small" },
-          { name: "material", value: "plastic" },
-        ],
-      },
-      {
-        id: "22",
-        barcode: "974321234",
-        imageId: "id-8686",
-        price: 8,
-        comparePrice: 0,
-        quantity: 10,
-        weight: 2,
-        weightUnit: "KG",
-        options: [
-          { name: "color", value: "green" },
-          { name: "size", value: "small" },
-          { name: "material", value: "metals" },
-        ],
-      },
-      {
-        id: "22",
-        barcode: "974321234",
-        imageId: "id-8686",
-        price: 8,
-        comparePrice: 0,
-        quantity: 10,
-        weight: 2,
-        weightUnit: "KG",
-        options: [
-          { name: "color", value: "green" },
-          { name: "size", value: "large" },
-          { name: "material", value: "metals" },
-        ],
-      },
-    ],
-  },
-];

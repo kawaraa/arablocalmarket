@@ -1,23 +1,27 @@
 "use client";
+import { useContext, useState } from "react";
+import { AppSessionContext } from "../app-session-context";
+import { request } from "../(service)/api-provider";
 import shdCnt from "../(layout)/json/shared-content.json";
 import Modal from "./(styled)/modal";
 import Badge from "./(styled)/badge";
 import SvgIcon from "./(styled)/svg-icon";
 import LineItems from "./line-items";
 import { Textarea, ToggleSwitch } from "./(styled)/inputs";
-import { useState } from "react";
 
-export default function OrderDetails({ lang, open, onClose, onChange, admin, pos, ...order }) {
+export default function OrderDetails({ open, onClose, onChange, onRemoveItem, admin, pos, ...order }) {
+  const { lang, addMessage } = useContext(AppSessionContext);
   const [print, setPrint] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     setLoading(true);
     try {
       if (pos) {
-        // Todo: checkout >>> fetch()
+        order.customer = { id: "32" };
+        const { customer } = (await request("order", "POST", { data: order })).data;
+        onRemoveItem(null, true);
       }
-      // Todo: clear items from the localStorage
 
       if (print || !pos) {
         const order = e.target.parentElement.parentElement.cloneNode(true);
@@ -26,11 +30,12 @@ export default function OrderDetails({ lang, open, onClose, onChange, admin, pos
         document.body.appendChild(order);
         window.print();
         location.reload();
+      } else {
+        addMessage({ type: "success", text: shdCnt.done[lang], duration: 5 });
       }
     } catch (error) {
-      console.log("handleCheckout Error: >>>", error);
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
-
     setLoading(false);
     onClose();
   };
@@ -51,6 +56,9 @@ export default function OrderDetails({ lang, open, onClose, onChange, admin, pos
                 {order.id}
               </span>
             )}
+
+            {/* {order.customers && order.customers[0] && <div>Search for a customers</div>} */}
+
             <label htmlFor="order-status" className="relative inline-flex rounded-full">
               <Badge
                 text={shdCnt.status[order.status][lang] || order.status}
@@ -75,7 +83,7 @@ export default function OrderDetails({ lang, open, onClose, onChange, admin, pos
             bill
             items={order.lineItems}
             currency={order.currency}
-            onRemove={pos ? order.onRemoveItem : null}
+            onRemove={pos ? onRemoveItem : null}
           />
 
           <p className="mt-3 pt-2 border-t-[1px] border-bc flex justify-between">
@@ -137,7 +145,7 @@ export default function OrderDetails({ lang, open, onClose, onChange, admin, pos
           {pos && (
             <ToggleSwitch
               checked={print}
-              onCheck={({ target }) => setPrint(target.checked)}
+              onChange={({ target }) => setPrint(target.checked)}
               cls="w-full mt-3 flex justify-between print:hidden">
               <span className="ml-3 text-sm font-medium">Print after checkout</span>
               <span className="w-2"></span>

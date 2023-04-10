@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
-// import ProductSearch from "../../../../(component)/product-search";
+import ProductSearch from "../../../../(component)/product-search";
 import ProductCard from "../../../../(component)/product-card";
 import { LinkButton } from "../../../../(component)/(styled)/button";
 import { request } from "../../../../(service)/api-provider";
@@ -42,7 +42,9 @@ export default function StoreProducts({ params, searchParams }) {
   useEffect(() => {
     document.title = "Admin store products - ALM";
   }, []);
-  console.log(products[0]);
+
+  const foundProducts = products;
+
   if (!user || !store) return null;
   return (
     <div>
@@ -55,13 +57,13 @@ export default function StoreProducts({ params, searchParams }) {
         iconCls="w-full"
       />
 
-      {/* <ProductSearch text={searchParams.search} /> */}
+      <ProductSearch text={searchParams.search} />
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}
       </h2>
-      <ul className="flex flex-wrap">
-        {products.map((p, i) => (
+      <ul dir="ltr" className="flex flex-wrap">
+        {foundProducts.map((p, i) => (
           <ProductCard
             lang={lang}
             currency={store.currency}
@@ -69,6 +71,7 @@ export default function StoreProducts({ params, searchParams }) {
             product={p}
             link={`/admin/store/${store.id}/product/${p.id}`}
             key={i}
+            priority={i < 10}
           />
         ))}
       </ul>

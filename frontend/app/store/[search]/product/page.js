@@ -66,7 +66,7 @@ export default async function ProductsByStore({ params, searchParams }) {
             {content.product[lang][0]}
             <span className="font-bold">( 9 )</span> {content.product[lang][1]}
           </h2>
-          <ul className="flex flex-wrap">
+          <ul dir="ltr" className="flex flex-wrap">
             {data.map((p, i) => (
               <ProductCard
                 lang={lang}
@@ -75,6 +75,7 @@ export default async function ProductsByStore({ params, searchParams }) {
                 id={p.id}
                 link={`/store/${storeId}/product/${p.id}`}
                 key={i}
+                priority={i < 10}
               />
             ))}
           </ul>
