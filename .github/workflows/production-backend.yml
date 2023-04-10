@@ -6,11 +6,18 @@ name: production-backend
 on:
   push:
     branches: ["main"]
+    # path:
+    #   paths:
+    #     - "backend/**"
+    #   paths-ignore:
+    #     - "frontend/**"
   pull_request:
     branches: ["main"]
-    paths:
-      - "backend/**"
-
+    # path:
+    #   paths:
+    #     - "backend/**"
+    #   paths-ignore:
+    #     - "frontend/**"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,20 +26,21 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
-      - run: cd backend
+      - working-directory: ./backend
       - run: ls
       - run: npm ci
       - run: npm run build
 
   deployment:
     runs-on: ["self-hosted", "Linux", "X64", "production-backend"]
+    environment: production
     strategy:
       matrix:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
       # - run: rm ~/.pm2/logs/*
-      - run: cd backend
+      - working-directory: ./backend
       - run: ls
       - run: npm instal --production
       - run: npx pm2 start server.js --name app
