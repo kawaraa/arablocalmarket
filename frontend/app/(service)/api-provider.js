@@ -4,7 +4,7 @@ import { validateError } from "./utilities";
 export function getURL(key) {
   if (!config.apiHost) {
     if (window.location.host.includes("localhost")) config.apiHost = "http://127.0.0.1:1337";
-    else config.apiHost = "https://api." + window.location.host;
+    else config.apiHost = "https://api.arablocalmarket.com";
   }
 
   return config.apiHost + config[key];
@@ -55,6 +55,7 @@ export async function request(url, method = "GET", data, type = "application/jso
 
 export async function fetchUser() {
   const user = await request("getUser");
+  if (!user || !user.id) return null;
 
   const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
   user.myStores = (await request("store", "GET", { query: q1 })).data;
