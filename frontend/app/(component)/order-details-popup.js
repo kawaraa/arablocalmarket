@@ -18,7 +18,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
     setLoading(true);
     try {
       if (pos) {
-        order.customer = { id: "32" };
+        order.customer = { id: "1" };
         const { customer } = (await request("order", "POST", { data: order })).data;
         onRemoveItem(null, true);
       }

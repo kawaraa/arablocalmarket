@@ -47,7 +47,8 @@ export function copyText(text = "", cb) {
 export function validateError(error) {
   console.log("validateError: >>> ", error);
   const lang = Cookies.get("lang") || "en";
-  const name = Object.keys(errors).find((errName) => error?.toLowerCase().includes(errName));
+  let name = Object.keys(errors).find((errName) => error?.toLowerCase().includes(errName));
+  if (/^(?=.*phone)(?=.*unique).*$/gim.test(error)) name = "phoneExist";
   return name ? errors[name][lang] : errors.wrong[lang];
 }
 
@@ -64,5 +65,9 @@ const errors = {
   "invalid identifier": {
     en: "Invalid Email or Password",
     ar: "البريد الإلكتروني أو كلمة السر خاطئة",
+  },
+  phoneExist: {
+    en: "Phone number is already in use",
+    ar: "رقم الهاتف قيد الاستخدام",
   },
 };

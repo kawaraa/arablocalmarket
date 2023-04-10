@@ -54,7 +54,7 @@ export default function Signup({ searchParams }) {
   };
 
   useEffect(() => {
-    if (user) router.replace(user?.myStores[0] ? "/admin/store" : "store");
+    if (user && user?.myStores) router.replace(user?.myStores[0] ? "/admin/store" : "store");
   }, [user]);
 
   if (user) return null;
