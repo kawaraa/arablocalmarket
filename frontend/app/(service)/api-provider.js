@@ -2,6 +2,11 @@ import config from "./config.json";
 import { validateError } from "./utilities";
 
 export function getURL(key) {
+  if (!config.apiHost) {
+    if (window.location.host.includes("localhost")) config.apiHost = "http://127.0.0.1:1337";
+    else config.apiHost = "api." + window.location.host;
+  }
+
   return config.apiHost + config[key];
 }
 

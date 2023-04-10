@@ -1,5 +1,5 @@
 {
-  "apiHost": "http://127.0.0.1:1337",
+  "apiHost": null,
   "signUp": "/api/auth/local/register",
   "signIn": "/api/auth/local",
   "getUser": "/api/users/me?populate=*",
