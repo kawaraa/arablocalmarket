@@ -72,13 +72,15 @@ export default function Options({ store, id, variants, name, image, discount }) 
   }, [item.options]);
 
   useEffect(() => {
+    // window.localStorage.removeItem("checkoutItems");
+
     if (variants) {
+      const { options } = variants[index];
       const copy = { ...item };
-      copy.options[0] = variants[index].options[0].value;
+      copy.options[0] = options[0].value;
       setItem(copy);
+      options.forEach((o, i) => updateItemOptions(i, o.value));
     }
-    window.localStorage.removeItem("checkoutItems");
-    if (window.localStorage.getItem("checkoutItems")) window.localStorage.removeItem("checkoutItems");
   }, []);
 
   return (

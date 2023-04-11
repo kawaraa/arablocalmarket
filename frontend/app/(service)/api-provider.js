@@ -1,12 +1,8 @@
 import config from "./config.json";
 import { validateError } from "./utilities";
+config.apiHost = process.env.NEXT_PUBLIC_API_HOST;
 
 export function getURL(key) {
-  if (!config.apiHost) {
-    if (window.location.host.includes("localhost")) config.apiHost = "http://127.0.0.1:1337";
-    else config.apiHost = "https://api.arablocalmarket.com";
-  }
-
   return config.apiHost + config[key];
 }
 
@@ -65,7 +61,40 @@ export async function fetchUser() {
   user.customerId = id;
   user.workStores = attributes.workStores.data.map(removeAttributes);
   user.favoriteStores = attributes.favoriteStores.data.map(removeAttributes);
-  user.cart = attributes.cart;
+
+  const sIds = attributes.cart.map((it) => "filters[id][$in]=" + it.storeId).join("&");
+  const storeCts = (await request("store", "GET", { query: `?${sIds}&fields=name,currency,meta` })).data;
+
+  const pIds = attributes.cart.map((it) => "filters[id][$in]=" + it.productNumber).join("&");
+  const { data } = await request("product", "GET", {
+    query: `?${pIds}&fields=name&populate[image]=*&populate[variants][populate][options]=*`,
+  });
+
+  storeCts.forEach((s) => {
+    s.currency = s.currency.split("-")[0];
+    s.phone = s.meta.phone;
+    delete s.meta;
+    s.total = 0;
+
+    s.items = attributes.cart.filter((item) => {
+      if (item.storeId != s.id) return false;
+      const product = data.find((p) => p.id == item.productNumber)?.attributes;
+      if (!product) return false;
+
+      const variant = product.variants.find((v) => v.barcode == item.barcode);
+      if (!variant) return false;
+
+      item.title = product.name + " - " + variant.options.map((o) => o.value).join(" - ");
+      item.imageUrl = product.image.data?.attributes.formats.thumbnail.url;
+      item.price = variant.price;
+      item.discount = product.discount || 0;
+      s.total += +item.price;
+
+      return item;
+    });
+  });
+
+  user.cart = storeCts.filter((c) => !!c.items[0]);
 
   const ps = attributes.favoriteProducts.data;
   const ids = ps.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
@@ -75,11 +104,12 @@ export async function fetchUser() {
     s.currency = s.currency.split("-")[0];
     s.phone = s.meta.phone;
     delete s.meta;
+    s.total = 0;
+
     s.items = ps
       .filter((p) => p.attributes.storeId == s.id)
       .map((p) => {
         const { name, image, variants } = p.attributes;
-        s.total = 0;
         s.total += +variants[0].price;
         return {
           productNumber: p.id,

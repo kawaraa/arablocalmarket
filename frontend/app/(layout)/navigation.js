@@ -13,15 +13,13 @@ import EmptyState from "../(component)/(styled)/empty-state";
 export default function Navigation() {
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-  const { lang, updateLang, themeMode, updateThemeMode, user, cart } = useContext(AppSessionContext);
+  const { lang, updateLang, themeMode, updateThemeMode, user } = useContext(AppSessionContext);
 
   const signinLink = content.navLinks[content.navLinks.length - 1];
-
   const initials = !user ? null : user.firstName[0] + user.lastName[0];
+  let cartItems = JSON.parse(window.localStorage.getItem("cartItems"))?.length || 0;
+  if (user?.cart && user.cart[0]) cartItems += user.cart.reduce((t, c) => t + c.items.length, 0);
 
-  // const itemsNumber = user?.cart.length || window.localStorage.getItem("carts")
-
-  console.log(user);
   useEffect(() => {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
@@ -118,7 +116,9 @@ export default function Navigation() {
           <span className="w-6 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
             <SvgIcon name="cart" />
           </span>
-          <span className="text-sm font-medium text-red -mt-1">{cart.items.length || 10}</span>
+          <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
+            {cartItems}
+          </span>
         </Link>
 
         {user ? (

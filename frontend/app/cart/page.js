@@ -12,31 +12,41 @@ export default function Cart({ params, searchParams }) {
   const [activeTab, setActiveTab] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [carts, setCarts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   const tabs = content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }));
   const favorite = activeTab?.path?.includes("favorite");
 
-  const deleteFromCart = (storeId, index) => {
-    const copy = [...carts];
-    copy.forEach((c) => c.id == storeId && c.items.splice(index, 1));
+  const deleteFromCart = async (storeId, barcode) => {
+    const copy = [...cart];
+    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => it.barcode != barcode)));
     const c = copy.filter((c) => !!c.items[0]);
 
-    window.localStorage.setItem("carts", JSON.stringify(c));
+    setAppLoading(true);
 
-    setCarts(c);
-
-    if (user) {
+    if (!user) {
+      let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
+      cartItems = cartItems.filter((it) => it.storeId != storeId && it.barcode != barcode);
+      window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    } else {
       // Todo: remove the item from the backend
     }
+
+    setCart(c);
+    setAppLoading(false);
   };
 
-  const deleteFromFavorite = (storeId, index) => {
+  const deleteFromFavorite = async (storeId, barcode) => {
     if (!user?.favoriteProducts) return;
     const copy = [...user.favoriteProducts];
-    copy.forEach((c) => c.id == storeId && c.items.splice(index, 1));
+    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => it.barcode != barcode)));
+
+    setAppLoading(true);
+
     // Todo: remove the item from the backend
+
     setFavoriteProducts(copy.filter((c) => !!c.items[0]));
+    setAppLoading(false);
   };
 
   const handleCheckout = () => {
@@ -52,8 +62,41 @@ export default function Cart({ params, searchParams }) {
     }));
 
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
-    window.localStorage.setItem("carts", JSON.stringify(carts.filter((c) => c.id != selectedStore.id)));
+    let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
+    cartItems = JSON.stringify(cartItems.filter((it) => it.storeId != selectedStore.id));
+    window.localStorage.setItem("cartItems", cartItems);
+
     router.push("/checkout");
+  };
+
+  const mergeCartItem = async (item) => {
+    try {
+      console.log("Todo: Merge the local cart item with the user cart items ", item);
+    } catch (err) {
+      //
+    }
+  };
+
+  const mergeUserAndLocalCarts = (items) => {
+    if (!items || !items[0]) return [];
+    const stores = [...(user?.cart || [])];
+
+    items.forEach((item) => {
+      const { phone, currency, productNumber, barcode, quantity, title, imageUrl, price, discount } = item;
+      const newItem = { productNumber, barcode, title, imageUrl, price, discount, quantity };
+      const store = { id: item.storeId, name: item.storeName, phone, currency, items: [newItem] };
+
+      if (user && !user.cart.find((c) => c.items.find((it) => it.barcode == barcode))) mergeCartItem(item);
+
+      const storeIndex = stores.findIndex((s) => s.id == item.storeId);
+      if (storeIndex < 0) return stores.push(store);
+
+      const itemIndex = stores[storeIndex].items.findIndex((item) => item.barcode == barcode);
+      if (itemIndex < 0) stores[storeIndex].items.push(newItem);
+      else stores[storeIndex].items[itemIndex].quantity = quantity;
+    });
+
+    return stores;
   };
 
   useEffect(() => {
@@ -66,13 +109,12 @@ export default function Cart({ params, searchParams }) {
 
     setAppLoading(true);
     setFavoriteProducts(user?.favoriteProducts || []);
-    let carts = JSON.parse(window.localStorage.getItem("carts"));
-    if (!carts && user) carts = user.carts;
-    if (carts) setCarts(carts);
+
+    setCart(mergeUserAndLocalCarts(JSON.parse(window.localStorage.getItem("cartItems"))));
     setAppLoading(false);
   }, []);
 
-  const results = favorite ? favoriteProducts || [] : carts;
+  const results = favorite ? favoriteProducts || [] : cart;
 
   return (
     <article className="pb-14">
@@ -87,7 +129,7 @@ export default function Cart({ params, searchParams }) {
         ? favoriteProducts.map((s, i) => (
             <StoreItems favorite={favorite} {...s} onRemove={deleteFromFavorite} key={i} />
           ))
-        : carts.map((s, i) => (
+        : cart.map((s, i) => (
             <StoreItems
               favorite={favorite}
               {...s}

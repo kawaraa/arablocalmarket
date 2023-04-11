@@ -1,12 +1,13 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { AppSessionContext } from "../../app-session-context";
 import { Cookies } from "../../(service)/utilities";
 import Modal from "../../(component)/(styled)/modal";
 import LeafletMap from "../../(component)/leaflet-map";
 import SearchBox from "../../(component)/(styled)/search-box";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
-import { AppSessionContext } from "../../app-session-context";
+import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const router = useRouter();
@@ -53,7 +54,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
 
       <Modal
         title={content.title[lang]}
-        okBtn="Save"
+        okBtn={shdCnt.save[lang]}
         open={showFilter}
         onApprove={handleSearch}
         onCancel={() => setShowFilter(false)}

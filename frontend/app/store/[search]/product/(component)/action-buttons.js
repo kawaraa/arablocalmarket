@@ -21,23 +21,15 @@ export default function ActionButtons({}) {
   const handleAddToCart = () => {
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
     if (!items || !items[0]) return showWarning();
+    items[0].currency = items[0].currency.split("-")[0];
 
-    const { phone, currency, productNumber, barcode, quantity, title, imageUrl, price, discount } = items[0];
-    const item = { productNumber, barcode, title, imageUrl, price, discount, quantity };
-    const newCart = { id: items[0].storeId, name: items[0].storeName, phone, currency, items: [item] };
-    newCart.currency = currency.split("-")[0];
+    const cartItems = JSON.parse(window.localStorage.getItem("cartItems")) || [];
+    const itemIndex = cartItems.findIndex((it) => it.barcode == items[0].barcode);
+    if (itemIndex < 0) cartItems.push(items[0]);
+    else cartItems[itemIndex].quantity = items[0].quantity;
 
-    const carts = JSON.parse(window.localStorage.getItem("carts")) || [];
-    const cartIndex = carts.findIndex((c) => c.id == items[0].storeId);
-
-    if (cartIndex < 0) carts.push(newCart);
-    else {
-      const itemIndex = carts[cartIndex].items.findIndex((item) => item.barcode == barcode);
-      if (itemIndex < 0) carts[cartIndex].items.push(newCart.items[0]);
-      else carts[cartIndex].items[itemIndex].quantity = quantity;
-    }
-
-    window.localStorage.setItem("carts", JSON.stringify(carts));
+    window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    document.getElementById("nav-cart").innerHTML = cartItems.length;
 
     addMessage({ type: "success", text: content.addedToCart[lang], duration: 2.5 });
   };
@@ -46,6 +38,7 @@ export default function ActionButtons({}) {
     if (!user) return addMessage({ type: "warning", text: shdCnt.favErr[lang], duration: 4 });
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
     if (!items || !items[0]) return showWarning();
+
     console.log("Todo: Add this item to favorite", items[0]);
 
     addMessage({ type: "success", text: content.addedToFav[lang], duration: 2.5 });

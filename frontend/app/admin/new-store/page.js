@@ -42,7 +42,7 @@ export default function NewStore({ params, searchParams }) {
 
   const updateDay = (day) => {
     const copy = [...days];
-    const index = copy.findIndex((d) => d.day == day.name);
+    const index = copy.findIndex((d) => d.day == day.day);
     copy[index].open = day.open;
     copy[index].close = day.close;
     setDays(copy);
@@ -134,7 +134,7 @@ export default function NewStore({ params, searchParams }) {
       setOnDeliveryPayment(onDeliveryPay);
       setOnlinePayment(onlinePay);
     } catch (error) {
-      addMessage({ type: "error", text: error.message , duration:5});
+      addMessage({ type: "error", text: error.message, duration: 5 });
     }
     setAppLoading(false);
   };
@@ -323,7 +323,7 @@ export default function NewStore({ params, searchParams }) {
       />
 
       <Button type="submit" cls="w-full my-5 !p-2">
-        {update ? content.saveBtn[lang] : content.createBtn[lang]}
+        {update ? shdCnt.save[lang] : content.createBtn[lang]}
       </Button>
     </form>
   );
@@ -357,7 +357,6 @@ const content = {
   cocNumber: { en: "COC Number", ar: "رقم السجل التجاري" },
   vatNumber: { en: "Tax ID / VAT Number", ar: "الرقم الضريبي" },
   createBtn: { en: "Create", ar: "إنشاء" },
-  saveBtn: { en: "Save", ar: "حفظ" },
   error: {
     en: "Please locate your store location on the map so your customers can find your it",
     ar: "يرجى تحديد موقع متجرك على الخريطة حتى يتمكن الزبائن من العثور عليه",

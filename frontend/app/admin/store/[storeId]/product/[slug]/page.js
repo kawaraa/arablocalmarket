@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import Variant from "../(component)/variant";
-import { Button, IconButton, LinkButton } from "../../../../../(component)/(styled)/button";
+import { Button, IconButton } from "../../../../../(component)/(styled)/button";
 import { InputField, Textarea } from "../../../../../(component)/(styled)/inputs";
 import ImageUpload from "../../../../../(component)/(styled)/upload-image";
 import { CategorySelect } from "../../../../../(component)/custom-inputs";
@@ -171,7 +171,7 @@ export default function ProductById({ params }) {
 
       <div className="text-right">
         <Button type="submit" cls="w-full md:w-auto py-3">
-          {!product ? content.create[lang] : content.save[lang]}
+          {!product ? content.create[lang] : shdCnt.save[lang]}
         </Button>
       </div>
     </form>
@@ -199,5 +199,4 @@ const content = {
   },
   variant: { en: "Variants", ar: "الاصناف" },
   create: { en: "Create", ar: "إنشاء" },
-  save: { en: "Save", ar: "حفظ" },
 };

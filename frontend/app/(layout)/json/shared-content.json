@@ -1,5 +1,6 @@
 {
   "done": { "en": "Done", "ar": "تم" },
+  "save": { "en": "Save", "ar": "حفظ" },
   "customerName": { "ar": "زبون نقاط البيع", "en": "POS customer" },
   "periods": [
     { "en": "AM", "ar": "صباحًا" },

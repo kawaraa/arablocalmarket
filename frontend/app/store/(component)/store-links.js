@@ -94,7 +94,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
         title={content.rateH[lang]}
         onCancel={() => setShowRatingInput(false)}
         onApprove={handleRating}
-        okBtn={content.rateOk[lang]}
+        okBtn={shdCnt.save[lang]}
         center>
         <div className="text-center my-3">
           <StarRating stars={stars} onRate={setStars} cls="text-blur text-3xl" />
@@ -106,7 +106,6 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
 
 const content = {
   rateH: { en: "Rating", ar: "التقييم" },
-  rateOk: { en: "Save", ar: "حفظ" },
   share: {
     success: { en: "Copied store link", ar: "تم نسخ رابط المتجر" },
     error: { en: "Could not copy store link", ar: "تعذر نسخ رابط المتجر" },
