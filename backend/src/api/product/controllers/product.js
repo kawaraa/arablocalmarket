@@ -5,6 +5,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 module.exports = createCoreController("api::product.product", ({ strapi }) => ({
   async find(ctx) {
     const { data, meta } = await super.find(ctx);
+    if (!data) return { data, meta };
 
     if (data[0].attributes.ratings?.data) {
       data.forEach((p) => {

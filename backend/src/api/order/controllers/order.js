@@ -61,6 +61,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
   async findOne(ctx) {
     const { data, meta } = await super.findOne(ctx);
+    if (!data) return { data, meta };
 
     const isOwner = ctx.state.user.id == data.attributes.store?.data?.attributes?.owner;
     const customer = ctx.state.user.id == data.attributes.customer?.user;

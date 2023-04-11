@@ -22,6 +22,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
 
   async find(ctx) {
     let { data, meta } = await super.find(ctx);
+    if (!data) return { data, meta };
 
     data = data.map(({ id, attributes }) => {
       attributes.id = id;

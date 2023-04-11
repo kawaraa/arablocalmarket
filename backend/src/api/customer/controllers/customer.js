@@ -21,6 +21,7 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
 
     if (!ctx.params.id) return ctx.unauthorized();
     let { data, meta } = await super.findOne(ctx);
+    if (!data) return { data, meta };
 
     data.attributes.workStores?.data?.forEach((s) => {
       s.attributes = strapi
