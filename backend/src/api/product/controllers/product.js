@@ -40,8 +40,18 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
   },
 
   async delete(ctx) {
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx);
+    const id = ctx.params.id;
+    const storeId = ctx.request.body.data?.storeId;
+
+    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);
     if (!owner) return ctx.unauthorized();
+
+    const options = { select: ["id"], where: { id, storeId }, populate: ["image"] };
+    const product = await strapi.db.query("api::product.product").findOne(options);
+
+    if (!product || product.id) return ctx.unauthorized();
+    if (product.image) strapi.plugins.upload.services.upload.remove(product.image);
+
     return super.delete(ctx);
   },
 }));
