@@ -62,21 +62,30 @@ export async function fetchUser() {
   user.workStores = attributes.workStores.data.map(removeAttributes);
   user.favoriteStores = attributes.favoriteStores.data.map(removeAttributes);
 
-  const sIds = attributes.cart.map((it) => "filters[id][$in]=" + it.storeId).join("&");
-  const storeCts = (await request("store", "GET", { query: `?${sIds}&fields=name,currency,meta` })).data;
+  user.cart = await prepareCart(attributes.cart);
 
-  const pIds = attributes.cart.map((it) => "filters[id][$in]=" + it.productNumber).join("&");
-  const { data } = await request("product", "GET", {
-    query: `?${pIds}&fields=name&populate[image]=*&populate[variants][populate][options]=*`,
-  });
+  user.favoriteProducts = await prepareFavoriteProducts(attributes.favoriteProducts.data);
 
-  storeCts.forEach((s) => {
+  return user;
+}
+
+const prepareCart = async (cart) => {
+  if (!cart | !cart[0]) return [];
+
+  const ids = cart.map((it) => "filters[id][$in]=" + it.storeId).join("&");
+  const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
+
+  const pIds = cart.map((it) => "filters[id][$in]=" + it.productNumber).join("&");
+  const query = `?${pIds}&fields=name&populate[image]=*&populate[variants][populate][options]=*`;
+  const { data } = await request("product", "GET", { query });
+
+  stores.forEach((s) => {
     s.currency = s.currency.split("-")[0];
     s.phone = s.meta.phone;
     delete s.meta;
     s.total = 0;
 
-    s.items = attributes.cart.filter((item) => {
+    s.items = cart.filter((item) => {
       if (item.storeId != s.id) return false;
       const product = data.find((p) => p.id == item.productNumber)?.attributes;
       if (!product) return false;
@@ -94,10 +103,13 @@ export async function fetchUser() {
     });
   });
 
-  user.cart = storeCts.filter((c) => !!c.items[0]);
+  user.cart = stores.filter((c) => !!c.items[0]);
+};
 
-  const ps = attributes.favoriteProducts.data;
-  const ids = ps.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
+const prepareFavoriteProducts = async (favoriteProducts) => {
+  if (!favoriteProducts | !favoriteProducts[0]) return [];
+
+  const ids = favoriteProducts.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
   const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
 
   stores.forEach((s) => {
@@ -121,11 +133,7 @@ export async function fetchUser() {
         };
       });
   });
-
-  user.favoriteProducts = stores;
-
-  return user;
-}
+};
 
 export function removeAttributes(data) {
   data.attributes.id = data.id;
