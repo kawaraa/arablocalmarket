@@ -4,10 +4,12 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async create(ctx) {
-    const { data, meta } = await super.create(ctx);
-    const m = JSON.stringify({ phone: ctx.state.user.phone });
-    await strapi.service("api::store.store").update(data.id, { data: { owner: ctx.state.user.id, meta: m } });
-    return { data, meta };
+    const newStore = JSON.parse(ctx.request.body.data);
+    newStore.owner = ctx.state.user.id + "";
+    newStore.meta = JSON.stringify({ phone: ctx.state.user.phone });
+    ctx.request.body.data = JSON.stringify(newStore);
+
+    return super.create(ctx);
   },
 
   async findOne(ctx) {
