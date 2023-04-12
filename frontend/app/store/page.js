@@ -26,7 +26,7 @@ export default async function StoresNearby({ searchParams }) {
   let { data, meta } = await serverRequest("store", "GET", { query: q }).catch(catchErr);
 
   // This should be done int backend, the same as here: letsdohobby/app/server/src/domain/model/search-criteria.js
-  data = data.filter((store) => {
+  data = data?.filter((store) => {
     store.distance = new Distance(
       coordinates[0],
       coordinates[1],
@@ -50,10 +50,10 @@ export default async function StoresNearby({ searchParams }) {
       <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
       <h1 className="mb-4 text-center">
-        {content.h1[lang][0]} <strong>( {data.length} )</strong> {content.h1[lang][1]}
+        {content.h1[lang][0]} <strong>( {data?.length || 0} )</strong> {content.h1[lang][1]}
       </h1>
       {/* <div>IP: {ip}</div> */}
-      {!data[0] ? (
+      {!data || !data[0] ? (
         <div className="h-[60vh] flex items-center">
           <EmptyState type="noStore" />
         </div>

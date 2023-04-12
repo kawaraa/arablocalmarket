@@ -60,7 +60,8 @@ export default function StoreProducts({ params, searchParams }) {
       <ProductSearch text={searchParams.search} />
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
-        {content.h2[lang][0]} <span className="font-bold">( 9 )</span> {content.h2[lang][1]}
+        {content.h2[lang][0]} <span className="font-bold">( {foundProducts.length} )</span>{" "}
+        {content.h2[lang][1]}
       </h2>
       <ul dir="ltr" className="flex flex-wrap">
         {foundProducts.map((p, i) => (
