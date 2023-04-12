@@ -13,7 +13,7 @@ export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open
       }
       // style={getCssDelay()}
     >
-      {/* <Link href={link} className="relative block w-full bg-cbg card cd_hr rounded-xl duration-200">
+      <Link href={link} className="relative block w-full bg-cbg card cd_hr rounded-xl duration-200">
         <p className={`overflow-hidden absolute top-10 -right-1 w-14  text-${open ? "green" : "t"}`}>
           <SvgIcon name="tag" />
           <span className="absolute top-0 right-0 bottom-0 left-2 inline-flex justify-center items-center text-[11px] font-semibold  text-dt">
@@ -33,7 +33,7 @@ export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open
         </div>
 
         {admin ? <StoreAdminInfo {...s} /> : <StoreCustomerInfo lang={lang} {...s} />}
-      </Link> */}
+      </Link>
     </Tag>
   );
 }

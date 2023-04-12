@@ -74,7 +74,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
               lang={lang}
               link={`/store/${store.id}/product`}
               name={store.name}
-              imageUrl={store.cover.data.attributes.url}
+              imageUrl={store.cover.data?.attributes?.url}
               about={store.about}
               distance={store.distance}
               ratings={store.ratings}
