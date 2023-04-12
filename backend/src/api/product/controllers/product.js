@@ -5,7 +5,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 module.exports = createCoreController("api::product.product", ({ strapi }) => ({
   async find(ctx) {
     const { data, meta } = await super.find(ctx);
-    if (!data) return { data, meta };
+    if (!data || !data[0]) return { data, meta };
 
     if (data[0].attributes.ratings?.data) {
       data.forEach((p) => {
@@ -33,7 +33,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     if (ctx.request.files) {
       const options = { where: { id: ctx.params.id }, populate: ["image"] };
       const p = await strapi.db.query("api::product.product").findOne(options);
-      if (p.image) strapi.plugins.upload.services.upload.remove(p.image);
+      if (p.image) await strapi.plugins.upload.services.upload.remove(p.image);
     }
 
     return super.update(ctx);
@@ -41,17 +41,13 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
 
   async delete(ctx) {
     const id = ctx.params.id;
-    const storeId = ctx.request.body.data?.storeId;
+    const storeId = ctx.query.storeId;
 
     const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);
     if (!owner) return ctx.unauthorized();
 
-    const options = { select: ["id"], where: { id, storeId }, populate: ["image"] };
-    const product = await strapi.db.query("api::product.product").findOne(options);
-
-    if (!product || product.id) return ctx.unauthorized();
-    if (product.image) strapi.plugins.upload.services.upload.remove(product.image);
-
-    return super.delete(ctx);
+    const res = await strapi.service("api::product.product").deleteProductWithMediaFiles(id);
+    if (!res) return ctx.badRequest();
+    return res;
   },
 }));

@@ -10,6 +10,7 @@ import Loader from "../../../../../(layout)/loader";
 import { request } from "../../../../../(service)/api-provider";
 import { AppSessionContext } from "../../../../../app-session-context";
 import shdCnt from "../../../../../(layout)/json/shared-content.json";
+import Modal from "../../../../../(component)/(styled)/modal";
 // Todo: preview the product
 
 export default function ProductById({ params }) {
@@ -18,6 +19,7 @@ export default function ProductById({ params }) {
   const [initialLoading, setInitialLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [variants, setVariants] = useState([{}]);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const handleUpdateVariant = (index, data) => {
     const copy = [...variants];
@@ -58,10 +60,24 @@ export default function ProductById({ params }) {
       }
 
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      // router.replace(`/store/${params.storeId}/product${id}`);
+      router.replace(`/store/${params.storeId}/product${id}`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
+    setAppLoading(false);
+  };
+
+  const handleDelete = async () => {
+    setDeleteConfirmation(false);
+    setAppLoading(true);
+    try {
+      await request("product", "DELETE", { query: `/${product.id}?storeId=${params.storeId}` });
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
+      router.replace(`/admin/store/${params.storeId}/product`);
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
+
     setAppLoading(false);
   };
 
@@ -90,91 +106,107 @@ export default function ProductById({ params }) {
 
   if (initialLoading) return <Loader size="100" screen />;
   return (
-    <form onSubmit={handleSubmit} dir="auto" className="mb-10">
-      <h1 className="flex justify-center text-xl font-semibold mb-3">
-        {!product ? content.createH1[lang] : content.updateH1[lang]}
-        {product && (
-          <IconButton
-            icon="eye"
-            onClick={() => router.push(`/store/${params.storeId}/product/${params.slug}`)}
-          />
-        )}
-      </h1>
+    <>
+      <form onSubmit={handleSubmit} dir="auto" className="mb-10">
+        <h1 className="flex justify-center text-xl font-semibold mb-3">
+          {!product ? content.createH1[lang] : content.updateH1[lang]}
+          {product && (
+            <IconButton
+              icon="eye"
+              onClick={() => router.push(`/store/${params.storeId}/product/${params.slug}`)}
+            />
+          )}
+        </h1>
 
-      <ImageUpload
-        id="product-image"
-        imageUrl={product?.image?.url}
-        name="image"
-        required={!product}
-        alt={product?.name || "Uploaded product image"}
-        title="Edit product image"
-        fullHeight
-        cls="h-40"
-      />
+        <ImageUpload
+          id="product-image"
+          imageUrl={product?.image?.url}
+          name="image"
+          required={!product}
+          alt={product?.name || "Uploaded product image"}
+          title="Edit product image"
+          fullHeight
+          cls="h-40"
+        />
 
-      <InputField
-        type="text"
-        name="name"
-        required
-        defaultValue={product?.name}
-        placeholder={content.name.placeholder[lang]}
-        min="4"
-        max="25"
-        full
-        cls="flex-col my-5 text-lg font-semibold ">
-        <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
-      </InputField>
+        <InputField
+          type="text"
+          name="name"
+          required
+          defaultValue={product?.name}
+          placeholder={content.name.placeholder[lang]}
+          min="4"
+          max="25"
+          full
+          cls="flex-col my-5 text-lg font-semibold ">
+          <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
+        </InputField>
 
-      <Textarea
-        name="description"
-        defaultValue={product?.description}
-        title={content.description.placeholder[lang]}
-        cls="my-5 rounded-md">
-        <span className="block mt-3 font-semibold rq">{content.description.text[lang]}</span>
-      </Textarea>
+        <Textarea
+          name="description"
+          defaultValue={product?.description}
+          title={content.description.placeholder[lang]}
+          cls="my-5 rounded-md">
+          <span className="block mt-3 font-semibold rq">{content.description.text[lang]}</span>
+        </Textarea>
 
-      <CategorySelect
-        lang={lang}
-        defaultValue={product?.category}
-        cls="my-5 w-full"
-        inCls="text-center mx-2 rounded-full"
-      />
+        <CategorySelect
+          lang={lang}
+          defaultValue={product?.category}
+          cls="my-5 w-full"
+          inCls="text-center mx-2 rounded-full"
+        />
 
-      <InputField
-        name="vendor"
-        defaultValue={product?.vendor}
-        label={content.vendor.text[lang]}
-        placeholder={content.vendor.placeholder[lang]}
-        full
-        cls="flex-col my-5"
-      />
+        <InputField
+          name="vendor"
+          defaultValue={product?.vendor}
+          label={content.vendor.text[lang]}
+          placeholder={content.vendor.placeholder[lang]}
+          full
+          cls="flex-col my-5"
+        />
 
-      <div className="relative my-8">
-        <h3 className="block mb-1 font-semibold">{content.variant[lang]}</h3>
-        {variants.map((v, index) => (
-          <Variant
-            lang={lang}
-            {...v}
-            onRemove={() => setVariants(variants.filter((_, i) => i !== index))}
-            onUpdate={(d) => handleUpdateVariant(index, d)}
-            number={index + 1}
-            key={index}
-          />
-        ))}
+        <div className="relative my-8">
+          <h3 className="block mb-1 font-semibold">{content.variant[lang]}</h3>
+          {variants.map((v, index) => (
+            <Variant
+              lang={lang}
+              {...v}
+              onRemove={() => setVariants(variants.filter((_, i) => i !== index))}
+              onUpdate={(d) => handleUpdateVariant(index, d)}
+              number={index + 1}
+              key={index}
+            />
+          ))}
 
-        {variants.length < 20 && (
-          <div className="text-right">
-            <Button icon="plus" onClick={() => setVariants([...variants, {}])} cls="!p-0" iconCls="w-8" />
-          </div>
-        )}
-      </div>
+          {variants.length < 20 && (
+            <div className="text-right">
+              <Button icon="plus" onClick={() => setVariants([...variants, {}])} cls="!p-0" iconCls="w-8" />
+            </div>
+          )}
+        </div>
 
-      <div className="text-right">
-        <Button type="submit" cls="w-full md:w-auto py-3">
-          {!product ? content.create[lang] : shdCnt.save[lang]}
-        </Button>
-      </div>
-    </form>
+        <div dir="ltr" className="flex">
+          {product && (
+            <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="w-auto md:w-auto py-3">
+              {shdCnt.delete[lang]}
+            </Button>
+          )}
+          <Button type="submit" cls="w-auto md:w-auto py-3">
+            {!product ? content.create[lang] : shdCnt.save[lang]}
+          </Button>
+        </div>
+      </form>
+
+      <Modal
+        title={content.confirmTitle[lang]}
+        okBtn={shdCnt.yes[lang]}
+        onCancel={() => setDeleteConfirmation(false)}
+        onApprove={handleDelete}
+        open={deleteConfirmation}>
+        <p className="my-5">{content.confirmP[lang]}</p>
+      </Modal>
+    </>
   );
 }
 
@@ -199,4 +231,9 @@ const content = {
   },
   variant: { en: "Variants", ar: "الاصناف" },
   create: { en: "Create", ar: "إنشاء" },
+  confirmTitle: { en: "product delete confirmation", ar: "تأكيد حذف المنتج" },
+  confirmP: {
+    en: "Are you sure you want to delete this product?",
+    ar: "هل أنت متأكد أنك تريد حذف هذا المنتج؟",
+  },
 };

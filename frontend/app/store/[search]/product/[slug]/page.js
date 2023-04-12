@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import ActionButtons, { Stock } from "../(component)/action-buttons";
 import Options from "../(component)/options";
 import { serverRequest } from "../../../../(service)/api-provider";
@@ -15,11 +16,15 @@ export const metadata = { title: "Product Name / title - store name - ALM" };
 
 export default async function ProductBySlug({ params }) {
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
+  if (!res.data.id) return notFound();
+
   res.data.attributes.id = res.data.id;
   const store = res.data.attributes;
 
   // Todo: make product query by ID, name, barcode E.g. UPC/IAN/EAN and description using (slug)
   const { data } = await serverRequest("product", "GET", { query: `/${params.slug}${q1}` }).catch(catchErr);
+  if (!data?.id) return notFound();
+
   const product = data.attributes;
   product.id = data.id;
 

@@ -11,6 +11,7 @@ import AddressInputs from "../(component)/address-inputs";
 import { NameInputField, PhoneInputField } from "../(component)/custom-inputs";
 import OnDeliveryPaymentMethods from "./(component)/on-delivery-payment-methods";
 import OnlinePaymentMethods from "./(component)/online-payment-methods";
+import shdCnt from "../(layout)/json/shared-content.json";
 const q = "?fields=name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=payments";
 
 export default function Checkout({}) {
@@ -336,7 +337,7 @@ ${address.province}, ${address.country}`;
 
       <Modal
         title={content.confirmTitle[lang]}
-        okBtn={content.confirmBtn[lang]}
+        okBtn={shdCnt.yes[lang]}
         onCancel={() => setConfirmCheckout(false)}
         onApprove={handleBuy}
         loading={loading}
@@ -431,7 +432,6 @@ const content = {
       "هل أنت متأكد أنك تريد تأكيد هذا الطلب؟",
     ],
   },
-  confirmBtn: { en: "Yes", ar: "نعم" },
   whatsAppSand: { en: "Send the order via WhatsApp", ar: "أرسل الطلب عبر الواتساب" },
 };
 

@@ -1,11 +1,12 @@
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import StoreLinks from "../(component)/store-links";
 import EmptyState from "../../(component)/(styled)/empty-state";
 import Tabs from "../../(component)/(styled)/tabs";
 import { serverRequest } from "../../(service)/api-provider";
 const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
-const catchErr = () => ({ data: [], meta: {} });
+const catchErr = () => ({ data: {}, meta: {} });
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Name / title - ALM" };
@@ -16,6 +17,8 @@ export default async function StoreLayout({ children, params, searchParams }) {
 
   // Todo: make the store query by id, title and about
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
+  if (!res?.data?.attributes) return notFound();
+
   const store = res.data.attributes;
   store.id = res.data.id;
   const image = store?.cover?.data?.attributes?.url || "/market-store-grocery-cartoon.jpg";

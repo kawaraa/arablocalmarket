@@ -10,16 +10,19 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     const store = await strapi.service("api::store.store").findOne(ctx.request.body.data.storeId);
 
-    if (posOrder && store?.owner != ctx.state.user?.id) ctx.unauthorized();
+    if (posOrder && store?.owner != ctx.state.user?.id) return ctx.unauthorized();
 
     const { results } = await strapi.service("api::product.product").find({
       filters: { id: oldItems.map(({ productNumber }) => productNumber) },
       populate: { image: true, variants: { populate: { options: true } } },
     });
 
+    if (!results || !results[0]) return ctx.unauthorized();
+
     for (const product of results) {
       const index = oldItems.findIndex((item) => item.productNumber == product.id);
-      if (index < 0) continue;
+      if (index < 0) return ctx.unauthorized();
+
       for (const variant of product.variants) {
         if (oldItems[index].barcode != variant.barcode) continue;
         oldItems[index].productNumber = product.id + "";
@@ -55,13 +58,12 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     ctx.request.body.data.currency = store.currency;
     ctx.request.body.data.total = oldItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    await strapi.service("api::order.order").create(ctx.request.body);
-    return ctx.request.body;
+    return strapi.service("api::order.order").create(ctx.request.body);
   },
 
   async findOne(ctx) {
     const { data, meta } = await super.findOne(ctx);
-    if (!data) return { data, meta };
+    if (!data || !data[0]) return { data, meta };
 
     const isOwner = ctx.state.user.id == data.attributes.store?.data?.attributes?.owner;
     const customer = ctx.state.user.id == data.attributes.customer?.user;
@@ -75,7 +77,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     const { data, meta } = await super.find(ctx);
 
     let owner = false;
-    if (!data || !data[0]) owner = true;
+    if (!data || !data[0]) return { data, meta };
+
     data.forEach((d) => {
       const isOwner = ctx.state.user.id == d.attributes.store?.data?.attributes?.owner;
       if (isOwner || ctx.state.user.id == d.attributes.customer?.user) owner = true;
@@ -94,7 +97,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     if (!ctx.request.body.data) return super.update(ctx);
 
     const o = await strapi.service("api::order.order").findOne(ctx.params.id, { populate: { store: true } });
-    if (ctx.state.user.id != o.store.owner) ctx.unauthorized();
+    if (ctx.state.user.id != o?.store?.owner) return ctx.unauthorized();
 
     Object.keys(ctx.request.body.data).forEach((k) => {
       !["status", "note"].includes(k) && delete ctx.request.body.data[k];

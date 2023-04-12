@@ -3,6 +3,7 @@ import { Component } from "react";
 import TransitionContainer from "../../(layout)/transition-container";
 import Loader from "../../(layout)/loader";
 import SvgIcon from "./svg-icon";
+import { IconButton } from "./button";
 
 export default class Message extends Component {
   remove = (id) => {
@@ -38,6 +39,7 @@ export default class Message extends Component {
               )
             )}
             <span className="flex-1 mx-2">{msg.text}</span>
+            <IconButton icon="crossMark" size="5" onClick={() => this.remove(msg.id)} />
           </div>
         ))}
       </TransitionContainer>
