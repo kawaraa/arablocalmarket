@@ -74,9 +74,14 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         if (!borderSize[0]) {
           setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100]);
         }
-        // canvas.toDataURL("image/jpeg", 1.0); // full-quality
+        // canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
         Quagga.decodeSingle(
-          { decoder: { readers }, src: scanCanvas.toDataURL(), locate: false, multiple: false },
+          {
+            decoder: { readers },
+            src: scanCanvas.toDataURL("image/jpeg", 1.0),
+            locate: false,
+            multiple: false,
+          },
           checkResult
         );
       };
@@ -84,7 +89,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       check();
       video.play();
     } catch (error) {
-      console.error(`${error.name}: ${error.message}`);
+      // console.error(`${error.name}: ${error.message}`);
       stopStreams();
       if (error.message == "Permission denied") onError(content.permissionErr[lang]);
       else onError(error.message);
@@ -135,5 +140,5 @@ const readers = [
   "code_39_reader",
   "code_39_vin_reader",
   "codabar_reader",
-  "i2of5_reader",
+  // "i2of5_reader",
 ];

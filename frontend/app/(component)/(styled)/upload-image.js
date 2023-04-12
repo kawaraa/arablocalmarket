@@ -6,37 +6,31 @@ import SvgIcon from "./svg-icon";
 export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeight, cls, ...p }) {
   const [fileChanged, setFileChanged] = useState(false);
   const inputRef = useRef(null);
+  const [filePreview, setFilePreview] = useState(null);
 
   const handleChange = (e) => {
     setFileChanged(!fileChanged);
-    if (onFile) onFile(e.target.files[0]);
+    if (!e.target.files[0]) return;
+
+    const img = document.createElement("img");
+    img.onload = () => convert(img);
+    img.src = URL.createObjectURL(e.target.files[0]);
   };
 
-  const sss = () => {
-    document.querySelector("input").onchange = function () {
-      var img = new Image();
-      img.onload = convert;
-      img.src = URL.createObjectURL(this.files[0]);
+  const convert = (img) => {
+    URL.revokeObjectURL(img); // free up memory
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    const cb = (blob) => {
+      setFilePreview(blob);
+      if (onFile) onFile(blob);
     };
 
-    function convert() {
-      URL.revokeObjectURL(this.src); // free up memory
-      var c = document.createElement("canvas"), // create a temp. canvas
-        ctx = c.getContext("2d");
-      c.width = this.width; // set size = image, draw
-      c.height = this.height;
-      ctx.drawImage(this, 0, 0);
-
-      // convert to File object, NOTE: we're using binary mime-type for the final Blob/File
-      c.toBlob(
-        function (blob) {
-          var file = new File([blob], "MyJPEG.jpg", { type: "application/octet-stream" });
-          window.location = URL.createObjectURL(file);
-        },
-        "image/jpeg",
-        0.75
-      ); // mime=JPEG, quality=0.75
-    }
+    canvas.toBlob(cb, "image/jpeg", 1); // mime=JPEG, quality=1, this will compress the image
   };
 
   return (
@@ -56,7 +50,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
       {inputRef.current?.files[0] || imageUrl ? (
         <>
           <Image
-            src={inputRef.current?.files[0] ? URL.createObjectURL(inputRef.current?.files[0]) : imageUrl}
+            src={filePreview ? URL.createObjectURL(filePreview) : imageUrl}
             width="400"
             height="400"
             alt={alt}

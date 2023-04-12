@@ -18,6 +18,7 @@ export default function ProductById({ params }) {
   const { lang, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [initialLoading, setInitialLoading] = useState(false);
   const [product, setProduct] = useState(null);
+  const [file, setFile] = useState(null);
   const [variants, setVariants] = useState([{}]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
@@ -30,7 +31,6 @@ export default function ProductById({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const f = e.target;
-    const file = f.image.files[0];
     let body = null;
     let id = null;
 
@@ -121,8 +121,9 @@ export default function ProductById({ params }) {
         <ImageUpload
           id="product-image"
           imageUrl={product?.image?.url}
-          name="image"
-          required={!product}
+          // name="image"
+          onFile={setFile}
+          required={!product?.image?.url}
           alt={product?.name || "Uploaded product image"}
           title="Edit product image"
           fullHeight

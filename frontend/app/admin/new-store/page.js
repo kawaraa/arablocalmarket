@@ -26,6 +26,7 @@ export default function NewStore({ params, searchParams }) {
   const router = useRouter();
   const { lang, setAppLoading, user, addMessage } = useContext(AppSessionContext);
   const [store, setStore] = useState(null);
+  const [file, setFile] = useState(null);
   const [days, setDays] = useState([]);
   const [deliver, setDeliver] = useState(false);
   const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
@@ -54,7 +55,6 @@ export default function NewStore({ params, searchParams }) {
     e.preventDefault();
     const f = e.target;
     const payments = [];
-    const file = f.cover?.files[0];
     setAppLoading(true);
 
     try {
@@ -175,7 +175,9 @@ export default function NewStore({ params, searchParams }) {
         {!update && (
           <ImageUpload
             id="store-cover"
-            name="cover"
+            // name="cover"
+            required
+            onFile={setFile}
             alt={content.imgAlt[lang]}
             title={content.imgTitle[lang]}
           />
