@@ -52,19 +52,21 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           {number > 1 && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="hover:text-red" />}
         </div>
 
-        <InputField
-          type="text"
-          name="barcode"
-          disabled={!!v.barcode}
-          label={content.barcode.text[lang]}
-          placeholder={v.barcode || content.barcode.placeholder[lang]}
-          onChange={(e) => onUpdate({ barcode: e.target.value })}
-          required
-          min="4"
-          max="25"
-          full
-          cls="items-center mb-3 ">
-          {/* <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span> */}
+        <div className="flex">
+          <InputField
+            type="text"
+            name="barcode"
+            disabled={!!v.barcode}
+            label={content.barcode.text[lang]}
+            placeholder={v.barcode || content.barcode.placeholder[lang]}
+            onChange={(e) => onUpdate({ barcode: e.target.value })}
+            required
+            min="4"
+            max="25"
+            full
+            cls="flex-auto items-center mb-3 ">
+            {/* <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span> */}
+          </InputField>
 
           <IconButton
             type="button"
@@ -73,9 +75,9 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
             title={shdCnt.scanBtn[lang]}
             aria-expanded="true"
             aria-haspopup="dialog"
-            cls="absolute z-1 right-1 w-12 p-1 cursor-pointer hover:text-pc transition"
+            cls="w-10 p-1 cursor-pointer hover:text-pc transition"
           />
-        </InputField>
+        </div>
 
         {options.map((o, index) => (
           <div className="relative pt-2 my-3" key={index}>
