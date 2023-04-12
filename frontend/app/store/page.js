@@ -95,7 +95,7 @@ async function getData() {
 }
 
 function getGeoInfo(ip) {
-  return serverRequest(`https://get.geojs.io/v1/ip/geo/${ip}.json`).catch(() => null);
+  return fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
 }
 
 const content = {
