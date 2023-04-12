@@ -1,7 +1,7 @@
 import Footer from "../(layout)/footer";
 
 export default function PrivacyPolicy(props) {
-  console.log("PrivacyPolicy: >>>", props);
+  // console.log("PrivacyPolicy: >>>", props);
 
   return (
     <div className="relative overflow-hidden pt-[5.75rem]">

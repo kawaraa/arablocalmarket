@@ -4,18 +4,23 @@ import EmptyState from "../(component)/(styled)/empty-state";
 import { serverRequest } from "../(service)/api-provider";
 import StoreCard from "./(component)/store-card";
 import StoreSearch from "./(component)/store-search";
-const q = "?populate[cover]=*&populate[ratings]=*&populate[address]=*";
-const catchErr = () => ({ data: [], meta: {} });
+
+// export const revalidate = 30;
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Stores Nearby - ALM" };
+// export async function generateMetadata({ params }) {
+//   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+//   return { title: "..." };
+// }
 
-export default async function StoresNearby({ searchParams }) {
+export default async function StoresNearby({ searchParams, ...props }) {
   // const headersList = headers();
   // const ip = headersList.get("ip-address");
   // const ip = headersList.get("x-forwarded-for");
   // const ip = req.headers["x-real-ip"] || req.connection.remoteAddress;
   // console.log(ip);
+  console.log("StoresNearby: >>>", props);
 
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
@@ -23,10 +28,11 @@ export default async function StoresNearby({ searchParams }) {
   const range = +(cookieStore.get("range")?.value || "0.5");
   const search = searchParams.search?.toLowerCase();
 
-  let { data, meta } = await serverRequest("store", "GET", { query: q }).catch(catchErr);
+  let stores = await getData();
+  // console.log("StoresNearby data: >>>", data);
 
   // This should be done int backend, the same as here: letsdohobby/app/server/src/domain/model/search-criteria.js
-  data = data?.filter((store) => {
+  stores = stores.filter((store) => {
     store.distance = new Distance(
       coordinates[0],
       coordinates[1],
@@ -50,16 +56,16 @@ export default async function StoresNearby({ searchParams }) {
       <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
       <h1 className="mb-4 text-center">
-        {content.h1[lang][0]} <strong>( {data?.length || 0} )</strong> {content.h1[lang][1]}
+        {content.h1[lang][0]} <strong>( {stores.length || 0} )</strong> {content.h1[lang][1]}
       </h1>
       {/* <div>IP: {ip}</div> */}
-      {!data || !data[0] ? (
+      {!stores[0] ? (
         <div className="h-[60vh] flex items-center">
           <EmptyState type="noStore" />
         </div>
       ) : (
         <ul className="flex flex-wrap  mx-auto mb-16">
-          {data.map((store, i) => (
+          {stores.map((store, i) => (
             <StoreCard
               Tag="li"
               lang={lang}
@@ -77,6 +83,17 @@ export default async function StoresNearby({ searchParams }) {
       )}
     </>
   );
+}
+
+async function getData() {
+  const q = "?populate[cover]=*&populate[ratings]=*&populate[address]=*";
+  const catchErr = () => ({ data: [], meta: {} });
+
+  // const res = await fetch("https://...", { next: { revalidate: 10 } });
+  let { data, meta } = await serverRequest("store", "GET", { query: q }, "application/json", {
+    next: { revalidate: 10 },
+  }).catch(catchErr);
+  return data || [];
 }
 
 const content = {
