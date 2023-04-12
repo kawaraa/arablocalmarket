@@ -22,7 +22,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
   let text = ip;
 
   if (coordinates[0] == 0) {
-    const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
+    const userGeo = await getGeoInfo(ip);
     if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
     text += JSON.stringify(userGeo);
   }
