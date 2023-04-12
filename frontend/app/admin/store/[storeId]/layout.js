@@ -84,7 +84,7 @@ export default function StoreById({ children, params: { storeId } }) {
         </Link>
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
         <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
-          Edit
+          {shdCnt.edit[lang]}
         </LinkButton>
       </ImageUpload>
 
