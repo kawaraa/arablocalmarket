@@ -28,7 +28,7 @@ export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open
             src={imageUrl}
             width="250"
             height="250"
-            alt="Some description for the image"
+            alt={name}
             className={`block w-full ${cls ? "" : "h-full"}`}
           />
         </div>

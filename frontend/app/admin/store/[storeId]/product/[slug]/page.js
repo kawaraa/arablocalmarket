@@ -11,7 +11,6 @@ import { request } from "../../../../../(service)/api-provider";
 import { AppSessionContext } from "../../../../../app-session-context";
 import shdCnt from "../../../../../(layout)/json/shared-content.json";
 import Modal from "../../../../../(component)/(styled)/modal";
-// Todo: preview the product
 
 export default function ProductById({ params }) {
   const router = useRouter();
@@ -60,7 +59,7 @@ export default function ProductById({ params }) {
       }
 
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      router.replace(`/store/${params.storeId}/product${id}`);
+      router.replace(`/store/${params.storeId}/product/${id}`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -124,8 +123,8 @@ export default function ProductById({ params }) {
           // name="image"
           onFile={setFile}
           required={!product?.image?.url}
-          alt={product?.name || "Uploaded product image"}
-          title="Edit product image"
+          alt={product?.name || content.upload[lang]}
+          title={content.upload[lang]}
           fullHeight
           cls="h-40"
         />
@@ -216,6 +215,7 @@ const content = {
   title: { en: "Create new product", ar: "إنشاء منتج جديد" },
   createH1: { en: "New product", ar: "منتج جديد" },
   updateH1: { en: "Update product", ar: "تحديث جديد" },
+  upload: { en: "Upload product image", ar: "تحميل صورة المنتج" },
   name: {
     text: { en: "Product name", ar: "اسم المنتج" },
     placeholder: { en: "E.g. Black Tea", ar: "مثال, شاي أسود" },

@@ -15,24 +15,24 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
     const img = document.createElement("img");
     img.onload = () => convert(img);
     img.src = URL.createObjectURL(e.target.files[0]);
-  };
 
-  const convert = (img) => {
-    URL.revokeObjectURL(img); // free up memory
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
+    const convert = (img) => {
+      URL.revokeObjectURL(img); // free up memory
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
 
-    const cb = (blob) => {
-      setFilePreview(blob);
-      if (onFile) onFile(blob);
+      const cb = (blob) => {
+        blob.name = "new-image.jpg";
+        setFilePreview(blob);
+        if (onFile) onFile(blob);
+      };
+
+      canvas.toBlob(cb, "image/jpeg", 1); // mime=JPEG, quality=1, this will compress the image
     };
-
-    canvas.toBlob(cb, "image/jpeg", 1); // mime=JPEG, quality=1, this will compress the image
   };
-
   return (
     <div
       className={`relative overflow-hidden mb-3 -mx-1 sm:mx-0 flex justify-center items-center bg-lbg dark:bg-cbg sm:rounded-lg ${
