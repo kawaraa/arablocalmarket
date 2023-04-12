@@ -86,8 +86,9 @@ export default function ProductById({ params }) {
       const { data } = await request("product", "GET", {
         query: "/" + id + "?populate[image]=*&populate[variants][populate]=*&populate[rating]=*",
       });
+      console.log(data);
       data.attributes.id = data.id;
-      if (data.attributes.image.data) {
+      if (data.attributes?.image.data) {
         data.attributes.image.data.attributes.id = data.attributes.image.data.id;
         data.attributes.image = data.attributes.image.data.attributes;
       }
