@@ -16,7 +16,7 @@ export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
   const { lang, setAppLoading, user, addMessage } = useContext(AppSessionContext);
   const [store, setStore] = useState(null);
-  const image = store?.cover.data.attributes?.url || "/market-store-grocery-cartoon.jpg";
+  const image = store?.cover.data?.attributes?.url || "/market-store-grocery-cartoon.jpg";
 
   const handleChange = async ({ target }) => {
     setAppLoading(true);
