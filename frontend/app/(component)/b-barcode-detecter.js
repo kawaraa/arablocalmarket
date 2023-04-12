@@ -49,10 +49,10 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
 
       video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
-        if (constraints.video !== true) {
-          ctx.translate(video.videoWidth, 0);
-          ctx.scale(-1, 1);
-        }
+        // if (constraints.video !== true) {
+        ctx.translate(video.videoWidth, 0);
+        ctx.scale(-1, 1);
+        // }
 
         ctx.drawImage(video, 0, 0);
       });
