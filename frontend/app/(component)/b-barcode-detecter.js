@@ -100,7 +100,7 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         />
       )}
 
-      <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg mirror"></canvas>
+      <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg "></canvas>
     </div>
   );
 }
