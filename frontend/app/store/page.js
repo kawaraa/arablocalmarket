@@ -12,19 +12,18 @@ import StoreSearch from "./(component)/store-search";
 
 export default async function StoresNearby({ searchParams, ...props }) {
   const headersList = headers();
-  const ip = headersList.get("x-forwarded-for");
 
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
   let coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "0.5");
   const search = searchParams.search?.toLowerCase();
-  let text = ip;
+  let text = "";
 
   if (coordinates[0] == 0) {
-    const userGeo = await getGeoInfo(ip);
+    const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
     if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
-    text += JSON.stringify(userGeo);
+    text = JSON.stringify(userGeo);
   }
 
   let stores = await getData();
@@ -95,7 +94,8 @@ async function getData() {
 }
 
 function getGeoInfo(ip) {
-  return fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
+  // `https://get.geojs.io/v1/ip/geo/${ip}.json`
+  return serverRequest(` http://ip-api.com/json/${ip}`).catch(() => null);
 }
 
 const content = {
