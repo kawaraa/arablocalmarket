@@ -15,24 +15,20 @@ export const metadata = { title: "Stores Nearby - ALM" };
 // }
 
 export default async function StoresNearby({ searchParams, ...props }) {
-  // const headersList = headers();
+  const headersList = headers();
   // const ip = headersList.get("ip-address");
-  // const ip = headersList.get("x-forwarded-for");
+  const ip = headersList.get("x-forwarded-for");
   // const ip = req.headers["x-real-ip"] || req.connection.remoteAddress;
   // console.log(ip);
   console.log("StoresNearby: >>>", props);
 
   const cookieStore = cookies();
-  // const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  const lang = "en";
-  // const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
-  const coordinates = [0, 0];
-  // const range = +(cookieStore.get("range")?.value || "0.5");
-  const range = +"0.5";
-  // const search = searchParams.search?.toLowerCase();
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  const range = +(cookieStore.get("range")?.value || "0.5");
+  const search = searchParams.search?.toLowerCase();
 
   let stores = await getData();
-  console.log("StoresNearby data: >>>", stores);
 
   // This should be done int backend, the same as here: letsdohobby/app/server/src/domain/model/search-criteria.js
   stores = stores.filter((store) => {
@@ -56,12 +52,12 @@ export default async function StoresNearby({ searchParams, ...props }) {
   // <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>
   return (
     <>
-      {/* <StoreSearch text={searchParams?.search} coordinates={coordinates} /> */}
+      <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
       <h1 className="mb-4 text-center">
         {content.h1[lang][0]} <strong>( {stores.length || 0} )</strong> {content.h1[lang][1]}
       </h1>
-      {/* <div>IP: {ip}</div> */}
+      <div>IP: {ip}</div>
       {!stores[0] ? (
         <div className="h-[60vh] flex items-center">
           <EmptyState type="noStore" />
@@ -91,10 +87,8 @@ export default async function StoresNearby({ searchParams, ...props }) {
 async function getData() {
   const q = "?populate[cover]=*&populate[ratings]=*&populate[address]=*";
   const catchErr = () => ({ data: [], meta: {} });
-
-  // const res = await fetch("https://...", { next: { revalidate: 10 } });
   let { data, meta } = await serverRequest("store", "GET", { query: q }, "application/json", {
-    next: { revalidate: 10 },
+    // next: { revalidate: 30 },
   }).catch(catchErr);
   return data || [];
 }
