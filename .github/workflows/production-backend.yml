@@ -5,19 +5,13 @@ name: production-backend
 
 on:
   push:
-    branches: ["main"]
     path:
       paths:
         - "backend/**"
-      paths-ignore:
-        - "frontend/**"
+    branches: ["main"]
   pull_request:
     branches: ["main"]
-    path:
-      paths:
-        - "backend/**"
-      paths-ignore:
-        - "frontend/**"
+
 jobs:
   # build:
   #   runs-on: ubuntu-latest

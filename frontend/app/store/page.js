@@ -44,7 +44,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
       "km"
     );
 
-    return true;
+    return store;
     // return (
     //   coordinates[0] == 0 ||
     //   (store.distance <= range &&
@@ -56,7 +56,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
   // <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>
   return (
     <>
-      <StoreSearch text={searchParams?.search} coordinates={coordinates} />
+      {/* <StoreSearch text={searchParams?.search} coordinates={coordinates} /> */}
 
       <h1 className="mb-4 text-center">
         {content.h1[lang][0]} <strong>( {stores.length || 0} )</strong> {content.h1[lang][1]}
