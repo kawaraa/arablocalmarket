@@ -5,10 +5,10 @@ name: production-backend
 
 on:
   push:
+    branches: ["main"]
     path:
       paths:
         - "backend/**"
-    branches: ["main"]
   pull_request:
     branches: ["main"]
 

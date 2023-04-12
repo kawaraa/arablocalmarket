@@ -35,22 +35,22 @@ export default async function StoresNearby({ searchParams, ...props }) {
   console.log("StoresNearby data: >>>", stores);
 
   // This should be done int backend, the same as here: letsdohobby/app/server/src/domain/model/search-criteria.js
-  stores = stores.filter((store) => {
-    store.distance = new Distance(
-      coordinates[0],
-      coordinates[1],
-      store.address.currentLat,
-      store.address.currentLng,
-      "km"
-    );
+  // stores = stores.filter((store) => {
+  //   store.distance = new Distance(
+  //     coordinates[0],
+  //     coordinates[1],
+  //     store.address.currentLat,
+  //     store.address.currentLng,
+  //     "km"
+  //   );
 
-    return store;
-    // return (
-    //   coordinates[0] == 0 ||
-    //   (store.distance <= range &&
-    //     (!search ? true : store.name.includes(search || store.description?.includes(search))))
-    // );
-  });
+  //   return store;
+  //   // return (
+  //   //   coordinates[0] == 0 ||
+  //   //   (store.distance <= range &&
+  //   //     (!search ? true : store.name.includes(search || store.description?.includes(search))))
+  //   // );
+  // });
 
   // <h4>Could not find stores near you!</h4>
   // <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>
@@ -68,7 +68,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
         </div>
       ) : (
         <ul className="flex flex-wrap  mx-auto mb-16">
-          {stores.map((store, i) => (
+          {/* {stores.map((store, i) => (
             <StoreCard
               Tag="li"
               lang={lang}
@@ -81,7 +81,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
               open={store.open}
               key={i}
             />
-          ))}
+          ))} */}
         </ul>
       )}
     </>
