@@ -23,6 +23,9 @@
       { "en": "sunday", "ar": "الأحد" }
     ]
   },
+  "scanner": { "en": "Scan a product barcode", "ar": "مسح رمز أو رقم المنتج" },
+  "scanBtn": { "en": "Show barcode scanner", "ar": "إظهار ماسح الباركود" },
+  "noItem": { "en": "No item found", "ar": "لم يتم العثور على أي عنصر" },
   "variants": { "en": "Variants", "ar": "اصناف" },
   "stock": { "en": "In stock", "ar": "في المخزن" },
   "add": { "en": "Add", "ar": "أضف" },

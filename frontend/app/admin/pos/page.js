@@ -11,6 +11,7 @@ import BarcodeScanner from "../../(component)/barcode-scanner";
 import BrowserBarcodeDetecter from "../../(component)/b-barcode-detecter";
 import ProductPopup from "./(component)/product-popup";
 import OrderDetailsPopup from "../../(component)/order-details-popup";
+import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function POS({ params, searchParams }) {
   const router = useRouter();
@@ -31,10 +32,10 @@ export default function POS({ params, searchParams }) {
   const [clickedProduct, setClickedProduct] = useState(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
 
-  const onScanErr = () => addMessage({ type: "error", text: err.message, duration: 5 });
+  const onScanErr = (text) => addMessage({ type: "error", text, duration: 5 });
 
   const handleBarcodeDetect = async (barcode) => {
-    if (!barcode) return addMessage({ type: "warning", text: content.noItem[lang], duration: 2.5 });
+    if (!barcode) return addMessage({ type: "warning", text: shdCnt.noItem[lang], duration: 2.5 });
     const p = products.find((p) => {
       const variant = p.variants.find((v) => v.barcode == barcode);
       if (variant) {
@@ -45,7 +46,7 @@ export default function POS({ params, searchParams }) {
         addItem(newItem);
       }
     });
-    if (!p) addMessage({ type: "warning", text: content.noItem[lang], duration: 2.5 });
+    if (!p) addMessage({ type: "warning", text: shdCnt.noItem[lang], duration: 2.5 });
     setSearch(barcode);
     if (showScanner) setShowScanner(false);
   };
@@ -132,7 +133,7 @@ export default function POS({ params, searchParams }) {
             type="button"
             onClick={() => setShowScanner(true)}
             icon="scan"
-            title={content.scanBtn[lang]}
+            title={shdCnt.scanBtn[lang]}
             aria-expanded="true"
             aria-haspopup="dialog"
             cls="w-12 p-1 hover:text-pc transition"
@@ -167,7 +168,7 @@ export default function POS({ params, searchParams }) {
         </ul>
       </article>
 
-      <Modal title={content.scanner[lang]} open={showScanner} center>
+      <Modal title={shdCnt.scanner[lang]} open={showScanner} center>
         {browserSupportBarcodeScanner ? (
           <BrowserBarcodeDetecter
             lang={lang}
@@ -229,7 +230,4 @@ const content = {
   h1: { en: ["Found", "Products"], ar: ["يوجد", "منتج"] },
   search: { en: "Search for a product", ar: "ابحث عن منتج" },
   okBtn: { en: "Search", ar: "بحث" },
-  scanner: { en: "Scan a product barcode", ar: "مسح رمز أو رقم المنتج" },
-  scanBtn: { en: "Show barcode scanner", ar: "إظهار ماسح الباركود" },
-  noItem: { en: "No item found", ar: "لم يتم العثور على أي عنصر" },
 };

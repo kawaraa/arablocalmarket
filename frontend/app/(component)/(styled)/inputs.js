@@ -17,7 +17,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
   };
 
   return (
-    <div dir="auto" className={"flex " + (cls || "flex-col")}>
+    <div dir="auto" className={"relative flex " + (cls || "flex-col")}>
       {children}
       {label && (
         <>

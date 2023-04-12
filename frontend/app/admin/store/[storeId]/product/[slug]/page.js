@@ -175,6 +175,7 @@ export default function ProductById({ params }) {
               onRemove={() => setVariants(variants.filter((_, i) => i !== index))}
               onUpdate={(d) => handleUpdateVariant(index, d)}
               number={index + 1}
+              setMessage={addMessage}
               key={index}
             />
           ))}
