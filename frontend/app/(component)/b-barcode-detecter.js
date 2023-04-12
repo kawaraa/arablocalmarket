@@ -50,9 +50,9 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
       video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
         // if (constraints.video !== true) {
-        ctx.translate(video.videoWidth, 0);
-        ctx.scale(-1, 1);
-        // }
+        // ctx.translate(video.videoWidth, 0);
+        // ctx.scale(-1, 1);
+        // // }
 
         ctx.drawImage(video, 0, 0);
       });
@@ -100,7 +100,7 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         />
       )}
 
-      <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg "></canvas>
+      <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
     </div>
   );
 }
