@@ -103,6 +103,8 @@ export default function NewStore({ params, searchParams }) {
       let id = null;
       if (!store) {
         const formData = new FormData();
+        addMessage({ type: "error", text: file.name, duration: 5 });
+
         formData.append("files.cover", file, file.name);
         formData.append("data", JSON.stringify(data));
         id = (await request("store", "POST", formData)).data.id;
