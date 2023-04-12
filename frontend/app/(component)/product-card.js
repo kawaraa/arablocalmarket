@@ -17,8 +17,8 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
           <Image
             src={product.image.data?.attributes.formats.thumbnail.url}
             alt={product.name}
-            width="250"
-            height="250"
+            width="200"
+            height="200"
             className="max-h-36 w-auto"
             priority={priority}
           />

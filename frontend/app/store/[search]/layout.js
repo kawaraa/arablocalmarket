@@ -30,7 +30,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
       ) : (
         <article>
           <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
-            <Image priority src={image} width="250" height="250" alt={store.name} className="block w-full" />
+            <Image priority src={image} width="400" height="400" alt={store.name} className="block w-full" />
             <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
               <span

@@ -100,7 +100,7 @@ export default function StoreById({ children, params: { storeId } }) {
         />
 
         <ToggleSwitch name="open" checked={store.open} onChange={handleChange}>
-          <span className="mx-2">Open</span>
+          <span className="mx-2"> {shdCnt.statusStatus.open[lang]}</span>
         </ToggleSwitch>
       </section>
 

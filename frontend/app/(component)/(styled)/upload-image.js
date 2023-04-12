@@ -12,6 +12,33 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
     if (onFile) onFile(e.target.files[0]);
   };
 
+  const sss = () => {
+    document.querySelector("input").onchange = function () {
+      var img = new Image();
+      img.onload = convert;
+      img.src = URL.createObjectURL(this.files[0]);
+    };
+
+    function convert() {
+      URL.revokeObjectURL(this.src); // free up memory
+      var c = document.createElement("canvas"), // create a temp. canvas
+        ctx = c.getContext("2d");
+      c.width = this.width; // set size = image, draw
+      c.height = this.height;
+      ctx.drawImage(this, 0, 0);
+
+      // convert to File object, NOTE: we're using binary mime-type for the final Blob/File
+      c.toBlob(
+        function (blob) {
+          var file = new File([blob], "MyJPEG.jpg", { type: "application/octet-stream" });
+          window.location = URL.createObjectURL(file);
+        },
+        "image/jpeg",
+        0.75
+      ); // mime=JPEG, quality=0.75
+    }
+  };
+
   return (
     <div
       className={`relative overflow-hidden mb-3 -mx-1 sm:mx-0 flex justify-center items-center bg-lbg dark:bg-cbg sm:rounded-lg ${
@@ -30,8 +57,8 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
         <>
           <Image
             src={inputRef.current?.files[0] ? URL.createObjectURL(inputRef.current?.files[0]) : imageUrl}
-            width="250"
-            height="250"
+            width="400"
+            height="400"
             alt={alt}
             className={fullHeight ? "h-full" : "w-full"}
           />

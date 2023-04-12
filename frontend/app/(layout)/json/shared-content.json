@@ -11,6 +11,7 @@
   ],
   "open": { "en": "Opens", "ar": "يفتح" },
   "close": { "en": "Closes", "ar": "يغلق" },
+  "statusStatus": { "open": { "en": "Open", "ar": "مفتوح" }, "close": { "en": "Closed", "ar": "مغلق" } },
   "day": {
     "en": "Day",
     "ar": "يوم",

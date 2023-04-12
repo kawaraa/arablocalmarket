@@ -40,7 +40,7 @@ export default function Stores() {
               admin={activeTab?.key != "favorite"}
               link={`/admin/store/${store.id}`}
               name={store.name}
-              imageUrl={store.cover.data?.attributes.url}
+              imageUrl={store.cover.data?.attributes.url || "/market-store-grocery-cartoon.jpg"}
               totalOrders={store.orders}
               employees={store.workers}
               ratings={store.ratings}

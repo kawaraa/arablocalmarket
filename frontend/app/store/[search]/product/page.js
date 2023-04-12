@@ -49,8 +49,8 @@ export default async function ProductsByStore({ params, searchParams }) {
                     <Image
                       src={c.image}
                       alt={c.text[lang]}
-                      width="250"
-                      height="250"
+                      width="200"
+                      height="200"
                       className="h-full w-auto"
                     />
                   </div>
