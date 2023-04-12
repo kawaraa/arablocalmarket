@@ -22,7 +22,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
   };
   const handleAddOption = () => {
     if (!(options.length < 3)) return;
-    const name = Object.keys(content.options.values).find((name) => !options.find((op) => op.name == name));
+    const name = Object.keys(shdCnt.options.values).find((name) => !options.find((op) => op.name == name));
     setOptions([...options, { name }]);
   };
 
@@ -83,11 +83,11 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           <div className="relative pt-2 my-3" key={index}>
             <div className="flex relative">
               <label htmlFor={"name-" + index} className="w-32 mb-1 text-sm rq">
-                {content.options.name[lang]}
+                {shdCnt.options.name[lang]}
               </label>
               <span className="w-2"></span>
               <label htmlFor={"value-" + index} className="flex-1 mb-1 text-sm rq">
-                {content.options.value[lang]}
+                {shdCnt.options.value[lang]}
               </label>
               {index + 1 > 1 && (
                 <IconButton
@@ -105,9 +105,9 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
                 defaultValue={o.name}
                 cls="flex w-32 rounded-lg"
                 inCls="!w-32 flex-auto !p-0 rounded-lg">
-                {Object.keys(content.options.values).map((op, i) => (
+                {Object.keys(shdCnt.options.values).map((op, i) => (
                   <option value={op} disabled={!!options.find((o) => o.name == op)} key={i}>
-                    {content.options.values[op][lang] || op}
+                    {shdCnt.options.values[op][lang] || op}
                   </option>
                 ))}
               </Select>
@@ -130,7 +130,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
                   required
                   min="1"
                   max="10"
-                  placeholder={content.options.values[o.name].placeholder[lang]}
+                  placeholder={shdCnt.options.values[o.name].placeholder[lang]}
                   full
                   cls="flex-1"
                 />
@@ -207,21 +207,5 @@ const content = {
     text: { en: "Barcode", ar: "رقم المنتج" },
     // text: { en: "UPC / EAN Barcode", ar: "رمز / رقم المنتج" },
     placeholder: { en: "E.g. 875674398784", ar: "مثال, 875674398784" },
-  },
-  options: {
-    name: { en: "Name", ar: "نوع التفاصيل" },
-    value: { en: "Value", ar: "التفاصيل" },
-    values: {
-      WEIGHT: { ar: "الوزن", placeholder: { en: "E.g. 100G", ar: "مثال، 100 جرام" } },
-      SIZE: { ar: "الحجم", placeholder: { en: "E.g. Small", ar: "مثال، صغير" } },
-      PACKAGING: {
-        ar: "التعبئة",
-        placeholder: { en: "E.g. cans, jars, bags", ar: "مثال، علبة، مطربان، كيس" },
-      },
-      COLOR: { ar: "اللون", placeholder: { en: "E.g. Black", ar: "مثال، أسود" } },
-      FLAVOR: { ar: "النكهة", placeholder: { en: "E.g. Chicken", ar: "مثال، دجاج" } },
-      TYPE: { ar: "النوع", placeholder: { en: "E.g. Cooked", ar: "مثال، مطبوخ" } },
-      // SCENT: { ar: "الرائحة", placeholder: { en: "E.g. Sweet", ar: "مثال، حلو" } },
-    },
   },
 };

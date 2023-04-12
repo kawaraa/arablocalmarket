@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import VariantOptions from "../../../../(component)/variant-options";
 import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs";
 import { AppSessionContext } from "../../../../app-session-context";
-import shsCnt from "../../../../(layout)/json/shared-content.json";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
 
 export default function Options({ store, id, variants, name, image, discount }) {
   const { lang, addMessage } = useContext(AppSessionContext);
@@ -45,7 +45,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
   const updateItemQuantity = (num) => {
     const stock = variants[index].quantity;
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
-    if (!items) return addMessage({ type: "warning", text: shsCnt.noItemErr[lang], duration: 4 });
+    if (!items) return addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
 
     items[0].quantity = num < 1 ? 1 : num > stock ? stock : num;
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
@@ -88,7 +88,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
       {Object.keys(options).map((name, i) => (
         <VariantOptions
           name={name}
-          values={options[name]}
+          values={shdCnt.options.values[options[name]][lang]}
           onSelect={(value) => updateItemOptions(i, value)}
           selectedOptions={item.options}
           label

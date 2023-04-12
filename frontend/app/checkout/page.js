@@ -324,7 +324,7 @@ ${address.province}, ${address.country}`;
         {store.whatsAppOrder && store.meta?.phone && (
           <a
             onClick={sendOrderViawhatsApp}
-            href={`https://api.whatsapp.com/send/?phone=${store.meta.phone}&text=`}
+            href={`https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=`}
             rel="noreferrer"
             target="_blank"
             alt={content.whatsAppSand[lang]}
