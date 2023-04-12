@@ -87,8 +87,10 @@ export default function ProductById({ params }) {
         query: "/" + id + "?populate[image]=*&populate[variants][populate]=*&populate[rating]=*",
       });
       data.attributes.id = data.id;
-      data.attributes.image.data.attributes.id = data.attributes.image.data.id;
-      data.attributes.image = data.attributes.image.data.attributes;
+      if (data.attributes.image.data) {
+        data.attributes.image.data.attributes.id = data.attributes.image.data.id;
+        data.attributes.image = data.attributes.image.data.attributes;
+      }
       setProduct(data.attributes);
       setVariants(data.attributes.variants);
     } catch (error) {
@@ -119,10 +121,10 @@ export default function ProductById({ params }) {
 
         <ImageUpload
           id="product-image"
-          imageUrl={product?.image?.url}
+          imageUrl={product.image?.url}
           // name="image"
           onFile={setFile}
-          required={!product?.image?.url}
+          required={!product.image?.url}
           alt={product?.name || content.upload[lang]}
           title={content.upload[lang]}
           fullHeight
@@ -187,13 +189,17 @@ export default function ProductById({ params }) {
           )}
         </div>
 
-        <div dir="ltr" className="flex">
+        {/* dir="ltr" */}
+        <div className="flex my-5">
           {product && (
-            <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="w-auto md:w-auto py-3">
-              {shdCnt.delete[lang]}
-            </Button>
+            <>
+              <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="py-2 px-5 text-lg">
+                {shdCnt.delete[lang]}
+              </Button>
+              <span className="w-3 h-3"></span>
+            </>
           )}
-          <Button type="submit" cls="w-auto md:w-auto py-3">
+          <Button type="submit" cls="py-2 px-5 text-lg">
             {!product ? content.create[lang] : shdCnt.save[lang]}
           </Button>
         </div>

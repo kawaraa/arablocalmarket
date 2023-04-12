@@ -343,13 +343,16 @@ export default function NewStore({ params, searchParams }) {
           full
         />
 
-        <div>
+        <div className="flex my-5">
           {store && (
-            <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="w-auto md:w-auto py-3">
-              {shdCnt.delete[lang]}
-            </Button>
+            <>
+              <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="py-2 px-5 text-lg">
+                {shdCnt.delete[lang]}
+              </Button>
+              <span className="w-3 h-3"></span>
+            </>
           )}
-          <Button type="submit" cls="w-full my-5 !p-2">
+          <Button type="submit" cls="py-2 px-5 text-lg">
             {update ? shdCnt.save[lang] : content.createBtn[lang]}
           </Button>
         </div>
