@@ -18,10 +18,12 @@ export default async function StoresNearby({ searchParams, ...props }) {
   let coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "0.5");
   const search = searchParams.search?.toLowerCase();
+  let text = "";
 
   if (coordinates[0] == 0) {
     const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
     if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
+    text = JSON.stringify(userGeo);
   }
 
   let stores = await getData();
@@ -50,7 +52,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
     <>
       <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
-      {/* <div className="my-5 ">DEV Info: {ip}</div> */}
+      <div className="my-5 ">DEV Info: {text}</div>
 
       <h1 className="mb-4 text-center">
         {content.h1[lang][0]} <strong>( {stores.length || 0} )</strong> {content.h1[lang][1]}
