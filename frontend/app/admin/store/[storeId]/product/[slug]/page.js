@@ -122,10 +122,10 @@ export default function ProductById({ params }) {
 
         <ImageUpload
           id="product-image"
-          imageUrl={product.image?.url}
+          imageUrl={product?.image?.url}
           // name="image"
           onFile={setFile}
-          required={!product.image?.url}
+          required={!product?.image?.url}
           alt={product?.name || content.upload[lang]}
           title={content.upload[lang]}
           fullHeight
