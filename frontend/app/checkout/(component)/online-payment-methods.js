@@ -21,29 +21,29 @@ export default function OnlinePaymentMethods({ lang, cnt, user, payments, select
                 </>
               )} */}
           </div>
-        ) : !bankMethod.meta ? (
+        ) : !bankMethod?.meta ? (
           <p className="mt-8 text-center text-orange">{cnt.noBankPay[lang]}</p>
-        ) : !user && bankMethod.meta?.private ? (
+        ) : !user && bankMethod?.meta?.private ? (
           <p className="mt-8 text-center text-orange">{cnt.noBankPayPrivate[lang]}</p>
         ) : (
           <dl className="mt-6 lazy-c">
             <dt className="">{shdCnt.bankInfo.holder[lang]}</dt>
             <dd className=" flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.accountHolder}
+              {bankMethod?.meta?.accountHolder}
               <span className="inline-block w-6">
                 <SvgIcon name="copy" />
               </span>
             </dd>
             <dt className="">{shdCnt.bankInfo.number[lang]}</dt>
             <dd className="flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.iban}
+              {bankMethod?.meta?.iban}
               <span className="inline-block w-6">
                 <SvgIcon name="copy" />
               </span>
             </dd>
             <dt className="">{shdCnt.bankInfo.bic[lang]}</dt>
             <dd className="flex justify-between items-center text-blue cursor-pointer">
-              {bankMethod.meta.bic}
+              {bankMethod?.meta?.bic}
               <span className="inline-block w-6">
                 <SvgIcon name="copy" />
               </span>
