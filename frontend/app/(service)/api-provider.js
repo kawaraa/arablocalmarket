@@ -46,7 +46,8 @@ export async function request(url, method = "GET", data, type = "application/jso
 
   const response = await fetch(aUrl, { method, body, headers, ...arg }).catch(() => null);
   if (response?.ok) return response.json();
-  throw new Error(validateError(await response?.text()));
+  // throw new Error(validateError(await response?.text()));
+  throw new Error(await response?.text());
 }
 
 export async function fetchUser() {
