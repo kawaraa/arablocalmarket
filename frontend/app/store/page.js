@@ -8,25 +8,21 @@ import StoreSearch from "./(component)/store-search";
 // export const revalidate = 30;
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-export const metadata = { title: "Stores Nearby - ALM" };
-// export async function generateMetadata({ params }) {
-//   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-//   return { title: "..." };
-// }
+// export const metadata = { title: "Stores Nearby - ALM" };
 
 export default async function StoresNearby({ searchParams, ...props }) {
   const headersList = headers();
-  // const ip = headersList.get("ip-address");
-  const ip = headersList.get("x-forwarded-for");
-  // const ip = req.headers["x-real-ip"] || req.connection.remoteAddress;
-  // console.log(ip);
-  console.log("StoresNearby: >>>", props);
 
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  let coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "0.5");
   const search = searchParams.search?.toLowerCase();
+
+  if (coordinates[0] == 0) {
+    const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
+    if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
+  }
 
   let stores = await getData();
 
@@ -54,10 +50,12 @@ export default async function StoresNearby({ searchParams, ...props }) {
     <>
       <StoreSearch text={searchParams?.search} coordinates={coordinates} />
 
+      {/* <div className="my-5 ">DEV Info: {ip}</div> */}
+
       <h1 className="mb-4 text-center">
         {content.h1[lang][0]} <strong>( {stores.length || 0} )</strong> {content.h1[lang][1]}
       </h1>
-      <div>IP: {ip}</div>
+
       {!stores[0] ? (
         <div className="h-[60vh] flex items-center">
           <EmptyState type="noStore" />
@@ -91,6 +89,10 @@ async function getData() {
     // next: { revalidate: 30 },
   }).catch(catchErr);
   return data || [];
+}
+
+function getGeoInfo(ip) {
+  return serverRequest(`https://get.geojs.io/v1/ip/geo/${ip}.json`).catch(() => null);
 }
 
 const content = {

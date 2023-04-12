@@ -27,6 +27,8 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
 
   useEffect(() => {
     if (position[0] == 0) setTimeout(() => setShowFilter(true), 1500);
+    else Cookies.set("coordinates", `${position[0]}:${position[1]}`);
+    window.document.title = content.title[lang] + " - ALM";
   }, []);
 
   return (
@@ -53,7 +55,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
       </div>
 
       <Modal
-        title={content.title[lang]}
+        title={content.modalTitle[lang]}
         okBtn={shdCnt.save[lang]}
         open={showFilter}
         onApprove={handleSearch}
@@ -106,7 +108,8 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
 }
 
 const content = {
+  title: { en: "Stores Nearby", ar: "المتاجر المجاورة" },
   searchLabel: { en: "Search for a store", ar: "ابحث عن متجر" },
-  title: { en: "Select a location", ar: "اختر موقعا" },
+  modalTitle: { en: "Select a location", ar: "اختر موقعا" },
   range: { en: ["Location range", "KM"], ar: ["نطاق الموقع", "كم"] },
 };
