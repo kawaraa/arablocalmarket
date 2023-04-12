@@ -23,13 +23,16 @@ export default async function StoresNearby({ searchParams, ...props }) {
   console.log("StoresNearby: >>>", props);
 
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
-  const range = +(cookieStore.get("range")?.value || "0.5");
-  const search = searchParams.search?.toLowerCase();
+  // const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = "en";
+  // const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  const coordinates = [0, 0];
+  // const range = +(cookieStore.get("range")?.value || "0.5");
+  const range = +"0.5";
+  // const search = searchParams.search?.toLowerCase();
 
   let stores = await getData();
-  // console.log("StoresNearby data: >>>", data);
+  console.log("StoresNearby data: >>>", stores);
 
   // This should be done int backend, the same as here: letsdohobby/app/server/src/domain/model/search-criteria.js
   stores = stores.filter((store) => {
