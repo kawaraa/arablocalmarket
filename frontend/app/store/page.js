@@ -68,7 +68,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
         </div>
       ) : (
         <ul className="flex flex-wrap  mx-auto mb-16">
-          {/* {stores.map((store, i) => (
+          {stores.map((store, i) => (
             <StoreCard
               Tag="li"
               lang={lang}
@@ -81,7 +81,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
               open={store.open}
               key={i}
             />
-          ))} */}
+          ))}
         </ul>
       )}
     </>
