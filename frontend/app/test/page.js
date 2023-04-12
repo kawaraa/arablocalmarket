@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../(component)/(styled)/modal";
 import { IconButton } from "../(component)/(styled)/button";
 import BrowserBarcodeDetecter from "../(component)/b-barcode-detecter";
