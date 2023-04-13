@@ -1,8 +1,8 @@
 "use client";
 export default function VariantOptions({ name, values, onSelect, selectedOptions, label }) {
   return (
-    <div className="flex items-center mt-3">
-      {label && <h3 className="w-16">{name}</h3>}
+    <div dir="auto" className="flex items-center mt-3">
+      {label && <h3 className="w-20">{name}</h3>}
       <span className="w-2 h-2"></span>
       <ul className="flex-1 flex items-center">
         {values.map((v, i) => (
