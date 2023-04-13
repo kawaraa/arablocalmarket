@@ -108,6 +108,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
   return (
     <div
+      dir="ltr"
       className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${cls || ""}`}>
       <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 

@@ -90,7 +90,9 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
   }, []);
 
   return (
-    <div className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
+    <div
+      dir="ltr"
+      className={`overflow-hidden w-full h-52 flex justify-center items-center w-full ${cls || ""}`}>
       {onClose && (
         <IconButton
           icon="crossMark"
