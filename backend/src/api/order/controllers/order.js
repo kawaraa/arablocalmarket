@@ -30,6 +30,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         oldItems[index].price = variant.price;
         oldItems[index].discount = variant.discount || 0;
         oldItems[index].imageUrl = product.image.formats.thumbnail.url;
+        variant.quantity -= +oldItems[index].quantity;
+        if (variant.quantity < 0) return ctx.badRequest();
       }
     }
 
@@ -58,7 +60,15 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
     ctx.request.body.data.currency = store.currency;
     ctx.request.body.data.total = oldItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    return strapi.service("api::order.order").create(ctx.request.body);
+    const order = await strapi.service("api::order.order").create(ctx.request.body);
+
+    await Promise.all(
+      results.map((p) =>
+        strapi.service("api::product.product").update(p.id, { data: { variants: p.variants } })
+      )
+    );
+
+    return order;
   },
 
   async findOne(ctx) {

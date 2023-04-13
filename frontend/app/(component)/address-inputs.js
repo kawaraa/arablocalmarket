@@ -95,7 +95,7 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
           required
           disabled={checkout}
           // autoComplete="country"
-          className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
+          className={`block bg-cbg w-1/2 px-3 card ${checkout ? "" : "cd_hr"} fs rounded-${
             lang == "en" ? "l-md py-2" : "r-md py-0"
           }`}>
           <option value="">{content.country[lang]}</option>
@@ -109,7 +109,7 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
           required
           disabled={checkout}
           // autoComplete="country-name"
-          className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
+          className={`block bg-cbg w-1/2 px-3 card ${checkout ? "" : "cd_hr"} fs rounded-${
             lang == "en" ? "r-md py-2" : "l-md py-0"
           }`}>
           <option value="">{content.province[lang]}</option>
@@ -126,7 +126,7 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
           title={content.city[lang]}
           aria-label={content.city[lang]}
           // autoComplete="address-level2"
-          className={`block bg-cbg w-1/2 px-1 card cd_hr fs rounded-${
+          className={`block bg-cbg w-1/2 px-1 card ${checkout ? "" : "cd_hr"} fs rounded-${
             lang == "en" ? "l-md py-2" : "r-md py-0"
           }`}>
           <option value="">{content.city[lang]}</option>

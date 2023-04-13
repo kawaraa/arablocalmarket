@@ -43,7 +43,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
   };
 
   const updateItemQuantity = (num) => {
-    const stock = variants[index].quantity;
+    const stock = +variants[index].quantity;
     const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
     if (!items) return addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
 
@@ -51,7 +51,9 @@ export default function Options({ store, id, variants, name, image, discount }) 
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
 
     const copy = { ...item };
-    copy.quantity = num < 1 ? 1 : num > stock ? stock : num;
+    copy.quantity = items[0].quantity;
+
+    document.getElementById("product-stock").innerHTML = stock - copy.quantity;
     setItem(copy);
   };
 

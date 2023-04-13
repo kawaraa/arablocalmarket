@@ -138,7 +138,7 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
 
 export function CheckCard({ Tag = "label", children, cls, inCls, ...p }) {
   return (
-    <Tag htmlFor={cls} className={`relative w-1/2 md:w-44 bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
+    <Tag htmlFor={cls} className={`relative bg-cbg rounded-lg card cd_hr ${cls || ""}`}>
       <input
         id={cls}
         title={p.title || p.name}

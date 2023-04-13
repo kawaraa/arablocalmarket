@@ -57,7 +57,8 @@ export default function Checkout({}) {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = {};
+      const { country, province, city } = store?.address || {};
+      const data = { country, province, city };
       new FormData(e.target).forEach((value, key) => (data[key] = value));
       // Todo: Save the address if the user is signed in
       setAddress(data);
@@ -175,7 +176,7 @@ ${address.province}, ${address.country}`;
             onChange={() => setDeliveryMethod(text.en)}
             required
             key={i}
-            cls="py-1 flex flex-col justify-center items-center mx-1 space-y-3">
+            cls="w-44 py-1 flex flex-col justify-center items-center mx-1 space-y-3">
             <div className={"w-auto h-[40px] md:24 " + cls}>
               <SvgIcon name={icon} />
             </div>
@@ -200,13 +201,16 @@ ${address.province}, ${address.country}`;
                   title={content.savedAdr[lang]}
                   required
                   checked
-                  cls="m-2 p-3 w-full md:w-1/2 lg:w-1/3">
+                  onChange={() => {}}
+                  cls="w-1/2 md:w-44 m-2 p-3 w-full md:w-1/2 lg:w-1/3">
                   <h6 className="font-medium" dir="ltr">
                     {address.firstName} {address.lastName}
                   </h6>
                   <p dir="ltr">
-                    {address.line1} {address.line2 || ""},<br />
-                    {address.postalCode} {address.city}, {address.country}
+                    {address.line1} {address.line2 || ""}
+                    <br />
+                    {address.postalCode} {address.city}
+                    <br /> {address.province} {address.country}
                   </p>
                 </CheckCard>
               </div>
@@ -293,7 +297,7 @@ ${address.province}, ${address.country}`;
                     checked={paymentMethod == method}
                     onChange={() => setPaymentMethod(method)}
                     title={content.paymentMethods.online.methods[method].title[lang]}
-                    cls="!h-10 mx-1 flex justify-center items-center"
+                    cls="w-1/2 md:w-44 !h-10 mx-1 flex justify-center items-center"
                     key={i}>
                     <span className={`h-[25px] ${method != "card" ? "" : "mx-1"}`}>
                       <SvgIcon name={method == "card" ? "creditCard" : "bank"} />

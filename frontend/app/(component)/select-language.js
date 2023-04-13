@@ -21,14 +21,14 @@ export default function SelectLanguage({ selected }) {
           type="radio"
           name="language"
           onChange={() => changeLanguage("en")}
-          cls="!h-10 mx-1 flex justify-center items-center text-lg">
+          cls="w-1/2 md:w-44 !h-10 mx-1 flex justify-center items-center text-lg">
           English
         </CheckCard>
         <CheckCard
           type="radio"
           name="language"
           onChange={() => changeLanguage("ar")}
-          cls="!h-10 mx-1 flex justify-center items-center text-lg">
+          cls="w-1/2 md:w-44 !h-10 mx-1 flex justify-center items-center text-lg">
           العربية
         </CheckCard>
       </div>
