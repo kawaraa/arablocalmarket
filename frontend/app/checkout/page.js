@@ -122,7 +122,6 @@ ${address.province}, ${address.country}`;
       order.customer = JSON.parse(window.localStorage.getItem("customer")) || null;
       const customer = await request("order", "POST", { data: order });
       if (!user) window.localStorage.setItem("customer", JSON.stringify(customer));
-
       router.replace("/checkout/success");
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });

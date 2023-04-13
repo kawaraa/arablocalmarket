@@ -72,7 +72,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
         (height / video.videoHeight) * 100;
         if (!borderSize[0]) {
-          setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100 - 6]);
+          setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100]);
         }
         // canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
         Quagga.decodeSingle(
@@ -120,7 +120,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
         />
       )}
       <div className="relative">
-        <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg mirror"></canvas>
+        <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
         <div
           className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
             borderSize[1] || 0
