@@ -4,7 +4,7 @@ import { countries } from "k-utilities";
 import { InputField } from "./(styled)/inputs";
 import LeafletMap from "./leaflet-map";
 
-export default function AddressInputs({ lang, map, onError, ...adr }) {
+export default function AddressInputs({ lang, checkout, map, onError, ...adr }) {
   const [country, setCountry] = useState();
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
@@ -19,6 +19,7 @@ export default function AddressInputs({ lang, map, onError, ...adr }) {
     if (lng) setLng(lng);
     if (adrName) {
       setLine1(adrName?.split(",")[0] || "");
+      if (checkout) return;
       const cy = Object.keys(countries).find((cy) => adrName?.includes(cy));
       if (cy) {
         setCountry(cy);
@@ -92,6 +93,7 @@ export default function AddressInputs({ lang, map, onError, ...adr }) {
           value={country || ""}
           onChange={(e) => setCountry(e.target.value)}
           required
+          disabled={checkout}
           // autoComplete="country"
           className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
             lang == "en" ? "l-md py-2" : "r-md py-0"
@@ -105,6 +107,7 @@ export default function AddressInputs({ lang, map, onError, ...adr }) {
           value={province || ""}
           onChange={(e) => setProvince(e.target.value)}
           required
+          disabled={checkout}
           // autoComplete="country-name"
           className={`block bg-cbg w-1/2 px-3 card cd_hr fs rounded-${
             lang == "en" ? "r-md py-2" : "l-md py-0"
@@ -116,9 +119,10 @@ export default function AddressInputs({ lang, map, onError, ...adr }) {
       <div className="flex">
         <select
           name="city"
-          required
           value={city || ""}
           onChange={(e) => setCity(e.target.value)}
+          required
+          disabled={checkout}
           title={content.city[lang]}
           aria-label={content.city[lang]}
           // autoComplete="address-level2"

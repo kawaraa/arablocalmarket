@@ -1,22 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
-import Modal from "../(component)/(styled)/modal";
-import { IconButton } from "../(component)/(styled)/button";
-import BrowserBarcodeDetecter from "../(component)/b-barcode-detecter";
-import BarcodeScanner from "../(component)/barcode-scanner";
-import { ToggleSwitch } from "../(component)/(styled)/inputs";
+// import { useEffect, useState } from "react";
+// import Modal from "../(component)/(styled)/modal";
+// import { IconButton } from "../(component)/(styled)/button";
+// import BrowserBarcodeDetecter from "../(component)/b-barcode-detecter";
+// import BarcodeScanner from "../(component)/barcode-scanner";
+// import { ToggleSwitch } from "../(component)/(styled)/inputs";
 
 export default function SignIn() {
-  const [browserSupport, setBrowserSupport] = useState(false);
-  const [showScanner, setShowScanner] = useState(false);
-  const [result, setResult] = useState("No result yet");
+  // const [browserSupport, setBrowserSupport] = useState(false);
+  // const [showScanner, setShowScanner] = useState(false);
+  // const [result, setResult] = useState("No result yet");
 
-  useEffect(() => {
-    setBrowserSupport(!!window.BarcodeDetector);
-  }, []);
+  // useEffect(() => {
+  //   setBrowserSupport(!!window.BarcodeDetector);
+  // }, []);
   return (
     <div>
-      <ToggleSwitch onChange={() => setBrowserSupport(!browserSupport)} />
+      {/* <ToggleSwitch onChange={() => setBrowserSupport(!browserSupport)} />
 
       <div>
         <IconButton
@@ -45,7 +45,7 @@ export default function SignIn() {
             cls="mt-5"
           />
         )}
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

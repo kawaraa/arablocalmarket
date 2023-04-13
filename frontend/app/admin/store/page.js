@@ -10,8 +10,6 @@ export default function Stores() {
   const router = useRouter();
   const { lang, user } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
-  let result = activeTab?.key == "work" ? user.workStores : user.myStores;
-  if (activeTab?.key == "favorite") result = user.favoriteStores;
 
   useEffect(() => {
     document.title = "Admin Stores - ALM";
@@ -19,6 +17,10 @@ export default function Stores() {
   }, [user]);
 
   if (!user) return null;
+
+  let result = activeTab?.key == "work" ? user.workStores : user.myStores;
+  if (activeTab?.key == "favorite") result = user.favoriteStores;
+
   return (
     <article className="relative pt-5 ">
       <Tabs

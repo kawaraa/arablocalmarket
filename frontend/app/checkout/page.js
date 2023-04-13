@@ -12,7 +12,7 @@ import { NameInputField, PhoneInputField } from "../(component)/custom-inputs";
 import OnDeliveryPaymentMethods from "./(component)/on-delivery-payment-methods";
 import OnlinePaymentMethods from "./(component)/online-payment-methods";
 import shdCnt from "../(layout)/json/shared-content.json";
-const q = "?fields=name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=payments";
+const q = "?fields=name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=address,payments";
 
 export default function Checkout({}) {
   const router = useRouter();
@@ -243,8 +243,12 @@ ${address.province}, ${address.country}`;
               <PhoneInputField full lang={lang} cls="4 mb-2 relative shadow-sm" inCls="text-lg rounded-md" />
               <AddressInputs
                 lang={lang}
-                map
+                country={store?.address.country}
+                province={store?.address.province}
+                city={store?.address.city}
                 onError={(text) => addMessage({ type: "error", text, duration: 5 })}
+                checkout
+                map
               />
             </div>
           </Modal>
