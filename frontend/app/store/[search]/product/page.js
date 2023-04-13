@@ -5,9 +5,6 @@ import ProductCard from "../../../(component)/product-card";
 import { serverRequest } from "../../../(service)/api-provider";
 import Image from "next/image";
 const q = "?fields=currency";
-const q1 =
-  "?fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price";
-const catchErr = () => ({ data: [], meta: {} });
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Nprice:12,ame / title products - ALM" };
@@ -22,7 +19,7 @@ export default async function ProductsByStore({ params, searchParams }) {
   // Todo: make the store query by id, title and about
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(() => null);
   const currency = res?.data?.attributes.currency.split("-");
-  const { data, meta } = await serverRequest("product", "GET", { query: q1 }).catch(catchErr);
+  const products = await getProducts(storeId);
   // let result = data;
 
   return (
@@ -43,7 +40,7 @@ export default async function ProductsByStore({ params, searchParams }) {
                   href={`/store/${storeId}/product?category=${c.text.key}`}
                   className="relative block w-full h-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">
                   <span className="absolute top-2 right-2">
-                    {data.filter((p) => p.attributes.category == c.key).length}
+                    {products.filter((p) => p.attributes.category == c.key).length}
                   </span>
                   <div className="overflow-hidden h-16 flex justify-center items-center">
                     <Image
@@ -67,7 +64,7 @@ export default async function ProductsByStore({ params, searchParams }) {
             <span className="font-bold">( 9 )</span> {content.product[lang][1]}
           </h2>
           <ul dir="ltr" className="flex flex-wrap">
-            {data.map((p, i) => (
+            {products.map((p, i) => (
               <ProductCard
                 lang={lang}
                 currency={currency[0]}
@@ -84,6 +81,13 @@ export default async function ProductsByStore({ params, searchParams }) {
     </div>
   );
 }
+
+const getProducts = async (storeId) => {
+  const q1 = `?filters[storeId][$eq]=${storeId}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price`;
+  const catchErr = () => ({ data: [], meta: {} });
+  const { data, meta } = await serverRequest("product", "GET", { query: q1 }).catch(catchErr);
+  return data || [];
+};
 
 const content = {
   product: { en: ["Found", "Products"], ar: ["يوجد", "منتج"] },
