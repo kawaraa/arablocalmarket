@@ -19,7 +19,8 @@ export default async function ProductsByStore({ params, searchParams: { lang, se
   const res = await serverRequest("store", "GET", { query: `/${storeId}${q}` }).catch(() => null);
   const currency = res?.data?.attributes.currency.split("-");
   const products = await getProducts(storeId);
-  const results = category == "all" ? products : products.filter((p) => p.attributes.category == category);
+  const results =
+    !category || category == "all" ? products : products.filter((p) => p.attributes.category == category);
 
   return (
     <div>

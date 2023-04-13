@@ -4,17 +4,20 @@ import Modal from "../(component)/(styled)/modal";
 import { IconButton } from "../(component)/(styled)/button";
 import BrowserBarcodeDetecter from "../(component)/b-barcode-detecter";
 import BarcodeScanner from "../(component)/barcode-scanner";
+import { ToggleSwitch } from "../(component)/(styled)/inputs";
 
 export default function SignIn() {
-  const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
+  const [browserSupport, setBrowserSupport] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
   const [result, setResult] = useState("No result yet");
 
   useEffect(() => {
-    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
+    setBrowserSupport(!!window.BarcodeDetector);
   }, []);
   return (
     <div>
+      <ToggleSwitch onChange={() => setBrowserSupport(!browserSupport)} />
+
       <div>
         <IconButton
           type="button"
@@ -25,7 +28,7 @@ export default function SignIn() {
       </div>
 
       <Modal title="Scanner" open={showScanner} center>
-        {browserSupportBarcodeScanner ? (
+        {browserSupport ? (
           <BrowserBarcodeDetecter
             lang={"en"}
             onDetect={setResult}

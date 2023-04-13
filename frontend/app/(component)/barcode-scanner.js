@@ -72,7 +72,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
 
         (height / video.videoHeight) * 100;
         if (!borderSize[0]) {
-          setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100]);
+          setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100 - 6]);
         }
         // canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
         Quagga.decodeSingle(
