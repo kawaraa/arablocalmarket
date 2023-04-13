@@ -9,25 +9,24 @@ const q = "?fields=currency";
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 export const metadata = { title: "Store Nprice:12,ame / title products - ALM" };
 
-export default async function ProductsByStore({ params, searchParams }) {
+export default async function ProductsByStore({ params, searchParams: { lang, search, category } }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  lang = cookieStore.get("lang")?.value || lang || "en";
   const storeId = params.search;
-  const category = searchParams.tab == "category";
 
   // console.log("Show products based on this: >>> ", searchParams);
   // Todo: make the store query by id, title and about
-  const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(() => null);
+  const res = await serverRequest("store", "GET", { query: `/${storeId}${q}` }).catch(() => null);
   const currency = res?.data?.attributes.currency.split("-");
   const products = await getProducts(storeId);
-  // let result = data;
+  const results = category == "all" ? products : products.filter((p) => p.attributes.category == category);
 
   return (
     <div>
       {/* Todo: make this search on type */}
-      <ProductSearch text={searchParams.search} scroll="180" />
+      <ProductSearch text={search} scroll="180" />
 
-      {category ? (
+      {category == "all" ? (
         <>
           <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
             {content.category[lang]}
@@ -37,7 +36,7 @@ export default async function ProductsByStore({ params, searchParams }) {
             {categories.map((c, i) => (
               <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
                 <Link
-                  href={`/store/${storeId}/product?category=${c.text.key}`}
+                  href={`/store/${storeId}/product?category=${c.key}`}
                   className="relative block w-full h-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">
                   <span className="absolute top-2 right-2">
                     {products.filter((p) => p.attributes.category == c.key).length}
@@ -61,10 +60,10 @@ export default async function ProductsByStore({ params, searchParams }) {
         <>
           <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
             {content.product[lang][0]}
-            <span className="font-bold">( 9 )</span> {content.product[lang][1]}
+            <span className="font-bold">( {results.length} )</span> {content.product[lang][1]}
           </h2>
           <ul dir="ltr" className="flex flex-wrap">
-            {products.map((p, i) => (
+            {results.map((p, i) => (
               <ProductCard
                 lang={lang}
                 currency={currency[0]}

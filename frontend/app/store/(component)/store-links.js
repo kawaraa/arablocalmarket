@@ -79,7 +79,9 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
             onClick={(e) => e.preventDefault() + setShowRatingInput(true)}>
             &#9733;
           </a>
-          {ratings.total && <sub className="absolute -right-1 bottom-0 text-xs text-bg">{ratings.total}</sub>}
+          {ratings.total > 0 && (
+            <sub className="absolute -right-1 bottom-0 !text-xs text-bg">{ratings.total}</sub>
+          )}
         </li>
       </ul>
 

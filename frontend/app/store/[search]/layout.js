@@ -69,7 +69,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
 const content = {
   tabs: [
     { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
-    { key: "2", path: "/store/storeId/product?tab=category", text: { en: "Category", ar: "الفئات" } },
+    { key: "2", path: "/store/storeId/product?category=all", text: { en: "Category", ar: "الفئات" } },
     { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
   ],
 };
