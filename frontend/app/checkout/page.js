@@ -157,8 +157,6 @@ ${address.province}, ${address.country}`;
     if (user && user.address) setAddress(user.address);
   }, []);
 
-  console.log(store);
-
   if (!store || !items || !items[0]) return null;
   return (
     <article className="py-8">

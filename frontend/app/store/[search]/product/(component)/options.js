@@ -87,8 +87,8 @@ export default function Options({ store, id, variants, name, image, discount }) 
     <>
       {Object.keys(options).map((name, i) => (
         <VariantOptions
-          name={name}
-          values={shdCnt.options.values[options[name]][lang]}
+          name={shdCnt.options.values[name][lang] || name}
+          values={options[name]}
           onSelect={(value) => updateItemOptions(i, value)}
           selectedOptions={item.options}
           label
