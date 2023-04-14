@@ -10,22 +10,43 @@ export default function RootLayout({ children, searchParams }) {
   const language = cookieStore.get("lang")?.value || searchParams?.lang;
   const lang = language || "en";
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
-  // Todo: Change the description language based on the IP address.
-  // Todo: If it's possible, change the html lang based on the IP address.
-  // Todo: If it's possible, change the html className based on the IP address.
 
   return (
     <html lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <head>
-        <title>Arab Local Market</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Complete description of the content showed in this sample page." />
-        {/* <meta name="theme-color" content="black" /> */}
-        {/* <meta property="og:title" content="My Sample Page"/>
-        <meta property="og:description" content="Complete description of the content showed in this sample page for Open Graph."/>
-        <meta property="og:url" content="https://mydomain.com/"/>
-        <meta property="og:type" content="website"/> */}
-        {/* <script src="/loading-screen.js" defer></script> */}
+        <title>{content.title[lang]}</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="ArabLocalMarket" />
+        <meta name="description" content={content.description[lang]} />
+        <meta name="keywords" content={content.keywords[lang]} />
+        <meta property="og:title" content={content.title[lang]} />
+        <meta property="og:description" content={content.description[lang]} />
+        <meta property="og:url" content="https://arablocalmarket.com" />
+        <meta property="og:type" content="website" />
+
+        {/* <!-- PAW Support --> */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="shortcut icon" type="image/ico" sizes="48x48" href="/favicon/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="192x192"
+          href="/favicon/android-chrome-192x192.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          type="image/png"
+          sizes="512x512"
+          href="/favicon/android-chrome-512x512.png"
+        />
+        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-status-bar" content="#121212" />
+        <meta name="theme-color" content="#121212" />
+        <meta name="background-color" content="#ffffff" />
+
         {/* <script src="https://cdn.tailwindcss.com"></script> */}
         <script src="/tailwind-css-script.js"></script>
         <script src="/config.js"></script>
@@ -53,3 +74,15 @@ export default function RootLayout({ children, searchParams }) {
     </html>
   );
 }
+
+const content = {
+  title: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
+  description: {
+    en: "Arab Local Market is the first platform for Arabic markets, stores and supermarkets that sell Arabic Halal Food Products where the user can look for the nearby stores and order food.",
+    ar: "السوق المحلي العربي هو أول منصة للأسواق العربية والمتاجر ومحلات السوبر ماركت التي تبيع المنتجات الغذائية العربية الحلال حيث يمكن للمستخدم البحث عن المتاجر القريبة وطلب الطعام",
+  },
+  keywords: {
+    en: "Nearby grocery stores, local markets, supermarkets, Halal food, heigh quality Halal food",
+    ar: "محلات البقالة قريبة, الأسواق المحلية, طعام منتجات غذائية حلال, طعام حلال عالي الجودة",
+  },
+};
