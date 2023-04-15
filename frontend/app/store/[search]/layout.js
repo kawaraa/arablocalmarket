@@ -22,6 +22,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
 
   const store = res.data.attributes;
   store.id = res.data.id;
+  store.phone = res.data.meta?.phone;
   const image = store?.cover?.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
 
   return (
