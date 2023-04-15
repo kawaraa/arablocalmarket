@@ -75,6 +75,15 @@ export default function AppSessionContextProvider({ children, language, theme })
   //   setConversations(conversationsCopy);
   // };
 
+  // const addNotification = (notification) => {
+  //   const index = unseenNotifications.findIndex((note) => note.id === notification.id);
+  //   if (index < 0) setUnseenNotifications([...unseenNotifications, notification]);
+  // };
+  // const removeNotification = (notification) => {
+  //   setUnseenNotifications(unseenNotifications.filter((not) => not.id !== notification.id));
+  // };
+  // const removeUnseenChat = (id) => setUnseenChats(unseenChats.filter((chat) => chat.id !== id));
+
   const updateUser = (user) => {
     setAppLoading(true);
     setLoading(true);
@@ -83,6 +92,20 @@ export default function AppSessionContextProvider({ children, language, theme })
     setUser(user);
     setLoading(false);
     setAppLoading(false);
+  };
+
+  const requestNotificationPermission = () => {
+    const error = "Notifications are not supported";
+    return new Promise((resolve, reject) => {
+      if (!Notification || typeof Notification.requestPermission !== "function") reject(error);
+      if (Notification.permission === "granted") return resolve(Notification.permission);
+      try {
+        Notification.requestPermission().then(resolve).catch(reject);
+      } catch (error) {
+        // Safari doesn't return a promise for requestPermissions and it throws a Error. instead it takes a callback.
+        Notification.requestPermission((res) => (res ? resolve(res) : reject(res)));
+      }
+    });
   };
 
   useEffect(() => {
@@ -101,6 +124,18 @@ export default function AppSessionContextProvider({ children, language, theme })
         setLoading(false);
         setAppLoading(false);
       });
+
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => {
+          // console.log("Scope: ", registration.scope); // what does this mean? Ninja said that it has scope of the web-worker file
+          // console.log("Registration: ", registration);
+        })
+        .catch((error) => {
+          console.log("Web Worker Registration Error: ", error);
+        });
+    }
   }, []);
 
   // useEffect(() => {
@@ -112,29 +147,6 @@ export default function AppSessionContextProvider({ children, language, theme })
   //     setConversations(conversationsCopy);
   //   }
   // }, [receivedMessage]);
-
-  // const addNotification = (notification) => {
-  //   const index = unseenNotifications.findIndex((note) => note.id === notification.id);
-  //   if (index < 0) setUnseenNotifications([...unseenNotifications, notification]);
-  // };
-  // const removeNotification = (notification) => {
-  //   setUnseenNotifications(unseenNotifications.filter((not) => not.id !== notification.id));
-  // };
-  // const removeUnseenChat = (id) => setUnseenChats(unseenChats.filter((chat) => chat.id !== id));
-
-  const requestNotificationPermission = () => {
-    const error = "Notifications are not supported";
-    return new Promise((resolve, reject) => {
-      if (!Notification || typeof Notification.requestPermission !== "function") reject(error);
-      if (Notification.permission === "granted") return resolve(Notification.permission);
-      try {
-        Notification.requestPermission().then(resolve).catch(reject);
-      } catch (error) {
-        // Safari doesn't return a promise for requestPermissions and it throws a Error. instead it takes a callback.
-        Notification.requestPermission((res) => (res ? resolve(res) : reject(res)));
-      }
-    });
-  };
 
   const state = {
     setAppLoading,

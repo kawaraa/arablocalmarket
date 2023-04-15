@@ -11,7 +11,6 @@ export default async function StoreOverview({ params, searchParams }) {
 
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
   if (!res?.data?.attributes) return null;
-
   const store = res.data.attributes;
   store.id = res.data.id;
 
