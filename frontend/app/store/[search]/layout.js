@@ -19,10 +19,8 @@ export default async function StoreLayout({ children, params, searchParams }) {
   // Todo: make the store query by id, title and about
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
   if (!res?.data?.attributes) return notFound();
-
   const store = res.data.attributes;
   store.id = res.data.id;
-
   const image = store?.cover?.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
 
   return (
@@ -36,11 +34,8 @@ export default async function StoreLayout({ children, params, searchParams }) {
             <Image priority src={image} width="400" height="400" alt={store.name} className="block w-full" />
             <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
-              <span
-                className={`inline-block w-6 h-6 bg-${
-                  store.open ? "green" : "dt"
-                } rounded-full mr-2`}></span>{" "}
-              {store.name}
+              <span className={`inline-block w-6 h-6 bg-${store.open ? "green" : "dt"} rounded-full`}></span>{" "}
+              <span className="mx-2">{store.name}</span>
             </h1>
             <StoreLinks
               lang={lang}
