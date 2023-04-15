@@ -4,7 +4,7 @@
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#121212",
+  "theme_color": "#ffffff",
   "description": "Arab Local Market is the first platform for Arabic markets, stores and supermarkets that sell Arabic Halal Food Products where the user can look for the nearby stores and order food.",
   "orientation": "portrait-primary",
   "icons": [

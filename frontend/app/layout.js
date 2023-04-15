@@ -43,8 +43,8 @@ export default function RootLayout({ children, searchParams }) {
           href="/favicon/android-chrome-512x512.png"
         />
         <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-status-bar" content="#121212" />
-        <meta name="theme-color" content="#121212" />
+        <meta name="apple-mobile-web-app-status-bar" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff" />
         <meta name="background-color" content="#ffffff" />
 
         {/* <script src="https://cdn.tailwindcss.com"></script> */}
