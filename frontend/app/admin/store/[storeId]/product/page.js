@@ -87,33 +87,3 @@ const content = {
     path: "/admin/store/storeId/product/new",
   },
 };
-
-const products = [
-  {
-    id: "321",
-    name: "Prepared food",
-    description: "Some product rich text description",
-    image: { src: "/burger-prepared-food-clipart.png" },
-    price: 12,
-    variants: 3,
-    ratings: { stars: 3, total: 265 },
-  },
-  { id: "6765", name: "Eggs", price: 12, image: { src: "/dairy-clipart.png" }, variants: 31, starts: 3.5 },
-  {
-    id: "982",
-    name: "Beverages",
-    price: 85,
-    image: { src: "/beverages-clipart.png" },
-    variants: 52,
-    starts: 4.5,
-  },
-  { id: "5367", name: "Snacks", price: 63, image: { src: "/snacks-clipart.png" }, variants: 86, starts: 1.5 },
-  {
-    id: "12",
-    name: "dairy",
-    price: 12,
-    image: { src: "/dairy-clipart.png" },
-    variants: 25,
-    starts: 2.5,
-  },
-];

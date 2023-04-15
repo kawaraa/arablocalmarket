@@ -5,6 +5,8 @@
   "edit": { "en": "Edit", "ar": "تعديل" },
   "yes": { "en": "Yes", "ar": "نعم" },
   "customerName": { "ar": "زبون نقاط البيع", "en": "POS customer" },
+  "products": { "en": "Products", "ar": "المنتجات" },
+  "category": { "en": "Categories", "ar": "الفئات" },
   "periods": [
     { "en": "AM", "ar": "صباحًا" },
     { "en": "PM", "ar": "مساءً" }

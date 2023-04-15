@@ -5,6 +5,7 @@ import StoreLinks from "../(component)/store-links";
 import EmptyState from "../../(component)/(styled)/empty-state";
 import Tabs from "../../(component)/(styled)/tabs";
 import { serverRequest } from "../../(service)/api-provider";
+import shdCnt from "../../(layout)/json/shared-content.json";
 const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
 const catchErr = () => ({ data: {}, meta: {} });
 
@@ -21,7 +22,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
 
   const store = res.data.attributes;
   store.id = res.data.id;
-  const image = store?.cover?.data?.attributes?.url || "/market-store-grocery-cartoon.jpg";
+  const image = store?.cover?.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
 
   return (
     <>
@@ -29,7 +30,8 @@ export default async function StoreLayout({ children, params, searchParams }) {
         <EmptyState type="notFound" />
       ) : (
         <article>
-          <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:bg-gradient-to-tl from-dbg via-pc to-dbg sm:rounded-2xl">
+          {/* sm:bg-gradient-to-tl from-dbg via-pc to-dbg */}
+          <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:rounded-2xl">
             <Image priority src={image} width="400" height="400" alt={store.name} className="block w-full" />
             <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
@@ -68,8 +70,8 @@ export default async function StoreLayout({ children, params, searchParams }) {
 
 const content = {
   tabs: [
-    { key: "3", path: "/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },
-    { key: "2", path: "/store/storeId/product?category=all", text: { en: "Category", ar: "الفئات" } },
+    { key: "3", path: "/store/storeId/product", text: shdCnt.products },
+    { key: "2", path: "/store/storeId/product?category=all", text: shdCnt.category },
     { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
   ],
 };

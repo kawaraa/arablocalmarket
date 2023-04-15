@@ -8,20 +8,16 @@
   "attributes": {
     "day": {
       "type": "enumeration",
-      "enum": [
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-        "sunday"
-      ],
+      "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
       "required": true
     },
     "opens": {
       "type": "enumeration",
       "enum": [
+        "AM-12.00",
+        "AM-12.15",
+        "AM-12.30",
+        "AM-12.45",
         "AM-01.00",
         "AM-01.15",
         "AM-01.30",
@@ -66,10 +62,10 @@
         "AM-11.15",
         "AM-11.30",
         "AM-11.45",
-        "AM-12.00",
-        "AM-12.15",
-        "AM-12.30",
-        "AM-12.45",
+        "PM-12.00",
+        "PM-12.15",
+        "PM-12.30",
+        "PM-12.45",
         "PM-01.00",
         "PM-01.15",
         "PM-01.30",
@@ -113,11 +109,7 @@
         "PM-11.00",
         "PM-11.15",
         "PM-11.30",
-        "PM-11.45",
-        "PM-12.00",
-        "PM-12.15",
-        "PM-12.30",
-        "PM-12.45"
+        "PM-11.45"
       ],
       "required": true,
       "default": "AM-07.00"
@@ -125,6 +117,10 @@
     "closes": {
       "type": "enumeration",
       "enum": [
+        "AM-12.00",
+        "AM-12.15",
+        "AM-12.30",
+        "AM-12.45",
         "AM-01.00",
         "AM-01.15",
         "AM-01.30",
@@ -169,10 +165,10 @@
         "AM-11.15",
         "AM-11.30",
         "AM-11.45",
-        "AM-12.00",
-        "AM-12.15",
-        "AM-12.30",
-        "AM-12.45",
+        "PM-12.00",
+        "PM-12.15",
+        "PM-12.30",
+        "PM-12.45",
         "PM-01.00",
         "PM-01.15",
         "PM-01.30",
@@ -216,11 +212,7 @@
         "PM-11.00",
         "PM-11.15",
         "PM-11.30",
-        "PM-11.45",
-        "PM-12.00",
-        "PM-12.15",
-        "PM-12.30",
-        "PM-12.45"
+        "PM-11.45"
       ],
       "default": "PM-07.00",
       "required": true

@@ -57,7 +57,7 @@ export default function Navigation() {
         }`}>
         <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
           <div className="relative w-7 rounded-md">
-            <img src={`/${lang}.png`} className="w-full" />
+            <img src={`/img/${lang}.png`} className="w-full" />
 
             <select
               value={lang}

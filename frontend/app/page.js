@@ -18,7 +18,7 @@ export default async function LandingPage({ params, searchParams }) {
           className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c"
           style={{
             ...getCssDelay(),
-            backgroundImage: "url('img/a.png')",
+            backgroundImage: "url('/img/landing-page.png')",
             backgroundSize: "contain",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

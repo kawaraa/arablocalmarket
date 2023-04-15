@@ -2,47 +2,47 @@
   {
     "key": "vegetable",
     "text": { "en": "Vegetables and fruits", "ar": "الخضروات والفواكه" },
-    "image": "/produce-vegetables-clipart.png"
+    "image": "/img/category/produce-vegetables-clipart.png"
   },
   {
     "key": "bakery",
     "text": { "en": "Bakery", "ar": "مخبوزات" },
-    "image": "/bread-clipart.png"
+    "image": "/img/category/bread-clipart.png"
   },
   {
     "key": "meat",
     "text": { "en": "Meat and poultry", "ar": "لحم و دواجن" },
-    "image": "/cut-of-meat-clipart.png"
+    "image": "/img/category/cut-of-meat-clipart.png"
   },
   {
     "key": "seafood",
     "text": { "en": "Seafood", "ar": "مأكولات بحرية" },
-    "image": "/fish-clipart.png"
+    "image": "/img/category/fish-clipart.png"
   },
   {
     "key": "deli",
     "text": { "en": "Deli", "ar": "الأطعمة" },
-    "image": "/burger-prepared-food-clipart.png"
+    "image": "/img/category/burger-prepared-food-clipart.png"
   },
   {
     "key": "dairy",
     "text": { "en": "Dairy and eggs", "ar": "الألبان والبيض" },
-    "image": "/dairy-clipart.png"
+    "image": "/img/category/dairy-clipart.png"
   },
   {
     "key": "beverages",
     "text": { "en": "Beverages", "ar": "المشروبات" },
-    "image": "/beverages-clipart.png"
+    "image": "/img/category/beverages-clipart.png"
   },
   {
     "key": "snack",
     "text": { "en": "Snacks and candy", "ar": "الوجبات الخفيفة والحلوى" },
-    "image": "/snacks-clipart.png"
+    "image": "/img/category/snacks-clipart.png"
   },
   {
     "key": "canned",
     "text": { "en": "Canned and packaged goods", "ar": "البضائع المعلبة والمعبأة" },
-    "image": "/canned-goods-clipart.png"
+    "image": "/img/category/canned-goods-clipart.png"
   },
   {
     "key": "legumes",
@@ -50,7 +50,7 @@
       "en": "Legumes and grains",
       "ar": "الحبوب والبقوليات"
     },
-    "image": "/legumes-grains-clipart.png"
+    "image": "/img/category/legumes-grains-clipart.png"
   },
   {
     "key": "seeds",
@@ -58,27 +58,26 @@
       "en": "Nuts and seeds",
       "ar": "المكسرات والبذور"
     },
-    "image": "/nuts-seeds-clipart.png"
+    "image": "/img/category/nuts-seeds-clipart.png"
   },
   {
     "key": "spices",
     "text": { "en": "Spices and sauces", "ar": "البهارات والصلصات" },
-    "image": "/condiments-sauces-spices-clipart.png"
+    "image": "/img/category/condiments-sauces-spices-clipart.png"
   },
   {
     "key": "cleaning",
     "text": { "en": "Cleaning supplies", "ar": "معدات تنظيف" },
-    "image": "/cleaning-supplies-clipart.png"
+    "image": "/img/category/cleaning-supplies-clipart.png"
   },
   {
     "key": "care",
     "text": { "en": "Care products", "ar": "منتجات العناية" },
-    "image": "/care-products-clipart.png"
+    "image": "/img/category/care-products-clipart.png"
   },
-
   {
     "key": "baby",
     "text": { "en": "Baby supplies", "ar": "مستلزمات الأطفال" },
-    "image": "/baby-food-clipart.png"
+    "image": "/img/category/baby-food-clipart.png"
   }
 ]

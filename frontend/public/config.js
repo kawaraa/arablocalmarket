@@ -5,8 +5,8 @@ tailwind.config = {
     colors: {
       // testbg: "linear-gradient(to bottom right, #9bface, #b26cfc)",
       // hpbg: "radial-gradient(#b8f5d9, #ffffff)",
-      pc: "#9bface", // Primary Color // #cbf7f2
-      pc2: "#b26cfc",
+      pc: "#9bface", // Primary Color // #cbf7f2 // #b2ebf9
+      pc2: "#b26cfc", // #aea1ea
       bg: "#ffffff", // Background & Dark Title Color
       cbg: "#ffffff1a", // Card Background
       t: "#666666", // Light Color
