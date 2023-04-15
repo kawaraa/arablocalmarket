@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v1";
+const staticFileCacheName = "static-files-v-0";
 const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -27,17 +27,7 @@ self.addEventListener("activate", async (evt) => {
 
 self.addEventListener("fetch", (evt) => {
   if (!evt.request.url.includes("http")) evt.respondWith(fetch(evt.request));
-  else if (/api\/auth/.test(evt.request.url)) {
-    evt.respondWith(
-      caches.open(staticFileCacheName).then((cache) => {
-        cache.delete("/");
-        return fetch(evt.request).then((response) => {
-          cache.put("/", response.clone());
-          return response;
-        });
-      })
-    );
-  } else {
+  else {
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
         if (cachedResponse) return cachedResponse;
@@ -52,6 +42,31 @@ self.addEventListener("fetch", (evt) => {
       // .catch((error) => caches.match(staticFileCachePaths[0])) // offline fallback page
     );
   }
+  // else if (/api\/auth/.test(evt.request.url)) {
+  //   evt.respondWith(
+  //     caches.open(staticFileCacheName).then((cache) => {
+  //       cache.delete("/");
+  //       return fetch(evt.request).then((response) => {
+  //         cache.put("/", response.clone());
+  //         return response;
+  //       });
+  //     })
+  //   );
+  // } else {
+  //   evt.respondWith(
+  //     caches.match(evt.request).then((cachedResponse) => {
+  //       if (cachedResponse) return cachedResponse;
+  //       return fetch(evt.request).then((response) => {
+  //         if (evt.request.method != "GET") return response;
+  //         return caches.open(staticFileCacheName).then((cache) => {
+  //           cache.put(evt.request, response.clone());
+  //           return response;
+  //         });
+  //       });
+  //     })
+  //     // .catch((error) => caches.match(staticFileCachePaths[0])) // offline fallback page
+  //   );
+  // }
 });
 
 // self.addEventListener("message", (evt) => {
