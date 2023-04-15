@@ -1,6 +1,8 @@
 "use client";
+import { useState } from "react";
 import categories from "../(layout)/json/categories.json";
 import shdCnt from "../(layout)/json/shared-content.json";
+import { IconButton } from "./(styled)/button";
 import { CheckCard, InputField, InputWithSelect, Select } from "./(styled)/inputs";
 
 export function NameInputField({ lang, first, ...p }) {
@@ -51,12 +53,14 @@ export function PhoneInputField({ lang, ...p }) {
     />
   );
 }
-export function PswInputField({ lang, confirm, ...p }) {
+export function PswInputField({ lang, confirm, cls, ...p }) {
+  const [visible, setVisible] = useState(false);
+
   const newProps = { ...p, ...(!confirm ? {} : { name: "confirmPassword", autoComplete: "new-password" }) };
   const t = !confirm ? content.password[lang] : content.confirmPassword[lang];
   return (
     <InputField
-      type="password"
+      type={visible ? "text" : "password"}
       name="password"
       required
       min="9"
@@ -65,8 +69,10 @@ export function PswInputField({ lang, confirm, ...p }) {
       autoComplete="current-password"
       placeholder={t}
       title={t}
-      {...newProps}
-    />
+      cls={"items-center " + cls}
+      {...newProps}>
+      <IconButton icon="eye" onClick={() => setVisible(!visible)} className="absolute right-2 w-5 z-1" />
+    </InputField>
   );
 }
 export function PriceInputField({ lang, compare, ...p }) {

@@ -6,6 +6,7 @@ import { AppSessionContext } from "../app-session-context";
 import { fetchUser, request } from "../(service)/api-provider";
 import { InputField } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
+import { EmailInputField, PswInputField } from "../(component)/custom-inputs";
 
 export default function SignIn() {
   const router = useRouter();
@@ -54,29 +55,8 @@ export default function SignIn() {
         </div>
 
         <div className="-space-y-px rounded-md shadow-sm">
-          <InputField
-            type="email"
-            name="email"
-            required
-            min="10"
-            max="30"
-            autoComplete="email"
-            title={content.email[lang]}
-            full
-            inCls="text-lg rounded-t-md cd_hr"
-          />
-
-          <InputField
-            type="password"
-            name="password"
-            required
-            min="10"
-            max="30"
-            autoComplete="current-password"
-            title={content.password[lang]}
-            full
-            inCls="text-lg rounded-b-md cd_hr"
-          />
+          <EmailInputField full lang={lang} cls="text-lg rounded-t-md cd_hr" inCls="rounded-t-md" />
+          <PswInputField full lang={lang} cls="" inCls="text-lg cd_hr rounded-b-md" />
         </div>
 
         <div className="text-sm text-right">
@@ -108,7 +88,6 @@ export default function SignIn() {
 const content = {
   h1: { en: "Sign in to your account", ar: "تسجيل الدخول إلى حسابك" },
   email: { en: "Email address", ar: "البريد الإلكتروني" },
-  password: { en: "Password", ar: "كلمة المرور" },
   forget: { en: "Forgot your password?", ar: "هل نسيت كلمة المرور؟" },
   submit: { en: "Sign in", ar: "تسجيل الدخول" },
   createAccount: { en: "Create an account", ar: "إنشاء حساب" },

@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0";
+const staticFileCacheName = "static-files-v-1";
 const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -26,8 +26,13 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  if (!evt.request.url.includes("http")) evt.respondWith(fetch(evt.request));
-  else {
+  if (
+    !evt.request.url.includes("http") ||
+    evt.request.url.includes("api/auth") ||
+    evt.request.url.includes("api/users")
+  ) {
+    evt.respondWith(fetch(evt.request));
+  } else {
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
         if (cachedResponse) return cachedResponse;

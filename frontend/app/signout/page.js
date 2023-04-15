@@ -9,9 +9,13 @@ export default function Logout() {
   const { updateUser } = useContext(AppSessionContext);
 
   useEffect(() => {
+    window.localStorage.removeItem("user");
     window.localStorage.removeItem("accessToken");
     updateUser(null);
     router.replace("/");
+    // setTimeout(() => router.replace("/"), 1000);
+    // setTimeout(() => window.location.replace("/"), 2000);
+
     // Todo: use either Strapi or Next to clear the "HttpOnly" cookie.
   }, []);
 
