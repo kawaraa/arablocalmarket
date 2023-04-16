@@ -34,20 +34,19 @@ self.addEventListener("fetch", (evt) => {
     evt.request.url.includes("api/users") ||
     (evt.request.url.includes("/api/") && navigator.onLine)
   ) {
-    evt.respondWith(fetch(evt.request).catch((err) => err));
+    evt.respondWith(fetch(evt.request));
   } else {
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
         if (cachedResponse) return cachedResponse;
-        return fetch(evt.request)
-          .then((response) => {
-            if (evt.request.method != "GET" || !response.ok) return response;
-            return caches.open(staticFileCacheName).then((cache) => {
-              cache.put(evt.request, response.clone());
-              return response;
-            });
-          })
-          .catch((err) => err);
+        return fetch(evt.request).then((response) => {
+          if (evt.request.method != "GET" || !response.ok) return response;
+          return caches.open(staticFileCacheName).then((cache) => {
+            cache.put(evt.request, response.clone());
+            return response;
+          });
+        });
+        // .catch((err) => err);
       })
       // .catch((error) => {
       //   console.log("caches.match ERROR: >>>", error);
