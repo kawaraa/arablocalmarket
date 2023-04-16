@@ -12,11 +12,6 @@ const staticFileCachePaths = [
 ];
 // const pushNotificationEvents = ["ADD_NOTIFICATION", "NEW_MESSAGE"];
 
-const networkErrorResponse = new Response("Network error", {
-  status: 408,
-  headers: { "Content-Type": "text/plain" },
-});
-
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));
   self.skipWaiting();
@@ -32,35 +27,68 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log("Start", evt.request.url, caches.match(staticFileCachePaths[0]));
-  if (
-    // !evt.request.url.includes("http") ||
-    evt.request.url.includes("api/auth") ||
-    evt.request.url.includes("api/users") ||
-    evt.request.url.includes("/api/")
-  ) {
-    if (!navigator.onLine) return evt.respondWith(networkErrorResponse);
-    evt.respondWith(fetch(evt.request));
-  } else {
-    evt.respondWith(
-      caches.match(evt.request).then((cachedResponse) => {
-        if (cachedResponse) return cachedResponse;
-        if (!navigator.onLine) return networkErrorResponse;
-        return fetch(evt.request).then((response) => {
-          if (evt.request.method != "GET" || !response.ok) return response;
-          return caches.open(staticFileCacheName).then((cache) => {
-            cache.put(evt.request, response.clone());
-            return response;
-          });
-        });
-      })
-      // .catch((error) => {
-      //   console.log("caches.match ERROR: >>>", error);
-      //   caches.match(staticFileCachePaths[0]);
-      // }) // offline fallback page
-    );
-  }
+  evt.respondWith(handleRequest(evt.request));
+  // if (
+  //   // !evt.request.url.includes("http") ||
+  //   evt.request.url.includes("api/auth") ||
+  //   evt.request.url.includes("api/users") ||
+  //   evt.request.url.includes("/api/")
+  // ) {
+  //   if (!navigator.onLine) return evt.respondWith(networkErrorResponse);
+  //   evt.respondWith(fetch(evt.request));
+  // } else {
+  //   evt.respondWith(
+  //     caches.match(evt.request).then((cachedResponse) => {
+  //       if (cachedResponse) return cachedResponse;
+  //       if (!navigator.onLine) return networkErrorResponse;
+  //       return fetch(evt.request).then((response) => {
+  //         if (evt.request.method != "GET" || !response.ok) return response;
+  //         return caches.open(staticFileCacheName).then((cache) => {
+  //           cache.put(evt.request, response.clone());
+  //           return response;
+  //         });
+  //       });
+  //     })
+  //     // .catch((error) => {
+  //     //   console.log("caches.match ERROR: >>>", error);
+  //     //   caches.match(staticFileCachePaths[0]);
+  //     // }) // offline fallback page
+  //   );
+  // }
 });
+
+const handleRequest = async (request) => {
+  // console.log("Start", request.url, await caches.match(staticFileCachePaths[0]));
+  const networkErrorResponse = new Response("Network error", {
+    status: 408,
+    headers: { "Content-Type": "text/plain" },
+  });
+  try {
+    if (!navigator.onLine) return networkErrorResponse;
+
+    // !request.url.includes("http") ||
+    if (/api|api\/auth|api\/users/gim.test(request.url)) return fetch(request);
+    else {
+      const cachedResponse = await caches.match(request);
+      if (cachedResponse) return cachedResponse;
+
+      // if (!navigator.onLine) return networkErrorResponse;
+      const response = await fetch(request);
+      if (request.method != "GET" || !response.ok) return response;
+
+      await caches.open(staticFileCacheName).then((cache) => cache.put(request, response.clone()));
+      return response;
+    }
+  } catch (error) {
+    console.log("caches ERROR: >>>", request.method, request.url, error);
+    //   caches.match(staticFileCachePaths[0]); // offline fallback page
+
+    return new Response("Network error", {
+      status: 408,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
+};
 
 // self.addEventListener("message", (evt) => {
 //   // evt.source is the page client who sent the message
