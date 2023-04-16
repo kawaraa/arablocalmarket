@@ -77,11 +77,8 @@ function setLoading(loading) {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    // && environment != "development"
-    console.log("registerServiceWorker");
-
+    // && !window.location.origin.includes("localhost");
     navigator.serviceWorker.getRegistrations().then(async (registrations) => {
-      console.log(registrations);
       for (const registration of registrations) {
         if (
           registration.active.state == "activated" &&
@@ -90,20 +87,12 @@ function registerServiceWorker() {
           continue;
         }
         await new Promise((res, rej) => registration.unregister().then(res).catch(rej));
-        console.log("unregister: ", registration);
       }
 
       navigator.serviceWorker
         .register("/service-worker.js")
-        .then((registration) => {
-          // console.log("Scope: ", registration.scope); // what does this mean? Ninja said that it has scope of the web-worker file
-          // console.log("Registration: ", registration);
-        })
-        .catch((error) => {
-          console.log("Web Worker Registration Error: ", error);
-        });
-
-      // window.location.reload();
+        .then((registration) => console.log("Registration scope: ", registration.scope))
+        .catch((error) => console.log("Web Worker Registration Error: ", error));
 
       window.removeEventListener("load", registerServiceWorker);
     });
