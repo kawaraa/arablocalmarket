@@ -1,16 +1,12 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0";
-const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
+const staticFileCacheName = "static-files-v-1";
+// const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
   // "/offline",
-  // "/style/variables.css",
-  // "/style/homepage.css",
-  // "https://fonts.googleapis.com/css2?display=swap&family=Lato&family=Roboto&family=Mulish&family=Spartan&family=Quicksand&family=Sora:wght@100&family=Comic+Neue",
-  // "https://fonts.gstatic.com/s/lato/v16/S6uyw4BMUTPHjx4wXiWtFCc.woff2",
 ];
-const pushNotificationEvents = ["ADD_NOTIFICATION", "NEW_MESSAGE"];
+// const pushNotificationEvents = ["ADD_NOTIFICATION", "NEW_MESSAGE"];
 
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));
@@ -26,6 +22,7 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
+  console.log("evt.request.url: >>>", evt.request.url);
   if (
     !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||
@@ -148,7 +145,7 @@ self.addEventListener("fetch", (evt) => {
 //   const focusedClients = await getFocusedClients();
 
 //   focusedClients.forEach((client) => client.postMessage(data));
-//   if (!pushNotificationEvents.find((evt) => evt === data.type)) return;
+// if (!pushNotificationEvents.find((evt) => evt === data.type)) return;
 
 //   if (Notification.permission === "granted" && self.notifications === "on" && !focusedClients[0]) {
 //     const notification = getNotifications(data);
