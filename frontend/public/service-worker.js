@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-19";
+const staticFileCacheName = "static-files-v-20";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -11,6 +11,11 @@ const staticFileCachePaths = [
   "/signup",
 ];
 // const pushNotificationEvents = ["ADD_NOTIFICATION", "NEW_MESSAGE"];
+
+const networkErrorResponse = new Response("Network error", {
+  status: 408,
+  headers: { "Content-Type": "text/plain" },
+});
 
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));
@@ -27,18 +32,20 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  // console.log("Start", evt.request.url, caches.match(staticFileCachePaths[0]));
+  console.log("Start", evt.request.url, caches.match(staticFileCachePaths[0]));
   if (
     // !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||
     evt.request.url.includes("api/users") ||
-    (evt.request.url.includes("/api/") && navigator.onLine)
+    evt.request.url.includes("/api/")
   ) {
+    if (!navigator.onLine) return evt.respondWith(networkErrorResponse);
     evt.respondWith(fetch(evt.request));
   } else {
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
         if (cachedResponse) return cachedResponse;
+        if (!navigator.onLine) return networkErrorResponse;
         return fetch(evt.request).then((response) => {
           if (evt.request.method != "GET" || !response.ok) return response;
           return caches.open(staticFileCacheName).then((cache) => {
@@ -46,7 +53,6 @@ self.addEventListener("fetch", (evt) => {
             return response;
           });
         });
-        // .catch((err) => err);
       })
       // .catch((error) => {
       //   console.log("caches.match ERROR: >>>", error);
