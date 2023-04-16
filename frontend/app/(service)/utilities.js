@@ -57,6 +57,10 @@ const errors = {
     en: "Something went wrong, please try again later",
     ar: "حدث خطأ ما، يرجى المحاولة فى وقت لاحق",
   },
+  "failed to fetch": {
+    en: "No internet, Please check your network connection!",
+    arr: "لا يوجد إنترنت ، يرجى التحقق من اتصالك بالشبكة!",
+  },
   "already taken": { en: "Email are already taken", ar: "البريد الإلكتروني مستخدم" },
   "not confirmed": {
     en: "You can not sign in if you don't confirm your Email address",

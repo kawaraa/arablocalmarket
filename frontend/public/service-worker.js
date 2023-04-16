@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-21";
+const staticFileCacheName = "static-files-v-1";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -59,20 +59,21 @@ self.addEventListener("fetch", (evt) => {
 
 const handleRequest = async (request) => {
   // console.log("Start", request.url, await caches.match(staticFileCachePaths[0]));
-  const networkErrorResponse = new Response("Network error", {
-    status: 408,
-    headers: { "Content-Type": "text/plain" },
-  });
+  const networkErrorResponse = Response.error();
+  // const networkErrorResponse = new Response("Network error", {
+  //   status: 408,
+  //   headers: { "Content-Type": "text/plain" },
+  // });
   try {
-    if (!navigator.onLine) return networkErrorResponse;
-
     // !request.url.includes("http") ||
-    if (/api|api\/auth|api\/users/gim.test(request.url)) return fetch(request);
-    else {
+    if (/api|api\/auth|api\/users/gim.test(request.url)) {
+      console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+      return await fetch(request);
+    } else {
       const cachedResponse = await caches.match(request);
       if (cachedResponse) return cachedResponse;
+      console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
 
-      // if (!navigator.onLine) return networkErrorResponse;
       const response = await fetch(request);
       if (request.method != "GET" || !response.ok) return response;
 
@@ -83,10 +84,7 @@ const handleRequest = async (request) => {
     console.log("caches ERROR: >>>", request.method, request.url, error);
     //   caches.match(staticFileCachePaths[0]); // offline fallback page
 
-    return new Response("Network error", {
-      status: 408,
-      headers: { "Content-Type": "text/plain" },
-    });
+    return networkErrorResponse;
   }
 };
 

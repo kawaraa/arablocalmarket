@@ -44,13 +44,13 @@ export async function request(url, method = "GET", data, type = "application/jso
     }
   }
 
-  const response = await fetch(aUrl, { method, body, headers, ...arg }).catch(() => null);
+  const response = await fetch(aUrl, { method, body, headers, ...arg }).catch((err) => err);
   if (response?.ok) return response.json();
-  throw new Error(validateError(await response?.text()));
+  throw new Error(validateError(response?.message || (await response?.text())));
 }
 
 export async function fetchUser() {
-  const user = await request("getUser").catch(() => null);
+  const user = await request("getUser");
   if (!user || !user.id) return null;
 
   const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
@@ -140,7 +140,7 @@ export function removeAttributes(data) {
   return data.attributes;
 }
 
-export function registerServiceWorker(environment) {
+export function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
     // && !window.location.origin.includes("localhost");
     navigator.serviceWorker.getRegistrations().then(async (registrations) => {

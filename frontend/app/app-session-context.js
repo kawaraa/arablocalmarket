@@ -119,7 +119,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     fetchUser()
       .then(updateUser)
-      .catch(() => {
+      .catch((err) => {
         const user = JSON.parse(window.localStorage.getItem("user") || null);
         if (user) return updateUser(user);
         setLoading(false);
