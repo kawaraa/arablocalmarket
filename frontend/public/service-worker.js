@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-11";
+const staticFileCacheName = "static-files-v-12";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -25,29 +25,36 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log("static-files-v-10: >>>", navigator.onLine, evt.request.url);
+  // console.log("static-files-v-10: >>>", navigator.onLine, evt.request.url);
   if (
     !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||
-    evt.request.url.includes("api/users")
+    evt.request.url.includes("api/users") ||
+    (evt.request.url.includes("/api/") && navigator.onLine)
   ) {
     evt.respondWith(fetch(evt.request));
   } else {
     evt.respondWith(
-      caches.match(evt.request).then((cachedResponse) => {
-        console.log("Cash: >>>", cachedResponse);
-        if (cachedResponse) return cachedResponse;
-        return fetch(evt.request).then((response) => {
-          console.log("Before fetch: >>>", evt.request.method, cachedResponse);
-          if (evt.request.method != "GET") return response;
-          console.log("After fetch: >>>", evt.request.method, response);
-          return caches.open(staticFileCacheName).then((cache) => {
-            cache.put(evt.request, response.clone());
-            return response;
+      caches
+        .match(evt.request)
+        .then((cachedResponse) => {
+          // console.log("Cash: >>>", cachedResponse);
+          if (cachedResponse) return cachedResponse;
+          return fetch(evt.request).then((response) => {
+            // console.log("Before fetch: >>>", evt.request.method, cachedResponse);
+            if (evt.request.method != "GET" || !response.ok) return response;
+            // console.log("After fetch: >>>", evt.request.method, response);
+            return caches.open(staticFileCacheName).then((cache) => {
+              cache.put(evt.request, response.clone());
+              return response;
+            });
           });
-        });
-      })
-      // .catch((error) => caches.match(staticFileCachePaths[0])) // offline fallback page
+        })
+        .catch((error) => {
+          // console.log("caches.match ERROR: >>>", error);
+
+          caches.match(staticFileCachePaths[0]);
+        }) // offline fallback page
     );
   }
 });

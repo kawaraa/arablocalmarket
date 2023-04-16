@@ -51,7 +51,11 @@ export default async function LandingPage({ params, searchParams }) {
             {content.findStoreLink[lang]}
           </Link>
 
-          <a href="#section2" className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
+          <a
+            href="#section2"
+            title={content.readMore[lang]}
+            aria-label={content.readMore[lang]}
+            className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
             <SvgIcon name="arrowDownInCircle" />
           </a>
         </article>
@@ -109,5 +113,9 @@ const content = {
   h3Link: {
     en: "Create a store",
     ar: "أنشئ متجرًا",
+  },
+  readMore: {
+    en: "Read more on how to create a store and manage you the store inventory",
+    ar: "اقرأ المزيد حول كيفية إنشاء متجر وإدارة مخزون المتجر",
   },
 };

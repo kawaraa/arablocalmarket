@@ -50,7 +50,7 @@ export async function request(url, method = "GET", data, type = "application/jso
 }
 
 export async function fetchUser() {
-  const user = await request("getUser");
+  const user = await request("getUser").catch(() => null);
   if (!user || !user.id) return null;
 
   const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
@@ -139,3 +139,50 @@ export function removeAttributes(data) {
   data.attributes.id = data.id;
   return data.attributes;
 }
+
+// export function registerServiceWorker(environment) {
+//   if ("serviceWorker" in navigator) {
+//     // && environment != "development"
+//     // console.log(environment);
+
+//     const registerFn = () => {
+//       console.log("environment: >>> ", environment);
+
+//       navigator.serviceWorker.getRegistrations().then(async (registrations) => {
+//         console.log(registrations);
+//         for (const registration of registrations) {
+//           await new Promise((res, rej) => registration.unregister().then(res).catch(rej));
+//           console.log("unregister: ", bool);
+//         }
+
+//         navigator.serviceWorker
+//           .register("/service-worker.js")
+//           .then((registration) => {
+//             // console.log("Scope: ", registration.scope); // what does this mean? Ninja said that it has scope of the web-worker file
+//             // console.log("Registration: ", registration);
+//           })
+//           .catch((error) => {
+//             console.log("Web Worker Registration Error: ", error);
+//           });
+
+//         // window.location.reload();
+
+//         window.removeEventListener("load", registerFn);
+//       });
+//     };
+
+//     window.addEventListener("load", registerFn);
+//   }
+
+//   // if ("serviceWorker" in navigator && environment != "development") {
+//   //   navigator.serviceWorker
+//   //     .register("/service-worker.js")
+//   //     .then((registration) => {
+//   //       // console.log("Scope: ", registration.scope); // what does this mean? Ninja said that it has scope of the web-worker file
+//   //       // console.log("Registration: ", registration);
+//   //     })
+//   //     .catch((error) => {
+//   //       console.log("Web Worker Registration Error: ", error);
+//   //     });
+//   // }
+// }

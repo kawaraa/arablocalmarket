@@ -126,17 +126,8 @@ export default function AppSessionContextProvider({ children, language, theme })
         setAppLoading(false);
       });
 
-    if ("serviceWorker" in navigator && environment != "development") {
-      navigator.serviceWorker
-        .register("/service-worker.js")
-        .then((registration) => {
-          // console.log("Scope: ", registration.scope); // what does this mean? Ninja said that it has scope of the web-worker file
-          // console.log("Registration: ", registration);
-        })
-        .catch((error) => {
-          console.log("Web Worker Registration Error: ", error);
-        });
-    }
+    // registerServiceWorker(environment);
+    // window.env = environment;
   }, []);
 
   // useEffect(() => {

@@ -57,7 +57,7 @@ export default function Navigation() {
         }`}>
         <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
           <div className="relative w-7 rounded-md">
-            <img src={`/img/${lang}.png`} className="w-full" />
+            <img alt={content.langAlt[lang]} width="30" src={`/img/${lang}.png`} className="w-full w-7" />
 
             <select
               value={lang}
@@ -225,4 +225,5 @@ const content = {
       ar: "storeOwner ارسل لك طلب الانضمام إلى فريقه",
     },
   },
+  langAlt: { en: "Change Language", ar: "تغيير اللغة" },
 };
