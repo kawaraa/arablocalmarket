@@ -139,3 +139,25 @@ export function removeAttributes(data) {
   data.attributes.id = data.id;
   return data.attributes;
 }
+
+export function registerServiceWorker(environment) {
+  if ("serviceWorker" in navigator) {
+    // && !window.location.origin.includes("localhost");
+    navigator.serviceWorker.getRegistrations().then(async (registrations) => {
+      for (const registration of registrations) {
+        if (
+          registration.active.state == "activated" &&
+          registration.active?.scriptURL?.includes("service-worker.js")
+        ) {
+          continue;
+        }
+        await new Promise((res, rej) => registration.unregister().then(res).catch(rej));
+      }
+
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => console.log("Registration scope: ", registration.scope))
+        .catch((error) => console.log("Web Worker Registration Error: ", error));
+    });
+  }
+}

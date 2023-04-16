@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 import Messages from "./(component)/(styled)/messages";
-import { fetchUser } from "./(service)/api-provider";
+import { fetchUser, registerServiceWorker } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
 const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
@@ -126,8 +126,7 @@ export default function AppSessionContextProvider({ children, language, theme })
         setAppLoading(false);
       });
 
-    // registerServiceWorker(environment);
-    // window.env = environment;
+    registerServiceWorker();
   }, []);
 
   // useEffect(() => {
