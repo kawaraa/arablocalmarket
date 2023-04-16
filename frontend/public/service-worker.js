@@ -1,9 +1,12 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-1";
+const staticFileCacheName = "static-files-v-10";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
+  "/tailwind-css-script.js",
+  "/config.js",
+  "/barcode-scanner/quagga.min.js",
   // "/offline",
 ];
 // const pushNotificationEvents = ["ADD_NOTIFICATION", "NEW_MESSAGE"];
@@ -22,7 +25,7 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log("evt.request.url: >>>", evt.request.url);
+  console.log("static-files-v-10: >>>", evt.request.url);
   if (
     !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||

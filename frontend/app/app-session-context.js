@@ -4,6 +4,7 @@ import Messages from "./(component)/(styled)/messages";
 import { fetchUser } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
+const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
 
 export const AppSessionContext = createContext();
 
@@ -125,7 +126,7 @@ export default function AppSessionContextProvider({ children, language, theme })
         setAppLoading(false);
       });
 
-    if ("serviceWorker" in navigator) {
+    if ("serviceWorker" in navigator && environment != "development") {
       navigator.serviceWorker
         .register("/service-worker.js")
         .then((registration) => {
