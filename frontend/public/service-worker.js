@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-17";
+const staticFileCacheName = "static-files-v-18";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -26,31 +26,25 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log("A", evt.request.url);
+  console.log("Start", evt.request.url);
   if (
     // !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||
     evt.request.url.includes("api/users") ||
     (evt.request.url.includes("/api/") && navigator.onLine)
   ) {
-    console.log("B", evt.request.method);
-
+    console.log("API Start", evt.request.method, evt.request.url);
     evt.respondWith(fetch(evt.request).catch((err) => err));
-    console.log("C", evt.request.method);
   } else {
-    console.log("D", evt.request.method);
+    console.log("Look for Cache", evt.request.method);
 
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
-        console.log("E", evt.request.method);
-
+        console.log("Cached", evt.request.method, evt.request.url, cachedResponse);
         if (cachedResponse) return cachedResponse;
-        console.log("F", evt.request.method);
-
         return fetch(evt.request)
           .then((response) => {
-            console.log("G", evt.request.method, response.ok);
-
+            console.log("Fetched", response.ok, evt.request.method, evt.request.url);
             if (evt.request.method != "GET" || !response.ok) return response;
             return caches.open(staticFileCacheName).then((cache) => {
               cache.put(evt.request, response.clone());
@@ -58,8 +52,7 @@ self.addEventListener("fetch", (evt) => {
             });
           })
           .catch((err) => {
-            console.log("ERROR: >>>> ", evt.request.method);
-
+            console.log("ERROR: >>>> ", evt.request.method, err);
             return err;
           });
       })
