@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-17";
+const staticFileCacheName = "static-files-v-1";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -27,35 +27,27 @@ self.addEventListener("activate", async (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-  console.log("Start", evt.request.url, caches.match(staticFileCachePaths[0]));
+  // console.log("Start", evt.request.url, caches.match(staticFileCachePaths[0]));
   if (
     // !evt.request.url.includes("http") ||
     evt.request.url.includes("api/auth") ||
     evt.request.url.includes("api/users") ||
     (evt.request.url.includes("/api/") && navigator.onLine)
   ) {
-    // console.log("API Start", evt.request.method, evt.request.url);
     evt.respondWith(fetch(evt.request).catch((err) => err));
   } else {
-    // console.log("Look for Cache", evt.request.method);
-
     evt.respondWith(
       caches.match(evt.request).then((cachedResponse) => {
-        // console.log("Cached", evt.request.method, evt.request.url, cachedResponse);
         if (cachedResponse) return cachedResponse;
         return fetch(evt.request)
           .then((response) => {
-            // console.log("Fetched", response.ok, evt.request.method, evt.request.url);
             if (evt.request.method != "GET" || !response.ok) return response;
             return caches.open(staticFileCacheName).then((cache) => {
               cache.put(evt.request, response.clone());
               return response;
             });
           })
-          .catch((err) => {
-            // console.log("ERROR: >>>> ", evt.request.method, err);
-            return err;
-          });
+          .catch((err) => err);
       })
       // .catch((error) => {
       //   console.log("caches.match ERROR: >>>", error);
