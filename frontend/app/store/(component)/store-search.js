@@ -15,7 +15,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
   const { lang, addMessage } = useContext(AppSessionContext);
   const [showFilter, setShowFilter] = useState(false);
   const [position, setPosition] = useState(coordinates);
-  const [range, setRange] = useState("0.5");
+  const [range, setRange] = useState("1");
   const [search, setSearch] = useState(text || "");
 
   const handleSearch = async () => {

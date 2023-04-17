@@ -1,9 +1,10 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-1";
+const staticFileCacheName = "static-files-v-2";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
+  "/offline.html",
   "/tailwind-css-script.js",
   "/config.js",
   "/barcode-scanner/quagga.min.js",
@@ -58,21 +59,18 @@ self.addEventListener("fetch", (evt) => {
 });
 
 const handleRequest = async (request) => {
-  // console.log("Start", request.url, await caches.match(staticFileCachePaths[0]));
+  console.log("caches Start", request.method, request.url);
   const networkErrorResponse = Response.error();
-  // const networkErrorResponse = new Response("Network error", {
-  //   status: 408,
-  //   headers: { "Content-Type": "text/plain" },
-  // });
+  // console.log("caches ERROR: >>>", request.method, request.url);
   try {
     // !request.url.includes("http") ||
     if (/api|api\/auth|api\/users/gim.test(request.url)) {
-      console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+      // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
       return await fetch(request);
     } else {
       const cachedResponse = await caches.match(request);
       if (cachedResponse) return cachedResponse;
-      console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+      // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
 
       const response = await fetch(request);
       if (request.method != "GET" || !response.ok) return response;
@@ -82,8 +80,7 @@ const handleRequest = async (request) => {
     }
   } catch (error) {
     console.log("caches ERROR: >>>", request.method, request.url, error);
-    //   caches.match(staticFileCachePaths[0]); // offline fallback page
-
+    if (request.url.includes("_next")) return caches.match(staticFileCachePaths[1]); // offline fallback page
     return networkErrorResponse;
   }
 };
