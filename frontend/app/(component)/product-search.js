@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
-import SvgIcon from "./(styled)/svg-icon";
+// import SvgIcon from "./(styled)/svg-icon";
 
 export default function ProductSearch({ text, scroll }) {
   const { lang } = useContext(AppSessionContext);

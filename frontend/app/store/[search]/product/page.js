@@ -20,10 +20,10 @@ export default async function ProductsByStore({ params, searchParams: { lang, se
   // Todo: make the store query by id, title and about
   const res = await serverRequest("store", "GET", { query: `/${storeId}${q}` }).catch(() => null);
   const currency = res?.data?.attributes.currency.split("-");
-  const products = await getProducts(storeId);
+  const products = await getProducts(storeId, search);
   const results =
     !category || category == "all" ? products : products.filter((p) => p.attributes.category == category);
-
+  console.log("search: >>> ", search);
   return (
     <div>
       {/* Todo: make this search on type */}

@@ -11,8 +11,10 @@ export const StoreCustomerInfo = ({ lang, about, ratings, distance }) => {
   // }
 
   return (
-    <section dir="auto" className="p-3">
-      <p className="text-sm mb-1">{about}</p>
+    <section dir="ltr" className="mt-3 p-3">
+      {/* <p dir="auto" className="text-sm mb-1">
+        {about}
+      </p> */}
 
       <p className="flex justify-between items-center">
         <span>

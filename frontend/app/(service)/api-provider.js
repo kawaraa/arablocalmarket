@@ -141,8 +141,7 @@ export function removeAttributes(data) {
 }
 
 export function registerServiceWorker() {
-  if ("serviceWorker" in navigator) {
-    // && !window.location.origin.includes("localhost");
+  if ("serviceWorker" in navigator && !window.location.origin.includes("localhost")) {
     navigator.serviceWorker.getRegistrations().then(async (registrations) => {
       for (const registration of registrations) {
         if (

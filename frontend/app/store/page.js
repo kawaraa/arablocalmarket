@@ -50,7 +50,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
   // <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>
   return (
     <>
-      <StoreSearch text={searchParams?.search} coordinates={coordinates} />
+      <StoreSearch text={search} coordinates={coordinates} />
 
       {/* <div className="my-5 ">DEV Info: {text}</div> */}
 
