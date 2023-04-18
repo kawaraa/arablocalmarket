@@ -88,7 +88,7 @@ export default function ProductById({ params }) {
       });
 
       data.attributes.id = data.id;
-      if (data.attributes?.image.data) data.attributes.image = null;
+      if (!data.attributes?.image.data) data.attributes.image = null;
       else {
         data.attributes.image.data.attributes.id = data.attributes.image.data.id;
         data.attributes.image = data.attributes.image.data.attributes;
@@ -130,6 +130,7 @@ export default function ProductById({ params }) {
           alt={product?.name || content.upload[lang]}
           title={content.upload[lang]}
           fullHeight
+          product
           cls="h-40"
         />
 

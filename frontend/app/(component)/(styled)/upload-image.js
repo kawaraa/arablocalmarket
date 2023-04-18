@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import SvgIcon from "./svg-icon";
 
-export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeight, cls, ...p }) {
+export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeight, product, cls, ...p }) {
   const [fileChanged, setFileChanged] = useState(false);
   const inputRef = useRef(null);
   const [filePreview, setFilePreview] = useState(null);
@@ -11,6 +11,12 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
   const handleChange = (e) => {
     setFileChanged(!fileChanged);
     if (!e.target.files[0]) return;
+
+    if (product) {
+      setFilePreview(e.target.files[0]);
+      if (onFile) onFile(e.target.files[0]);
+      return;
+    }
 
     const img = document.createElement("img");
     img.onload = () => convert(img);
