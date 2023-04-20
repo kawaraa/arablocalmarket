@@ -9,7 +9,7 @@ import categories from "../../../(layout)/json/categories.json";
 const q = "?fields=currency";
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-export const metadata = { title: "Store Nprice:12,ame / title products - ALM" };
+// export const metadata = { title: "Store name - ALM" };
 
 export default async function ProductsByStore({ params, searchParams: { lang, search, category } }) {
   const cookieStore = cookies();
@@ -23,7 +23,7 @@ export default async function ProductsByStore({ params, searchParams: { lang, se
   const products = await getProducts(storeId, search);
   const results =
     !category || category == "all" ? products : products.filter((p) => p.attributes.category == category);
-  console.log("search: >>> ", search);
+  // console.log("search: >>> ", search);
   return (
     <div>
       {/* Todo: make this search on type */}

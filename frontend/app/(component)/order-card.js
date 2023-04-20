@@ -3,9 +3,9 @@ import Badge from "./(styled)/badge";
 import shdCnt from "../(layout)/json/shared-content.json";
 import SvgIcon from "./(styled)/svg-icon";
 import Link from "next/link";
-// import { getCssDelay } from "../(service)/style-methods";
+import { getCssDelay } from "../(service)/style-methods";
 
-export default function OrderCard({ lang, admin, onClick, ...order }) {
+export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), ...order }) {
   const handleClick = (e) => {
     if (e.target.tagName == "A") return;
     onClick(order);
@@ -14,7 +14,7 @@ export default function OrderCard({ lang, admin, onClick, ...order }) {
     <li
       dir="auto"
       onClick={handleClick}
-      // style={getCssDelay()}
+      style={style}
       className="card px-2 py-3 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex lazy-c">
       {!admin && (
         <StoreHeaderInfo

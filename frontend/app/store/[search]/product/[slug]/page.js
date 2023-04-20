@@ -4,15 +4,14 @@ import ActionButtons, { Stock } from "../(component)/action-buttons";
 import Options from "../(component)/options";
 import { serverRequest } from "../../../../(service)/api-provider";
 import { ShareButton } from "../../../../(component)/share-button";
-import shdCnt from "../../../../(layout)/json/shared-content.json";
-// import Images from "../(component)/images";
+// import shdCnt from "../../../../(layout)/json/shared-content.json";
 const q = "?fields=name,currency,meta";
 const q1 =
   "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[rating]=*";
 const catchErr = () => ({ data: {}, meta: {} });
 
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-export const metadata = { title: "Product Name / title - store name - ALM" };
+// export const metadata = { title: "Product Name - store name - ALM" };
 
 export default async function ProductBySlug({ params }) {
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
@@ -45,8 +44,6 @@ export default async function ProductBySlug({ params }) {
           cls="block w-6 absolute top-3 right-3 hover:text-pc"
         />
       </div>
-
-      {/* <Images productName={product.name} images={product.images}/> */}
 
       <div className="relative ">
         <Options store={store} {...product} />

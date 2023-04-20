@@ -6,10 +6,54 @@ Strapi comes with a full featured [Command Line Interface](https://docs.strapi.i
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/developer-docs/latest/developer-resources/cli/CLI.html#strapi-develop)
 
+- Run the app
+
 ```
 npm run develop
 # or
 yarn develop
+```
+
+- Adjust the Media Library in Admin panel settings
+
+```
+Responsive friendly upload is false
+Size optimization is true
+Auto orientation is false
+```
+
+- Adjust the Advance settings in Admin panel settings
+
+```
+Default role for authenticated users is Authenticated
+Enable email confirmation is true
+Redirection url is http://localhost:3000
+Reset password page is
+```
+
+- Adjust the Users & permissions Roles in settings on Admin panel settings
+
+#### `Public`
+
+```
+Order alow create
+Product alow find, findOne
+Rating alow find, findOne
+Store alow find, findOne
+Upload alow upload, findOne
+User alow callback, connect, emailConfirmation, forgotPassword, register, resetPassword, sendEmailConfirmation
+```
+
+#### `Authenticated`
+
+```
+Customer alow create, update, find, findOne
+Order alow create, update, find, findOne
+Product alow create, update, delete, find, findOne
+Rating alow create, update, delete, find, findOne
+Store alow create, update, delete, find, findOne
+Upload alow upload, findOne
+User alow changePassword, me
 ```
 
 ### `start`

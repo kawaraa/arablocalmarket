@@ -30,7 +30,7 @@ export default function StoreProducts({ params, searchParams }) {
   useEffect(() => {
     if (!user) router.replace("/signin");
     else {
-      const store = user.myStores.find((s) => s.id == params.storeId);
+      const store = user.myStores?.find((s) => s.id == params.storeId);
       if (store) {
         store.currency = store.currency.split("-")[0];
         setStore(store);

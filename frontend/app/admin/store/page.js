@@ -49,7 +49,6 @@ export default function Stores() {
               favorites={store.favorites}
               open={store.open}
               distance={{ length: 0, unit: "KM" }}
-              cls="w-full sm:w-1/2 xl:w-1/3"
               key={i}
             />
           ))}

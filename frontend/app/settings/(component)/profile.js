@@ -44,8 +44,8 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
 
       <h3 className="text-lg font-semibold mt-6 mb-2">Address</h3>
 
-      {!adr ? (
-        <Button type="submit" icon="plus" onClick={() => setAddressForm(true)} cls="w-full mt-3 ">
+      {!adr?.line1 ? (
+        <Button type="submit" icon="plus" onClick={() => setAddressForm(true)} cls=" mt-3 ">
           New address
         </Button>
       ) : (
@@ -55,8 +55,10 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
           aria-label="Click to edit your Address"
           className="card cd_hr p-3 w-full lg:w-1/2 rounded-md cursor-pointer">
           <p dir="ltr">
-            {adr.line1} {adr.line2 || ""},<br />
-            {adr.postalCode} {adr.city}, {adr.country}
+            {adr.line1} {adr.line2 || ""}
+            <br />
+            {adr.postalCode} {adr.city}
+            <br /> {adr.province} {adr.country}
           </p>
         </address>
       )}

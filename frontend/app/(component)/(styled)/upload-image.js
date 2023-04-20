@@ -55,10 +55,8 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
       />
       {inputRef.current?.files[0] || imageUrl ? (
         <>
-          <Image
+          <img
             src={filePreview ? URL.createObjectURL(filePreview) : imageUrl}
-            width="400"
-            height="400"
             alt={alt}
             className={fullHeight ? "h-full" : "w-full"}
           />

@@ -9,7 +9,6 @@ import shdCnt from "../(layout)/json/shared-content.json";
 export default function Settings(props) {
   const router = useRouter();
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
-  console.log(user);
 
   const handleUpdate = async (data) => {
     try {

@@ -255,7 +255,7 @@ export default function NewStore({ params, searchParams }) {
               name="onDeliveryCard"
               checked={!!onDeliveryPayment?.card}
               onChange={(e) => setOnDeliveryPayment({ ...onDeliveryPayment, card: e.target.checked })}
-              cls="!flex my-3 card">
+              cls="!flex my-3">
               <div className="flex-1">{content.card[lang]}</div>
             </ToggleSwitch>
 

@@ -1,8 +1,4 @@
-"use strict";
-
-/**
- * product service
- */
+"use strict"; /** product service */
 
 const { createCoreService } = require("@strapi/strapi").factories;
 
@@ -18,8 +14,8 @@ module.exports = createCoreService("api::product.product", ({ strapi }) => ({
   },
 
   async deleteStoreProductsWithMediaFiles(storeId) {
-    const pOptions = { select: ["id"], where: { storeId }, populate: ["image"] };
-    const { results, pagination } = await strapi.service("api::product.product").find(pOptions);
+    const options = { select: ["id"], where: { storeId }, populate: ["image"] };
+    const results = await strapi.db.query("api::product.product").findMany(options);
     if (!results[0]) return;
 
     await Promise.all(
