@@ -41,7 +41,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
 
   async delete(ctx) {
     const id = ctx.params.id;
-    const storeId = ctx.query.storeId;
+    const storeId = +ctx.query.storeId;
 
     const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);
     if (!owner) return ctx.unauthorized();

@@ -5,7 +5,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async create(ctx) {
     const newStore = JSON.parse(ctx.request.body.data);
-    newStore.owner = ctx.state.user.id + "";
+    newStore.owner = +ctx.state.user.id;
     newStore.meta = { phone: ctx.state.user.phone };
     ctx.request.body.data = JSON.stringify(newStore);
 
