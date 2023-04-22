@@ -13,10 +13,9 @@
   "pluginOptions": {},
   "attributes": {
     "storeId": {
-      "type": "string",
+      "type": "integer",
       "required": true,
-      "maxLength": 100,
-      "minLength": 1
+      "min": 1
     },
     "name": {
       "pluginOptions": {},
@@ -37,10 +36,7 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "videos"
-      ],
+      "allowedTypes": ["images", "videos"],
       "pluginOptions": {}
     },
     "category": {
