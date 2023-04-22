@@ -36,7 +36,7 @@ export default function ProductById({ params }) {
     setAppLoading(true);
     try {
       const data = {
-        storeId: params.storeId,
+        storeId: +params.storeId,
         name: f.name.value,
         description: f.description.value,
         category: f.category.value,
