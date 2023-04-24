@@ -47,7 +47,7 @@ export function PhoneInputField({ lang, ...p }) {
       max="15"
       pattern="^(\+|00|0)\d{10,13}$"
       autoComplete="tel"
-      placeholder="E.g. +31639793297"
+      placeholder={shdCnt.ex[lang] + " +31639793297"}
       title={content.phone[lang]}
       {...p}
     />

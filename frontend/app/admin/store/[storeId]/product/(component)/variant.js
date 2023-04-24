@@ -58,16 +58,15 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
             name="barcode"
             disabled={!!v.barcode}
             label={content.barcode.text[lang]}
-            placeholder={v.barcode || content.barcode.placeholder[lang]}
+            placeholder={v.barcode || shdCnt.ex[lang] + " 875674398784"}
             onChange={(e) => onUpdate({ barcode: e.target.value })}
             required
             min="4"
             max="25"
             full
-            cls="flex-auto items-center mb-3 ">
-            {/* <span className="block text-sm mb-1 rq">{content.barcode.text[lang]}</span> */}
-          </InputField>
-
+            cls="flex-auto items-center mb-3 "
+          />
+          <span className="w-2 h-2"></span>
           <IconButton
             type="button"
             onClick={() => setShowScanner(true)}
@@ -206,6 +205,5 @@ const content = {
   barcode: {
     text: { en: "Barcode", ar: "رقم المنتج" },
     // text: { en: "UPC / EAN Barcode", ar: "رمز / رقم المنتج" },
-    placeholder: { en: "E.g. 875674398784", ar: "مثال, 875674398784" },
   },
 };

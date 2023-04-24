@@ -184,15 +184,7 @@ export default function NewStore({ params, searchParams }) {
         )}
 
         {!update && (
-          <InputField
-            type="text"
-            name="name"
-            placeholder={content.name.placeholder[lang]}
-            required
-            min="4"
-            max="30"
-            full
-            cls="mb-2 flex-col">
+          <InputField type="text" name="name" required min="4" max="30" full cls="mb-2 flex-col">
             <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
           </InputField>
         )}
@@ -295,7 +287,7 @@ export default function NewStore({ params, searchParams }) {
               name="accountHolder"
               defaultValue={onlinePayment?.bank?.accountHolder}
               label={shdCnt.bankInfo.holder[lang]}
-              placeholder="E.g. John Doe"
+              placeholder={shdCnt.ex[lang] + " John Doe"}
               required
               full
               cls="flex-col my-1"
@@ -305,7 +297,7 @@ export default function NewStore({ params, searchParams }) {
               name="iban"
               defaultValue={onlinePayment?.bank?.iban}
               label={shdCnt.bankInfo.number[lang]}
-              placeholder="E.g. FI21 1234 5698 7654 3210"
+              placeholder={shdCnt.ex[lang] + " FI21 1234 5698 7654 3210"}
               required
               full
               cls="flex-col my-1"
@@ -316,7 +308,7 @@ export default function NewStore({ params, searchParams }) {
               defaultValue={onlinePayment?.bank?.bic}
               label={shdCnt.bankInfo.bic[lang]}
               // title="Bank Identifier Number" // Todo: Add a tooltip
-              placeholder="E.g. BOHIUS77"
+              placeholder={shdCnt.ex[lang] + " BOHIUS77"}
               required
               full
               cls="flex-col my-1"
@@ -330,7 +322,7 @@ export default function NewStore({ params, searchParams }) {
           name="cocNumber"
           defaultValue={store?.cocNumber}
           label={content.cocNumber[lang]}
-          placeholder="E.g. 9876543"
+          placeholder={shdCnt.ex[lang] + " 9876543"}
           full
           cls="flex-col mt-1 mb-3"
         />
@@ -339,7 +331,7 @@ export default function NewStore({ params, searchParams }) {
           name="vatNumber"
           defaultValue={store?.vatNumber}
           label={content.vatNumber[lang]}
-          placeholder="E.g. US52359525"
+          placeholder={" US52359525 " + shdCnt.ex[lang]}
           full
         />
 
@@ -379,7 +371,7 @@ const content = {
   updateH1: { en: "Update store", ar: "تحديث المتجر" },
   imgAlt: { en: "Store cover image", ar: "صورة الغلاف المخزن" },
   imgTitle: { en: "Upload the store cover image", ar: "قم بتحميل صورة غلاف المتجر" },
-  name: { en: "Store name", ar: "اسم المتجر", placeholder: { en: "E.g. alm-store", ar: "alm-store ,مثال" } },
+  name: { en: "Store name", ar: "اسم المتجر" },
   about: {
     en: "About",
     ar: "وصف المتجر",

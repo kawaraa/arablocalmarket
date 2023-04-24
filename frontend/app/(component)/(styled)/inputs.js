@@ -24,7 +24,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
           <label htmlFor={cls} className={`flex text-sm whitespace-nowrap ${p.required ? "rq" : ""}`}>
             {label}
           </label>
-          <span className="w-1 h-1"></span>
+          <span className="w-2 h-2"></span>
         </>
       )}
       <span className={`relative inline-flex items-center ${full ? "w-full" : ""}`}>

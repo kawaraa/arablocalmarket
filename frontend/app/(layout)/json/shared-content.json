@@ -4,6 +4,7 @@
   "delete": { "en": "Delete", "ar": "حذف" },
   "edit": { "en": "Edit", "ar": "تعديل" },
   "yes": { "en": "Yes", "ar": "نعم" },
+  "ex": { "en": "E.g.", "ar": "مثال," },
   "customerName": { "ar": "زبون نقاط البيع", "en": "POS customer" },
   "products": { "en": "Products", "ar": "المنتجات" },
   "category": { "en": "Categories", "ar": "الفئات" },

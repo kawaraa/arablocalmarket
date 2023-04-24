@@ -68,7 +68,7 @@ export default function Signup({ searchParams }) {
   }
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
-      <form dir="auto" onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">
+      <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">
         <div>
           <img src="/img/logo.png" alt="Arab Local market Logo" className="h-auto w-24 mx-auto " />
           <h1 className="mt-6 text-center text-2xl font-bold ">{content.h1[lang]}</h1>
