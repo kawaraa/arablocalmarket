@@ -46,6 +46,7 @@ export default function POS({ params, searchParams }) {
         addItem(newItem);
       }
     });
+
     if (!p) addMessage({ type: "warning", text: shdCnt.noItem[lang], duration: 2.5 });
     setSearch(barcode);
     if (showScanner) setShowScanner(false);
