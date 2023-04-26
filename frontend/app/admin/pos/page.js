@@ -39,16 +39,17 @@ export default function POS({ params, searchParams }) {
     const p = products.find((p) => {
       const variant = p.variants.find((v) => v.barcode == barcode);
       if (variant) {
-        const newItem = { productNumber: p.id, barcode: variant.barcode, price: variant.price, quantity: 1 };
-        newItem.title = `${p.name} ${item.options.join(" - ")}`;
+        const newItem = { productNumber: p.id, barcode, price: variant.price, quantity: 1 };
+        newItem.title = `${p.name} ${variant.options.map((o) => o.value).join(" - ")}`;
         newItem.imageUrl = p.image.data?.attributes.formats.thumbnail.url;
-
         addItem(newItem);
+        addMessage({ type: "success", text: shdCnt.itemAdded[lang], duration: 2.5 });
+        return true;
       }
     });
 
     if (!p) addMessage({ type: "warning", text: shdCnt.noItem[lang], duration: 2.5 });
-    setSearch(barcode);
+    // setSearch(barcode);
     if (showScanner) setShowScanner(false);
   };
 
@@ -114,7 +115,6 @@ export default function POS({ params, searchParams }) {
 
   useEffect(() => {
     document.title = content.title[lang] + " - ALM";
-
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
