@@ -95,7 +95,7 @@ ${address.province}, ${address.country}`;
       encodeURI(
         whatsAppOrder[lang](
           its,
-          total,
+          store.currency + total,
           deliveryMethods.text[lang],
           payment.text[lang],
           payment.methods[paymentMethod][lang],

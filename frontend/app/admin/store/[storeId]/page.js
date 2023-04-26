@@ -59,7 +59,8 @@ export default function StoreOrders({}) {
         }
         d.attributes.currency = d.attributes.currency.split("-")[0];
       });
-      setOrders(data);
+
+      setOrders(data.sort((a, b) => Date.parse(b.attributes.createdAt) - Date.parse(a.attributes.createdAt)));
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }

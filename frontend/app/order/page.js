@@ -26,11 +26,13 @@ export default function Orders(props) {
       const query = `?filters[customer][user][$eq]=${user.id}&populate[lineItems]=*&populate[store][fields]=owner,name,meta`;
       const { data } = await request("order", "GET", { query });
       setOrders(
-        data.map((o) => {
-          o.attributes.id = o.id;
-          o.attributes.currency = o.attributes.currency.split("-")[0];
-          return o.attributes;
-        })
+        data
+          .map((o) => {
+            o.attributes.id = o.id;
+            o.attributes.currency = o.attributes.currency.split("-")[0];
+            return o.attributes;
+          })
+          .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
       );
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });

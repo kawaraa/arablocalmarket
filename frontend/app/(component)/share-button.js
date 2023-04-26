@@ -4,15 +4,16 @@ import { AppSessionContext } from "../app-session-context";
 import SvgIcon from "./(styled)/svg-icon";
 import { copyText } from "../(service)/utilities";
 
-export function ShareButton({ title, text, cls }) {
+export function ShareButton({ title, text, url, cls }) {
   const { lang, addMessage } = useContext(AppSessionContext);
 
   const handleShare = (e) => {
     e.preventDefault();
+    const newUrl = url ? window.location.origin + url : window.location.href;
     if (navigator.share) {
-      return navigator.share({ title: title + " - ALM", text: text, url: window.location.href });
+      return navigator.share({ title: title + " - ALM", text: text, url: newUrl });
     }
-    copyText(window.location.href, (copied) => {
+    copyText(newUrl, (copied) => {
       const type = copied ? "success" : "error";
       addMessage({ type, text: content[type][lang], duration: 2 });
     });

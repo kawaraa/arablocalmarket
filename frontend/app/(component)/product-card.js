@@ -4,13 +4,14 @@ import ProductCardButtons from "./product-card-buttons";
 import SvgIcon from "./(styled)/svg-icon";
 import StarRating from "./(styled)/rating";
 import shdCnt from "../(layout)/json/shared-content.json";
+import { ShareButton } from "./share-button";
 
 export default function ProductCard({ lang, link, currency, id, admin, product, priority }) {
   const Tag = typeof link == "function" ? "div" : Link;
   const newP = typeof link == "function" ? { onClick: () => link(product) } : { href: link };
 
   return (
-    <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
+    <li className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c">
       <Tag {...newP} className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
         <h3 className="text-center mt-2">{product.name}</h3>
         <div className="overflow-hidden h-40 flex justify-center items-center">
@@ -61,6 +62,13 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
           {admin && <span className="text-xs mx-1">{product.ratings.total}</span>}
         </div>
       </Tag>
+
+      <ShareButton
+        title={product.name}
+        text={product.description}
+        url={link.replace("/admin", "")}
+        cls="block w-6 absolute bottom-3 right-3 hover:text-pc"
+      />
     </li>
   );
 }

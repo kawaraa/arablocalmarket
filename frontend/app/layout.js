@@ -12,7 +12,7 @@ export default function RootLayout({ children, searchParams }) {
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
-    <html lang={lang} className={`scroll-smooth group ${themeMode}`}>
+    <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <head>
         <title>{content.title[lang]}</title>
         <meta charSet="UTF-8" />
@@ -24,6 +24,7 @@ export default function RootLayout({ children, searchParams }) {
         <meta property="og:description" content={content.description[lang]} />
         <meta property="og:url" content="https://arablocalmarket.com" />
         <meta property="og:type" content="website" />
+        <meta name="google" content="notranslate" />
 
         {/* <!-- PAW Support --> */}
         <link rel="manifest" href="/manifest.json" />

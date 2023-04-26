@@ -140,7 +140,7 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
         <InputField
           type="text"
           name="postalCode"
-          required
+          // required
           min="4"
           max="10"
           value={postalCode || ""}
