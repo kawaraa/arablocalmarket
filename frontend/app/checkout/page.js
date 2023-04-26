@@ -70,7 +70,7 @@ export default function Checkout({}) {
     setAddressForm(false);
   };
 
-  const sendOrderViawhatsApp = (e) => {
+  const sendOrderViaWhatsApp = (e) => {
     if (!validateOrder()) return e.preventDefault();
 
     let total = 0;
@@ -91,7 +91,7 @@ ${address.province}, ${address.country}`;
     }
 
     e.target.href =
-      `https://api.whatsapp.com/send/?phone=${store.id}&text=` +
+      `https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=` +
       whatsAppOrder[lang](
         its,
         total,
@@ -331,7 +331,7 @@ ${address.province}, ${address.country}`;
         </button>
         {store.whatsAppOrder && store.meta?.phone && (
           <a
-            onClick={sendOrderViawhatsApp}
+            onClick={sendOrderViaWhatsApp}
             href={`https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=`}
             rel="noreferrer"
             target="_blank"
