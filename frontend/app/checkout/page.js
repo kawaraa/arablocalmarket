@@ -92,13 +92,15 @@ ${address.province}, ${address.country}`;
 
     e.target.href =
       `https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=` +
-      whatsAppOrder[lang](
-        its,
-        total,
-        deliveryMethods.text[lang],
-        payment.text[lang],
-        payment.methods[paymentMethod][lang],
-        adr
+      encodeURI(
+        whatsAppOrder[lang](
+          its,
+          total,
+          deliveryMethods.text[lang],
+          payment.text[lang],
+          payment.methods[paymentMethod][lang],
+          adr
+        )
       );
   };
 
@@ -357,6 +359,36 @@ ${address.province}, ${address.country}`;
   );
 }
 
+const whatsAppOrder = {
+  en: (items, total, deliveryMethod, type, method, address) => `Hi!
+I would like to order the following items.
+${items}
+
+*Total:* ${total}
+
+*Delivery type:* ${deliveryMethod}
+
+*Payment method:* ${type} - ${method}
+
+${!address ? "" : "*Address:*"}
+${address || ""}
+`,
+
+  ar: (items, total, deliveryMethod, type, method, address) => `مرحبا!
+أود أن أطلب العناصر التالية.
+${items}
+
+*المجموع:* ${total}
+
+*نوع التوصيل:* ${deliveryMethod}
+
+*طريقة الدفع:* ${type} - ${method}
+
+${!address ? "" : "*العنوان:*"}
+${address || ""}
+`,
+};
+
 const content = {
   h1: { en: "items", ar: "عناصر" },
   deliveryH3: { en: "Please select delivery method", ar: "الرجاء تحديد طريقة التسليم" },
@@ -441,36 +473,4 @@ const content = {
     ],
   },
   whatsAppSand: { en: "Send the order via WhatsApp", ar: "أرسل الطلب عبر الواتساب" },
-};
-
-const whatsAppOrder = {
-  en: (items, total, deliveryMethod, type, method, address) => `Hi!
-I would like to order the following items.
-
-${items}
-
-*Total:* ${total}
-
-*Delivery type:* ${deliveryMethod}
-
-*Payment method:* ${type} - ${method}
-
-${!address ? "" : "*Address:*"}
-${address || ""}
-`,
-
-  ar: (items, total, deliveryMethod, type, method, address) => `مرحبا!
-أود أن أطلب العناصر التالية.
-
-${items}
-
-المجموع:* ${total}*
-
-نوع التوصيل:* ${deliveryMethod}*
-
-طريقة الدفع:* ${type} - ${method}*
-
-${!address ? "" : "*العنوان:*"}
-${address || ""}
-`,
 };
