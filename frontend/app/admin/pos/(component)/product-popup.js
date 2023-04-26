@@ -71,7 +71,7 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
         <div dir="auto" className="mt-10">
           {Object.keys(options).map((name, i) => (
             <VariantOptions
-              name={name}
+              name={shdCnt.options.values[name][lang]}
               values={options[name]}
               onSelect={(v) => updateItemOptions(i, v)}
               selectedOptions={item.options}
@@ -79,7 +79,11 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
               key={i}
             />
           ))}
-          <div className="relative w-full flex mb-3 mt-10 justify-center items-center">
+          <div dir="auto" className="w-full mb-3 mt-10 flex justify-between items-center">
+            <div className="text-sm font-light">
+              <span className="font-medium">{product.variants[index].quantity - item.quantity}</span>{" "}
+              {shdCnt.stock[lang]}
+            </div>
             <NumberInputWithControl
               name="quantity"
               value={item.quantity || 0}
@@ -88,10 +92,6 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
               onChange={updateItemQuantity}
               title="Quantity"
             />
-            <div className="absolute right-3 text-sm font-light">
-              <span className="font-medium">{product.variants[index].quantity - item.quantity}</span>{" "}
-              {shdCnt.stock[lang]}
-            </div>
           </div>
         </div>
       )}
