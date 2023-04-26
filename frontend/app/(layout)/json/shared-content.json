@@ -76,6 +76,7 @@
     "bic": { "en": "BIC / Swift", "ar": "رمز BIC / Swift" }
   },
   "noItemErr": { "en": "Please select an item first", "ar": "الرجاء تحديد عنصر أولا" },
+  "noStockErr": { "en": "There is not enough quantity in stock", "ar": "لا توجد كمية كافية في المخزون" },
   "favErr": {
     "en": "Only signed in users can add a store to favorite",
     "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة"

@@ -22,6 +22,18 @@ export default function StoreOrders({}) {
     setTimeout(() => setOpenOrder(true), 300);
   };
 
+  const deleteOrder = async (orderId) => {
+    setAppLoading(true);
+    try {
+      await request("order", "DELETE", { query: `/${orderId}` });
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
+      setOrders(orders.filter((o) => o.id != orderId));
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+    setAppLoading(false);
+  };
+
   const handleChange = async ({ name, value }) => {
     setAppLoading(true);
     try {
@@ -63,7 +75,15 @@ export default function StoreOrders({}) {
     <>
       <ul className="print:hidden">
         {orders.map((o, i) => (
-          <OrderCard lang={lang} id={o.id} {...o.attributes} onClick={previewOrder} admin key={i} />
+          <OrderCard
+            lang={lang}
+            id={o.id}
+            {...o.attributes}
+            onClick={previewOrder}
+            onDelete={deleteOrder}
+            admin
+            key={i}
+          />
         ))}
       </ul>
 

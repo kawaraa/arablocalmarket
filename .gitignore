@@ -4,7 +4,6 @@
 .env
 .env*.local
 variable.json
-alm-bucket.json
 
 # build
 build

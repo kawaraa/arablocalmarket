@@ -115,4 +115,13 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
     return super.update(ctx);
   },
+
+  async delete(ctx) {
+    if (!ctx.request.body.data) return super.update(ctx);
+
+    const o = await strapi.service("api::order.order").findOne(ctx.params.id, { populate: { store: true } });
+    if (ctx.state.user.id != o?.store?.owner) return ctx.unauthorized();
+
+    return super.delete(ctx);
+  },
 }));
