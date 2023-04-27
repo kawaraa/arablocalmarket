@@ -59,7 +59,7 @@ export default function BarcodeScanner({ onDetect, onError, onClose, cls }) {
       const checkResult = (result) => {
         if (!result?.codeResult?.code) setTimeout(check, 50);
         else {
-          onDetect(result.codeResult.code);
+          onDetect(result.codeResult.code + "");
           stopStreams();
         }
       };

@@ -163,7 +163,7 @@ export default function Navigation() {
                 <li className="" key={i}>
                   <Link
                     href={link.path}
-                    className="block min-w-[250px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                    className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {link.text[lang]}
                   </Link>
                 </li>
