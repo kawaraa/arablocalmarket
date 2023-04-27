@@ -17,6 +17,7 @@ export default function SignIn() {
   return (
     <div>
       {document.cookie}
+
       {/* <ToggleSwitch onChange={() => setBrowserSupport(!browserSupport)} />
 
       <div>

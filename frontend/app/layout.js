@@ -7,8 +7,7 @@ import "./global.css";
 // Todo: https://www.datocms.com/blog/dealing-with-nextjs-seo
 export default function RootLayout({ children, searchParams }) {
   const cookieStore = cookies();
-  const language = cookieStore.get("lang")?.value || searchParams?.lang;
-  const lang = language || "en";
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
@@ -54,7 +53,7 @@ export default function RootLayout({ children, searchParams }) {
             className="min-h-screen pt-14 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:min-h-fit"
             dir="auto">
             {children}
-            {!language && <SelectLanguage selected={false} />}
+            <SelectLanguage language={lang} />
           </main>
         </AppSessionContextProvider>
 

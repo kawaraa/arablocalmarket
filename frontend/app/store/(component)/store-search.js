@@ -2,32 +2,35 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
-import { Cookies } from "../../(service)/utilities";
 import Modal from "../../(component)/(styled)/modal";
 import LeafletMap from "../../(component)/leaflet-map";
 import SearchBox from "../../(component)/(styled)/search-box";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import shdCnt from "../../(layout)/json/shared-content.json";
 
-export default function StoreSearch({ text, coordinates = [0, 0] }) {
+export default function StoreSearch({ text, userLocation = [0, 0] }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { lang, addMessage } = useContext(AppSessionContext);
+  const { lang, coordinates, range, updateCoordinates, updateRange, addMessage } =
+    useContext(AppSessionContext);
   const [showFilter, setShowFilter] = useState(false);
-  const [position, setPosition] = useState(coordinates);
-  const [range, setRange] = useState("1");
   const [search, setSearch] = useState(text || "");
 
-  const handleSearch = async () => {
-    Cookies.set("coordinates", `${position[0]}:${position[1]}`);
-    Cookies.set("range", range);
-    router.push(`${pathname}?search=${search}`);
+  const handleSearch = () => {
     if (showFilter) setShowFilter(false);
+    router.push(`${pathname}?search=${search}`);
+  };
+
+  const handleUpdatePosition = ({ lat, lng }) => {
+    updateCoordinates([lat, lng]);
   };
 
   useEffect(() => {
-    if (position[0] == 0) setTimeout(() => setShowFilter(true), 1500);
-    else Cookies.set("coordinates", `${position[0]}:${position[1]}`);
+    if (!coordinates[0]) setTimeout(() => setShowFilter(true), 1500);
+    else if (coordinates[0] && userLocation[0] == 0) window.location.reload();
+  }, [coordinates]);
+
+  useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
   }, []);
 
@@ -79,8 +82,8 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
         <div className="text-left m-1">
           <LeafletMap
             lang={lang}
-            coordinates={position}
-            onLocate={({ lat, lng }) => setPosition([lat, lng])}
+            coordinates={coordinates}
+            onLocate={handleUpdatePosition}
             requestUserLocation={true}
             onError={(text) => addMessage({ type: "error", text, duration: 5 })}
           />
@@ -98,7 +101,7 @@ export default function StoreSearch({ text, coordinates = [0, 0] }) {
             max="10"
             step="0.1"
             value={range}
-            onChange={(e) => setRange(e.target.value)}
+            onChange={(e) => updateRange(e.target.value)}
             className="w-full h-1 md:h-2 bg-bc rounded-lg appearance-none cursor-pointer dark:bg-t"
           />
         </div>

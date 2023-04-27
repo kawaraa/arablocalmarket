@@ -15,10 +15,11 @@ export default async function StoresNearby({ searchParams, ...props }) {
 
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  let coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "0.5");
   const search = searchParams.search?.toLowerCase();
 
+  // This is not needed if reloading the page in this file: app/store/(component)/store-search.js
   // let text = "";
   // if (coordinates[0] == 0) {
   //   const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
@@ -50,7 +51,7 @@ export default async function StoresNearby({ searchParams, ...props }) {
   // <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>
   return (
     <>
-      <StoreSearch text={search} coordinates={coordinates} />
+      <StoreSearch text={search} userLocation={coordinates} />
 
       {/* <div className="my-5 ">DEV Info: {text}</div> */}
 

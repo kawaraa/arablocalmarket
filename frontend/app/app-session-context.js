@@ -4,7 +4,6 @@ import Messages from "./(component)/(styled)/messages";
 import { fetchUser, registerServiceWorker } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 // import { Validator } from "k-utilities";
-const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
 
 export const AppSessionContext = createContext();
 
@@ -13,6 +12,8 @@ export default function AppSessionContextProvider({ children, language, theme })
   const [messages, setMessages] = useState([]);
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
+  const [coordinates, setCoordinates] = useState([0, 0]);
+  const [range, setRange] = useState(1);
   const [user, setUser] = useState(null);
 
   // localStorage.cart.items.
@@ -35,19 +36,31 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const updateLang = (lang) => {
     Cookies.set("lang", lang);
+    window.localStorage.setItem("lang", lang);
     document.documentElement.setAttribute("lang", lang);
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
     setLang(lang);
   };
-
   const updateThemeMode = (mode) => {
+    Cookies.set("themeMode", mode);
+    window.localStorage.setItem("themeMode", mode);
+    setThemeMode(mode);
     document.documentElement.classList.remove("dark", "light", "auto");
 
-    Cookies.set("themeMode", mode);
-    if (mode === "auto") document.documentElement.classList.add("auto");
-    else document.documentElement.classList.add(mode);
-    setThemeMode(mode);
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (mode === "dark" || (mode == "auto" && systemDark)) document.documentElement.classList.add("dark");
+    else document.documentElement.classList.add("light");
+  };
+  const updateCoordinates = (coordinates) => {
+    Cookies.set("coordinates", `${coordinates[0]}:${coordinates[1]}`);
+    window.localStorage.setItem("coordinates", `${coordinates[0]}:${coordinates[1]}`);
+    setCoordinates(coordinates);
+  };
+  const updateRange = (range) => {
+    Cookies.set("range", range);
+    window.localStorage.setItem("range", range);
+    setRange(range);
   };
 
   // const addPost = (post) => setPosts([post, ...posts]); // posts.splice(0, 0, detail);
@@ -110,12 +123,15 @@ export default function AppSessionContextProvider({ children, language, theme })
   };
 
   useEffect(() => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
+    const aThemeMode = Cookies.get("themeMode") || window.localStorage.getItem("themeMode");
+    const aCoordinates = Cookies.get("coordinates") || window.localStorage.getItem("coordinates");
+    const aRange = Cookies.get("range") || window.localStorage.getItem("range");
 
-    if (Cookies.get("themeMode") === "dark" || dark) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-
-    updateThemeMode(Cookies.get("themeMode") || themeMode);
+    updateThemeMode(aThemeMode || "auto");
+    if (aLang) updateLang(aLang);
+    if (aCoordinates) updateCoordinates(aCoordinates.split(":"));
+    if (aRange) updateRange(aRange);
 
     fetchUser()
       .then(updateUser)
@@ -146,6 +162,10 @@ export default function AppSessionContextProvider({ children, language, theme })
     updateLang,
     themeMode,
     updateThemeMode,
+    coordinates,
+    updateCoordinates,
+    range,
+    updateRange,
     user,
     updateUser,
     cart,

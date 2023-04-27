@@ -1,18 +1,23 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 
-export default function SelectLanguage({ selected }) {
-  const { updateLang } = useContext(AppSessionContext);
-  const [open, setOpen] = useState(!selected);
+export default function SelectLanguage({ language }) {
+  const { lang, updateLang } = useContext(AppSessionContext);
+  const [open, setOpen] = useState(false);
 
   const changeLanguage = (lang) => {
     updateLang(lang);
     setOpen(false);
     window.location.reload();
   };
+
+  useEffect(() => {
+    if (!lang) setTimeout(() => setOpen(true), 400);
+    else if (lang && language != lang) window.location.reload();
+  }, [lang]);
 
   return (
     <Modal open={open} center>
