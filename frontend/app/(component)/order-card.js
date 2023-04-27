@@ -9,7 +9,7 @@ import { IconButton } from "./(styled)/button";
 export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), onDelete, ...order }) {
   const handleClick = (e) => {
     if (e.target.tagName == "A") return;
-    if (e.target.name == "delete") return onDelete(order.id);
+    if (e.target.name == "delete" && admin) return onDelete(order.id);
     onClick(order);
   };
 
@@ -41,8 +41,12 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
           cls={`text-sm ${!admin ? "" : "mx-3"}`}
         />
         <span className="text-sm font-semibold px-1 border rounded">{order.id}</span>
-        <span className="w-2 h-2"></span>
-        <IconButton icon="bin" name="delete" cls="text-red" />
+        {admin && (
+          <>
+            <span className="w-2 h-2"></span>
+            <IconButton icon="bin" name="delete" cls="text-red" />
+          </>
+        )}
       </div>
 
       <p dir="auto" className="flex justify-between mt-4">

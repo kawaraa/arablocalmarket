@@ -62,13 +62,14 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
           {admin && <span className="text-xs mx-1">{product.ratings.total}</span>}
         </div>
       </Tag>
-
-      <ShareButton
-        title={product.name}
-        text={product.description}
-        url={link.replace("/admin", "")}
-        cls="block w-6 absolute bottom-3 right-3 hover:text-pc"
-      />
+      {Tag != "div" && (
+        <ShareButton
+          title={product.name}
+          text={product.description}
+          url={link.replace("/admin", "")}
+          cls="block w-6 absolute bottom-3 right-3 hover:text-pc"
+        />
+      )}
     </li>
   );
 }
