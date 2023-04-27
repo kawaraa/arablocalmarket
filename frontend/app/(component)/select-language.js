@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
+import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage({ language }) {
   const { lang, updateLang } = useContext(AppSessionContext);
@@ -15,9 +16,10 @@ export default function SelectLanguage({ language }) {
   };
 
   useEffect(() => {
-    if (!lang) setTimeout(() => setOpen(true), 400);
-    else if (lang && language != lang) window.location.reload();
-  }, [lang]);
+    const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
+    if (!aLang) setTimeout(() => setOpen(true), 400);
+    else if (aLang && language != aLang) window.location.reload();
+  }, []);
 
   return (
     <Modal open={open} center>
