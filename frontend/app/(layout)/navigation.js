@@ -7,7 +7,6 @@ import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
-import { Cookies } from "../(service)/utilities";
 import EmptyState from "../(component)/(styled)/empty-state";
 
 export default function Navigation() {
@@ -22,8 +21,8 @@ export default function Navigation() {
 
   useEffect(() => {
     setShowMenu(false);
-    if (pathName?.toLowerCase() === "/en") Cookies.set("lang", "en");
-    else if (pathName?.toLowerCase() === "/ar") Cookies.set("lang", "ar");
+    if (pathName?.toLowerCase() === "/en") updateLang("en");
+    else if (pathName?.toLowerCase() === "/ar") updateLang("ar");
   }, [pathName]);
 
   if (pathName == "/admin/pos") return "";
@@ -161,10 +160,10 @@ export default function Navigation() {
                     iconCls="w-full"
                   /> */}
               {content.userLinks.map((link, i) => (
-                <li className="even:bg-[#f8fafc]" key={i}>
+                <li className="" key={i}>
                   <Link
                     href={link.path}
-                    className="block whitespace-nowrap px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                    className="block min-w-[250px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {link.text[lang]}
                   </Link>
                 </li>
