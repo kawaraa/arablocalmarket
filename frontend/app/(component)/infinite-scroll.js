@@ -14,10 +14,10 @@ export default function infiniteScroll({ onLoadContent, setLoading, ready }) {
     setLoading(false);
   };
 
-  const handleScrollEvent = () => {
+  const handleScrollEvent = async () => {
     const { scrollTop, offsetHeight } = document.documentElement;
     if (window.innerHeight + scrollTop !== offsetHeight || doneRef.current) return;
-    fetchContent();
+    await fetchContent();
   };
 
   useEffect(() => {

@@ -1,106 +1,61 @@
 import { cookies } from "next/headers";
-import Link from "next/link";
-import Image from "next/image";
 import ProductSearch from "../../../(component)/product-search";
 import ProductCard from "../../../(component)/product-card";
 import { serverRequest } from "../../../(service)/api-provider";
-import shdCnt from "../../../(layout)/json/shared-content.json";
-import categories from "../../../(layout)/json/categories.json";
 const q = "?fields=currency";
 
-// For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-// export const metadata = { title: "Store name - ALM" };
-
-export default async function ProductsByStore({ params, searchParams: { lang, search, category } }) {
+export default async function ProductsByStore({ params, searchParams }) {
   const cookieStore = cookies();
-  lang = cookieStore.get("lang")?.value || lang || "en";
+  const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
   const storeId = params.search;
 
-  // console.log("Show products based on this: >>> ", searchParams);
-  // Todo: make the store query by id, title and about
   const res = await serverRequest("store", "GET", { query: `/${storeId}${q}` }).catch(() => null);
   const currency = res?.data?.attributes.currency.split("-");
-  const products = await getProducts(storeId, search);
-  const results =
-    !category || category == "all" ? products : products.filter((p) => p.attributes.category == category);
-  // console.log("search: >>> ", search);
+  const products = await getProducts(storeId, searchParams);
+
   return (
-    <div>
-      {/* Todo: make this search on type */}
-      <ProductSearch text={search} scroll="180" />
+    <>
+      {/* Todo: implement infinite scroll */}
+      <ProductSearch text={""} scroll="180" />
 
-      {category == "all" ? (
-        <>
-          <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
-            {shdCnt.category[lang]}
-          </h2>
-
-          <ul className="flex flex-wrap">
-            {categories.map((c, i) => (
-              <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
-                <Link
-                  href={`/store/${storeId}/product?category=${c.key}`}
-                  className="relative block w-full h-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">
-                  <span className="absolute top-2 right-2">
-                    {products.filter((p) => p.attributes.category == c.key).length}
-                  </span>
-                  <div className="overflow-hidden h-16 flex justify-center items-center">
-                    <Image
-                      src={c.image}
-                      alt={c.text[lang]}
-                      width="200"
-                      height="200"
-                      className="h-full w-auto"
-                    />
-                  </div>
-                  <h3 className="text-sm text-center mt-2">{c.text[lang]}</h3>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <>
-          <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
-            {content.product[lang][0]}
-            <span className="font-bold">( {results.length} )</span> {content.product[lang][1]}
-          </h2>
-          <ul dir="ltr" className="flex flex-wrap">
-            {results.map((p, i) => (
-              <ProductCard
-                lang={lang}
-                currency={currency[0]}
-                product={p.attributes}
-                id={p.id}
-                link={`/store/${storeId}/product/${p.id}`}
-                key={i}
-                priority={i < 10}
-              />
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
+      <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
+        {content.product[lang][0]}
+        <span className="font-bold">( {products.length} )</span> {content.product[lang][1]}
+      </h2>
+      <ul dir="ltr" className="flex flex-wrap">
+        {products.map((p, i) => (
+          <ProductCard
+            lang={lang}
+            currency={currency[0]}
+            product={p.attributes}
+            id={p.id}
+            link={`/store/${storeId}/product/${p.id}`}
+            key={i}
+            priority={i < 10}
+          />
+        ))}
+      </ul>
+    </>
   );
 }
 
-const getProducts = async (storeId) => {
-  const q1 = `?filters[storeId][$eq]=${storeId}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price`;
-  const catchErr = () => ({ data: [], meta: {} });
-  const { data, meta } = await serverRequest("product", "GET", { query: q1 }).catch(catchErr);
+const getProducts = async (storeId, { category, search, page }) => {
+  if (!page) page = 1;
+  let sq = ``;
+  if (category) sq = `&filters[category][$eq]=${category}`;
+  else if (search) {
+    sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
+  }
+
+  // const query = `?filters[storeId][$eq]=${storeId.current}${sq}&pagination[page]=${pageRef.current}&pagination[pageSize]=50&populate=*&sort=createdAt:desc`;
+
+  const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
+  // console.log(query);
+  const catchErr = () => ({ data: [], meta: { pagination: { total: 0 } } });
+  const { data, meta } = await serverRequest("product", "GET", { query }).catch(catchErr);
   return data || [];
 };
 
 const content = {
   product: { en: ["Found", "Products"], ar: ["يوجد", "منتج"] },
 };
-
-// The rest of the categories.
-// const categories = [
-//   { text: { name: "Frozen foods" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Health - wellness products" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Office - school supplies" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Electronics" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Home - kitchen supplies" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Seasonal items" }, image: "", numberOfItems: 1031 },
-// ];

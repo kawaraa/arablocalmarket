@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
+// import { IconButton } from "./(styled)/button";
 // import SvgIcon from "./(styled)/svg-icon";
 
 export default function ProductSearch({ text, scroll, onSearch }) {
@@ -26,16 +27,16 @@ export default function ProductSearch({ text, scroll, onSearch }) {
   return (
     <>
       <div className="flex mb-3">
-        {/* <button
+        {/* <IconButton
           type="button"
+          icon="filter"
           onClick={() => setShowFilter(true)}
           title="Show search filter"
           aria-label="Search filter"
           aria-expanded="true"
           aria-haspopup="dialog"
-          className="w-8 p-1 hover:text-pc transition">
-          <SvgIcon name="filter" />
-        </button> */}
+          className="w-8 p-1 hover:text-pc transition"
+        /> */}
 
         <SearchBox
           label={content.search[lang]}

@@ -92,8 +92,8 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             key={i}
-            className="duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
-            <Link href={link.path} className="block px-3 py-2">
+            className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
+            <Link href={link.path} className="block p-3 text-lg">
               {link.text[lang]}
             </Link>
           </li>
@@ -103,7 +103,7 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
-            <Link href={content.navLinks[1].path} className="block px-3 py-2">
+            <Link href={content.navLinks[1].path} className="block p-3 text-lg">
               {content.navLinks[1].text[lang]}
             </Link>
           </li>

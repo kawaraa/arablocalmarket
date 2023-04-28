@@ -67,7 +67,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
 const content = {
   tabs: [
     { key: "3", path: "/store/storeId/product", text: shdCnt.products },
-    { key: "2", path: "/store/storeId/product?category=all", text: shdCnt.category },
+    { key: "2", path: "/store/storeId/category", text: shdCnt.category },
     { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
   ],
 };

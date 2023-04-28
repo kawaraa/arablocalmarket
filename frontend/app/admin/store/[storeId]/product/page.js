@@ -29,13 +29,12 @@ export default function StoreProducts({ params, searchParams }) {
 
   const fetchProducts = async (search) => {
     try {
-      setSearchText(search);
       let sq = ``;
       if (search) {
         pageRef.current = 1;
         sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
       }
-      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&pagination[page]=${pageRef.current}&pagination[pageSize]=50&populate=*&sort=createdAt:desc`;
+      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc&populate=*`;
       const { data, meta } = await request("product", "GET", { query });
       setTotal(meta.pagination.total);
       if (!search) pageRef.current += 1;
