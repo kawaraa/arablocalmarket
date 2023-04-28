@@ -22,6 +22,11 @@ export default function StoreProducts({ params, searchParams }) {
 
   const onScanErr = (text) => addMessage({ type: "error", text, duration: 5 });
 
+  const handleSearch = (searchText) => {
+    setSearchText(searchText);
+    refresh(searchText);
+  };
+
   const fetchProducts = async (search) => {
     try {
       setSearchText(search);
@@ -74,11 +79,10 @@ export default function StoreProducts({ params, searchParams }) {
         cls="fixed z-1 bottom-7 right-7 w-12 h-12 !p-0 rounded-lg"
         iconCls="w-full"
       />
-      <div>{searchText}</div>
-      <div className="flex items-center mb-3">
-        <SearchBox search={searchText} onSearch={refresh} cls="flex-1" />
 
-        <BarcodeScannerPopup lang={lang} onBarcodeDetect={fetchProducts} onError={onScanErr} btnSize="10" />
+      <div className="flex items-center mb-3">
+        <SearchBox search={searchText} onSearch={handleSearch} cls="flex-1" />
+        <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnSize="10" />
       </div>
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">

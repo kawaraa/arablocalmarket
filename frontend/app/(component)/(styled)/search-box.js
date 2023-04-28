@@ -4,6 +4,7 @@ import SvgIcon from "./svg-icon";
 
 export default function SearchBox({ label, onSearch, search, onBlur, onFinish, cls, inCls }) {
   const inputRef = useRef();
+  const valueAttr = onSearch ? { value: search } : { defaultValue: search };
 
   const handleFinish = (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
         name="search"
         onChange={(e) => onSearch && onSearch(e.target.value.toLowerCase().trim() || "")}
         onBlur={onBlur && handleFinish}
-        defaultValue={search}
+        {...valueAttr}
         autoComplete="search"
         placeholder={label}
         className={`w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-150 ${
