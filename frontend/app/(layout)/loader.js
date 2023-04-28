@@ -1,6 +1,6 @@
 "use client";
 
-export default function Loader({ size = "10", wrapperCls = "", cls = "" }) {
+export default function Loader({ size = "10", screen, wrapperCls = "", cls = "" }) {
   let borderSize = Math.round(+size / 8);
   if (borderSize > 7) borderSize = 7;
   const c = !screen ? wrapperCls : "z-10 flex justify-center items-center fixed inset-0" + wrapperCls;

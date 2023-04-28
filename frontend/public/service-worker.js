@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-12";
+const staticFileCacheName = "static-files-v-13";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
@@ -59,7 +59,7 @@ self.addEventListener("fetch", (evt) => {
 });
 
 const handleRequest = async (request) => {
-  console.log("caches Start", request.method, request.url);
+  // console.log("caches Start", request.method, request.url);
   const networkErrorResponse = Response.error();
   // console.log("caches ERROR: >>>", request.method, request.url);
   try {
@@ -79,7 +79,7 @@ const handleRequest = async (request) => {
       return response;
     }
   } catch (error) {
-    console.log("caches ERROR: >>>", request.method, request.url, error);
+    // console.log("caches ERROR: >>>", request.method, request.url, error);
     if (request.url.includes("_next")) return caches.match(staticFileCachePaths[1]); // offline fallback page
     return networkErrorResponse;
   }
