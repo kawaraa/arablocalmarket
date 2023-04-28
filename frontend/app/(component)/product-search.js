@@ -6,7 +6,7 @@ import Modal from "./(styled)/modal";
 import SearchBox from "./(styled)/search-box";
 // import SvgIcon from "./(styled)/svg-icon";
 
-export default function ProductSearch({ text, scroll }) {
+export default function ProductSearch({ text, scroll, onSearch }) {
   const { lang } = useContext(AppSessionContext);
   const router = useRouter();
   const pathname = usePathname();
@@ -39,7 +39,7 @@ export default function ProductSearch({ text, scroll }) {
 
         <SearchBox
           label={content.search[lang]}
-          onSearch={setSearch}
+          onSearch={onSearch || setSearch}
           search={search}
           onFinish={handleSearch}
           cls="flex-1 sm:flex-none lazy-c"

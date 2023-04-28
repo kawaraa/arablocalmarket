@@ -18,7 +18,7 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
         ref={inputRef}
         type="search"
         name="search"
-        onChange={(e) => onSearch && onSearch(e.target.value.toLowerCase() || "")}
+        onChange={(e) => onSearch && onSearch(e.target.value.toLowerCase().trim() || "")}
         onBlur={onBlur && handleFinish}
         defaultValue={search}
         autoComplete="search"
