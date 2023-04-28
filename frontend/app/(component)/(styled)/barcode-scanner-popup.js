@@ -10,6 +10,11 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
   const [showScanner, setShowScanner] = useState(false);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
 
+  const handleDetect = (barcode) => {
+    setShowScanner(false);
+    onBarcodeDetect(barcode);
+  };
+
   useEffect(() => {
     setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
@@ -32,7 +37,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
         {browserSupportBarcodeScanner ? (
           <BrowserBarcodeDetecter
             lang={lang}
-            onDetect={onBarcodeDetect}
+            onDetect={handleDetect}
             onError={onError}
             onClose={() => setShowScanner(false)}
             cls="mt-5"
@@ -40,7 +45,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
         ) : (
           <BarcodeScanner
             lang={lang}
-            onDetect={onBarcodeDetect}
+            onDetect={handleDetect}
             onError={onError}
             onClose={() => setShowScanner(false)}
             cls="mt-5"

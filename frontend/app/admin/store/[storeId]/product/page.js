@@ -74,7 +74,7 @@ export default function StoreProducts({ params, searchParams }) {
       />
 
       <div className="flex items-center mb-3">
-        <SearchBox search={searchParams.search} onSearch={refresh} />
+        <SearchBox search={searchParams.search} onSearch={refresh} cls="flex-1" />
 
         <BarcodeScannerPopup lang={lang} onBarcodeDetect={fetchProducts} onError={onScanErr} btnSize="10" />
       </div>

@@ -61,14 +61,14 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           min="5"
           max="25"
           full
-          cls="flex-auto items-center"
+          cls="flex-1 items-center"
         />
 
         <BarcodeScannerPopup
           lang={lang}
           onBarcodeDetect={handleBarcodeDetect}
           onError={onScanErr}
-          btnSize="12"
+          btnSize="10"
         />
       </div>
 
