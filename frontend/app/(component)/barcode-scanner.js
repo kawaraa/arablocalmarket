@@ -137,9 +137,9 @@ const readers = [
   "ean_8_reader",
   "upc_reader",
   "upc_e_reader",
-  "code_128_reader",
-  "code_39_reader",
-  "code_39_vin_reader",
-  "codabar_reader",
+  // "code_128_reader",
+  // "code_39_reader",
+  // "code_39_vin_reader",
+  // "codabar_reader",
   // "i2of5_reader",
 ];

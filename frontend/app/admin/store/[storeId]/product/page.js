@@ -14,6 +14,7 @@ export default function StoreProducts({ params, searchParams }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
   const [store, setStore] = useState(null);
   const storeId = useRef(null);
   const pageRef = useRef(1);
@@ -23,6 +24,7 @@ export default function StoreProducts({ params, searchParams }) {
 
   const fetchProducts = async (search) => {
     try {
+      setSearchText(search);
       let sq = ``;
       if (search) {
         pageRef.current = 1;
@@ -72,9 +74,9 @@ export default function StoreProducts({ params, searchParams }) {
         cls="fixed z-1 bottom-7 right-7 w-12 h-12 !p-0 rounded-lg"
         iconCls="w-full"
       />
-
+      <div>{searchText}</div>
       <div className="flex items-center mb-3">
-        <SearchBox search={searchParams.search} onSearch={refresh} cls="flex-1" />
+        <SearchBox search={searchText} onSearch={refresh} cls="flex-1" />
 
         <BarcodeScannerPopup lang={lang} onBarcodeDetect={fetchProducts} onError={onScanErr} btnSize="10" />
       </div>

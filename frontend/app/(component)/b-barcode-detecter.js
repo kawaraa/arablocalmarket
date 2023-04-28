@@ -111,10 +111,10 @@ const content = { permissionErr: { en: "Could not access camera.", ar: "تعذر
 
 const formats = [
   // "aztec",
-  "code_128",
-  "code_39",
-  "code_93",
-  "codabar",
+  // "code_128",
+  // "code_39",
+  // "code_93",
+  // "codabar",
   // "data_matrix",
   "ean_13",
   "ean_8",
