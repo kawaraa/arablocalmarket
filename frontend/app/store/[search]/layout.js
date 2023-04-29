@@ -56,7 +56,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
               }))}
               cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none lazy-c"
             />
-            <section className="">{children}</section>
+            <section className="min-h-[55vh]">{children}</section>
           </div>
         </article>
       )}

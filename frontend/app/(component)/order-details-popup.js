@@ -19,7 +19,8 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
     try {
       if (pos) {
         await request("order", "POST", { data: { ...order, customer: { id: 1 } } });
-        onRemoveItem(null, true);
+        const barcodes = order.map((o) => o.barcode);
+        onRemoveItem(null, barcodes);
       }
 
       if (print || !pos) {

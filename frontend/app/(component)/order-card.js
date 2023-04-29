@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getCssDelay } from "../(service)/style-methods";
 import { IconButton } from "./(styled)/button";
 
-export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), onDelete, ...order }) {
+export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), onDelete, order }) {
   const handleClick = (e) => {
     if (e.target.tagName == "A") return;
     if (e.target.name == "delete" && admin) return onDelete(order.id);

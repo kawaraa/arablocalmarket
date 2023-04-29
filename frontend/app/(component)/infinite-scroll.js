@@ -5,6 +5,10 @@ export default function infiniteScroll({ onLoadContent, setLoading, ready }) {
   const itemsRef = useRef([]);
   const doneRef = useRef(false);
 
+  const onRemoveItem = (index) => {
+    itemsRef.current.splice(index, 1);
+  };
+
   const fetchContent = async (prams) => {
     setLoading(true);
     const data = await onLoadContent(prams);
@@ -29,5 +33,5 @@ export default function infiniteScroll({ onLoadContent, setLoading, ready }) {
     return () => window.removeEventListener("scroll", handleScrollEvent);
   }, []);
 
-  return { data: itemsRef.current, refresh: fetchContent };
+  return { data: itemsRef.current, removeItem: onRemoveItem, refresh: fetchContent };
 }

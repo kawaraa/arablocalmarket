@@ -17,33 +17,40 @@ export default function Cart({ params, searchParams }) {
   const tabs = content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }));
   const favorite = activeTab?.path?.includes("favorite");
 
-  const deleteFromCart = async (storeId, barcode) => {
+  const deleteFromCart = async (storeId, barcodes) => {
+    const check = (b) => barcodes.includes(b);
     const copy = [...cart];
-    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => it.barcode != barcode)));
+    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => !check(it.barcode))));
     const c = copy.filter((c) => !!c.items[0]);
 
     setAppLoading(true);
 
     if (!user) {
       let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
-      cartItems = cartItems.filter((it) => it.storeId != storeId && it.barcode != barcode);
+      cartItems = cartItems.filter((it) => it.storeId != storeId && !check(it.barcode));
       window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
     } else {
-      // Todo: remove the item from the backend
+      try {
+        // Todo: remove the item from the backend
+      } catch (error) {}
     }
 
     setCart(c);
     setAppLoading(false);
   };
 
-  const deleteFromFavorite = async (storeId, barcode) => {
+  const deleteFromFavorite = async (storeId, barcodes) => {
     if (!user?.favoriteProducts) return;
+    const check = (b) => barcodes.includes(b);
+
     const copy = [...user.favoriteProducts];
-    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => it.barcode != barcode)));
+    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => !check(it.barcode))));
 
     setAppLoading(true);
 
-    // Todo: remove the item from the backend
+    try {
+      // Todo: remove the item from the backend
+    } catch (error) {}
 
     setFavoriteProducts(copy.filter((c) => !!c.items[0]));
     setAppLoading(false);

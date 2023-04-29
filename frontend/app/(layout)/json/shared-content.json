@@ -1,4 +1,6 @@
 {
+  "foundProducts": { "en": ["Found", "Products"], "ar": ["يوجد", "منتج"] },
+  "foundOrders": { "en": ["Found", "Orders"], "ar": ["يوجد", "طلبات"] },
   "done": { "en": "Done", "ar": "تم" },
   "save": { "en": "Save", "ar": "حفظ" },
   "delete": { "en": "Delete", "ar": "حذف" },

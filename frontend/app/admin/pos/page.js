@@ -37,12 +37,10 @@ export default function POS({ params, searchParams }) {
     setOrder({ ...order, lineItems: [...order.lineItems, newItem] });
     setClickedProduct(null);
   };
-  const removeItem = (index, all) => {
-    const copy = { ...order };
-    if (all) copy.lineItems = [];
-    else copy.lineItems.splice(index, 1);
-    setOrder(copy);
-    if (!copy.lineItems[0]) setShowOrderDetails(false);
+  const removeItem = (storeId, barcodes) => {
+    const items = (lineItems = order.lineItems.filter((item) => !barcodes.includes(item.barcode)));
+    setOrder({ ...order, lineItems: order });
+    if (!items[0]) setShowOrderDetails(false);
   };
 
   const handleChange = ({ name, value }) => {
@@ -63,7 +61,7 @@ export default function POS({ params, searchParams }) {
         pageRef.current = 1;
         sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
       }
-      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc&populate[image]=*&populate[variants][populate]=*&populate[favorites]=*&populate[ratings]=*`;
+      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate[image]=*&populate[variants][populate]=*&populate[favorites]=*&populate[ratings]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("product", "GET", { query });
       setTotal(meta.pagination.total);
       if (!search) pageRef.current += 1;

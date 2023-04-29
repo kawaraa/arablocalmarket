@@ -48,7 +48,7 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
                 <IconButton
                   icon="bin"
                   size="7"
-                  onClick={() => onRemove(storeId, item.barcode)}
+                  onClick={() => onRemove(storeId, [item.barcode])}
                   cls="hover:text-red print:hidden"
                 />
               </>

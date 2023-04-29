@@ -2,9 +2,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
+import { request } from "../../../../(service)/api-provider";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
 import ProductCard from "../../../../(component)/product-card";
 import { LinkButton } from "../../../../(component)/(styled)/button";
-import { request } from "../../../../(service)/api-provider";
 import infiniteScroll from "../../../../(component)/infinite-scroll";
 import Loader from "../../../../(layout)/loader";
 import SearchBox from "../../../../(component)/(styled)/search-box";
@@ -34,7 +35,7 @@ export default function StoreProducts({ params, searchParams }) {
         pageRef.current = 1;
         sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
       }
-      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc&populate=*`;
+      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate=*`;
       const { data, meta } = await request("product", "GET", { query });
       setTotal(meta.pagination.total);
       if (!search) pageRef.current += 1;
@@ -85,7 +86,8 @@ export default function StoreProducts({ params, searchParams }) {
       </div>
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
-        {content.h2[lang][0]} <span className="font-bold">( {total} )</span> {content.h2[lang][1]}
+        {shdCnt.foundProducts[lang][0]} <span className="font-bold">( {total} )</span>{" "}
+        {shdCnt.foundProducts[lang][1]}
       </h2>
       <ul dir="ltr" className="flex flex-wrap">
         {data.map((p, i) => (
@@ -107,7 +109,6 @@ export default function StoreProducts({ params, searchParams }) {
 }
 
 const content = {
-  h2: { en: ["Found", "Products"], ar: ["يوجد", "منتج"] },
   createProduct: {
     text: { en: "Create product", ar: "إنشاء منتج" },
     path: "/admin/store/storeId/product/new",

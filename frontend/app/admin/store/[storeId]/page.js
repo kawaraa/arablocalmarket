@@ -1,16 +1,20 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import OrderDetailsPopup from "../../../(component)/order-details-popup";
 import OrderCard from "../../../(component)/order-card";
 import { AppSessionContext } from "../../../app-session-context";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
+import infiniteScroll from "../../../(component)/infinite-scroll";
+import Loader from "../../../(layout)/loader";
 
 export default function StoreOrders({}) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
+  const [loading, setLoading] = useState(true);
   const [clickedOrder, setClickedOrder] = useState(null);
   const [openOrder, setOpenOrder] = useState(false);
-  const [orders, setOrders] = useState([]);
+  const pageRef = useRef(1);
+  const [total, setTotal] = useState(0);
 
   const clearSelectedOrder = () => {
     setOpenOrder(false);
@@ -27,7 +31,8 @@ export default function StoreOrders({}) {
     try {
       await request("order", "DELETE", { query: `/${orderId}` });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      setOrders(orders.filter((o) => o.id != orderId));
+      setTotal(total - 1);
+      removeItem(data.findIndex((o) => o.id == orderId));
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
@@ -49,44 +54,51 @@ export default function StoreOrders({}) {
   };
 
   const fetchOrders = async () => {
-    setAppLoading(true);
     try {
-      const query = `?filters[store][owner][$eq]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*`;
-      const { data } = await request("order", "GET", { query });
-      data.forEach((d) => {
-        if (d.attributes.customer?.name?.toLowerCase().includes("pos") && lang != "en") {
-          d.attributes.customer.name = shdCnt.customerName[lang];
-        }
-        d.attributes.currency = d.attributes.currency.split("-")[0];
-      });
+      const query = `?filters[store][owner][$eq]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
+      const { data, meta } = await request("order", "GET", { query });
 
-      setOrders(data.sort((a, b) => Date.parse(b.attributes.createdAt) - Date.parse(a.attributes.createdAt)));
+      pageRef.current += 1;
+      setTotal(meta.pagination.total);
+
+      return data.map((order) => {
+        order.attributes.id = order.id;
+        if (order.attributes.customer?.name?.toLowerCase().includes("pos") && lang != "en") {
+          order.attributes.customer.name = shdCnt.customerName[lang];
+        }
+        order.attributes.currency = order.attributes.currency.split("-")[0];
+        return order.attributes;
+      });
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
+      return [];
     }
-    setAppLoading(false);
   };
 
   useEffect(() => {
     document.title = "Admin Store orders - ALM"; // Todo: translate
-    fetchOrders();
   }, []);
+
+  const { data, removeItem, refresh } = infiniteScroll({
+    onLoadContent: fetchOrders,
+    setLoading,
+    ready: !!user?.id,
+  });
 
   return (
     <>
+      <h2 dir="auto" className="text-lg my-4 font-medium lazy-l">
+        {shdCnt.foundOrders[lang][0]} <span className="font-bold">( {total} )</span>{" "}
+        {shdCnt.foundOrders[lang][1]}
+      </h2>
+
       <ul className="print:hidden">
-        {orders.map((o, i) => (
-          <OrderCard
-            lang={lang}
-            id={o.id}
-            {...o.attributes}
-            onClick={previewOrder}
-            onDelete={deleteOrder}
-            admin
-            key={i}
-          />
+        {data.map((o, i) => (
+          <OrderCard lang={lang} order={o} onClick={previewOrder} onDelete={deleteOrder} admin key={i} />
         ))}
       </ul>
+
+      {loading && <Loader size="30" wrapperCls="my-5" />}
 
       <OrderDetailsPopup
         lang={lang}

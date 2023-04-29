@@ -27,8 +27,8 @@ export function Button({ children, type = "button", icon, loading, disabled, cls
 }
 
 export function IconButton({ children, icon, size = "8", cls, ...p }) {
-  let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] rounded-full cursor-pointer disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop transition `;
-  c += cls || "hover:text-pc";
+  let c = `w-${size} h-${size} inline-flex items-center justify-center p-[5px] cursor-pointer disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop transition `;
+  c += cls || "rounded-full hover:text-pc";
   const t = p.title || p.name;
 
   return (
