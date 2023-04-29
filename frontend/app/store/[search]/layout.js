@@ -47,7 +47,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
             />
           </section>
 
-          <div className="mt-3 pb-6 border-b-2 border-bc">
+          <div className="mt-3 pb-6">
             <Tabs
               tabs={content.tabs.map(({ key, path, text }) => ({
                 key,

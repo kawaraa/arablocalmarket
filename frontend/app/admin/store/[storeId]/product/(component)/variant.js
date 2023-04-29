@@ -6,8 +6,6 @@ import shdCnt from "../../../../../(layout)/json/shared-content.json";
 import BarcodeScannerPopup from "../../../../../(component)/(styled)/barcode-scanner-popup";
 
 export default function Variant({ lang, number, onRemove, onUpdate, setMessage, ...v }) {
-  const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
-  const [showScanner, setShowScanner] = useState(false);
   const [options, setOptions] = useState(v.options || [{ name: "WEIGHT" }]);
 
   const removeOption = (index) => {
@@ -29,16 +27,11 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
   const handleBarcodeDetect = async (barcode) => {
     if (!barcode) return setMessage({ type: "warning", text: shdCnt.noItem[lang], duration: 2.5 });
     onUpdate({ barcode });
-    if (showScanner) setShowScanner(false);
   };
 
   useEffect(() => {
     onUpdate({ options });
   }, [options]);
-
-  useEffect(() => {
-    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
-  }, []);
 
   return (
     <div className="relative my-3 card p-2 rounded">

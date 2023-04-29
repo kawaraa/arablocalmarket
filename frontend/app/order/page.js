@@ -28,8 +28,9 @@ export default function Orders(props) {
     try {
       const query = `?filters[customer][user][$eq]=${user.id}&populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("order", "GET", { query });
-      pageRef.current += 1;
       setTotal(meta.pagination.total);
+      if (pageRef.current > meta.pagination.pageCount) return [];
+      pageRef.current += 1;
 
       return data.map((o) => {
         o.attributes.id = o.id;

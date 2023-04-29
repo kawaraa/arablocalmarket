@@ -22,7 +22,6 @@ export default function Cart({ params, searchParams }) {
     const copy = [...cart];
     copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => !check(it.barcode))));
     const c = copy.filter((c) => !!c.items[0]);
-
     setAppLoading(true);
 
     // if (!user) {

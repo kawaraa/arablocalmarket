@@ -69,7 +69,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
   if (!user || !store) return null;
   return (
-    <article className="pb-20">
+    <article>
       <ImageUpload
         id="store-cover"
         imageUrl={image}
@@ -111,7 +111,7 @@ export default function StoreById({ children, params: { storeId } }) {
         </ToggleSwitch>
       </section>
 
-      <div className="pb-6 border-b-2 border-bc">
+      <div className="pb-6">
         <Tabs
           tabs={content.tabs.map(({ key, path, text }) => ({
             key,

@@ -6,8 +6,8 @@ export default function ScrollToTopBtn({ cls = "" }) {
   let [visible, setVisible] = useState(false);
 
   const handleScrollEvent = () => {
-    if (document.documentElement.scrollTop > 2000 && !visible) setVisible(true);
-    if (visible) setVisible(false);
+    if (document.documentElement.scrollTop > 2000) setVisible(true);
+    else setVisible(false);
   };
 
   useEffect(() => {

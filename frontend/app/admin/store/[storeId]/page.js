@@ -58,8 +58,9 @@ export default function StoreOrders({}) {
       const query = `?filters[store][owner][$eq]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("order", "GET", { query });
 
-      pageRef.current += 1;
       setTotal(meta.pagination.total);
+      if (pageRef.current > meta.pagination.pageCount) return [];
+      pageRef.current += 1;
 
       return data.map((order) => {
         order.attributes.id = order.id;
@@ -79,7 +80,7 @@ export default function StoreOrders({}) {
     document.title = "Admin Store orders - ALM"; // Todo: translate
   }, []);
 
-  const { data, removeItem, refresh } = infiniteScroll({
+  const { data, removeItem } = infiniteScroll({
     onLoadContent: fetchOrders,
     setLoading,
     ready: !!user?.id,

@@ -18,7 +18,7 @@ export default function ProductById({ params }) {
   const [initialLoading, setInitialLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [file, setFile] = useState(null);
-  const [variants, setVariants] = useState([{}]);
+  const [variants, setVariants] = useState([{ quantity: 0 }]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const handleUpdateVariant = (index, data) => {
@@ -187,7 +187,12 @@ export default function ProductById({ params }) {
 
           {variants.length < 20 && (
             <div className="text-right">
-              <Button icon="plus" onClick={() => setVariants([...variants, {}])} cls="!p-0" iconCls="w-8" />
+              <Button
+                icon="plus"
+                onClick={() => setVariants([...variants, { quantity: 0 }])}
+                cls="!p-0"
+                iconCls="w-8"
+              />
             </div>
           )}
         </div>
