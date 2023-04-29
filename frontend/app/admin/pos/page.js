@@ -11,6 +11,7 @@ import OrderDetailsPopup from "../../(component)/order-details-popup";
 import BarcodeScannerPopup from "../../(component)/(styled)/barcode-scanner-popup";
 import infiniteScroll from "../../(component)/infinite-scroll";
 import Loader from "../../(layout)/loader";
+import ScrollToTopBtn from "../../(component)/scroll-to-top-btn";
 
 export default function POS({ params, searchParams }) {
   const router = useRouter();
@@ -37,8 +38,8 @@ export default function POS({ params, searchParams }) {
     setClickedProduct(null);
   };
   const removeItem = (storeId, barcodes) => {
-    const items = (lineItems = order.lineItems.filter((item) => !barcodes.includes(item.barcode)));
-    setOrder({ ...order, lineItems: order });
+    const items = order.lineItems.filter((item) => !barcodes.includes(item.barcode));
+    setOrder({ ...order, lineItems: items });
     if (!items[0]) setShowOrderDetails(false);
   };
 
@@ -61,11 +62,13 @@ export default function POS({ params, searchParams }) {
       }
       const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate[image]=*&populate[variants][populate]=*&populate[favorites]=*&populate[ratings]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("product", "GET", { query });
-      setTotal(meta.pagination.total);
-      if (!search) pageRef.current += 1;
+
+      if (total < 1) setTotal(meta.pagination.total);
       const products = data.map(({ id, attributes }) => ({ id, ...attributes }));
       const p = products.find((p) => p.variants.find((v) => v.barcode == search));
       if (p) setClickedProduct(p);
+      if (pageRef.current > meta.pagination.pageCount) return [];
+      if (!search) pageRef.current += 1;
       return products;
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
@@ -98,7 +101,7 @@ export default function POS({ params, searchParams }) {
   if (!user || !store) return null;
   return (
     <>
-      <article>
+      <article className="pb-24">
         <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
           <SearchBox label={content.search[lang]} onFinish={refresh} inCls="p-2" cls="flex-1" />
           <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnSize="10" />
@@ -156,6 +159,7 @@ export default function POS({ params, searchParams }) {
           {order.lineItems.length}
         </span>
       </Button>
+      <ScrollToTopBtn />
     </>
   );
 }

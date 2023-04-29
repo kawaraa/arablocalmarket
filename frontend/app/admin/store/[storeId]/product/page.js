@@ -10,6 +10,7 @@ import infiniteScroll from "../../../../(component)/infinite-scroll";
 import Loader from "../../../../(layout)/loader";
 import SearchBox from "../../../../(component)/(styled)/search-box";
 import BarcodeScannerPopup from "../../../../(component)/(styled)/barcode-scanner-popup";
+import ScrollToTopBtn from "../../../../(component)/scroll-to-top-btn";
 
 export default function StoreProducts({ params, searchParams }) {
   const router = useRouter();
@@ -29,9 +30,10 @@ export default function StoreProducts({ params, searchParams }) {
         pageRef.current = 1;
         sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
       }
-      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate=*`;
+      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("product", "GET", { query });
-      setTotal(meta.pagination.total);
+      if (total < 1) setTotal(meta.pagination.total);
+      if (pageRef.current > meta.pagination.pageCount) return [];
       if (!search) pageRef.current += 1;
       return data.map(({ id, attributes }) => ({ id, ...attributes }));
     } catch (err) {
@@ -60,7 +62,7 @@ export default function StoreProducts({ params, searchParams }) {
 
   if (!store) return null;
   return (
-    <div>
+    <div className="pb-20">
       <LinkButton
         href={content.createProduct.path.replace("storeId", store.id)}
         title={content.createProduct.text[lang]}
@@ -91,7 +93,10 @@ export default function StoreProducts({ params, searchParams }) {
           />
         ))}
       </ul>
+
       {loading && <Loader size="30" wrapperCls="my-5" />}
+
+      <ScrollToTopBtn />
     </div>
   );
 }
