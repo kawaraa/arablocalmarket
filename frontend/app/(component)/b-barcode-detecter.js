@@ -62,7 +62,7 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         ctx.drawImage(video, 0, 0);
         const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
         if (!barCodes[0]) return check();
-        onDetect(barCodes[0].rawValue + "");
+        onDetect((barCodes[0].rawValue + "").trim());
         stopStreams();
       };
 

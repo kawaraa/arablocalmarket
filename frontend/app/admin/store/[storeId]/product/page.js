@@ -15,18 +15,12 @@ export default function StoreProducts({ params, searchParams }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
-  const [searchText, setSearchText] = useState("");
   const [store, setStore] = useState(null);
   const storeId = useRef(null);
   const pageRef = useRef(1);
   const [total, setTotal] = useState(0);
 
   const onScanErr = (text) => addMessage({ type: "error", text, duration: 5 });
-
-  const handleSearch = (searchText) => {
-    setSearchText(searchText);
-    refresh(searchText);
-  };
 
   const fetchProducts = async (search) => {
     try {
@@ -62,11 +56,7 @@ export default function StoreProducts({ params, searchParams }) {
     document.title = "Admin store products - ALM";
   }, []);
 
-  const { data, refresh } = infiniteScroll({
-    onLoadContent: fetchProducts,
-    setLoading,
-    ready: !!store?.id,
-  });
+  const { data, refresh } = infiniteScroll({ onLoadContent: fetchProducts, setLoading, ready: !!store?.id });
 
   if (!store) return null;
   return (
@@ -81,10 +71,9 @@ export default function StoreProducts({ params, searchParams }) {
       />
 
       <div className="flex items-center mb-3">
-        <SearchBox search={searchText} onSearch={handleSearch} cls="flex-1" />
-        <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnSize="10" />
+        <SearchBox onFinish={refresh} cls="flex-1" />
+        <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnSize="10" />
       </div>
-
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {shdCnt.foundProducts[lang][0]} <span className="font-bold">( {total} )</span>{" "}
         {shdCnt.foundProducts[lang][1]}
@@ -102,7 +91,6 @@ export default function StoreProducts({ params, searchParams }) {
           />
         ))}
       </ul>
-
       {loading && <Loader size="30" wrapperCls="my-5" />}
     </div>
   );

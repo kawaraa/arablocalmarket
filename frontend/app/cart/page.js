@@ -25,15 +25,15 @@ export default function Cart({ params, searchParams }) {
 
     setAppLoading(true);
 
-    if (!user) {
-      let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
-      cartItems = cartItems.filter((it) => it.storeId != storeId && !check(it.barcode));
-      window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    } else {
-      try {
-        // Todo: remove the item from the backend
-      } catch (error) {}
-    }
+    // if (!user) {
+    let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
+    cartItems = cartItems.filter((it) => it.storeId != storeId && !check(it.barcode));
+    window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    // } else {
+    //   try {
+    //     // Todo: remove the item from the backend
+    //   } catch (error) {}
+    // }
 
     setCart(c);
     setAppLoading(false);

@@ -10,7 +10,11 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
     e.preventDefault();
     inputRef.current?.setAttribute("readonly", true); // This will hide the keyboard.
     setTimeout(() => inputRef.current?.removeAttribute("readonly"), 200);
-    if (onFinish) onFinish(inputRef.current?.value.toLowerCase() || "");
+    if (onFinish) onFinish(inputRef.current?.value.toLowerCase().trim());
+  };
+
+  const handleEnterKey = (e) => {
+    if (e.code.toLowerCase() == "enter" || e.keyCode == 13) handleFinish(e);
   };
 
   return (
@@ -21,6 +25,8 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
         name="search"
         onChange={(e) => onSearch && onSearch(e.target.value.toLowerCase() || "")}
         onBlur={onBlur && handleFinish}
+        onKeyUp={handleEnterKey}
+        onKeyDown={handleEnterKey}
         {...valueAttr}
         autoComplete="search"
         placeholder={label}

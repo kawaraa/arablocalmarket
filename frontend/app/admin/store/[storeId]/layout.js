@@ -7,7 +7,7 @@ import Tabs from "../../../(component)/(styled)/tabs";
 import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
-import { LinkButton } from "../../../(component)/(styled)/button";
+import { IconButton, LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 const q = "?fields=name,open&populate=cover";
@@ -86,6 +86,13 @@ export default function StoreById({ children, params: { storeId } }) {
         <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
           {shdCnt.edit[lang]}
         </LinkButton>
+
+        <IconButton
+          icon="eye"
+          onClick={() => router.push(`/store/${storeId}/product`)}
+          size="10"
+          cls="absolute right-5 bottom-2 text-bg"
+        />
       </ImageUpload>
 
       <section className="mt-5 mb-3 flex justify-between">
