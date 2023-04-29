@@ -5,8 +5,6 @@ import { serverRequest } from "../(service)/api-provider";
 import StoreCard from "./(component)/store-card";
 import StoreSearch from "./(component)/store-search";
 
-// export const revalidate = 30;
-
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 // export const metadata = { title: "Stores Nearby - ALM" };
 

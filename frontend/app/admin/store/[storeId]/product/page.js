@@ -10,7 +10,6 @@ import infiniteScroll from "../../../../(component)/infinite-scroll";
 import Loader from "../../../../(layout)/loader";
 import SearchBox from "../../../../(component)/(styled)/search-box";
 import BarcodeScannerPopup from "../../../../(component)/(styled)/barcode-scanner-popup";
-import ScrollToTopBtn from "../../../../(component)/scroll-to-top-btn";
 
 export default function StoreProducts({ params, searchParams }) {
   const router = useRouter();
@@ -62,7 +61,7 @@ export default function StoreProducts({ params, searchParams }) {
 
   if (!store) return null;
   return (
-    <div className="pb-20">
+    <div>
       <LinkButton
         href={content.createProduct.path.replace("storeId", store.id)}
         title={content.createProduct.text[lang]}
@@ -95,8 +94,6 @@ export default function StoreProducts({ params, searchParams }) {
       </ul>
 
       {loading && <Loader size="30" wrapperCls="my-5" />}
-
-      <ScrollToTopBtn />
     </div>
   );
 }

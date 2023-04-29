@@ -69,7 +69,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
   if (!user || !store) return null;
   return (
-    <article>
+    <article className="pb-20">
       <ImageUpload
         id="store-cover"
         imageUrl={image}
