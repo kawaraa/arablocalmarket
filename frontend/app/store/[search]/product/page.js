@@ -52,7 +52,7 @@ const getProducts = async (storeId, { category, search, page }) => {
     sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
   }
 
-  const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
+  const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=16&sort=createdAt:desc`;
 
   const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
   return serverRequest("product", "GET", { query }).catch(catchErr);

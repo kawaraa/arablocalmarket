@@ -25,7 +25,9 @@ export default function PaginationButtons({ lang, query, pagination }) {
         onClick={() => divRef.current?.scrollBy(-250, 0)}
       />
 
-      <div ref={divRef} className="no-srl-bar w-full overflow-x-scroll flex -space-x-px scroll-smooth">
+      <div
+        ref={divRef}
+        className="no-srl-bar w-full overflow-x-scroll flex justify-center -space-x-px scroll-smooth">
         {Array.from({ length: buttons }, (_, i) => i + 1).map((num) => (
           <Link
             href={{ pathname, query: { ...query, page: num } }}
