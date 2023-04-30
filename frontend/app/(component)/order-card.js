@@ -28,7 +28,7 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
         />
       )}
 
-      <div dir="auto" className="flex justify-between items-center">
+      <div dir="ltr" className="flex justify-between items-center">
         {admin && (
           <>
             <User Tag="h3" name={order.customer?.name} />
