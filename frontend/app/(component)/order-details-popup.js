@@ -19,7 +19,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
     try {
       if (pos) {
         await request("order", "POST", { data: { ...order, customer: { id: 1 } } });
-        const barcodes = order.map((o) => o.barcode);
+        const barcodes = order.lineItems.map((o) => o.barcode);
         onRemoveItem(null, barcodes);
       }
 
@@ -48,7 +48,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
       okBtn={pos ? shdCnt.checkout[lang] : shdCnt.print[lang]}
       onApprove={admin ? handleCheckout : null}
       loading={loading}>
-      {order && order.lineItems && order.lineItems[0] && (
+      {order?.lineItems && order.lineItems[0] && (
         <>
           <div className="flex justify-between items-center m-[1px] mb-8">
             {order.id && (

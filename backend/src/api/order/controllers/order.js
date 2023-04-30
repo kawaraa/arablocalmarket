@@ -5,7 +5,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
   async create(ctx) {
-    const posOrder = ctx.request.body.data?.customer?.id == 32;
+    const posOrder = ctx.request.body.data?.customer?.id == 1;
     const oldItems = ctx.request.body.data.lineItems;
 
     const store = await strapi.service("api::store.store").findOne(ctx.request.body.data.storeId);

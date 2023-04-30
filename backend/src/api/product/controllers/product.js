@@ -3,6 +3,13 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::product.product", ({ strapi }) => ({
+  async create(ctx) {
+    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx);
+    if (!owner) return ctx.unauthorized();
+
+    return super.create(ctx);
+  },
+
   async find(ctx) {
     const { data, meta } = await super.find(ctx);
     if (!data || !data[0]) return { data, meta };
@@ -15,15 +22,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
           .calculateStars(ctx.state.user?.id, p.attributes.ratings.data);
       });
     }
-
     return { data, meta };
-  },
-
-  async create(ctx) {
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx);
-    if (!owner) return ctx.unauthorized();
-
-    return super.create(ctx);
   },
 
   async update(ctx) {
