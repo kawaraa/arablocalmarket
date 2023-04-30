@@ -28,3 +28,6 @@ const content = {
   noStore: { en: "There isn't any store in the selected range", ar: "لا يوجد أي متجر في النطاق المحدد" },
   notification: { en: "You don't have any notifications", ar: "ليس لديك أي إخطارات" },
 };
+
+// <h4>Could not find stores near you!</h4>
+// <p>Please make sure your location is active, otherwise you can choose the your location manually.</p>

@@ -13,7 +13,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
   const [coordinates, setCoordinates] = useState([0, 0]);
-  const [range, setRange] = useState(1);
+  const [range, setRange] = useState(1.5);
   const [user, setUser] = useState(null);
 
   // localStorage.cart.items.
