@@ -22,8 +22,8 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         navigator.msGetUserMedia;
 
       const barcodeDetector = new BarcodeDetector({ formats });
-      if (barcodeDetector) console.log("Barcode Detector supported!");
-      else throw new Error("Barcode Detector is not supported by this browser.");
+      if (!barcodeDetector) throw new Error("Barcode Detector is not supported by this browser.");
+      console.log("Barcode Detector supported!");
 
       const constraints = {
         audio: false,
@@ -42,10 +42,10 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
       canvas.width = width;
       canvas.height = height;
 
-      video.addEventListener("loadedmetadata", (event) => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-      });
+      // video.addEventListener("loadedmetadata", (event) => {
+      //   canvas.width = video.videoWidth;
+      //   canvas.height = video.videoHeight;
+      // });
 
       video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
@@ -54,12 +54,19 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         // ctx.scale(-1, 1);
         // // }
 
-        ctx.drawImage(video, 0, 0);
+        // ctx.drawImage(video, 0, 0);
+        const x = (video.videoWidth - width) / 2;
+        const y = (video.videoHeight - height) / 2;
+        ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
       });
 
       const check = async () => {
         if (!video?.srcObject || !canvas) return;
-        ctx.drawImage(video, 0, 0);
+        // ctx.drawImage(video, 0, 0);
+        const x = (video.videoWidth - width) / 2;
+        const y = (video.videoHeight - height) / 2;
+        ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+
         const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
         if (!barCodes[0]) return check();
         onDetect((barCodes[0].rawValue + "").trim());

@@ -39,7 +39,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
         <h4 className="mb-2">
           {content.h4[lang]} ( {number} )
         </h4>
-        {number > 1 && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="hover:text-red" />}
+        {onRemove && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="hover:text-red" />}
       </div>
 
       <div className="flex items-center mb-3">

@@ -16,7 +16,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
   };
 
   useEffect(() => {
-    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
+    // setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
   return (
@@ -34,7 +34,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
         />
       )}
       <Modal title={shdCnt.scanner[lang]} open={showScanner} center>
-        {/* {browserSupportBarcodeScanner ? (
+        {browserSupportBarcodeScanner ? (
           <BrowserBarcodeDetecter
             lang={lang}
             onDetect={handleDetect}
@@ -50,14 +50,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
             onClose={() => setShowScanner(false)}
             cls="mt-5"
           />
-        )} */}
-        <BarcodeScanner
-          lang={lang}
-          onDetect={handleDetect}
-          onError={onError}
-          onClose={() => setShowScanner(false)}
-          cls="mt-5"
-        />
+        )}
       </Modal>
     </>
   );

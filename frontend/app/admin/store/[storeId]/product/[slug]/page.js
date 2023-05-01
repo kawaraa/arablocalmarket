@@ -177,7 +177,7 @@ export default function ProductById({ params }) {
             <Variant
               lang={lang}
               {...v}
-              onRemove={() => setVariants(variants.filter((_, i) => i !== index))}
+              onRemove={!variants[1] ? null : () => setVariants(variants.filter((_, i) => i !== index))}
               onUpdate={(d) => handleUpdateVariant(index, d)}
               number={index + 1}
               setMessage={addMessage}
