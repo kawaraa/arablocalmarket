@@ -40,7 +40,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
               className="preview block w-full"
             />
 
-            <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
+            <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
               <span className={`inline-block w-6 h-6 bg-${store.open ? "green" : "dt"} rounded-full`}></span>{" "}
               <span className="mx-2">{store.name}</span>
             </h1>

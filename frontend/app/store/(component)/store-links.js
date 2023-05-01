@@ -8,7 +8,7 @@ import { AppSessionContext } from "../../app-session-context";
 import { ShareButton } from "../../(component)/share-button";
 import shdCnt from "../../(layout)/json/shared-content.json";
 const liCls =
-  "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center rounded-full hover:text-pc duration-200";
+  "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
 
 export default function StoreLinks({ lang, name = "", about = "", phone, ratings, scroll }) {
   const { user, addMessage } = useContext(AppSessionContext);

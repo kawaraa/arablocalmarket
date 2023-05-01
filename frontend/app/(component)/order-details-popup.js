@@ -105,7 +105,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
               {order.total}
             </span>
           </p>
-          {admin && order.address && (
+          {admin && order?.address?.line1 && (
             <address dir="ltr" className="relative card mt-5 px-2 py-1 rounded-md print:text-3xl print:mt-20">
               <h6 className="font-medium">
                 {order.firstName} {order.lastName}
