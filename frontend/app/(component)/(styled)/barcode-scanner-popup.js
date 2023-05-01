@@ -16,7 +16,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
   };
 
   useEffect(() => {
-    // setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
+    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
   }, []);
 
   return (

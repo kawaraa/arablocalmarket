@@ -1,18 +1,15 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Script from "next/script";
 import { IconButton } from "./(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
   const videoRef = useRef(document.createElement("video"));
-  const [borderSize, setBorderSize] = useState([]);
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
 
   const initializeScanner = async () => {
-    const scanCanvas = document.createElement("canvas");
-    // const scanCtx = scanCanvas.getContext("2d");
     const ctx = canvasRef.current.getContext("2d");
     const video = videoRef.current;
     video.autoplay = true;
@@ -32,16 +29,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         }
       }
 
-      // scanCanvas.width = width;
-      // scanCanvas.height = height;
-
       canvasRef.current.width = width;
       canvasRef.current.height = height;
-
-      // video.addEventListener("loadedmetadata", (event) => {
-      //   canvasRef.current.width = video.videoWidth;
-      //   canvasRef.current.height = video.videoHeight;
-      // });
 
       video.addEventListener("play", () => {
         // Flip the video only on mobile / touch devices.
@@ -49,17 +38,9 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         //   ctx.translate(video.videoWidth, 0);
         //   ctx.scale(-1, 1);
         // }
-        // ctx.drawImage(video, 0, 0);
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-
-        // (function loop() {
-        //   if (video?.srcObject && !video.paused && !video.ended) {
-        //     ctx.drawImage(video, 0, 0);
-        //     setTimeout(loop, 1000 / 30); //
-        //   }
-        // })();
       });
 
       const checkResult = (result) => {
@@ -75,15 +56,11 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-
-        // if (!borderSize[0]) {
-        //   setBorderSize([(width / video.videoWidth) * 100, (height / video.videoHeight) * 100]);
-        // }
         // canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL("image/jpeg", 1.0),
+            src: canvasRef.current.toDataURL(),
             locate: false,
             multiple: false,
           },
@@ -127,10 +104,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       )}
       <div className="relative">
         <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
-        {/* <div
-          className={`absolute top-1/2 left-1/2 w-[${borderSize[0] || 0}%] h-[${
-            borderSize[1] || 0
-          }%] border-4 border-red -translate-x-1/2 -translate-y-1/2`}></div> */}
       </div>
     </div>
   );

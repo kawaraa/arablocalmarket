@@ -46,7 +46,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
         <InputField
           type="text"
           name="barcode"
-          disabled={v.barcode?.length > 4}
+          // disabled={v.barcode?.length > 4}
           label={content.barcode.text[lang]}
           placeholder={v.barcode || shdCnt.ex[lang] + " 875674398784"}
           onChange={(e) => onUpdate({ barcode: e.target.value + "" })}

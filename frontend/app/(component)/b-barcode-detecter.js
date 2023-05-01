@@ -9,9 +9,8 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
   const height = 250;
 
   const initializeScanner = async () => {
-    const canvas = canvasRef.current;
     const video = videoRef.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvasRef.current.getContext("2d");
     video.autoplay = true;
 
     try {
@@ -23,7 +22,7 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
 
       const barcodeDetector = new BarcodeDetector({ formats });
       if (!barcodeDetector) throw new Error("Barcode Detector is not supported by this browser.");
-      console.log("Barcode Detector supported!");
+      // console.log("Barcode Detector supported!");
 
       const constraints = {
         audio: false,
@@ -39,35 +38,22 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
         }
       }
 
-      canvas.width = width;
-      canvas.height = height;
-
-      // video.addEventListener("loadedmetadata", (event) => {
-      //   canvas.width = video.videoWidth;
-      //   canvas.height = video.videoHeight;
-      // });
+      canvasRef.current.width = width;
+      canvasRef.current.height = height;
 
       video.addEventListener("play", () => {
-        // Flip the video only on mobile / touch devices.
-        // if (constraints.video !== true) {
-        // ctx.translate(video.videoWidth, 0);
-        // ctx.scale(-1, 1);
-        // // }
-
-        // ctx.drawImage(video, 0, 0);
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
       });
 
       const check = async () => {
-        if (!video?.srcObject || !canvas) return;
-        // ctx.drawImage(video, 0, 0);
+        if (!video?.srcObject || !canvasRef.current) return;
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
 
-        const barCodes = await barcodeDetector.detect(canvas).catch((err) => console.log(err));
+        const barCodes = await barcodeDetector.detect(canvasRef.current).catch((err) => console.log(err));
         if (!barCodes[0]) return check();
         onDetect((barCodes[0].rawValue + "").trim());
         stopStreams();
