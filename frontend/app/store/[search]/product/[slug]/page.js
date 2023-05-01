@@ -33,9 +33,9 @@ export default async function ProductBySlug({ params }) {
         <Image
           src={product.image.data?.attributes?.url}
           alt={product.name}
-          width="400"
-          height="400"
-          className="h-full w-auto"
+          width="600"
+          height="600"
+          className="preview h-full w-auto"
         />
 
         <ShareButton

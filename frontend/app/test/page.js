@@ -16,8 +16,8 @@ export default function SignIn() {
   // }, []);
   return (
     <div>
+      {document.cookie} <br />
       {window?.BarcodeDetector?.name}
-
       {/* <ToggleSwitch onChange={() => setBrowserSupport(!browserSupport)} />
 
       <div>

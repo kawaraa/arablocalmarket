@@ -26,7 +26,7 @@ export default function OnDeliveryPaymentMethods({ lang, cnt, payments, paymentM
   return methods[0] ? (
     <>
       <p className="pb-3 mt-6 mb-3 mx-2 ">{cnt.paymentMethods.p[lang]}</p>
-      <div className="mb-3 flex lazy-c">{methods}</div>
+      <div className="mb-3 flex lazy-b">{methods}</div>
     </>
   ) : (
     <p className="w-full mt-6 mb-3 text-orange text-center">{cnt.noOnDeliveryPay[lang]}</p>

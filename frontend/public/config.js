@@ -41,6 +41,7 @@ tailwind.config = {
     },
     fontFamily: {
       arabic: ["Noto Kufi Arabic", "sans-serif"],
+      monospace: "monospace",
     },
     zIndex: {
       auto: "auto",
@@ -65,12 +66,6 @@ tailwind.config = {
 
 function setLoading(loading) {
   const loader = document.getElementById("global-screen-loader");
-
-  if (loading) {
-    // elements[0].style.opacity = "0";
-    loader.style.display = "flex";
-  } else {
-    // elements[0].style.opacity = "1";
-    loader.style.display = "none";
-  }
+  if (loading) loader.style.display = "flex"; // elements[0].style.opacity = "0";
+  else loader.style.display = "none"; // elements[0].style.opacity = "1";
 }

@@ -31,8 +31,15 @@ export default async function StoreLayout({ children, params, searchParams }) {
         <article>
           {/* sm:bg-gradient-to-tl from-dbg via-pc to-dbg */}
           <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:rounded-2xl">
-            <Image priority src={image} width="400" height="400" alt={store.name} className="block w-full" />
-            <div className="absolute inset-0 bg-blur sm:rounded-2xl"></div>
+            <Image
+              priority
+              src={image}
+              width="600"
+              height="600"
+              alt={store.name}
+              className="preview block w-full"
+            />
+
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center lazy-l">
               <span className={`inline-block w-6 h-6 bg-${store.open ? "green" : "dt"} rounded-full`}></span>{" "}
               <span className="mx-2">{store.name}</span>
@@ -54,7 +61,7 @@ export default async function StoreLayout({ children, params, searchParams }) {
                 path: path.replace("storeId", store.id),
                 text: text[lang],
               }))}
-              cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none lazy-c"
+              cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
             />
             <section className="min-h-[55vh]">{children}</section>
           </div>

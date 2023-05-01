@@ -8,7 +8,7 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open, cls, ...s }) {
   return (
     <Tag
-      className={"relative p-1 text-t dark:text-dt lazy-c " + (cls || "w-full sm:w-1/2 xl:w-1/3")}
+      className={"relative p-1 text-t dark:text-dt lazy-b " + (cls || "w-full sm:w-1/2 xl:w-1/3")}
       style={getCssDelay()}>
       <Link
         href={link}

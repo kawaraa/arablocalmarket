@@ -47,7 +47,7 @@ export function PhoneInputField({ lang, ...p }) {
       max="15"
       pattern="^(\+|00|0)\d{10,13}$"
       autoComplete="tel"
-      placeholder={shdCnt.ex[lang] + " +31639793297"}
+      placeholder={content.phone[lang] + " " + shdCnt.ex[lang] + " +31639793297"}
       title={content.phone[lang]}
       {...p}
     />
@@ -58,6 +58,8 @@ export function PswInputField({ lang, confirm, cls, ...p }) {
 
   const newProps = { ...p, ...(!confirm ? {} : { name: "confirmPassword", autoComplete: "new-password" }) };
   const t = !confirm ? content.password[lang] : content.confirmPassword[lang];
+  // Todo: add a tooltip that describe the password format
+  // Use this onInvalid={console.log} Or tailwind peer: invalid
   return (
     <InputField
       type={visible ? "text" : "password"}
@@ -66,6 +68,7 @@ export function PswInputField({ lang, confirm, cls, ...p }) {
       min="9"
       max="50"
       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+      // onInvalid={console.log}
       autoComplete="current-password"
       placeholder={t}
       title={t}

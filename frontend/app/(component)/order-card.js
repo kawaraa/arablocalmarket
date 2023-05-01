@@ -18,7 +18,7 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
       dir="auto"
       onClick={handleClick}
       style={style}
-      className="card px-2 py-3 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex lazy-c">
+      className="card px-2 py-3 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex lazy-b">
       {!admin && (
         <StoreHeaderInfo
           id={order.store.data.id}

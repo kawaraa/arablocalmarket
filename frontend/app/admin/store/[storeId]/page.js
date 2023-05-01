@@ -65,8 +65,9 @@ export default function StoreOrders({}) {
       return data.map((order) => {
         order.attributes.id = order.id;
         if (order.attributes.customer?.name?.toLowerCase().includes("pos") && lang != "en") {
-          order.attributes.customer.name = shdCnt.customerName[lang];
+          order.attributes.customer.name = shdCnt.customerPos[lang];
         }
+
         order.attributes.currency = order.attributes.currency.split("-")[0];
         return order.attributes;
       });

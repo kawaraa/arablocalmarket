@@ -43,7 +43,7 @@ export default function ProductSearch({ text, scroll, onSearch }) {
           onSearch={onSearch || setSearch}
           search={search}
           onFinish={handleSearch}
-          cls="flex-1 sm:flex-none lazy-c"
+          cls="flex-1 sm:flex-none lazy-b"
         />
       </div>
 

@@ -24,7 +24,7 @@ export default async function Category({ params, searchParams }) {
 
         <ul className="flex flex-wrap">
           {categories.map((c, i) => (
-            <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-c" key={i}>
+            <li className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b" key={i}>
               <Link
                 href={`/store/${storeId}/product?category=${c.key}`}
                 className="relative block w-full h-full p-2 pt-3 bg-cbg card cd_hr rounded-xl duration-200">

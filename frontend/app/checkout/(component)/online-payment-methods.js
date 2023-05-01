@@ -8,9 +8,9 @@ export default function OnlinePaymentMethods({ lang, cnt, user, payments, select
 
   return (
     <>
-      <div className="mb-3 lazy-c">
+      <div className="mb-3 lazy-b">
         {selected == "card" ? (
-          <div className="lazy-c">
+          <div className="lazy-b">
             <p className="mt-8 text-center text-orange">{cnt.noOnlinePay[lang]}</p>
             {/* {!cardMethod.meta ? (
                 <p className="mt-8 text-center text-orange">{cnt.noOnlinePay[lang]}</p>
@@ -26,7 +26,7 @@ export default function OnlinePaymentMethods({ lang, cnt, user, payments, select
         ) : !user && bankMethod?.meta?.private ? (
           <p className="mt-8 text-center text-orange">{cnt.noBankPayPrivate[lang]}</p>
         ) : (
-          <dl className="mt-6 lazy-c">
+          <dl className="mt-6 lazy-b">
             <dt className="">{shdCnt.bankInfo.holder[lang]}</dt>
             <dd className=" flex justify-between items-center text-blue cursor-pointer">
               {bankMethod?.meta?.accountHolder}

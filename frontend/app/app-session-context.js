@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 import Messages from "./(component)/(styled)/messages";
 import { fetchUser, registerServiceWorker } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
+import ImagePreview from "./(component)/(styled)/image-preview";
 // import { Validator } from "k-utilities";
 
 export const AppSessionContext = createContext();
@@ -205,6 +206,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   return (
     <AppSessionContext.Provider value={state}>
       {children}
+      <ImagePreview />
       <Messages messages={messages} setMessages={setMessages} />
     </AppSessionContext.Provider>
   );

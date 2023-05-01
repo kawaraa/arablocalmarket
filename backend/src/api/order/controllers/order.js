@@ -67,7 +67,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         strapi.service("api::product.product").update(p.id, { data: { variants: p.variants } })
       )
     );
-
+    order.customer = ctx.request.body.data.customer;
     return order;
   },
 

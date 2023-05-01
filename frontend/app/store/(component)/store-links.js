@@ -38,7 +38,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
 
   return (
     <>
-      <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-bg text-2xl font-bold lazy-c">
+      <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-bg text-2xl font-bold lazy-b">
         <li className={liCls}>
           <a className="block w-6" href={`tel:${phone}`}>
             <SvgIcon name="phone" />

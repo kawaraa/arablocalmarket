@@ -102,7 +102,7 @@ export default function POS({ params, searchParams }) {
   return (
     <>
       <article>
-        <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db lazy-cg">
+        <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db">
           <SearchBox label={content.search[lang]} onFinish={refresh} inCls="p-2" cls="flex-1" />
           <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnSize="10" />
         </div>

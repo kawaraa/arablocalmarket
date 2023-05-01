@@ -20,6 +20,8 @@ export default function Checkout({}) {
 
   const [loading, setLoading] = useState(false);
   const [store, setStore] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState(null);
   const [confirmCheckout, setConfirmCheckout] = useState(false);
   const [addressForm, setAddressForm] = useState(false);
@@ -57,7 +59,7 @@ export default function Checkout({}) {
     e.preventDefault();
     setLoading(true);
     try {
-      const { country, province, city } = store?.address || {};
+      const { country, province, city } = store.address;
       const data = { country, province, city };
       new FormData(e.target).forEach((value, key) => (data[key] = value));
       // Todo: Save the address if the user is signed in
@@ -81,14 +83,11 @@ export default function Checkout({}) {
     }, "");
     const payment = content.paymentMethods[paymentType == "ONLINE" ? "online" : "onDelivery"];
     const deliveryMethods = content.deliveryMethods.find((p) => p.text.en == deliveryMethod);
-    let adr = null;
-    if (address) {
-      adr = `
-${address.firstName} ${address.lastName}
-${address.line1} ${address.line2 || ""}
-${address.postalCode} ${address.city}
-${address.province}, ${address.country}`;
-    }
+    const adr = `
+${firstName} ${lastName}
+${address?.line1 || ""} ${address?.line2 || ""}
+${address?.postalCode || ""} ${address?.city || ""}
+${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
 
     e.target.href =
       `https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=` +
@@ -99,7 +98,7 @@ ${address.province}, ${address.country}`;
           deliveryMethods.text[lang],
           payment.text[lang],
           payment.methods[paymentMethod][lang],
-          adr
+          adr.trim()
         )
       );
   };
@@ -119,11 +118,11 @@ ${address.province}, ${address.country}`;
         lineItems,
         payment: { type: paymentType, method: paymentMethod.toUpperCase() },
         delivery: deliveryMethod,
-        address,
+        address: { firstName, lastName, ...(address || {}) },
       };
 
       order.customer = JSON.parse(window.localStorage.getItem("customer")) || null;
-      const customer = await request("order", "POST", { data: order });
+      const { customer } = await request("order", "POST", { data: order });
       if (!user) window.localStorage.setItem("customer", JSON.stringify(customer));
       router.replace("/checkout/success");
     } catch (err) {
@@ -157,7 +156,11 @@ ${address.province}, ${address.country}`;
   useEffect(() => {
     if (!items || !items[0]) router.replace("/");
     else fetchStore();
-    if (user && user.address) setAddress(user.address);
+    if (user) {
+      if (user.address) setAddress(user.address);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+    }
   }, []);
 
   if (!store || !items || !items[0]) return null;
@@ -167,9 +170,30 @@ ${address.province}, ${address.country}`;
         {content.h1[lang]} ( {items.length} )
       </h1>
 
+      <div className="flex md:w-1/2 my-8 mx-auto -space-x-px">
+        <NameInputField
+          full
+          first
+          lang={lang}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          cls="1 relative w-1/2"
+          inCls="text-lg rounded"
+        />
+        <span className="w-2"></span>
+        <NameInputField
+          full
+          lang={lang}
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          cls="2 relative w-1/2"
+          inCls="text-lg rounded"
+        />
+      </div>
+
       <h3 className="mb-4 text-lg font-medium">{content.deliveryH3[lang]}</h3>
 
-      <section className="flex justify-center items-center lazy-c">
+      <section className="flex justify-center items-center lazy-b">
         {/* Todo: if store.deliver then show delivery option. */}
         {content.deliveryMethods.map(({ text, icon, cls }, i) => (
           <CheckCard
@@ -194,7 +218,6 @@ ${address.province}, ${address.country}`;
           ) : address ? (
             <>
               <h3 className="mt-6 text-lg font-medium">{content.addressH3[lang]}</h3>
-
               <div className="flex flex-wrap">
                 <CheckCard
                   type="radio"
@@ -206,7 +229,7 @@ ${address.province}, ${address.country}`;
                   onChange={() => {}}
                   cls="w-1/2 md:w-44 m-2 p-3 w-full md:w-1/2 lg:w-1/3">
                   <h6 className="font-medium" dir="ltr">
-                    {address.firstName} {address.lastName}
+                    {firstName} {lastName}
                   </h6>
                   <p dir="ltr">
                     {address.line1} {address.line2 || ""}
@@ -240,12 +263,6 @@ ${address.province}, ${address.country}`;
             loading={loading}
             open={addressForm}>
             <div className="px-1 mt-5">
-              <div className="flex mb-2 -space-x-px shadow-sm">
-                <NameInputField full lang={lang} first cls="1 relative w-1/2" inCls="text-lg rounded" />
-                <span className="w-2"></span>
-                <NameInputField full lang={lang} cls="2 relative w-1/2" inCls="text-lg rounded" />
-              </div>
-
               <PhoneInputField full lang={lang} cls="4 mb-2 relative shadow-sm" inCls="text-lg rounded-md" />
               <AddressInputs
                 lang={lang}
@@ -261,7 +278,7 @@ ${address.province}, ${address.country}`;
         </section>
       )}
 
-      <section className="pt-6 mb-6 lazy-c">
+      <section className="pt-6 mb-6 lazy-b">
         <h3 className="mb-3 text-lg font-medium">{content.paymentH3[lang]}</h3>
         <div className="md:w-1/2 mx-auto flex justify-evenly">
           <CheckInput
@@ -280,7 +297,7 @@ ${address.province}, ${address.country}`;
           </CheckInput>
         </div>
 
-        <section className="min-h-[250px] card px-2 py-3 mt-4 rounded-md lazy-c">
+        <section className="min-h-[250px] card px-2 py-3 mt-4 rounded-md lazy-b">
           {paymentType === "ON-DELIVERY" ? (
             <OnDeliveryPaymentMethods
               lang={lang}
@@ -291,7 +308,7 @@ ${address.province}, ${address.country}`;
             />
           ) : (
             <>
-              <div className="flex lazy-c">
+              <div className="flex lazy-b">
                 {Object.keys(content.paymentMethods.online.methods).map((method, i) => (
                   <CheckCard
                     type="radio"

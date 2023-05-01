@@ -15,7 +15,7 @@ export default async function LandingPage({ params, searchParams }) {
       <CheckUser />
       <section className="absolute inset-0 h-[100vh] w-full bg-hpbg dark:bg-dbg border-b border-b-2 border-b-bc">
         <div
-          className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-c"
+          className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-b"
           style={{
             ...getCssDelay(),
             backgroundImage: "url('/img/landing-page.png')",
@@ -46,7 +46,7 @@ export default async function LandingPage({ params, searchParams }) {
 
           <Link
             href="/store"
-            className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-c"
+            className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
             style={getCssDelay()}>
             {content.findStoreLink[lang]}
           </Link>
@@ -62,16 +62,16 @@ export default async function LandingPage({ params, searchParams }) {
       </section>
 
       <section id="section2" className="mt-[100vh] text-center">
-        <h3 className="text-lg mt-5 mb-3 font-bold lazy-c" style={getCssDelay()}>
+        <h3 className="text-lg mt-5 mb-3 font-bold lazy-b" style={getCssDelay()}>
           {content.h3[lang]}
         </h3>
-        <p className="text-lg my-5 mb-3 lazy-c" style={getCssDelay()}>
+        <p className="text-lg my-5 mb-3 lazy-b" style={getCssDelay()}>
           {content.h3P[lang]}
         </p>
 
         <Link
           href="/join"
-          className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-c"
+          className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-b"
           style={getCssDelay()}>
           {content.h3Link[lang]}
         </Link>

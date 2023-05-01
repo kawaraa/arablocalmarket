@@ -62,7 +62,7 @@ export default function RootLayout({ children, searchParams }) {
           </main>
         </AppSessionContextProvider>
 
-        <div id="global-screen-loader" className="z-10 flex justify-center items-center fixed inset-0">
+        <div id="global-screen-loader" className="z-10 fixed inset-0 flex justify-center items-center">
           <div className="w-20 h-20 border-[6px] border-t-[transparent] border-dbg dark:border-bg dark:border-t-[transparent] rounded-full animate-spin"></div>
         </div>
       </body>

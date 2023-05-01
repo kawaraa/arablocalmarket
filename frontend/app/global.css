@@ -101,6 +101,9 @@
 /* Good for bar loading animation: transition-timing-function: cubic-bezier(0.1, 0.7, 1.0, 0.1); */
 .lazy-c {
   animation: lazy-c 0.4s ease-in 0.1s reverse backwards;
+}
+.lazy-b {
+  animation: lazy-b 0.4s ease-in 0.1s reverse backwards;
   /* animation-delay: attr(data-d); */
   /* animation-delay: calc(attr(data-d) * 100ms); */
   /* animation-delay: calc(var(--a-d) * 100ms); */
@@ -118,6 +121,12 @@
 }
 
 @keyframes lazy-c {
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+@keyframes lazy-b {
   100% {
     opacity: 0;
     transform: translate(0, 50px);
