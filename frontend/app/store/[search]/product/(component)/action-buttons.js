@@ -79,11 +79,6 @@ export default function ActionButtons({ variants }) {
   );
 }
 
-export function Stock() {
-  const { lang } = useContext(AppSessionContext);
-  return shdCnt.stock[lang];
-}
-
 const content = {
   buyBtn: { en: "Buy", ar: "شراء" },
   addedToCart: { en: "Added new item to the cart", ar: "تمت إضافة عنصر جديد إلى سلة التسوق" },

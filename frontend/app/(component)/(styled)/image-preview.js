@@ -1,6 +1,7 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../app-session-context";
+import { IconButton } from "./button";
 
 export default function ImagePreview({}) {
   // Todo: Add title to image and close button
@@ -19,16 +20,10 @@ export default function ImagePreview({}) {
 
   if (!src) return null;
   return (
-    <div
-      id="picture-preview-outer"
-      className="z-9 fixed inset-0 bg-bg dark:bg-dbg flex justify-center items-center">
-      <div className="relative overflow-scroll duration-500 w-full md:w-1/3 lg:1/2 lazy-c">
-        <span
-          onClick={() => setSrc(null)}
-          className="block w-6 h-6 text-4xl bg-blur text-bg absolute top-1 right-1 flex justify-center items-center rotate-45 font-monospace rounded-full cursor-pointer">
-          +
-        </span>
-        <img src={src} className="w-full" />
+    <div className="z-9 fixed inset-0 bg-bg dark:bg-dbg flex justify-center items-center">
+      <IconButton onClick={() => setSrc(null)} icon="crossMark" cls="absolute top-3 right-3" />
+      <div className="w-full max-h-full lg:w-1/2 overflow-scroll duration-500 lazy-c">
+        <img src={src} className="w-full max-h-full" />
       </div>
     </div>
   );

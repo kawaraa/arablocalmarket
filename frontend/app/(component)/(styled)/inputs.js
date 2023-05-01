@@ -300,7 +300,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
   };
 
   return (
-    <div dir="auto" className={`inline-flex bg-cbg rounded-full ${cls}`}>
+    <div dir="auto" className={`inline-flex bg-cbg ${cls}`}>
       {typeof label != "string" ? (
         label
       ) : (

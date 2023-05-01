@@ -35,6 +35,7 @@
   "noItem": { "en": "No item found", "ar": "لم يتم العثور على أي عنصر" },
   "itemAdded": { "en": "New item has been added", "ar": "تمت إضافة عنصر جديد" },
   "variants": { "en": "Variants", "ar": "اصناف" },
+  "desc": { "en": "Description", "ar": "الوصف" },
   "stock": { "en": "In stock", "ar": "في المخزن" },
   "add": { "en": "Add", "ar": "أضف" },
   "checkout": { "en": "Checkout", "ar": "تاكيد الطلب" },

@@ -104,7 +104,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
         max={variants[index].quantity}
         onChange={updateItemQuantity}
         title="Quantity"
-        cls="mt-7 mb-3 !flex justify-center"
+        cls="mt-7 mb-3"
       />
     </>
   );

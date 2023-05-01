@@ -1,10 +1,11 @@
-import Image from "next/image";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import ActionButtons, { Stock } from "../(component)/action-buttons";
+import Image from "next/image";
+import ActionButtons from "../(component)/action-buttons";
 import Options from "../(component)/options";
 import { serverRequest } from "../../../../(service)/api-provider";
 import { ShareButton } from "../../../../(component)/share-button";
-// import shdCnt from "../../../../(layout)/json/shared-content.json";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
 const q = "?fields=name,currency,meta";
 const q1 =
   "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[rating]=*";
@@ -13,7 +14,10 @@ const catchErr = () => ({ data: {}, meta: {} });
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 // export const metadata = { title: "Product Name - store name - ALM" };
 
-export default async function ProductBySlug({ params }) {
+export default async function ProductBySlug({ params, searchParams }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
+
   const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
   if (!res.data.id) return notFound();
 
@@ -45,20 +49,21 @@ export default async function ProductBySlug({ params }) {
         />
       </div>
 
-      <div className="relative ">
+      <div className="relative text-center">
         <Options store={store} {...product} />
 
         <div className="absolute right-3 bottom-0 text-sm font-light">
           <span id="product-stock" className="font-medium">
             {product.variants[0].quantity}
           </span>{" "}
-          {/* <span className="sr-only"> {shdCnt.stock[lang]}</span> */}
-          <Stock />
+          {shdCnt.stock[lang]}
         </div>
       </div>
 
-      <h2 className="text-lg my-3">{product.name}</h2>
-      <p className="text-sm mb-10">
+      <h2 className="text-lg my-5 text-center">{product.name}</h2>
+
+      <h4 className="text-xl">{shdCnt.desc[lang]}</h4>
+      <p className="text-sm mt-3 mb-10">
         <span>{product.vendor}</span>
         <br />
         {product.description}
