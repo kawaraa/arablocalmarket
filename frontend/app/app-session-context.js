@@ -9,16 +9,13 @@ import ImagePreview from "./(component)/(styled)/image-preview";
 export const AppSessionContext = createContext();
 
 export default function AppSessionContextProvider({ children, language, theme }) {
-  const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
   const [coordinates, setCoordinates] = useState([0, 0]);
   const [range, setRange] = useState(1.5);
   const [user, setUser] = useState(null);
-
-  // localStorage.cart.items.
-  const cart = { items: [] };
+  const [cartItemsNum, setCartItemsNum] = useState(0);
 
   // const [worker, setWorker] = useState(null);
   // const [posts, setPosts] = useState([]);
@@ -32,7 +29,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   // const [profile, setProfile] = useState({});
   // const [editingField, setEditingField] = useState("");
 
-  const setAppLoading = (loading) => window?.setLoading(loading);
+  const setAppLoading = (loading) => window.setLoading(loading);
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = (lang) => {
@@ -101,11 +98,9 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const updateUser = (user) => {
     setAppLoading(true);
-    setLoading(true);
     if (user) window.localStorage.setItem("user", JSON.stringify(user));
     else window.localStorage.removeItem("user");
     setUser(user);
-    setLoading(false);
     setAppLoading(false);
   };
 
@@ -124,6 +119,11 @@ export default function AppSessionContextProvider({ children, language, theme })
   };
 
   useEffect(() => {
+    const localCart = JSON.parse(window?.localStorage.getItem("cartItems") || null)?.length || 0;
+    setCartItemsNum(localCart || user?.cart.length || 0);
+  }, [user]);
+
+  useEffect(() => {
     const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     const aThemeMode = Cookies.get("themeMode") || window.localStorage.getItem("themeMode");
     const aCoordinates = Cookies.get("coordinates") || window.localStorage.getItem("coordinates");
@@ -139,7 +139,6 @@ export default function AppSessionContextProvider({ children, language, theme })
       .catch((err) => {
         const user = JSON.parse(window.localStorage.getItem("user") || null);
         if (user) return updateUser(user);
-        setLoading(false);
         setAppLoading(false);
       });
 
@@ -169,7 +168,8 @@ export default function AppSessionContextProvider({ children, language, theme })
     updateRange,
     user,
     updateUser,
-    cart,
+    cartItemsNum,
+    setCartItemsNum,
     requestNotificationPermission,
 
     // worker,
@@ -202,7 +202,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     // setProfile,
   };
 
-  if (loading) return null;
   return (
     <AppSessionContext.Provider value={state}>
       {children}

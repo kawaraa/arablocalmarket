@@ -8,7 +8,7 @@ import EmptyState from "../(component)/(styled)/empty-state";
 
 export default function Cart({ params, searchParams }) {
   const router = useRouter();
-  const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
+  const { lang, user, setAppLoading, addMessage, setCartItemsNum } = useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
@@ -106,6 +106,10 @@ export default function Cart({ params, searchParams }) {
   };
 
   useEffect(() => {
+    setCartItemsNum(cart.length);
+  }, [cart]);
+
+  useEffect(() => {
     document.title = (activeTab?.text || "Shipping Cart") + " - ALM";
     setSelectedStore(null);
   }, [activeTab]);
@@ -117,6 +121,7 @@ export default function Cart({ params, searchParams }) {
     setFavoriteProducts(user?.favoriteProducts || []);
 
     setCart(mergeUserAndLocalCarts(JSON.parse(window.localStorage.getItem("cartItems"))));
+
     setAppLoading(false);
   }, []);
 

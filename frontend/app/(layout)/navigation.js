@@ -12,12 +12,9 @@ import EmptyState from "../(component)/(styled)/empty-state";
 export default function Navigation() {
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-  const { lang, updateLang, themeMode, updateThemeMode, user } = useContext(AppSessionContext);
-
+  const { lang, updateLang, themeMode, updateThemeMode, user, cartItemsNum } = useContext(AppSessionContext);
   const signinLink = content.navLinks[content.navLinks.length - 1];
   const initials = !user ? null : user.firstName[0] + user.lastName[0];
-  let cartItems = JSON.parse(window.localStorage.getItem("cartItems"))?.length || 0;
-  if (user?.cart && user.cart[0]) cartItems += user.cart.reduce((t, c) => t + c.items.length, 0);
 
   useEffect(() => {
     setShowMenu(false);
@@ -116,7 +113,7 @@ export default function Navigation() {
             <SvgIcon name="cart" />
           </span>
           <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
-            {cartItems}
+            {cartItemsNum}
           </span>
         </Link>
 
