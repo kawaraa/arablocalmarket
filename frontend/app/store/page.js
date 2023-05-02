@@ -11,6 +11,7 @@ import CoordinatesCriteria from "./(component)/coordinates-criteria";
 // export const metadata = { title: "Stores Nearby - ALM" };
 
 export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export default async function StoresNearby({ searchParams }) {
   // const headersList = headers();
