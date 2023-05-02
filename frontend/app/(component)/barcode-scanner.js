@@ -17,7 +17,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
     try {
       const constraints = {
         audio: false,
-        video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
+        video: { facingMode: { exact: "environment" } }, // width: 1920, height: 1080,width: { min: 1280 },
+        height: { min: 720 },
       };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 
@@ -60,7 +61,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL(),
+            src: canvasRef.current.toDataURL("image/jpeg", 1.0),
             locate: false,
             multiple: false,
           },

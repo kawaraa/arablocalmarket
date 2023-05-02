@@ -5,6 +5,7 @@ import BrowserBarcodeDetecter from "../b-barcode-detecter";
 import BarcodeScanner from "../barcode-scanner";
 import Modal from "./modal";
 import { IconButton } from "./button";
+import { ToggleSwitch } from "./inputs";
 
 export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, btnSize }) {
   const [showScanner, setShowScanner] = useState(false);
@@ -40,7 +41,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
             onDetect={handleDetect}
             onError={onError}
             onClose={() => setShowScanner(false)}
-            cls="mt-5"
+            cls=""
           />
         ) : (
           <BarcodeScanner
@@ -48,10 +49,20 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
             onDetect={handleDetect}
             onError={onError}
             onClose={() => setShowScanner(false)}
-            cls="mt-5"
+            cls=""
           />
+        )}
+        {window?.BarcodeDetector && (
+          <div className="text-center">
+            <ToggleSwitch
+              onChange={() => setBrowserSupportBarcodeScanner(!browserSupportBarcodeScanner)}
+              label={content.sc[lang] + " 1"}
+            />
+          </div>
         )}
       </Modal>
     </>
   );
 }
+
+const content = { sc: { en: "Scanner", ar: "الماسح" } };

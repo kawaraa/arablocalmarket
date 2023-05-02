@@ -26,7 +26,8 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
 
       const constraints = {
         audio: false,
-        video: { width: 1920, height: 1080, facingMode: { exact: "environment" } },
+        video: { facingMode: { exact: "environment" } }, // width: 1920, height: 1080,width: { min: 1280 },
+        height: { min: 720 },
       };
       if (!("ontouchstart" in document.documentElement)) constraints.video = true;
 

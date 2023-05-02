@@ -8,7 +8,12 @@ tailwind.config = {
       pc: "#9bface", // Primary Color // #cbf7f2 // #b2ebf9
       pc2: "#b26cfc", // #aea1ea
       bg: "#ffffff", // Background & Dark Title Color
+      lbg: "#e5e7eb", //f9fafb Light Background
+      dbg: "#121212", // Dark Background
       cbg: "#ffffff1a", // Card Background
+      dcbg: "#272727", // Dark card Background
+      lt: "#6b7280", // Light Title color
+      dt: "#ffffffbf", // Dark Color
       t: "#666666", // Light Color
       bc: "#0000001a", // Border Color & Hover effect
       bf: "#9aa0a6", // Border focus color
@@ -21,13 +26,6 @@ tailwind.config = {
       bg6: "#b8f5d9",
       bg7: "#fcdcdc",
       bg8: "#A9A9A9",
-
-      lbg: "#e5e7eb", //f9fafb Light Background
-      lt: "#6b7280", // Light Title color
-
-      dbg: "#121212", // Dark Background
-      dcbg: "#272727", // Dark card Background
-      dt: "#ffffffbf", // Dark Color
 
       // "ico-bg": "#9bface", // Icon & Button Background
       // "ico-c": "#121212", // Icon & Button Color

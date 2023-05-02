@@ -172,7 +172,8 @@ export function ToggleSwitch({ children, label, size = 50, cls, ...p }) {
             h - 2
           }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
       </label>
-      {label && <span className="ml-3 text-sm font-medium">{label}</span>}
+      <span className="w-2 h-2"></span>
+      {label && <span className="text-sm font-medium">{label}</span>}
     </div>
   );
 }
