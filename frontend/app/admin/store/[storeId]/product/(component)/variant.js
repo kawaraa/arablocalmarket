@@ -47,12 +47,13 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           type="text"
           name="barcode"
           // disabled={v.barcode?.length > 4}
-          label={content.barcode.text[lang]}
-          placeholder={v.barcode || shdCnt.ex[lang] + " 875674398784"}
+          value={v.barcode}
           onChange={(e) => onUpdate({ barcode: e.target.value + "" })}
           required
           min="5"
           max="25"
+          label={content.barcode.text[lang]}
+          placeholder={shdCnt.ex[lang] + " 875674398784"}
           full
           cls="flex-1 items-center"
         />
