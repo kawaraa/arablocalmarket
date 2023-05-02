@@ -40,7 +40,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
     const store = await strapi.db.query("api::store.store").findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
     if (ctx.request.files && store.cover) strapi.plugins.upload.services.upload.remove(store.cover);
-
+    delete ctx.request.body.data.owner;
     return super.update(ctx);
   },
 
