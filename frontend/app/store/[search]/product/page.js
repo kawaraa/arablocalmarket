@@ -6,6 +6,10 @@ import ProductCard from "../../../(component)/product-card";
 import PaginationButtons from "./(component)/pagination-buttons";
 const q = "?fields=currency";
 
+export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
 export default async function ProductsByStore({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
