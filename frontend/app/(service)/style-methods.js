@@ -1,5 +1,5 @@
 export function getCssDelay() {
-  return { animationDelay: Math.random().toFixed(2) + "s" };
+  return { animationDelay: Math.random() * 600 + "ms" };
 }
 
 export function random() {

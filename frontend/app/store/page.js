@@ -10,7 +10,7 @@ import CoordinatesCriteria from "./(component)/coordinates-criteria";
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 // export const metadata = { title: "Stores Nearby - ALM" };
 
-export default async function StoresNearby({ searchParams, ...props }) {
+export default async function StoresNearby({ searchParams }) {
   // const headersList = headers();
 
   const cookieStore = cookies();
