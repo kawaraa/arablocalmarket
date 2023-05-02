@@ -26,7 +26,7 @@ export default function Cart({ params, searchParams }) {
 
     // if (!user) {
     let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
-    cartItems = cartItems.filter((it) => it.storeId != storeId && !check(it.barcode));
+    cartItems = cartItems.filter((it) => it.storeId == storeId && !check(it.barcode));
     window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
     // } else {
     //   try {
@@ -49,7 +49,9 @@ export default function Cart({ params, searchParams }) {
 
     try {
       // Todo: remove the item from the backend
-    } catch (error) {}
+    } catch (error) {
+      console.log("deleteFromFavorite: >>> ", error);
+    }
 
     setFavoriteProducts(copy.filter((c) => !!c.items[0]));
     setAppLoading(false);

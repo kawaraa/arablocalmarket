@@ -58,7 +58,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
           <img
             src={filePreview ? URL.createObjectURL(filePreview) : imageUrl}
             alt={alt}
-            className={fullHeight ? "h-full" : "w-full"}
+            className={"preview " + (fullHeight ? "h-full" : "w-full")}
           />
 
           <label

@@ -22,7 +22,8 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {shdCnt.foundProducts[lang][0]}
-        <span className="font-bold">( {meta.pagination.total} )</span> {shdCnt.foundProducts[lang][1]}
+        <strong className="font-bold"> ( {meta.pagination.total} ) </strong>
+        {shdCnt.foundProducts[lang][1]}
       </h2>
 
       <ul dir="ltr" className="flex flex-wrap min-h-[30vh]">
