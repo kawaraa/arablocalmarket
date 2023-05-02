@@ -9,10 +9,9 @@ import { getCssDelay } from "../../../(service)/style-methods";
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 // export const metadata = { title: "Store name - ALM" };
 
-export default async function Category({ params, searchParams }) {
+export default async function Category({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
-  const storeId = params.search;
 
   await Promise.all(categories.map(async (c) => (c.total = await getTotal(storeId, c.key))));
 

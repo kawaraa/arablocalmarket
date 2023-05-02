@@ -9,7 +9,7 @@ export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
+  const res = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }).catch(catchErr);
   if (!res?.data?.attributes) return null;
   const store = res.data.attributes;
   store.id = res.data.id;

@@ -18,7 +18,7 @@ export default async function ProductBySlug({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
 
-  const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
+  const res = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }).catch(catchErr);
   if (!res.data.id) return notFound();
 
   res.data.attributes.id = res.data.id;

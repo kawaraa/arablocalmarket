@@ -1,19 +1,15 @@
 import { cookies } from "next/headers";
 import { serverRequest } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
+import categories from "../../../(layout)/json/categories.json";
 import ProductSearch from "../../../(component)/product-search";
 import ProductCard from "../../../(component)/product-card";
 import PaginationButtons from "./(component)/pagination-buttons";
 const q = "?fields=currency";
 
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
-
-export default async function ProductsByStore({ params, searchParams }) {
+export default async function ProductsByStore({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
-  const storeId = params.search;
 
   const storeReq = serverRequest("store", "GET", { query: `/${storeId}${q}` }).catch(() => null);
   const [store, { data, meta }] = await Promise.all([storeReq, getProducts(storeId, searchParams)]);
@@ -22,7 +18,7 @@ export default async function ProductsByStore({ params, searchParams }) {
   return (
     <>
       {/* searchParams.search || searchParams.category */}
-      <ProductSearch text={""} scroll="180" />
+      <ProductSearch text={searchParams.search} scroll="180" />
 
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {shdCnt.foundProducts[lang][0]}
@@ -49,18 +45,19 @@ export default async function ProductsByStore({ params, searchParams }) {
 }
 
 const getProducts = async (storeId, { category, search, page }) => {
+  const s = search?.trim() || "";
   if (!page) page = 1;
   let sq = ``;
-  if (category) sq = `&filters[category][$eq]=${category}`;
-  else if (search) {
-    sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
+  if (s) {
+    sq = `&filters[$or][0][name][$contains]=${s}&filters[$or][1][description][$contains]=${s}&filters[$or][2][variants][barcode][$contains]=${s}`;
+  } else if (category) {
+    category = categories.find((c) => (c.text.en + " " + c.text.ar).toLowerCase().includes(category));
+    if (category) sq = `&filters[category][$eq]=${category}`;
   }
 
   const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
-  const cacheConf = { cache: "no-store", next: { revalidate: 0 } };
   const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
-  // return serverRequest("product", "GET", { query }).catch(catchErr);
-  return serverRequest("product", "GET", { query }, undefined, cacheConf);
+  return serverRequest("product", "GET", { query }).catch(catchErr);
 };
 
 const content = {};
