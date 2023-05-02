@@ -13,10 +13,7 @@ export default function Stores() {
 
   useEffect(() => {
     document.title = "Admin Stores - ALM";
-
-    const id = setTimeout(() => {
-      if (!user) router.replace("/signin");
-    }, 1000);
+    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
     return () => clearTimeout(id);
   }, [user]);
 

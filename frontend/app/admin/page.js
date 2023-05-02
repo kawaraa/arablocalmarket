@@ -12,10 +12,7 @@ export default function Admin({ params, searchParams }) {
 
   useEffect(() => {
     document.title = "Admin dashboard - ALM";
-
-    const id = setTimeout(() => {
-      if (!user) router.replace("/signin");
-    }, 1000);
+    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
     return () => clearTimeout(id);
   }, [user]);
 

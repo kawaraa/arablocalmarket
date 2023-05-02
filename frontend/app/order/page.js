@@ -45,10 +45,7 @@ export default function Orders(props) {
 
   useEffect(() => {
     document.title = "Admin Orders - ALM";
-
-    const id = setTimeout(() => {
-      if (!user) router.replace("/signin");
-    }, 1000);
+    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
     return () => clearTimeout(id);
   }, [user]);
 

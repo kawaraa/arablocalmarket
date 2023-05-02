@@ -23,10 +23,7 @@ export default function Settings(props) {
 
   useEffect(() => {
     document.title = "Admin Settings - ALM";
-
-    const id = setTimeout(() => {
-      if (!user) router.replace("/signin");
-    }, 1000);
+    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
     return () => clearTimeout(id);
   }, [user]);
 
