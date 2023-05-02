@@ -26,8 +26,11 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
   };
 
   useEffect(() => {
-    if (!coordinates[0]) setTimeout(() => setShowFilter(true), 1500);
+    const setFilter = (arg) => setTimeout(() => setShowFilter(arg), 500);
+
+    if (!coordinates[0]) setFilter(true);
     else if (coordinates[0] && userLocation[0] == 0) window.location.reload();
+    else setFilter(false);
   }, [coordinates]);
 
   useEffect(() => {
