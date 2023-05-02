@@ -9,15 +9,23 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
 const catchErr = () => ({ data: {}, meta: {} });
 
+// Todo: NextJS is duplicated the titles
 // For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-export const metadata = { title: "Store Name / title - ALM" };
+// export const metadata = { title: "Store Name / title - ALM" };
+
+export const revalidate = 60;
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 
 export default async function StoreLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
   // Todo: make the store query by id, title and about
-  const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }).catch(catchErr);
+  const cacheConf = { cache: "no-store", next: { revalidate: 0 } };
+  const res = await serverRequest("store", "GET", { query: `/${params.search}${q}` }, null, cacheConf).catch(
+    catchErr
+  );
   if (!res?.data?.attributes) return notFound();
   const store = res.data.attributes;
   store.id = res.data.id;
