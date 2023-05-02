@@ -4,7 +4,7 @@ import EmptyState from "../(component)/(styled)/empty-state";
 import { serverRequest } from "../(service)/api-provider";
 import StoreCard from "./(component)/store-card";
 import StoreSearch from "./(component)/store-search";
-import PaginationButtons from "./[search]/product/(component)/pagination-buttons";
+import PaginationButtons from "./[storeId]/product/(component)/pagination-buttons";
 import CoordinatesCriteria from "./(component)/coordinates-criteria";
 
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
