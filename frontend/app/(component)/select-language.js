@@ -12,15 +12,12 @@ export default function SelectLanguage({ language }) {
   const changeLanguage = (lang) => {
     updateLang(lang);
     setOpen(false);
-    // window.location.reload();
-    // setTimeout(() => window.location.reload(), 500);
   };
 
   useEffect(() => {
     const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     if (!aLang) setTimeout(() => setOpen(true), 400);
     else if (lang && aLang && language != aLang) window.location.reload();
-    // else setTimeout(() => aLang && language != aLang && window.location.reload(), 500);
   }, [lang]);
 
   return (
