@@ -21,9 +21,6 @@ export default function SelectLanguage({ language }) {
     if (!aLang) setTimeout(() => setOpen(true), 400);
     else if (aLang && language != aLang) window.location.reload();
     // else setTimeout(() => aLang && language != aLang && window.location.reload(), 500);
-
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
   }, []);
 
   return (
