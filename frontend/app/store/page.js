@@ -10,6 +10,8 @@ import CoordinatesCriteria from "./(component)/coordinates-criteria";
 // Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
 // export const metadata = { title: "Stores Nearby - ALM" };
 
+export const dynamic = "force-dynamic";
+
 export default async function StoresNearby({ searchParams }) {
   // const headersList = headers();
 
@@ -83,7 +85,7 @@ async function getData(page, criteria, search) {
   // const query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
 
   const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
-  return serverRequest("store", "GET", { query }, null, { next: { revalidate: 60 } }).catch(catchErr);
+  return serverRequest("store", "GET", { query }).catch(catchErr);
 }
 
 // function getGeoInfo(ip) {
