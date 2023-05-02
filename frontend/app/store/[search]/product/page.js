@@ -53,7 +53,7 @@ const getProducts = async (storeId, { category, search, page }) => {
   }
 
   const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
-  const cacheConf = { next: { revalidate: 60 } };
+  const cacheConf = { cache: "no-store", next: { revalidate: 0 } };
   const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
   // return serverRequest("product", "GET", { query }).catch(catchErr);
   return serverRequest("product", "GET", { query }, null, cacheConf).catch(catchErr);
