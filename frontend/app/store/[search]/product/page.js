@@ -6,7 +6,7 @@ import ProductCard from "../../../(component)/product-card";
 import PaginationButtons from "./(component)/pagination-buttons";
 const q = "?fields=currency";
 
-export const revalidate = 60;
+export const revalidate = 0;
 export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
@@ -60,7 +60,7 @@ const getProducts = async (storeId, { category, search, page }) => {
   const cacheConf = { cache: "no-store", next: { revalidate: 0 } };
   const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
   // return serverRequest("product", "GET", { query }).catch(catchErr);
-  return serverRequest("product", "GET", { query }, null, cacheConf).catch(catchErr);
+  return serverRequest("product", "GET", { query }, undefined, cacheConf).catch(catchErr);
 };
 
 const content = {};

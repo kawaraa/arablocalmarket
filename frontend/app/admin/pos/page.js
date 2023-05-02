@@ -77,15 +77,18 @@ export default function POS({ params, searchParams }) {
   };
 
   useEffect(() => {
-    if (!user) router.replace("/signin");
-    else {
-      const store = user.myStores.find((s) => s.id == searchParams.storeId);
-      if (store) {
-        store.currency = store.currency.split("-")[0];
-        storeId.current = store.id;
-        setStore(store);
+    const id = setTimeout(() => {
+      if (!user) router.replace("/signin");
+      else {
+        const store = user.myStores.find((s) => s.id == searchParams.storeId);
+        if (store) {
+          store.currency = store.currency.split("-")[0];
+          storeId.current = store.id;
+          setStore(store);
+        }
       }
-    }
+    }, 1000);
+    return () => clearTimeout(id);
   }, [user]);
 
   useEffect(() => {

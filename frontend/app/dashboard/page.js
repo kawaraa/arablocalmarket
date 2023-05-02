@@ -10,7 +10,10 @@ export default function Dashboard({}) {
 
   useEffect(() => {
     document.title = "Admin Dashboard - ALM";
-    if (!user) router.replace("/signin");
+    const id = setTimeout(() => {
+      if (!user) router.replace("/signin");
+    }, 1000);
+    return () => clearTimeout(id);
   }, [user]);
 
   if (!user) return null;

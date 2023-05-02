@@ -160,7 +160,10 @@ export default function NewStore({ params, searchParams }) {
   }, [searchParams]);
 
   useEffect(() => {
-    if (!user) router.replace("/signin");
+    const id = setTimeout(() => {
+      if (!user) router.replace("/signin");
+    }, 1000);
+    return () => clearTimeout(id);
   }, [user]);
 
   if (!user) return null;

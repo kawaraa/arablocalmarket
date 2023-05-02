@@ -41,7 +41,10 @@ export default function SignIn() {
   };
 
   useEffect(() => {
-    if (user) router.replace(user.myStores[0] ? "/admin/store" : "store");
+    const id = setTimeout(() => {
+      if (user) router.replace(user.myStores[0] ? "/admin/store" : "store");
+    }, 1000);
+    return () => clearTimeout(id);
   }, [user]);
 
   if (user) return null;
