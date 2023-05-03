@@ -23,11 +23,10 @@ export default function Settings(props) {
 
   useEffect(() => {
     document.title = "Admin Settings - ALM";
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
+  }, []);
 
-  if (!user) return null;
+  if (user?.loading) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <article className="mt-4 max-w-md mx-auto">
       <h1 className="text-2xl mb-6">{content.h1[lang]}</h1>

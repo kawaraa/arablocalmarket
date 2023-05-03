@@ -12,7 +12,7 @@ import infiniteScroll from "../(component)/infinite-scroll";
 
 export default function Orders(props) {
   const router = useRouter();
-  const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
   const [clickedOrder, setClickedOrder] = useState(null);
   const [openOrder, setOpenOrder] = useState(false);
@@ -45,9 +45,7 @@ export default function Orders(props) {
 
   useEffect(() => {
     document.title = "Admin Orders - ALM";
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
+  }, []);
 
   const { data } = infiniteScroll({
     onLoadContent: fetchOrders,
@@ -55,7 +53,8 @@ export default function Orders(props) {
     ready: !!user?.id,
   });
 
-  if (!user) return null;
+  if (user?.loading) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <>
       <h1 dir="auto" className="text-lg my-5 font-medium lazy-l">

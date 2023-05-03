@@ -63,11 +63,11 @@ export default function StoreById({ children, params: { storeId } }) {
   };
 
   useEffect(() => {
-    const id = setTimeout(() => (!user ? router.replace("/signin") : fetchStore()), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
+    fetchStore();
+  }, []);
 
-  if (!user || !store) return null;
+  if (user?.loading || !store) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <article>
       <ImageUpload

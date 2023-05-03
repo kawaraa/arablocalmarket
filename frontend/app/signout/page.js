@@ -13,8 +13,6 @@ export default function Logout() {
     window.localStorage.removeItem("accessToken");
     updateUser(null);
     router.replace("/");
-    // setTimeout(() => router.replace("/"), 1000);
-    // setTimeout(() => window.location.replace("/"), 2000);
 
     // Todo: use either Strapi or Next to clear the "HttpOnly" cookie.
   }, []);

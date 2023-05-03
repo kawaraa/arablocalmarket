@@ -197,19 +197,22 @@ export default function ProductById({ params }) {
           )}
         </div>
 
-        {/* dir="ltr" */}
         <div className="flex my-5">
-          {product && (
-            <>
-              <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="py-2 px-5 text-lg">
-                {shdCnt.delete[lang]}
-              </Button>
-              <span className="w-3 h-3"></span>
-            </>
-          )}
           <Button type="submit" cls="py-2 px-5 text-lg">
             {!product ? content.create[lang] : shdCnt.save[lang]}
           </Button>
+
+          {product && (
+            <>
+              <span className="w-5 h-5"></span>
+              <Button
+                type="button"
+                onClick={() => setDeleteConfirmation(true)}
+                cls="py-2 px-5 bg-bg3 text-bg text-lg">
+                {shdCnt.delete[lang]}
+              </Button>
+            </>
+          )}
         </div>
       </form>
 

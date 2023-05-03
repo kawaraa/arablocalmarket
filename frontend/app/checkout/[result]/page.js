@@ -9,10 +9,7 @@ export default function Checkout({ params, searchParams }) {
   const { lang } = useContext(AppSessionContext);
   const page = params.result;
 
-  if (!(page in content)) {
-    router.replace("/");
-    return null;
-  }
+  if (!(page in content)) return router.replace("/");
 
   return (
     <div>

@@ -159,12 +159,8 @@ export default function NewStore({ params, searchParams }) {
     if (searchParams.id) fetchStoreById(searchParams.id);
   }, [searchParams]);
 
-  useEffect(() => {
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
-
-  if (!user) return null;
+  if (user?.loading) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
@@ -337,17 +333,21 @@ export default function NewStore({ params, searchParams }) {
         />
 
         <div className="flex my-5">
-          {store && (
-            <>
-              <Button type="button" onClick={() => setDeleteConfirmation(true)} cls="py-2 px-5 text-lg">
-                {shdCnt.delete[lang]}
-              </Button>
-              <span className="w-3 h-3"></span>
-            </>
-          )}
           <Button type="submit" cls="py-2 px-5 text-lg">
             {update ? shdCnt.save[lang] : content.createBtn[lang]}
           </Button>
+
+          {store && (
+            <>
+              <span className="w-5 h-5"></span>
+              <Button
+                type="button"
+                onClick={() => setDeleteConfirmation(true)}
+                cls="py-2 px-5 bg-bg3 text-bg text-lg">
+                {shdCnt.delete[lang]}
+              </Button>
+            </>
+          )}
         </div>
       </form>
 

@@ -12,11 +12,10 @@ export default function Admin({ params, searchParams }) {
 
   useEffect(() => {
     document.title = "Admin dashboard - ALM";
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
+  }, []);
 
-  if (!user) return null;
+  if (user?.loading) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <article>
       <h1 className="mx-2 my-3">Admin dashboard</h1>

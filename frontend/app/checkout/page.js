@@ -154,16 +154,16 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
   };
 
   useEffect(() => {
-    if (!items || !items[0]) router.replace("/");
-    else fetchStore();
+    if (!items || !items[0]) fetchStore();
     if (user) {
       if (user.address) setAddress(user.address);
       setFirstName(user.firstName);
       setLastName(user.lastName);
     }
-  }, []);
+  }, [user]);
 
-  if (!store || !items || !items[0]) return null;
+  if (!items || !items[0]) return router.replace("/");
+  if (!store) return null;
   return (
     <article className="py-8">
       <h1 className="mb-4 text-xl font-medium text-center">

@@ -40,14 +40,8 @@ export default function SignIn() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      if (user) router.replace(user.myStores[0] ? "/admin/store" : "store");
-    }, 1000);
-    return () => clearTimeout(id);
-  }, [user]);
-
-  if (user) return null;
+  if (user?.loading) return null;
+  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">

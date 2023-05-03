@@ -14,7 +14,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   const [themeMode, setThemeMode] = useState(theme);
   const [coordinates, setCoordinates] = useState([0, 0]);
   const [range, setRange] = useState(1.5);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ loading: true });
   const [cartItemsNum, setCartItemsNum] = useState(0);
 
   // const [worker, setWorker] = useState(null);
@@ -120,7 +120,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   useEffect(() => {
     const localCart = JSON.parse(window?.localStorage.getItem("cartItems") || null)?.length || 0;
-    setCartItemsNum(localCart || user?.cart.length || 0);
+    setCartItemsNum(localCart || user?.cart?.length || 0);
   }, [user]);
 
   useEffect(() => {
@@ -136,11 +136,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     fetchUser()
       .then(updateUser)
-      .catch((err) => {
-        const user = JSON.parse(window.localStorage.getItem("user") || null);
-        if (user) return updateUser(user);
-        setAppLoading(false);
-      });
+      .catch((err) => updateUser(JSON.parse(window.localStorage.getItem("user") || null)));
 
     registerServiceWorker();
   }, []);

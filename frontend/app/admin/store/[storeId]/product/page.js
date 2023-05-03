@@ -42,8 +42,7 @@ export default function StoreProducts({ params, searchParams }) {
   };
 
   useEffect(() => {
-    if (!user) router.replace("/signin");
-    else {
+    if (user && user.myStores) {
       const store = user.myStores?.find((s) => s.id == params.storeId);
       if (store) {
         store.currency = store.currency.split("-")[0];
@@ -59,7 +58,8 @@ export default function StoreProducts({ params, searchParams }) {
 
   const { data, refresh } = infiniteScroll({ onLoadContent: fetchProducts, setLoading, ready: !!store?.id });
 
-  if (!store) return null;
+  if (user?.loading || !store) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <div>
       <LinkButton

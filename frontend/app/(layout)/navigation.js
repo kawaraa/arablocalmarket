@@ -14,7 +14,7 @@ export default function Navigation() {
   const [showMenu, setShowMenu] = useState(false);
   const { lang, updateLang, themeMode, updateThemeMode, user, cartItemsNum } = useContext(AppSessionContext);
   const signinLink = content.navLinks[content.navLinks.length - 1];
-  const initials = !user ? null : user.firstName[0] + user.lastName[0];
+  const initials = !user?.firstName ? null : user.firstName[0] + user.lastName[0];
 
   useEffect(() => {
     setShowMenu(false);
@@ -96,7 +96,7 @@ export default function Navigation() {
           </li>
         ))}
 
-        {user && "user has a store" && (
+        {user?.id && "user has a store" && (
           <li
             onClick={() => setShowMenu(!showMenu)}
             className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
@@ -117,7 +117,13 @@ export default function Navigation() {
           </span>
         </Link>
 
-        {user ? (
+        {!user?.id ? (
+          <Link
+            href={signinLink.path}
+            className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
+            {signinLink.text[lang]}
+          </Link>
+        ) : (
           <>
             <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Dropdown
@@ -167,12 +173,6 @@ export default function Navigation() {
               ))}
             </Dropdown>
           </>
-        ) : (
-          <Link
-            href={signinLink.path}
-            className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
-            {signinLink.text[lang]}
-          </Link>
         )}
       </div>
     </nav>

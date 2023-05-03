@@ -13,11 +13,10 @@ export default function Stores() {
 
   useEffect(() => {
     document.title = "Admin Stores - ALM";
-    const id = setTimeout(() => !user && router.replace("/signin"), 1000);
-    return () => clearTimeout(id);
-  }, [user]);
+  }, []);
 
-  if (!user) return null;
+  if (user?.loading) return null;
+  else if (!user) return router.replace("/signin");
 
   let result = activeTab?.key == "work" ? user.workStores : user.myStores;
   if (activeTab?.key == "favorite") result = user.favoriteStores;

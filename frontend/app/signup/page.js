@@ -53,14 +53,8 @@ export default function Signup({ searchParams }) {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      if (user) router.replace(user.myStores[0] ? "/admin/store" : "store");
-    }, 1000);
-    return () => clearTimeout(id);
-  }, [user]);
-
-  if (user) return null;
+  if (user?.loading) return null;
+  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
   else if (searchParams.status == "confirm") {
     return (
       <article className="flex flex-col justify-center items-center h-[80vh]">

@@ -77,18 +77,14 @@ export default function POS({ params, searchParams }) {
   };
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      if (!user) router.replace("/signin");
-      else {
-        const store = user.myStores.find((s) => s.id == searchParams.storeId);
-        if (store) {
-          store.currency = store.currency.split("-")[0];
-          storeId.current = store.id;
-          setStore(store);
-        }
+    if (user && user?.myStores) {
+      const store = user.myStores.find((s) => s.id == searchParams.storeId);
+      if (store) {
+        store.currency = store.currency.split("-")[0];
+        storeId.current = store.id;
+        setStore(store);
       }
-    }, 1000);
-    return () => clearTimeout(id);
+    }
   }, [user]);
 
   useEffect(() => {
@@ -101,7 +97,8 @@ export default function POS({ params, searchParams }) {
     ready: !!store?.id,
   });
 
-  if (!user || !store) return null;
+  if (user?.loading || !store) return null;
+  else if (!user) return router.replace("/signin");
   return (
     <>
       <article>
