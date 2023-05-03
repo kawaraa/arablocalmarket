@@ -7,26 +7,19 @@ import Tabs from "../../(component)/(styled)/tabs";
 import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
-const catchErr = () => ({ data: {}, meta: {} });
 
-// Todo: NextJS is duplicated the titles
-// For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-// export const metadata = { title: "Store Name / title - ALM" };
-
-export default async function StoreLayout({ children, params, searchParams }) {
+export default async function StoreLayout({ children, params: { storeId }, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
   // Todo: make the store query by id, title and about
-  const res = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }).catch(catchErr);
-  if (!res?.data?.attributes) return notFound();
-  const store = res.data.attributes;
-  store.id = res.data.id;
-  const image = store?.cover?.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
+  const store = (await serverRequest("store", "GET", { query: `/${storeId}${q}` })).data;
+  if (!store?.id) return notFound();
+  const image = store.attributes?.cover?.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
 
   return (
     <>
-      {!store ? (
+      {!store.attributes ? (
         <EmptyState type="notFound" />
       ) : (
         <article>
@@ -37,20 +30,23 @@ export default async function StoreLayout({ children, params, searchParams }) {
               src={image}
               width="600"
               height="600"
-              alt={store.name}
+              alt={store.attributes.name}
               className="preview block w-full"
             />
 
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
-              <span className={`inline-block w-6 h-6 bg-${store.open ? "green" : "dt"} rounded-full`}></span>{" "}
-              <span className="mx-2">{store.name}</span>
+              <span
+                className={`inline-block w-6 h-6 bg-${
+                  store.attributes.open ? "green" : "dt"
+                } rounded-full`}></span>{" "}
+              <span className="mx-2">{store.attributes.name}</span>
             </h1>
             <StoreLinks
               lang={lang}
-              name={store.name}
-              about={store.about}
-              ratings={store.ratings}
-              phone={store.meta.phone}
+              name={store.attributes.name}
+              about={store.attributes.about}
+              ratings={store.attributes.ratings}
+              phone={store.attributes.meta.phone}
               scroll="175"
             />
           </section>

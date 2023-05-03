@@ -6,9 +6,6 @@ import shdCnt from "../../../(layout)/json/shared-content.json";
 import categories from "../../../(layout)/json/categories.json";
 import { getCssDelay } from "../../../(service)/style-methods";
 
-// For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-// export const metadata = { title: "Store name - ALM" };
-
 export default async function Category({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
@@ -52,9 +49,8 @@ export default async function Category({ params: { storeId }, searchParams }) {
 }
 
 const getTotal = async (storeId, category) => {
-  const query = `?filters[storeId][$eq]=${storeId}&filters[category][$eq]=${category}&fields=id`;
-  const catchErr = () => ({ data: [], meta: { pagination: { total: 0 } } });
-  const { data, meta } = await serverRequest("product", "GET", { query }).catch(catchErr);
+  const query = `?filters[storeId][$eq]=${storeId}&filters[category][$eq]=${category}&fields=id&pagination[pageSize]=1`;
+  const { data, meta } = await serverRequest("product", "GET", { query });
   return meta.pagination.total;
 };
 

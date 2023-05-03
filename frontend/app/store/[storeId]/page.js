@@ -3,16 +3,14 @@ import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";
 const q = "?fields=owner,deliver,deliveryCost,currency,about&populate=openingHours,address";
-const catchErr = () => ({ data: {}, meta: {} });
 
 export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  const res = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }).catch(catchErr);
-  if (!res?.data?.attributes) return null;
-  const store = res.data.attributes;
-  store.id = res.data.id;
+  // Todo: make the store query by id, title and about
+  const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })).data?.attributes;
+  if (!store) return notFound();
 
   const formatTime = (time) => {
     const arr = time.split("-");
@@ -71,6 +69,12 @@ export default async function StoreOverview({ params, searchParams }) {
       <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
     </>
   );
+}
+
+export async function generateMetadata({ params, searchParams }) {
+  const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }))?.data?.attributes;
+  if (!store) return {};
+  return { title: store.name + " - ALM", description: store.about };
 }
 
 const content = {

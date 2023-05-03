@@ -3,13 +3,13 @@
 import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../../../../app-session-context";
 import { request } from "../../../../(service)/api-provider";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
 import EmptyState from "../../../../(component)/(styled)/empty-state";
 import { User } from "../../../../(component)/order-card";
 
 export default function Customer({ params }) {
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [customers, setCustomers] = useState([]);
-  console.log("Orders: >>>", params.storeId);
 
   const fetchCustomers = async (id) => {
     try {
@@ -17,6 +17,10 @@ export default function Customer({ params }) {
       const { data } = await request("customer", "GET", { query });
       setCustomers(
         data.map(({ id, attributes }) => {
+          if (attributes.name?.toLowerCase().includes("pos") && lang != "en") {
+            attributes.name = shdCnt.customerPos[lang];
+          }
+
           attributes.id = id;
           return attributes;
         })

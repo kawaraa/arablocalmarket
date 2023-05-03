@@ -18,6 +18,7 @@ export default function POS({ params, searchParams }) {
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
   const [store, setStore] = useState(null);
+  const [search, setSearch] = useState("");
   const [order, setOrder] = useState({
     lineItems: [],
     status: "PENDING",
@@ -50,6 +51,7 @@ export default function POS({ params, searchParams }) {
   const onScanErr = (text) => addMessage({ type: "error", text, duration: 5 });
 
   const handleSearch = (searchText) => {
+    setSearch(searchText);
     refresh(searchText.trim());
   };
 
@@ -75,6 +77,10 @@ export default function POS({ params, searchParams }) {
       return [];
     }
   };
+
+  useEffect(() => {
+    if (!search.trim() || search.length > 3) handleSearch(search);
+  }, [search]);
 
   useEffect(() => {
     if (user && user?.myStores) {
@@ -103,8 +109,15 @@ export default function POS({ params, searchParams }) {
     <>
       <article>
         <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db">
-          <SearchBox label={content.search[lang]} onFinish={refresh} inCls="p-2" cls="flex-1" />
-          <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnSize="10" />
+          <SearchBox
+            label={content.search[lang]}
+            value={search}
+            onSearch={setSearch}
+            onFinish={handleSearch}
+            inCls="p-2"
+            cls="flex-1"
+          />
+          <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnSize="10" />
         </div>
 
         <h1 className="text-lg my-3 text-center font-medium">

@@ -2,13 +2,12 @@ import AppSessionContextProvider from "./app-session-context";
 import { cookies } from "next/headers";
 import Navigation from "./(layout)/navigation";
 import SelectLanguage from "./(component)/select-language";
-import "./global.css";
 import ScrollToTopBtn from "./(component)/scroll-to-top-btn";
+import "./global.css";
 
 // revalidate all the underneath routes and layouts
 export const revalidate = 60;
 
-// Todo: https://www.datocms.com/blog/dealing-with-nextjs-seo
 export default function RootLayout({ children, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
@@ -17,30 +16,6 @@ export default function RootLayout({ children, searchParams }) {
   return (
     <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <head>
-        <title>{content.title[lang]}</title>
-        <meta charSet="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="author" content="ArabLocalMarket" />
-        <meta name="description" content={content.description[lang]} />
-        <meta name="keywords" content={content.keywords[lang]} />
-        <meta property="og:title" content={content.title[lang]} />
-        <meta property="og:description" content={content.description[lang]} />
-        <meta property="og:url" content="https://arablocalmarket.com" />
-        <meta property="og:type" content="website" />
-        <meta name="google" content="notranslate" />
-
-        {/* <!-- PAW Support --> */}
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png" />
-        <link rel="shortcut icon" type="image/ico" sizes="48x48" href="/img/favicon.ico" />
-        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/img/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/img/android-chrome-192x192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/img/android-chrome-512x512.png" />
-        <meta name="apple-mobile-web-app-status-bar" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="background-color" content="#ffffff" />
-
         {/* <script src="https://cdn.tailwindcss.com"></script> */}
         <script src="/tailwind-css-script.js"></script>
         <script src="/config.js"></script>
@@ -68,6 +43,63 @@ export default function RootLayout({ children, searchParams }) {
       </body>
     </html>
   );
+}
+
+export async function generateMetadata({ params, searchParams }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const themeMode = cookieStore.get("themeMode")?.value;
+
+  return {
+    title: content.title[lang],
+    description: content.description[lang],
+    keywords: content.keywords[lang],
+    category: "retail", // grocery
+    authors: [{ name: "ArabLocalMarket", url: "https://arablocalmarket.com" }],
+    themeColor: themeMode == "dark" ? "#121212" : "#ffffff",
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#121212" },
+    ],
+    colorScheme: themeMode,
+    icons: {
+      icon: { type: "image/png", url: "/img/favicon-16x16.png", sizes: "16x16" },
+      shortcut: { type: "image/ico", url: "/img/favicon.ico", sizes: "48x48" },
+      apple: { type: "image/png", url: "/img/apple-touch-icon.png", sizes: "180x180" },
+      other: [
+        { rel: "icon", type: "image/png", url: "/img/favicon-32x32.png", sizes: "32x32" },
+        { rel: "icon", type: "image/png", url: "/img/android-chrome-192x192.png", sizes: "192x192" },
+        { rel: "icon", type: "image/png", url: "/img/android-chrome-512x512.png", sizes: "512x512" },
+      ],
+    },
+    manifest: "/manifest.json",
+    other: {
+      google: "notranslate",
+    },
+    openGraph: {
+      title: content.title[lang],
+      description: content.description[lang],
+      url: "https://arablocalmarket.com",
+      siteName: "ArabLocalMarket",
+      images: [
+        { url: "https://arablocalmarket.com/img/android-chrome-512x512.png", width: 600, height: 600 },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: content.title[lang],
+      description: content.description[lang],
+      siteId: "1467726470533754880",
+      creator: "@ArabLocalMarket",
+      creatorId: "1467726470533754880",
+      images: ["https://arablocalmarket.com/img/android-chrome-512x512.png"],
+    },
+    appleWebApp: {
+      title: content.title[lang],
+      statusBarStyle: "black-translucent",
+    },
+  };
 }
 
 const content = {

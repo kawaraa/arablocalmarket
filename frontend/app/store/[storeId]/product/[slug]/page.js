@@ -9,27 +9,22 @@ import shdCnt from "../../../../(layout)/json/shared-content.json";
 const q = "?fields=name,currency,meta";
 const q1 =
   "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[rating]=*";
-const catchErr = () => ({ data: {}, meta: {} });
-
-// For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-// export const metadata = { title: "Product Name - store name - ALM" };
 
 export default async function ProductBySlug({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
 
-  const res = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }).catch(catchErr);
-  if (!res.data.id) return notFound();
-
-  res.data.attributes.id = res.data.id;
-  const store = res.data.attributes;
-
+  const storeReq = serverRequest("store", "GET", { query: `/${params.storeId}${q}` });
   // Todo: make product query by ID, name, barcode E.g. UPC/IAN/EAN and description using (slug)
-  const { data } = await serverRequest("product", "GET", { query: `/${params.slug}${q1}` }).catch(catchErr);
-  if (!data?.id) return notFound();
+  const productReq = serverRequest("product", "GET", { query: `/${params.slug}${q1}` });
+  const [storeRes, { data }] = await Promise.all([storeReq, productReq]);
 
+  if (!storeRes.data?.id || !data?.id) return notFound();
+
+  storeRes.data.attributes.id = storeRes.data.id;
+  const store = storeRes.data.attributes;
+  data.attributes.id = data.id;
   const product = data.attributes;
-  product.id = data.id;
 
   return (
     <>
@@ -81,6 +76,35 @@ export default async function ProductBySlug({ params, searchParams }) {
       </div>
     </>
   );
+}
+
+export async function generateMetadata({ params, searchParams }) {
+  const product = (await serverRequest("product", "GET", { query: `/${params.slug}${q1}` })).data;
+  if (!product?.id) return {};
+
+  const image = product.attributes?.image?.data?.attributes?.url;
+
+  return {
+    title: product.attributes.name + " - ALM",
+    description: product.attributes.about,
+    openGraph: {
+      title: product.attributes.name,
+      description: product.attributes.about,
+      url: `https://arablocalmarket.com/store/${params.storeId}/product/${product.id}`,
+      siteName: "ArabLocalMarket",
+      images: [{ url: image, width: 600, height: 600 }],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.attributes.name,
+      description: product.attributes.about,
+      siteId: "1467726470533754880",
+      creator: "@ArabLocalMarket",
+      creatorId: "1467726470533754880",
+      images: [image],
+    },
+  };
 }
 
 const content = {};

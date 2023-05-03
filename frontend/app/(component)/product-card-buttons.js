@@ -11,9 +11,8 @@ export default function ProductCardButtons({ productId, variantsNumber, title, a
     console.log("Todo: add product to customer favorite: >>> ", productId);
   };
 
-  const getCls = () => (user.favoriteProducts.includes(productId) ? "text-red fill-red" : "fill-none");
+  const getCls = () => (user?.favoriteProducts?.includes(productId) ? "text-red fill-red" : "fill-none");
 
-  if (!user) return null;
   return (
     <>
       <span className="flex-1"></span>

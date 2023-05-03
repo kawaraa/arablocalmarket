@@ -7,9 +7,6 @@ import StoreSearch from "./(component)/store-search";
 import PaginationButtons from "./[storeId]/product/(component)/pagination-buttons";
 import CoordinatesCriteria from "./(component)/coordinates-criteria";
 
-// Todo: For more info on how to dynamically changing the title https://beta.nextjs.org/docs/guides/seo
-// export const metadata = { title: "Stores Nearby - ALM" };
-
 export default async function StoresNearby({ searchParams }) {
   // const headersList = headers();
 
@@ -67,6 +64,15 @@ export default async function StoresNearby({ searchParams }) {
   );
 }
 
+export async function generateMetadata({ params, searchParams }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  return {
+    title: content.title[lang] + " - ALM",
+    description: content.desc[lang],
+  };
+}
+
 async function getData(page, criteria, search) {
   // Todo: includes in the filters the following: open, payments, deliver, deliveryCost, whatsAppOrder
   const { range, minLat, maxLat, minLng, maxLng } = criteria;
@@ -82,8 +88,7 @@ async function getData(page, criteria, search) {
   // Todo: Use this query instead, it's tested
   // const query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
 
-  const catchErr = () => ({ data: [], meta: { pagination: { page: 1, total: 0 } } });
-  return serverRequest("store", "GET", { query }).catch(catchErr);
+  return serverRequest("store", "GET", { query });
 }
 
 // function getGeoInfo(ip) {
@@ -92,5 +97,10 @@ async function getData(page, criteria, search) {
 // }
 
 const content = {
+  title: { en: "Stores nearby", ar: "المتاجر القريبة" },
+  desc: {
+    en: "Arab Local Market, List of the stores within the selected range of location",
+    ar: "السوق المحلي، العربي قائمة المخازن ضمن النطاق المحدد من الموقع",
+  },
   h1: { en: ["Found", "Stores"], ar: ["يوجد", "مخزن"] },
 };

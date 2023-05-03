@@ -16,7 +16,7 @@
   "dependencies": {
     "eslint-config-next": "^13.1.6",
     "k-utilities": "^1.2.3",
-    "next": "^13.1.6",
+    "next": "^13.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
