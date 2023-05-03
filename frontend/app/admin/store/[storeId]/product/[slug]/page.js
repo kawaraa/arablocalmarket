@@ -144,7 +144,7 @@ export default function ProductById({ params }) {
           max="25"
           full
           cls="flex-col my-5 text-lg font-semibold ">
-          <span className="block mb-1 font-semibold rq">{content.name.text[lang]}</span>
+          <span className="block mb-1 text-lg font-semibold rq">{content.name.text[lang]}</span>
         </InputField>
 
         <Textarea
@@ -152,7 +152,7 @@ export default function ProductById({ params }) {
           defaultValue={product?.description}
           title={content.description.placeholder[lang]}
           cls="my-5 rounded-md">
-          <span className="block mt-3 font-semibold rq">{content.description.text[lang]}</span>
+          <span className="block mt-3 text-lg font-semibold rq">{content.description.text[lang]}</span>
         </Textarea>
 
         <CategorySelect
@@ -172,7 +172,7 @@ export default function ProductById({ params }) {
         />
 
         <div className="relative my-8">
-          <h3 className="block mb-1 font-semibold">{content.variant[lang]}</h3>
+          <h3 className="block mb-1 text-lg font-semibold">{content.variant[lang]}</h3>
           {variants.map((v, index) => (
             <Variant
               lang={lang}
@@ -186,13 +186,10 @@ export default function ProductById({ params }) {
           ))}
 
           {variants.length < 20 && (
-            <div className="text-right">
-              <Button
-                icon="plus"
-                onClick={() => setVariants([...variants, { quantity: 0 }])}
-                cls="!p-0"
-                iconCls="w-8"
-              />
+            <div className="text-center">
+              <Button icon="plus" onClick={() => setVariants([...variants, { quantity: 0 }])} iconCls="w-7">
+                {content.addV[lang]}
+              </Button>
             </div>
           )}
         </div>
@@ -249,6 +246,7 @@ const content = {
     placeholder: { en: "E.g. Lipton", ar: "مثال, ليبتون" },
   },
   variant: { en: "Variants", ar: "الاصناف" },
+  addV: { en: "New variant", ar: "صنف جديد" },
   create: { en: "Create", ar: "إنشاء" },
   confirmTitle: { en: "product delete confirmation", ar: "تأكيد حذف المنتج" },
   confirmP: {

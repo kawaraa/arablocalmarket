@@ -34,12 +34,12 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
   }, [options]);
 
   return (
-    <div className="relative my-3 card p-2 rounded">
+    <div className="relative my-5 card p-2 rounded">
       <div className="flex justify-between">
-        <h4 className="mb-2">
+        <h4 className="mb-2 font-semibold">
           {content.h4[lang]} ( {number} )
         </h4>
-        {onRemove && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="hover:text-red" />}
+        {onRemove && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="text-red" />}
       </div>
 
       <div className="flex items-center mb-3">
@@ -159,7 +159,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
         defaultValue={v.quantity || 0}
         onChange={(num) => onUpdate({ quantity: num })}
         label={content.quantity[lang]}
-        cls="items-center my-5"
+        cls="items-center mb-5"
         inCls="w-14"
       />
     </div>
