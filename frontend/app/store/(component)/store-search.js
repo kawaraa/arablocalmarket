@@ -26,6 +26,10 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
   };
 
   useEffect(() => {
+    if (!search.trim() || search.length > 3) handleSearch(search);
+  }, [search]);
+
+  useEffect(() => {
     const setFilter = (arg) => setTimeout(() => setShowFilter(arg), 500);
 
     if (!coordinates[0]) setFilter(true);

@@ -35,18 +35,14 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
             <span className="flex-1"></span>
           </>
         )}
+        <span className="text-sm font-semibold px-1 border rounded">{order.id}</span>
         <Badge
           text={shdCnt.status[order.status][lang] || order.status}
           color={shdCnt.status[order.status].color}
           cls={`text-sm ${!admin ? "" : "mx-3"}`}
         />
-        <span className="text-sm font-semibold px-1 border rounded">{order.id}</span>
-        {admin && (
-          <>
-            <span className="w-2 h-2"></span>
-            <IconButton icon="bin" name="delete" cls="text-red" />
-          </>
-        )}
+
+        {admin && <IconButton icon="bin" name="delete" cls="text-red" />}
       </div>
 
       <p dir="auto" className="flex justify-between mt-4">
@@ -90,15 +86,16 @@ export function StoreHeaderInfo({ children, id, name, phone, cls }) {
       <span className="flex-auto"></span>
       {phone && (
         <>
-          <a className={"w-5 mx-2 " + c} href={"tel:" + phone}>
+          <a className={"w-6 mx-2 " + c} href={"tel:" + phone}>
             <SvgIcon name="phone" />
           </a>
+          <span className="w-2"></span>
           <a
             href={"https://wa.me/" + phone}
             target="_blank"
             title="WhatsApp"
             aria-label="WhatsApp"
-            className={"w-6 text-green dark:text-pc " + c}>
+            className={"w-7 text-green dark:text-pc " + c}>
             <SvgIcon name="whatsapp" />
           </a>
         </>

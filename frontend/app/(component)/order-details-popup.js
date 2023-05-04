@@ -53,12 +53,6 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
       {order?.lineItems && order.lineItems[0] && (
         <>
           <div className="flex justify-between items-center m-[1px] mb-8">
-            {order.id && (
-              <span className="text-sm font-semibold px-1 mr-3 border rounded print:text-3xl">
-                {order.id}
-              </span>
-            )}
-
             <label htmlFor="order-status" className="relative inline-flex rounded-full">
               <Badge
                 text={shdCnt.status[order.status][lang] || order.status}
@@ -77,6 +71,12 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
                 ))}
               </select>
             </label>
+
+            {order.id && (
+              <span className="text-sm font-semibold px-1 mr-3 border rounded print:text-3xl">
+                {order.id}
+              </span>
+            )}
           </div>
 
           <LineItems

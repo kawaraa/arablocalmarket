@@ -64,7 +64,9 @@ export async function generateMetadata({ params, searchParams }) {
   const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
   const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }))?.data;
   if (!store?.id) return {};
-  const image = store.attributes?.cover?.data?.attributes?.url;
+  const image =
+    store.attributes?.cover?.data?.attributes?.url ||
+    "https://arablocalmarket.com/img/market-store-grocery-cartoon.jpg";
 
   return {
     title: store.attributes.name + " - ALM",

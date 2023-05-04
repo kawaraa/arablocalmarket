@@ -21,13 +21,8 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
   }, [pathName]);
 
   useEffect(() => {
-    const clickHandler = (e) => {
-      if (wrapper.current?.contains(e.target)) setActive(!active);
-      else setActive(false);
-    };
-
+    const clickHandler = (e) => !wrapper.current?.contains(e.target) && setActive(false);
     if (event === "click") window.document.addEventListener("click", clickHandler);
-
     return () => window.document.removeEventListener("click", clickHandler);
   }, []);
 
@@ -35,6 +30,7 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
     <div ref={wrapper} {...btnProps} className={`relative inline-block ${cls}`}>
       <button
         type="button"
+        onClick={() => setActive(!active)}
         className={`overflow-hidden flex w-full items-center justify-end rounded-md hover:text-lt dark:hover:text-dt ${btnCls}`}
         title={title || "user menu"}
         aria-label={title}
@@ -47,6 +43,7 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
       <Transition
         Tag="ul"
         open={active}
+        onClick={() => setActive(false)}
         base={`absolute right-0 overflow-hidden text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg `}
         enter={`opacity-100 scale-100 mt-${event == "click" ? "[10px]" : 0} mr-0 translate-x-0 translate-y-0`}
         exit={`border-none opacity-0 scale-90 translate-x-2 translate-y-2`}
