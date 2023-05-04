@@ -4,6 +4,6 @@ module.exports = {
   experimental: { appDir: true },
   reactStrictMode: true,
   images: {
-    domains: ["storage.googleapis.com"],
+    domains: ["arablocalmarket.com", "storage.googleapis.com", "localhost"],
   },
 };

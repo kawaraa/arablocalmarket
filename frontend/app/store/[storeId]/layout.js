@@ -28,8 +28,8 @@ export default async function StoreLayout({ children, params: { storeId }, searc
             <Image
               priority
               src={image}
-              width="600"
-              height="600"
+              width="1000"
+              height="1000"
               alt={store.attributes.name}
               className="preview block w-full"
             />

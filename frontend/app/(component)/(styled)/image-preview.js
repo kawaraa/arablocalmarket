@@ -1,11 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import { IconButton } from "./button";
 import Image from "next/image";
 
 export default function ImagePreview({}) {
   // Todo: Add title to image and close button
+  // const router = useRouter();
   const { lang } = useContext(AppSessionContext);
   const [src, setSrc] = useState(null);
 
@@ -13,6 +15,16 @@ export default function ImagePreview({}) {
     if (target.tagName != "IMG" || !target.className?.includes("preview")) return;
     setSrc(target.src);
   };
+
+  // useEffect(() => {
+  //   router?.beforePopState(({ as }) => {
+  //     if (as !== router.asPath) setSrc(null);
+  //     return true;
+  //   });
+  //   return () => router.beforePopState(() => true);
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [router]);
 
   useEffect(() => {
     window.addEventListener("click", handler);
@@ -24,7 +36,7 @@ export default function ImagePreview({}) {
     <div className="z-9 fixed inset-0 bg-bg dark:bg-dbg flex justify-center items-center">
       <IconButton onClick={() => setSrc(null)} icon="crossMark" cls="absolute top-3 right-3" />
       <div className="w-full max-h-full lg:w-1/2 overflow-scroll duration-500 lazy-c">
-        <Image src={src} alt={content.alt[lang]} fill={true} className="w-full max-h-full" />
+        <Image src={src} alt={content.alt[lang]} width="1000" height="1000" className="w-full max-h-full" />
       </div>
     </div>
   );
