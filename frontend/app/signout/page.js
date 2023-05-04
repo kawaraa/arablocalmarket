@@ -15,6 +15,7 @@ export default function Logout() {
     router.replace("/");
 
     // Todo: use either Strapi or Next to clear the "HttpOnly" cookie.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Loader size="100" screen />;

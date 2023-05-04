@@ -113,15 +113,19 @@ export function InputWithSelect({ label, options, value, onChange, cls, ...p }) 
   );
 }
 
-export function CheckInput({ children, size = "20", color = "red", cls, ...p }) {
+export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
+  const colors = ["border-red", "border-pc", "border-pc1", "border-bg3", "border-bg8"];
+  const btnRef = useRef(null);
   const checkSize = Math.round(+size / 3);
   const checkBorder = Math.round(+size / 5);
   const radius = p.type == "radio" ? "rounded-full" : "rounded";
+  const s = (w, h) => ({ width: `${w}px`, height: `${h}px` });
 
   return (
     <label htmlFor={cls} className={`inline-flex justify-center items-center ${cls}`}>
-      <div className={`relative w-[${size}px] h-[${size}px] flex justify-center items-center`}>
+      <div style={s(size, size)} className={`relative flex justify-center items-center`}>
         <input
+          ref={btnRef}
           id={cls}
           title={p.title || p.name}
           aria-label={p.title || p.name}
@@ -129,7 +133,11 @@ export function CheckInput({ children, size = "20", color = "red", cls, ...p }) 
           {...p}
         />
         <span
-          className={`box-content w-[${checkSize}px] h-[${checkSize}px] border-0 border-${color} ${radius} peer-checked:border-[${checkBorder}px] duration-150`}></span>
+          style={{
+            ...s(checkSize, checkSize),
+            borderWidth: btnRef.current?.checked ? `${checkBorder}px` : 0,
+          }}
+          className={`box-content border-0 ${colors[color]} ${radius} duration-150`}></span>
       </div>
       {children && <span className="mx-1">{children}</span>}
     </label>
@@ -160,7 +168,8 @@ export function ToggleSwitch({ children, label, size = 50, cls, ...p }) {
       <label
         htmlFor={cls}
         dir="ltr"
-        className={`overflow-hidden relative w-[${size}px] h-[${h}px] inline-flex items-center rounded-full cursor-pointer`}>
+        style={{ width: `${size}px`, height: `${h}px` }}
+        className={`overflow-hidden relative inline-flex items-center rounded-full cursor-pointer`}>
         <input
           type="checkbox"
           id={cls}
@@ -168,9 +177,8 @@ export function ToggleSwitch({ children, label, size = 50, cls, ...p }) {
           {...p}
         />
         <span
-          className={`inline-block w-[${h - 2}px] h-[${
-            h - 2
-          }px] bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
+          style={{ width: `${h - 2}px`, height: `${h - 2}px` }}
+          className={`inline-block bg-bg absolute ml-[2px] border border-bc peer-checked:translate-x-full rounded-full transition-all duration-200`}></span>
       </label>
       <span className="w-2 h-2"></span>
       {label && <span className="text-sm font-medium">{label}</span>}

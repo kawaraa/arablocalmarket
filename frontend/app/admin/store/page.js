@@ -31,7 +31,7 @@ export default function Stores() {
 
       {!result[0] ? (
         <div className="h-[60vh] w-full flex items-center">
-          <EmptyState type="no" />
+          <EmptyState lang={lang} type="no" />
         </div>
       ) : (
         <ul className="flex flex-wrap mx-auto mb-16">

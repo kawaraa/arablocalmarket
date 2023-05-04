@@ -109,6 +109,7 @@ export default function Cart({ params, searchParams }) {
 
   useEffect(() => {
     setCartItemsNum(cart.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart]);
 
   useEffect(() => {
@@ -125,7 +126,8 @@ export default function Cart({ params, searchParams }) {
     setCart(mergeUserAndLocalCarts(JSON.parse(window.localStorage.getItem("cartItems"))));
 
     setAppLoading(false);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const results = favorite ? favoriteProducts || [] : cart;
 

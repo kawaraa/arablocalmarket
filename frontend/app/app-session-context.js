@@ -29,7 +29,11 @@ export default function AppSessionContextProvider({ children, language, theme })
   // const [profile, setProfile] = useState({});
   // const [editingField, setEditingField] = useState("");
 
-  const setAppLoading = (loading) => window.setLoading(loading);
+  const setAppLoading = (loading) => {
+    const loader = document.getElementById("global-screen-loader");
+    if (loading) loader.style.display = "flex"; // elements[0].style.opacity = "0";
+    else loader.style.display = "none"; // elements[0].style.opacity = "1";
+  };
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = (lang) => {
@@ -139,6 +143,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       .catch((err) => updateUser(JSON.parse(window.localStorage.getItem("user") || null)));
 
     registerServiceWorker();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // useEffect(() => {

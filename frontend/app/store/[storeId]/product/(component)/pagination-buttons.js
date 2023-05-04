@@ -19,7 +19,7 @@ export default function PaginationButtons({ lang, query, pagination }) {
     <div dir="ltr" className="w-full flex" aria-label={content.label[lang]} title={content.label[lang]}>
       <IconButton
         icon="chevronDown"
-        size="10"
+        size="40"
         cls={"rotate-90 " + c + " rounded-b-md " + c1}
         title={content.prev[lang]}
         onClick={() => divRef.current?.scrollBy(-250, 0)}
@@ -43,7 +43,7 @@ export default function PaginationButtons({ lang, query, pagination }) {
 
       <IconButton
         icon="chevronDown"
-        size="10"
+        size="40"
         cls={"-rotate-90 " + c + " rounded-b-md " + c1}
         title={content.next[lang]}
         onClick={() => divRef.current?.scrollBy(250, 0)}

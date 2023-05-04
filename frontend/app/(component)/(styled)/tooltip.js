@@ -56,8 +56,6 @@ export default function Tooltip({ children, description = "", size, position }) 
         // title={description}
         role="tooltip"
         aria-label={"Tooltip. " + description}
-        aria-haspopup="true"
-        aria-expanded={tooltipOpen}
         className="inline-block w-4 h-4 mx-1 cursor-help">
         <SvgIcon name="exclamationMark" />
       </button>

@@ -1,9 +1,4 @@
-"use client";
-import { useContext } from "react";
-import { AppSessionContext } from "../../app-session-context";
-
 export default function EmptyState({ lang, type }) {
-  if (!lang) lang = useContext(AppSessionContext)?.lang;
   return (
     <div className="w-full py-2 text-center">
       <svg className="block w-[20%] mx-auto" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">

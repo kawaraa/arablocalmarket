@@ -9,9 +9,8 @@ import ProductCard from "../../(component)/product-card";
 import ProductPopup from "./(component)/product-popup";
 import OrderDetailsPopup from "../../(component)/order-details-popup";
 import BarcodeScannerPopup from "../../(component)/(styled)/barcode-scanner-popup";
-import infiniteScroll from "../../(component)/infinite-scroll";
+import useInfiniteScroll from "../../(component)/infinite-scroll-hook";
 import Loader from "../../(layout)/loader";
-import ScrollToTopBtn from "../../(component)/scroll-to-top-btn";
 
 export default function POS({ params, searchParams }) {
   const router = useRouter();
@@ -79,7 +78,8 @@ export default function POS({ params, searchParams }) {
   };
 
   useEffect(() => {
-    if (!search.trim() || search.length > 3) handleSearch(search);
+    if (storeId.current && (!search.trim() || search.length > 3)) handleSearch(search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
@@ -91,16 +91,16 @@ export default function POS({ params, searchParams }) {
         setStore(store);
       }
     }
-  }, [user]);
+  }, [searchParams.storeId, user]);
 
   useEffect(() => {
     document.title = content.title[lang] + " - ALM";
-  }, []);
+  }, [lang]);
 
-  const { data, refresh } = infiniteScroll({
+  const { data, refresh } = useInfiniteScroll({
     onLoadContent: fetchProducts,
     setLoading,
-    ready: !!store?.id,
+    ready: !!storeId.current,
   });
 
   if (user?.loading || !store) return null;

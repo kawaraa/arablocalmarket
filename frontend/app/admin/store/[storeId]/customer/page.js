@@ -33,6 +33,7 @@ export default function Customer({ params }) {
   useEffect(() => {
     document.title = "Admin Customers - ALM";
     fetchCustomers(params.storeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

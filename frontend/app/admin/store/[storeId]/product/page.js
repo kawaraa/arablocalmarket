@@ -6,7 +6,7 @@ import { request } from "../../../../(service)/api-provider";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
 import ProductCard from "../../../../(component)/product-card";
 import { LinkButton } from "../../../../(component)/(styled)/button";
-import infiniteScroll from "../../../../(component)/infinite-scroll";
+import useInfiniteScroll from "../../../../(component)/infinite-scroll-hook";
 import Loader from "../../../../(layout)/loader";
 import SearchBox from "../../../../(component)/(styled)/search-box";
 import BarcodeScannerPopup from "../../../../(component)/(styled)/barcode-scanner-popup";
@@ -50,13 +50,17 @@ export default function StoreProducts({ params, searchParams }) {
         storeId.current = store.id;
       }
     }
-  }, [user]);
+  }, [user, params.storeId]);
 
   useEffect(() => {
     document.title = "Admin store products - ALM";
   }, []);
 
-  const { data, refresh } = infiniteScroll({ onLoadContent: fetchProducts, setLoading, ready: !!store?.id });
+  const { data, refresh } = useInfiniteScroll({
+    onLoadContent: fetchProducts,
+    setLoading,
+    ready: !!store?.id,
+  });
 
   if (user?.loading || !store) return null;
   else if (!user) return router.replace("/signin");

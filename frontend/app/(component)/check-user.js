@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 
 export default function CheckUser() {
@@ -8,9 +8,11 @@ export default function CheckUser() {
   const { user } = useContext(AppSessionContext);
 
   useEffect(() => {
-    if (!user?.loading && user?.myStores) {
-      setTimeout(() => router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store"), 300);
-    }
+    if (!user?.loading && user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store");
+    // if (!user?.loading && user?.myStores) {
+    //   setTimeout(() => router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store"), 300);
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   return null;
 }

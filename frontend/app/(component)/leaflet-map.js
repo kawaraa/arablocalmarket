@@ -4,6 +4,7 @@ import Script from "next/script";
 import SvgIcon from "./(styled)/svg-icon";
 import SearchBox from "./(styled)/search-box";
 import Loader from "../(layout)/loader";
+import "./leaflet.css";
 
 export default function LeafletMap({ lang, coordinates, onLocate, requestUserLocation, onError }) {
   const [search, setSearch] = useState("");
@@ -93,21 +94,21 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
   useEffect(() => {
     if (window.L) {
       initializeMap(window.L);
-
       return () => {
         window.L.newMap.remove();
         delete window.L.newMap;
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="relative pt-2">
-      <Script src="/map/leaflet.js" onReady={() => initializeMap(window.L)}></Script>
+      <Script src="/map/leaflet.js" defer onReady={() => initializeMap(window.L)}></Script>
       {/* <Script
-        src="https://unpkg.com/leaflet/dist/leaflet.js"
+        src="https://unpkg.com/leaflet/dist/leaflet.js" defer
         onReady={() => initializeMap(window.L)}></Script> */}
-      <link rel="stylesheet" href="/map/leaflet.css" />
+      {/* <link rel="stylesheet" href="/map/leaflet.css" /> */}
       {onLocate && (
         <SearchBox label={content.searchLabel[lang]} onSearch={setSearch} onFinish={handleAddressSearch} />
       )}

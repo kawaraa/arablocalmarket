@@ -39,7 +39,7 @@ export default class Message extends Component {
               )
             )}
             <span className="flex-1 mx-2">{msg.text}</span>
-            <IconButton icon="crossMark" size="5" onClick={() => this.remove(msg.id)} />
+            <IconButton icon="crossMark" size="20" onClick={() => this.remove(msg.id)} />
           </div>
         ))}
       </TransitionContainer>

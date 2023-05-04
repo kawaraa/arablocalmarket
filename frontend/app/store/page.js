@@ -38,7 +38,7 @@ export default async function StoresNearby({ searchParams }) {
 
       {!data[0] ? (
         <div className="h-[60vh] flex items-center">
-          <EmptyState type="noStore" />
+          <EmptyState lang={lang} type="noStore" />
         </div>
       ) : (
         <ul className="flex flex-wrap  mx-auto mb-16">

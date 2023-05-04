@@ -13,6 +13,7 @@ export default function Transition({ Tag, children, base, enter, exit, time = "3
       setCls(exit);
       setTimeout(() => setActive(open), +time);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   if (!active) return null;

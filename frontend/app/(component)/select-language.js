@@ -18,7 +18,7 @@ export default function SelectLanguage({ language }) {
     const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     if (!aLang) setTimeout(() => setOpen(true), 400);
     else if (lang && aLang && language != aLang) window.location.reload();
-  }, [lang]);
+  }, [lang, language]);
 
   return (
     <Modal open={open} center>

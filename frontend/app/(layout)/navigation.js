@@ -8,6 +8,7 @@ import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../app-session-context";
 import EmptyState from "../(component)/(styled)/empty-state";
+import Image from "next/image";
 
 export default function Navigation() {
   const pathName = usePathname();
@@ -20,6 +21,7 @@ export default function Navigation() {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") updateLang("en");
     else if (pathName?.toLowerCase() === "/ar") updateLang("ar");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
   if (pathName == "/admin/pos") return "";
@@ -53,7 +55,13 @@ export default function Navigation() {
         }`}>
         <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
           <div className="relative w-7 rounded-md">
-            <img alt={content.langAlt[lang]} width="30" src={`/img/${lang}.png`} className="w-full w-7" />
+            <Image
+              src={`/img/${lang}.png`}
+              alt={content.langAlt[lang]}
+              width="30"
+              height="30"
+              className="w-full w-7"
+            />
 
             <select
               value={lang}

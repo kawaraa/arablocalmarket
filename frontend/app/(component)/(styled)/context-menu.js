@@ -9,15 +9,14 @@ export default function ContextMenu({ children }) {
   const [cls, setCls] = useState(defaultClass);
 
   useEffect(() => {
+    const menu = menu.current;
     const clickHandler = () => setCls(defaultClass);
 
     const rightClickHandler = (e) => {
-      if (menu.current.contains(e.target)) return;
+      if (menu.contains(e.target)) return;
       e.preventDefault();
 
-      const c = `block top-[${e.offsetY}px] right-[${
-        menu.current.parentElement.offsetWidth - e.offsetX
-      }px] w-auto`;
+      const c = `block top-[${e.offsetY}px] right-[${menu.parentElement.offsetWidth - e.offsetX}px] w-auto`;
 
       setCls(c + " opacity-0 scale-0 -mt-10 -mr-10");
 
@@ -25,12 +24,12 @@ export default function ContextMenu({ children }) {
     };
 
     // Todo: contextmenu event is not supported in IOS, need to implement one using touchstart, touched and pointer event
-    // menu.current.parentElement.addEventListener("touchstart", clickHandler);
-    menu.current.parentElement.addEventListener("click", clickHandler);
-    menu.current.parentElement.addEventListener("contextmenu", rightClickHandler);
+    // menu.parentElement.addEventListener("touchstart", clickHandler);
+    menu.parentElement.addEventListener("click", clickHandler);
+    menu.parentElement.addEventListener("contextmenu", rightClickHandler);
     return () => {
-      menu.current.parentElement.removeEventListener("click", clickHandler);
-      menu.current.parentElement.removeEventListener("contextmenu", rightClickHandler);
+      menu.parentElement.removeEventListener("click", clickHandler);
+      menu.parentElement.removeEventListener("contextmenu", rightClickHandler);
     };
   }, []);
 

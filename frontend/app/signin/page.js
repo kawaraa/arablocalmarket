@@ -7,6 +7,7 @@ import { fetchUser, request } from "../(service)/api-provider";
 import { InputField } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 import { EmailInputField, PswInputField } from "../(component)/custom-inputs";
+import Image from "next/image";
 
 export default function SignIn() {
   const router = useRouter();
@@ -46,7 +47,13 @@ export default function SignIn() {
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">
         <div>
-          <img src="/img/logo.png" alt="Arab Local market Logo" className="h-auto w-24 mx-auto " />
+          <Image
+            src="/img/logo.png"
+            alt="Arab Local market Logo"
+            width="100"
+            height="100"
+            className="h-auto w-24 mx-auto"
+          />
 
           <h1 className="mt-6 text-center text-2xl font-bold ">{content.h1[lang]}</h1>
         </div>

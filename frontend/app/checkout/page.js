@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import { request } from "../(service)/api-provider";
@@ -25,10 +25,10 @@ export default function Checkout({}) {
   const [address, setAddress] = useState(null);
   const [confirmCheckout, setConfirmCheckout] = useState(false);
   const [addressForm, setAddressForm] = useState(false);
-  const [deliveryMethod, setDeliveryMethod] = useState();
-  const [paymentType, setPaymentType] = useState();
+  const [deliveryMethod, setDeliveryMethod] = useState("pickup");
+  const [paymentType, setPaymentType] = useState("ON-DELIVERY");
   const [paymentMethod, setPaymentMethod] = useState();
-  const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
+  const items = useRef(JSON.parse(window.localStorage.getItem("checkoutItems"))).current;
 
   const validateOrder = () => {
     if (!deliveryMethod) {
@@ -154,12 +154,13 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
   };
 
   useEffect(() => {
-    if (!items || !items[0]) fetchStore();
+    if (items || items[0]) fetchStore();
     if (user) {
       if (user.address) setAddress(user.address);
-      setFirstName(user.firstName);
-      setLastName(user.lastName);
+      setFirstName(user.firstName || "");
+      setLastName(user.lastName || "");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!items || !items[0]) return router.replace("/");
@@ -199,11 +200,12 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
           <CheckCard
             type="radio"
             name="delivery"
+            checked={deliveryMethod == text.en}
             onChange={() => setDeliveryMethod(text.en)}
             required
             key={i}
             cls="w-44 py-1 flex flex-col justify-center items-center mx-1 space-y-3">
-            <div className={"w-auto h-[40px] md:24 " + cls}>
+            <div className={"w-auto h-[40px] " + cls}>
               <SvgIcon name={icon} />
             </div>
             <div className="capitalize">{text[lang]}</div>

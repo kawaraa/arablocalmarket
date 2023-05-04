@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 export default function SelectList({ a }) {
   console.log("SelectList: >>>", a);
@@ -16,9 +17,10 @@ export default function SelectList({ a }) {
           aria-expanded="true"
           aria-labelledby="listbox-label">
           <span className="flex items-center">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
+              fill={true}
               className="h-6 w-6 flex-shrink-0 rounded-full"
             />
             <span className="ml-3 block truncate">Tom Cook</span>
@@ -64,11 +66,13 @@ export default function SelectList({ a }) {
           <li
             className="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
             id="listbox-option-0"
-            role="option">
+            role="option"
+            aria-selected="true">
             <div className="flex items-center">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
+                fill={true}
                 className="h-6 w-6 flex-shrink-0 rounded-full"
               />
               {/* <!-- Selected: "font-semibold", Not Selected: "font-normal" --> */}

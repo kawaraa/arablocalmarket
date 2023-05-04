@@ -1,5 +1,4 @@
 "use client";
-
 import SvgIcon from "./(styled)/svg-icon";
 
 export default function ComboBox({ a }) {
@@ -11,9 +10,9 @@ export default function ComboBox({ a }) {
         <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
           <input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-            id="headlessui-combobox-input-:R2q:"
-            role="combobox"
             type="text"
+            role="combobox"
+            aria-controls="combobox-list"
             aria-expanded="false"
             data-headlessui-state=""
           />
@@ -34,7 +33,7 @@ export default function ComboBox({ a }) {
         class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         aria-labelledby="headlessui-combobox-button-:R4q:"
         role="listbox"
-        id="headlessui-combobox-options-:r0:"
+        id="combobox-list"
         data-headlessui-state="open">
         <li
           class="relative cursor-default select-none py-2 pl-10 pr-4 text-gray-900"

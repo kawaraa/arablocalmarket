@@ -27,6 +27,7 @@ export default function ProductSearch({ text, scroll, onSearch }) {
 
   useEffect(() => {
     router.refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   return (

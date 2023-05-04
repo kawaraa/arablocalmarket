@@ -64,6 +64,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
   useEffect(() => {
     fetchStore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (user?.loading || !store) return null;
@@ -90,7 +91,7 @@ export default function StoreById({ children, params: { storeId } }) {
         <IconButton
           icon="eye"
           onClick={() => router.push(`/store/${storeId}/product`)}
-          size="10"
+          size="40"
           cls="absolute right-5 bottom-2 text-bg"
         />
       </ImageUpload>

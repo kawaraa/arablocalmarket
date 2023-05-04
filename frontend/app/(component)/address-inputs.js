@@ -42,7 +42,7 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
     if (adr.line2) setLine2(adr.line2);
     if (adr.currentLat) setLat(adr.currentLat);
     if (adr.currentLng) setLng(adr.currentLng);
-  }, [adr.country]);
+  }, [adr]);
 
   const renderCountries = () => {
     const options = [];

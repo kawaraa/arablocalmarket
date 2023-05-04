@@ -2,7 +2,7 @@
 import SvgIcon from "./svg-icon";
 
 export default function Badge({ text, color, icon, cls, ...p }) {
-  let c = (colors[color - 1] ? `bg-${colors[color - 1]} ` : `bg-[${color}] `) + cls;
+  let c = (colors[color - 1] || "") + " " + cls;
   if (color == 8) c += " !text-bg";
 
   return (
@@ -18,4 +18,4 @@ export default function Badge({ text, color, icon, cls, ...p }) {
   );
 }
 
-const colors = ["bg1", "bg2", "bg3", "bg4", "bg5", "bg6", "bg7", "bg8"];
+const colors = ["bg-bg1", "bg-bg2", "bg-bg3", "bg-bg4", "bg-bg5", "bg-bg6", "bg-bg7", "bg-bg8"];

@@ -27,7 +27,8 @@ export default function Employees({ params }) {
   useEffect(() => {
     document.title = "Admin Employees - ALM";
     fetchEmployees(params.storeId);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.storeId]);
 
   return (
     <div className={`min-h-[45vh] flex ${!employees[0] ? "items-center" : ""}`}>

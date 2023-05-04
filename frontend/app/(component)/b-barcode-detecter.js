@@ -8,6 +8,14 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
   const width = 500;
   const height = 250;
 
+  const stopStreams = () => {
+    if (videoRef.current?.srcObject) {
+      const tracks = videoRef.current?.srcObject.getTracks();
+      for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
+    }
+    videoRef.current.srcObject = null;
+  };
+
   const initializeScanner = async () => {
     const video = videoRef.current;
     const ctx = canvasRef.current.getContext("2d");
@@ -70,17 +78,10 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
     }
   };
 
-  const stopStreams = () => {
-    if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current?.srcObject.getTracks();
-      for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
-    }
-    videoRef.current.srcObject = null;
-  };
-
   useEffect(() => {
     initializeScanner();
     return stopStreams;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

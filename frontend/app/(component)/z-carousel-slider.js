@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function CarouselSlider({ a }) {
   console.log("CarouselSlider: >>>", a);
 
@@ -9,42 +11,47 @@ export default function CarouselSlider({ a }) {
       <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
         {/* <!-- Item 1 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item="active">
-          <img
+          <Image
             src="/docs/images/carousel/carousel-1.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
+            fill={true}
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
         {/* <!-- Item 2 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
+          <Image
             src="/docs/images/carousel/carousel-2.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
+            fill={true}
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
         {/* <!-- Item 3 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
+          <Image
             src="/docs/images/carousel/carousel-3.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
+            fill={true}
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
         {/* <!-- Item 4 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
+          <Image
             src="/docs/images/carousel/carousel-4.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
+            fill={true}
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
         {/* <!-- Item 5 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
+          <Image
             src="/docs/images/carousel/carousel-5.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
             alt="..."
+            fill={true}
+            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
       </div>

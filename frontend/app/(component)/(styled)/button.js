@@ -26,13 +26,14 @@ export function Button({ children, type = "button", icon, loading, disabled, cls
   );
 }
 
-export function IconButton({ children, icon, size = "8", cls, ...p }) {
-  let c = `w-${size} h-${size} overflow-hidden inline-flex items-center justify-center p-[5px] cursor-pointer disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop transition `;
+export function IconButton({ children, icon, size = 35, cls, ...p }) {
+  let c = `overflow-hidden inline-flex items-center justify-center p-[5px] cursor-pointer disabled:hover:text-t disabled:opacity-60 disabled:cursor-no-drop transition `;
   c += cls || "rounded-full hover:text-pc";
   const t = p.title || p.name;
+  const style = { width: size + "px", height: size + "px" };
 
   return (
-    <button type="button" title={t} aria-label={t} className={c} {...p}>
+    <button type="button" title={t} aria-label={t} className={c} style={style} {...p}>
       {children}
       {(typeof icon === "string" && <SvgIcon name={icon} />) || icon}
     </button>

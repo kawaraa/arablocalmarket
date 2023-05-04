@@ -22,10 +22,13 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
 
   useEffect(() => {
     const clickHandler = (e) => !wrapper.current?.contains(e.target) && setActive(false);
-    if (event === "click") window.document.addEventListener("click", clickHandler);
-    return () => window.document.removeEventListener("click", clickHandler);
-  }, []);
+    if (event === "click") {
+      window.document.addEventListener("click", clickHandler);
+      return () => window.document.removeEventListener("click", clickHandler);
+    }
+  }, [event]);
 
+  const mt = event == "click" ? "mt-[10px]" : "";
   return (
     <div ref={wrapper} {...btnProps} className={`relative inline-block ${cls}`}>
       <button
@@ -44,8 +47,8 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
         Tag="ul"
         open={active}
         onClick={() => setActive(false)}
-        base={`absolute right-0 overflow-hidden text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg `}
-        enter={`opacity-100 scale-100 mt-${event == "click" ? "[10px]" : 0} mr-0 translate-x-0 translate-y-0`}
+        base={`absolute right-0 overflow-hidden text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg`}
+        enter={`opacity-100 scale-100 ${mt} mr-0 translate-x-0 translate-y-0`}
         exit={`border-none opacity-0 scale-90 translate-x-2 translate-y-2`}
         time="200">
         {children}

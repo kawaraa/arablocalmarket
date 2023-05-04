@@ -19,12 +19,12 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
     if (!t) setBar([0, 0]);
     else {
       if (onTabChange) onTabChange(t);
-
       const isActive = (el) => el.getAttribute("href") == t.path;
       for (let { children } of list.current.children) {
         if (isActive(children[0])) setBar([children[0].offsetLeft, children[0].offsetWidth]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p, current]);
 
   return (
@@ -49,7 +49,8 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
         </ul>
 
         <div
-          className={`absolute -bottom-[1px] left-[${bar[0]}px] w-[${bar[1]}px] h-[2px] bg-red duration-300`}></div>
+          style={{ left: `${bar[0]}px`, width: `${bar[1]}px` }}
+          className={`absolute -bottom-[1px] h-[2px] bg-red duration-300`}></div>
       </div>
 
       {children && <div className="mt-3 md:mt-6">{children}</div>}

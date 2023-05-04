@@ -8,7 +8,7 @@ import OrderCard from "../(component)/order-card";
 import OrderDetailsPopup from "../(component)/order-details-popup";
 import EmptyState from "../(component)/(styled)/empty-state";
 import Loader from "../(layout)/loader";
-import infiniteScroll from "../(component)/infinite-scroll";
+import useInfiniteScroll from "../(component)/infinite-scroll-hook";
 
 export default function Orders(props) {
   const router = useRouter();
@@ -47,7 +47,7 @@ export default function Orders(props) {
     document.title = "Admin Orders - ALM";
   }, []);
 
-  const { data } = infiniteScroll({
+  const { data } = useInfiniteScroll({
     onLoadContent: fetchOrders,
     setLoading,
     ready: !!user?.id,

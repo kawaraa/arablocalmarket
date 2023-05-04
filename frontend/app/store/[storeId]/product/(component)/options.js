@@ -70,11 +70,10 @@ export default function Options({ store, id, variants, name, image, discount }) 
 
     Object.keys(options).forEach((name) => (options[name] = Array.from(options[name])));
     setOptions(options);
-  }, [item.options]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.options, variants]);
 
   useEffect(() => {
-    // window.localStorage.removeItem("checkoutItems");
-
     if (variants) {
       const { options } = variants[index];
       const copy = { ...item };
@@ -82,7 +81,8 @@ export default function Options({ store, id, variants, name, image, discount }) 
       setItem(copy);
       options.forEach((o, i) => updateItemOptions(i, o.value));
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variants]);
 
   return (
     <>

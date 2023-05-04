@@ -1,4 +1,5 @@
 // Error bg: #fde3c2, Color: red
+// TailWindCss Script source: https://cdn.tailwindcss.com
 tailwind.config = {
   darkMode: "class",
   theme: {
@@ -61,9 +62,3 @@ tailwind.config = {
     },
   },
 };
-
-function setLoading(loading) {
-  const loader = document.getElementById("global-screen-loader");
-  if (loading) loader.style.display = "flex"; // elements[0].style.opacity = "0";
-  else loader.style.display = "none"; // elements[0].style.opacity = "1";
-}

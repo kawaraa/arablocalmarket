@@ -4,7 +4,9 @@ export default function StarRating({ stars = 0, onRate, cls }) {
   return (
     <span className={`relative inline-block ${cls || "text-sm"}`}>
       &#9733;&#9733;&#9733;&#9733;&#9733;
-      <span className={`overflow-hidden absolute inset-0 h-1/1 w-[${(stars / 5) * 100}%] text-orange`}>
+      <span
+        style={{ width: `${(stars / 5) * 100}%` }}
+        className={`overflow-hidden absolute inset-0 h-1/1 text-orange`}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
       </span>
       {onRate && (

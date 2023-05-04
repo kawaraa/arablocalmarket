@@ -105,7 +105,8 @@ export default function ProductById({ params }) {
     if (params.slug.toLowerCase() != "new") fetchProduct(params.slug);
     document.title = (product?.name || content.title[lang]) + " - ALM";
     window.scroll(0, 230);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.slug]);
 
   if (initialLoading) return <Loader size="100" screen />;
   return (
@@ -205,7 +206,7 @@ export default function ProductById({ params }) {
               <Button
                 type="button"
                 onClick={() => setDeleteConfirmation(true)}
-                cls="py-2 px-5 bg-bg3 text-bg text-lg">
+                cls="py-2 px-5 !bg-bg3 !text-bg text-lg">
                 {shdCnt.delete[lang]}
               </Button>
             </>

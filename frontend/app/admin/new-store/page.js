@@ -157,6 +157,7 @@ export default function NewStore({ params, searchParams }) {
 
   useEffect(() => {
     if (searchParams.id) fetchStoreById(searchParams.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   if (user?.loading) return null;
@@ -343,7 +344,7 @@ export default function NewStore({ params, searchParams }) {
               <Button
                 type="button"
                 onClick={() => setDeleteConfirmation(true)}
-                cls="py-2 px-5 bg-bg3 text-bg text-lg">
+                cls="py-2 px-5 !bg-bg3 !text-bg text-lg">
                 {shdCnt.delete[lang]}
               </Button>
             </>

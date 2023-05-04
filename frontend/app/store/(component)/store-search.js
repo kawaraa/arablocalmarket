@@ -27,6 +27,7 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
 
   useEffect(() => {
     if (!search.trim() || search.length > 3) handleSearch(search);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
@@ -35,10 +36,11 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
     if (!coordinates[0]) setFilter(true);
     else if (coordinates[0] && userLocation[0] == 0) window.location.reload();
     else setFilter(false);
-  }, [coordinates]);
+  }, [coordinates, userLocation]);
 
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -15,11 +15,7 @@ export default function RootLayout({ children, searchParams }) {
 
   return (
     <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
-      <head>
-        {/* <script src="https://cdn.tailwindcss.com"></script> */}
-        <script src="/tailwind-css-script.js"></script>
-        <script src="/config.js"></script>
-      </head>
+      <head></head>
       <body
         className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"

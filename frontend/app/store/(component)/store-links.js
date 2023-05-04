@@ -45,7 +45,12 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
           </a>
         </li>
         <li className={liCls}>
-          <a href={`https://wa.me/:${phone}`} target="_blank" title="WhatsApp" aria-label="WhatsApp">
+          <a
+            href={`https://wa.me/:${phone}`}
+            target="_blank"
+            rel="noreferrer"
+            title="WhatsApp"
+            aria-label="WhatsApp">
             <SvgIcon name="whatsapp" />
           </a>
         </li>

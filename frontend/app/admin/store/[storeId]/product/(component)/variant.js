@@ -31,6 +31,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
 
   useEffect(() => {
     onUpdate({ options });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   return (
@@ -39,7 +40,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
         <h4 className="mb-2 font-semibold">
           {content.h4[lang]} ( {number} )
         </h4>
-        {onRemove && <IconButton icon="crossMark" size="7" onClick={onRemove} cls="text-red" />}
+        {onRemove && <IconButton icon="crossMark" size="25" onClick={onRemove} cls="text-red" />}
       </div>
 
       <div className="flex items-center mb-3">
@@ -79,7 +80,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
             {index + 1 > 1 && (
               <IconButton
                 icon="crossMark"
-                size="3"
+                size="10"
                 onClick={() => removeOption(index)}
                 cls="!p-0 hover:text-red"
               />

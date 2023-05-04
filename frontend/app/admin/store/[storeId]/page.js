@@ -5,7 +5,7 @@ import OrderCard from "../../../(component)/order-card";
 import { AppSessionContext } from "../../../app-session-context";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
-import infiniteScroll from "../../../(component)/infinite-scroll";
+import useInfiniteScroll from "../../../(component)/infinite-scroll-hook";
 import Loader from "../../../(layout)/loader";
 
 export default function StoreOrders({}) {
@@ -81,7 +81,7 @@ export default function StoreOrders({}) {
     document.title = "Admin Store orders - ALM"; // Todo: translate
   }, []);
 
-  const { data, removeItem } = infiniteScroll({
+  const { data, removeItem } = useInfiniteScroll({
     onLoadContent: fetchOrders,
     setLoading,
     ready: !!user?.id,
