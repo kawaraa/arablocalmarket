@@ -1,12 +1,10 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-8";
+const staticFileCacheName = "static-files-v-9";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",
-  "/offline.html",
-  "/tailwind-css-script.js",
-  "/config.js",
+  // "/offline.html",
   "/barcode-scanner/quagga.min.js",
   "/signin",
   "/signup",
