@@ -62,13 +62,13 @@ export default function ActionButtons({ variants }) {
       <IconButton
         icon="favorite"
         onClick={handleAddToFavorite}
-        className="w-12 h-10 px-3 fill-none hover:text-dbg dark:hover:text-pc"
+        cls="!w-12 !h-10 px-3 fill-none hover:text-dbg dark:hover:text-pc"
       />
 
       <IconButton
         icon="cart"
         onClick={handleAddToCart}
-        className="relative w-12 h-10 px-[10px] hover:text-dbg dark:hover:text-pc">
+        cls="relative !w-12 !h-10 px-[10px] hover:text-dbg dark:hover:text-pc">
         <span className="absolute -top-1 right-1 text-lg">+</span>
       </IconButton>
 
