@@ -9,7 +9,7 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
       {items.map((item, i) => (
         <li className="flex " key={i}>
           <div className="overflow-hidden w-12 max-h-12 flex items-center rounded-md">
-            <Image src={item.imageUrl} alt={item.title} width="150" height="150" className="w-full" />
+            <Image src={item.imageUrl} alt={item.title} width="200" height="200" className="preview w-full" />
           </div>
           <span className="w-2 h-2"></span>
           <div className="flex-1 flex">
