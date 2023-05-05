@@ -11,7 +11,6 @@ export default function ProductSearch({ text, scroll, onSearch }) {
   const { lang } = useContext(AppSessionContext);
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [showFilter, setShowFilter] = useState(false);
   const [search, setSearch] = useState(text || "");
@@ -24,11 +23,6 @@ export default function ProductSearch({ text, scroll, onSearch }) {
   useEffect(() => {
     if (+scroll) setTimeout(() => window.scroll(0, scroll), 500);
   }, [scroll]);
-
-  useEffect(() => {
-    router.refresh();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
 
   return (
     <>

@@ -117,7 +117,7 @@ export default function POS({ params, searchParams }) {
             inCls="p-2"
             cls="flex-1"
           />
-          <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnSize="10" />
+          <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnSize="40" />
         </div>
 
         <h1 className="text-lg my-3 text-center font-medium">

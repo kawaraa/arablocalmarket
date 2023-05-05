@@ -63,7 +63,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           lang={lang}
           onBarcodeDetect={handleBarcodeDetect}
           onError={onScanErr}
-          btnSize="10"
+          btnSize="40"
         />
       </div>
 

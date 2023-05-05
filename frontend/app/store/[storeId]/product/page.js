@@ -98,7 +98,7 @@ const getProducts = async (storeId, { category, search, page }) => {
   if (s) {
     sq = `&filters[$or][0][name][$contains]=${s}&filters[$or][1][description][$contains]=${s}&filters[$or][2][variants][barcode][$contains]=${s}`;
   } else if (category) {
-    category = categories.find((c) => (c.text.en + " " + c.text.ar).toLowerCase().includes(category));
+    category = categories.find((c) => (c.text.en + " " + c.text.ar).toLowerCase().includes(category))?.key;
     if (category) sq = `&filters[category][$eq]=${category}`;
   }
 
