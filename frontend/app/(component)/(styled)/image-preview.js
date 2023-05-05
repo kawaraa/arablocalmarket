@@ -1,13 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import { IconButton } from "./button";
 import Image from "next/image";
 
 export default function ImagePreview({}) {
   // Todo: Add title to image and close button
-  // const router = useRouter();
+  const pathname = usePathname();
   const { lang } = useContext(AppSessionContext);
   const [src, setSrc] = useState(null);
 
@@ -16,15 +16,10 @@ export default function ImagePreview({}) {
     setSrc(target.src);
   };
 
-  // useEffect(() => {
-  //   router?.beforePopState(({ as }) => {
-  //     if (as !== router.asPath) setSrc(null);
-  //     return true;
-  //   });
-  //   return () => router.beforePopState(() => true);
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [router]);
+  useEffect(() => {
+    setSrc(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   useEffect(() => {
     window.addEventListener("click", handler);
