@@ -22,7 +22,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
 
   return (
     <>
-      {btnSize && (
+      {btnCls && (
         <IconButton
           type="button"
           onClick={() => setShowScanner(true)}

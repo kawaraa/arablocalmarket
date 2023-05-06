@@ -42,7 +42,7 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
           cls={`text-sm ${!admin ? "" : "mx-3"}`}
         />
 
-        {admin && <IconButton icon="bin" name="delete" cls="text-red" />}
+        {admin && <IconButton icon="bin" name="delete" cls="w-8 text-red" />}
       </div>
 
       <p dir="auto" className="flex justify-between mt-4">
