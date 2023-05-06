@@ -47,9 +47,8 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
                 <span className="w-2"></span>
                 <IconButton
                   icon="bin"
-                  size="25"
                   onClick={() => onRemove(storeId, [item.barcode])}
-                  cls="hover:text-red print:hidden"
+                  cls="w-7 hover:text-red print:hidden"
                 />
               </>
             )}

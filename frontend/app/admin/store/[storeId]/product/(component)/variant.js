@@ -40,7 +40,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
         <h4 className="mb-2 font-semibold">
           {content.h4[lang]} ( {number} )
         </h4>
-        {onRemove && <IconButton icon="crossMark" size="25" onClick={onRemove} cls="text-red" />}
+        {onRemove && <IconButton icon="crossMark" onClick={onRemove} cls="w-6 text-red" />}
       </div>
 
       <div className="flex items-center mb-3">
@@ -63,7 +63,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
           lang={lang}
           onBarcodeDetect={handleBarcodeDetect}
           onError={onScanErr}
-          btnSize="40"
+          btnCls="w-10"
         />
       </div>
 
@@ -80,9 +80,8 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
             {index + 1 > 1 && (
               <IconButton
                 icon="crossMark"
-                size="10"
                 onClick={() => removeOption(index)}
-                cls="!p-0 hover:text-red"
+                cls="w-3 !p-0 hover:text-red"
               />
             )}
           </div>

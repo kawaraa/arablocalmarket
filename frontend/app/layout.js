@@ -14,7 +14,7 @@ export default function RootLayout({ children, searchParams }) {
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
-    <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
+    <html translate="no" lang={lang} className={`scroll-smooth   group ${themeMode}`}>
       <head></head>
       <body
         className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${

@@ -7,7 +7,7 @@ import Modal from "./modal";
 import { IconButton } from "./button";
 import { ToggleSwitch } from "./inputs";
 
-export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, btnSize }) {
+export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, btnCls }) {
   const [showScanner, setShowScanner] = useState(false);
   const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
 
@@ -30,8 +30,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
           title={shdCnt.scanBtn[lang]}
           aria-expanded="true"
           aria-haspopup="dialog"
-          size={btnSize}
-          cls="p-1 cursor-pointer hover:text-pc transition"
+          cls={"p-1 cursor-pointer hover:text-pc transition " + btnCls}
         />
       )}
       <Modal title={shdCnt.scanner[lang]} open={showScanner} center>

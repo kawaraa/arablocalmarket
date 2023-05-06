@@ -13,7 +13,7 @@ import {
 import { request } from "../(service)/api-provider";
 import Image from "next/image";
 
-export default function Signup({ searchParams }) {
+export default function Signup({}) {
   const router = useRouter();
   const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
@@ -42,11 +42,9 @@ export default function Signup({ searchParams }) {
 
       await request("signUp", "POST", data);
 
-      addMessage({ type: "success", text: content.message[lang], duration: 3 });
+      addMessage({ type: "success", text: success(lang), duration: 30 });
 
       checkConfirmation({ identifier: email, password }, 1);
-
-      setTimeout(() => router.replace(window.location.href + "?status=confirm"), 2000);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -56,14 +54,6 @@ export default function Signup({ searchParams }) {
 
   if (user?.loading) return null;
   else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
-  else if (searchParams.status == "confirm") {
-    return (
-      <article className="flex flex-col justify-center items-center h-[80vh]">
-        <h1 className="text-2xl mb-3">{content.confirmH1[lang]}</h1>
-        <p className="text-center">{content.confirmP[lang]}</p>
-      </article>
-    );
-  }
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">
@@ -123,14 +113,28 @@ export default function Signup({ searchParams }) {
   );
 }
 
+const success = (lang) => (
+  <div>
+    <h4 className="font-semibold">{content.success[lang][0]}</h4>
+    <p>{content.success[lang][1]}</p>
+    <p>{content.success[lang][2]}</p>
+  </div>
+);
+
 const content = {
   h1: { en: "Create a new account", ar: "انشاء حساب جديد" },
   // username: { en: "Username", ar: "اسم المستخدم" } ,
   submit: { en: "Create", ar: "إنشاء حساب" },
-  message: { en: "Your account has been created", ar: "لقد تم إنشاء حسابك" },
-  confirmH1: { en: "Signed up successfully!", ar: "تم التسجيل بنجاح!" },
-  confirmP: {
-    en: "We have sent you a confirmation Email, Please go to your Email inbox and confirm your Email address.",
-    ar: "لقد أرسلنا لك رسالة تأكيد بالبريد الإلكتروني ، يرجى الذهاب إلى صندوق البريد الإلكتروني الخاص بك وتأكيد عنوان بريدك الإلكتروني.",
+  success: {
+    en: [
+      "Your account has been created",
+      "A confirmation Email is sent to your Email address",
+      "Please go to your Email inbox and confirm your Email address",
+    ],
+    ar: [
+      "لقد تم إنشاء حسابك",
+      "تم إرسال بريد إلكتروني للتأكيد عنوان بريدك الإلكتروني",
+      "يرجى الذهاب إلى صندوق البريد الإلكتروني الخاص بك وتأكيد عنوان البريد الإلكتروني الخاص بك",
+    ],
   },
 };

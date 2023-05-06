@@ -91,8 +91,7 @@ export default function StoreById({ children, params: { storeId } }) {
         <IconButton
           icon="eye"
           onClick={() => router.push(`/store/${storeId}/product`)}
-          size="40"
-          cls="absolute right-5 bottom-2 text-bg"
+          cls="w-10 absolute right-5 bottom-2 text-bg"
         />
       </ImageUpload>
 

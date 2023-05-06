@@ -77,7 +77,7 @@ export default function StoreProducts({ params, searchParams }) {
 
       <div className="flex items-center mb-3">
         <SearchBox onFinish={refresh} cls="flex-1" />
-        <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnSize="10" />
+        <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnCls="w-10" />
       </div>
       <h2 dir="auto" className="text-lg mb-3 font-medium lazy-l">
         {shdCnt.foundProducts[lang][0]} <span className="font-bold">( {total} )</span>{" "}

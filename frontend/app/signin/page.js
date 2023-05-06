@@ -41,8 +41,11 @@ export default function SignIn() {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
+  }, [user]);
+
   if (user?.loading) return null;
-  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">
@@ -65,7 +68,7 @@ export default function SignIn() {
 
         <div className="text-sm text-right">
           <Link
-            href="forget-password"
+            href="/forgot-password"
             className="inline-block font-medium underline underline-offset-4 hover:text-pc2">
             {content.forget[lang]}
           </Link>

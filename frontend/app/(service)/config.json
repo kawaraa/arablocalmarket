@@ -7,5 +7,7 @@
   "store": "/api/stores",
   "product": "/api/products",
   "favorite": "/api/favorites",
-  "order": "/api/orders"
+  "order": "/api/orders",
+  "forgotPassword": "/api/auth/forgot-password",
+  "resetPassword": "/api/auth/reset-password"
 }

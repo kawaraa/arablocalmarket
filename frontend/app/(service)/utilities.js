@@ -75,4 +75,8 @@ const errors = {
     en: "Phone number is already in use",
     ar: "رقم الهاتف قيد الاستخدام",
   },
+  "incorrect code": {
+    en: "Invalid recovery link, the link has been already used",
+    ar: "رابط الاسترداد غير صالح ، لقد تم استخدام الرابط بالفعل",
+  },
 };
