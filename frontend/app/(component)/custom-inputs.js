@@ -74,7 +74,7 @@ export function PswInputField({ lang, confirm, cls, ...p }) {
       title={t}
       cls={"items-center " + cls}
       {...newProps}>
-      <IconButton icon="eye" onClick={() => setVisible(!visible)} className="absolute right-2 w-5 z-1" />
+      <IconButton icon="eye" onClick={() => setVisible(!visible)} className="w-5 absolute right-2 z-1" />
     </InputField>
   );
 }

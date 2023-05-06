@@ -29,7 +29,7 @@ export default function ImagePreview({}) {
   if (!src) return null;
   return (
     <div className="z-9 fixed inset-0 bg-bg dark:bg-dbg flex justify-center items-center">
-      <IconButton onClick={() => setSrc(null)} icon="crossMark" cls="absolute top-3 right-3" />
+      <IconButton onClick={() => setSrc(null)} icon="crossMark" cls="w-10 absolute top-3 right-3" />
       <div className="w-full max-h-full lg:w-1/2 overflow-scroll duration-500 lazy-c">
         <Image src={src} alt={content.alt[lang]} width="1000" height="1000" className="w-full max-h-full" />
       </div>

@@ -30,7 +30,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             onClick={onCancel}
             disabled={!!loading}
             title="Cancel and close the modal window"
-            cls="absolute top-3 right-3 hover:text-red print:hidden"
+            cls="w-8 absolute top-3 right-3 hover:text-red print:hidden"
           />
         )}
         <div className="block pb-4 md:flex justify-start">

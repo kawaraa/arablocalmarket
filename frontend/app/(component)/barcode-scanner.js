@@ -100,7 +100,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
           icon="crossMark"
           onClick={() => onClose(stopStreams())}
           title="Cancel and close the modal window"
-          cls="absolute top-4 right-4 hover:text-red print:hidden"
+          cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
         />
       )}
       <div className="relative">
