@@ -26,8 +26,9 @@ Auto orientation is false
 
 ```
 Default role for authenticated users is Authenticated
+Reset password page is: http://localhost:3000/reset-password
 Enable email confirmation is true
-Redirection url is http://localhost:3000
+Redirection url is: http://localhost:3000
 Reset password page is
 ```
 
