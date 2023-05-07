@@ -12,6 +12,7 @@ export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open
       className={"relative p-1 text-t dark:text-dt lazy-b " + (cls || "w-full sm:w-1/2 xl:w-1/3")}
       style={getCssDelay()}>
       <Link
+        passHref
         href={link}
         className="relative flex flex-col justify-between w-full h-full bg-cbg card cd_hr rounded-xl duration-200">
         <p className={`overflow-hidden absolute top-10 -right-1 w-14  text-${open ? "green" : "t"}`}>

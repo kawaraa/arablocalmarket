@@ -32,6 +32,7 @@ export default function Navigation() {
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
 
       <Link
+        passHref
         className="flex flex-shrink-0 items-center text-md uppercase font-bold"
         href="/"
         title="Arab Local Market Slogan (ALM)">
@@ -98,7 +99,7 @@ export default function Navigation() {
             onClick={() => setShowMenu(!showMenu)}
             key={i}
             className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
-            <Link href={link.path} className="block p-3 text-lg">
+            <Link passHref href={link.path} className="block p-3 text-lg">
               {link.text[lang]}
             </Link>
           </li>
@@ -108,7 +109,7 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
-            <Link href={content.navLinks[1].path} className="block p-3 text-lg">
+            <Link passHref href={content.navLinks[1].path} className="block p-3 text-lg">
               {content.navLinks[1].text[lang]}
             </Link>
           </li>
@@ -116,7 +117,7 @@ export default function Navigation() {
       </ul>
 
       <div className="flex items-center justify-end flex-auto">
-        <Link href="/cart" className="relative flex mr-2">
+        <Link passHref href="/cart" className="relative flex mr-2">
           <span className="w-6 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
             <SvgIcon name="cart" />
           </span>
@@ -127,6 +128,7 @@ export default function Navigation() {
 
         {!user?.id ? (
           <Link
+            passHref
             href={signinLink.path}
             className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
             {signinLink.text[lang]}
@@ -145,6 +147,7 @@ export default function Navigation() {
                 // border-lbg border-b-[1px] last:border-none
                 <li className="overflow-hidden even:bg-[#f8fafc]" key={i}>
                   <Link
+                    passHref
                     href={"/order/" + note.meta?.path}
                     className="block w-60 md:w-72 break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {content.notifications[note.type][lang]}
@@ -173,6 +176,7 @@ export default function Navigation() {
               {content.userLinks.map((link, i) => (
                 <li className="" key={i}>
                   <Link
+                    passHref
                     href={link.path}
                     className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                     {link.text[lang]}

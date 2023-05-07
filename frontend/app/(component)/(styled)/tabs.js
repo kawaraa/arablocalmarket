@@ -39,6 +39,7 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
             <li className="flex-1 text-center" key={i}>
               {/* role="tab" */}
               <Link
+                passHref
                 href={t.path}
                 className={`relative inline-block px-1 whitespace-nowrap py-3 `}
                 onClick={handleBarChange}>

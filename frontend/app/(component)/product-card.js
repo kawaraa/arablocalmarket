@@ -9,7 +9,7 @@ import { getCssDelay } from "../(service)/style-methods";
 
 export default function ProductCard({ lang, link, currency, id, admin, product, priority }) {
   const Tag = typeof link == "function" ? "div" : Link;
-  const newP = typeof link == "function" ? { onClick: () => link(product) } : { href: link };
+  const newP = typeof link == "function" ? { onClick: () => link(product) } : { href: link, passHref: true };
 
   return (
     <li style={getCssDelay()} className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b">

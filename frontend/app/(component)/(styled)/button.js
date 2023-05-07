@@ -43,7 +43,7 @@ export function LinkButton({ children, icon, cls, iconCls, ...p }) {
   let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-pc2 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all transition `;
 
   return (
-    <Link className={c + (cls || "")} {...p}>
+    <Link passHref className={c + (cls || "")} {...p}>
       {children}
       {icon && (
         <span className={iconCls || "w-5"}> {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}</span>

@@ -45,6 +45,7 @@ export default async function LandingPage({ params, searchParams }) {
           </h2>
 
           <Link
+            passHref
             href="/store"
             className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
             style={getCssDelay()}>
@@ -70,6 +71,7 @@ export default async function LandingPage({ params, searchParams }) {
         </p>
 
         <Link
+          passHref
           href="/join"
           className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-b"
           style={getCssDelay()}>

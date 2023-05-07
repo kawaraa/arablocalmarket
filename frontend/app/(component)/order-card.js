@@ -79,7 +79,7 @@ export function StoreHeaderInfo({ children, id, name, phone, cls }) {
       }`}>
       {children}
 
-      <Link href={"/store/" + id} className={"font-medium mx-2 " + c}>
+      <Link passHref href={"/store/" + id} className={"font-medium mx-2 " + c}>
         {name}
       </Link>
 

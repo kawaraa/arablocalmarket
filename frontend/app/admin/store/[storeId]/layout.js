@@ -78,6 +78,7 @@ export default function StoreById({ children, params: { storeId } }) {
         alt="Store cover image"
         title="Edit store cover">
         <Link
+          passHref
           href={`/admin/pos?storeId=${storeId}`}
           title="Point of sale - Store mode"
           className="absolute top-5 right-5 w-8">

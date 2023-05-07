@@ -29,6 +29,7 @@ export default function PaginationButtons({ lang, query, pagination }) {
         className="no-srl-bar w-full overflow-x-scroll flex justify-center -space-x-px scroll-smooth">
         {Array.from({ length: buttons }, (_, i) => i + 1).map((num) => (
           <Link
+            passHref
             href={{ pathname, query: { ...query, page: num } }}
             onClick={scrollUp}
             className={
