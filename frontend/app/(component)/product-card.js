@@ -13,8 +13,8 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
 
   return (
     <li style={getCssDelay()} className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b">
-      <Tag {...newP} className="relative block w-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
-        <h3 className="text-center mt-2">{product.name}</h3>
+      <Tag {...newP} className="relative block w-full h-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
+        <h3 className="text-ellipsis overflow-hidden whitespace-nowrap text-center mt-2">{product.name}</h3>
         <div className="overflow-hidden h-40 flex justify-center items-center">
           <Image
             src={product.image.data?.attributes.formats.thumbnail.url}
