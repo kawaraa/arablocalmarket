@@ -44,12 +44,12 @@ export default async function LandingPage({ params, searchParams }) {
             {content.h2[lang]}
           </h2>
 
-          <Link
-            passHref
-            href="/store"
-            className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
-            style={getCssDelay()}>
-            {content.findStoreLink[lang]}
+          <Link passHref legacyBehavior href="/store">
+            <a
+              className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
+              style={getCssDelay()}>
+              {content.findStoreLink[lang]}
+            </a>
           </Link>
 
           <a
@@ -70,12 +70,12 @@ export default async function LandingPage({ params, searchParams }) {
           {content.h3P[lang]}
         </p>
 
-        <Link
-          passHref
-          href="/join"
-          className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-b"
-          style={getCssDelay()}>
-          {content.h3Link[lang]}
+        <Link passHref legacyBehavior href="/join">
+          <a
+            style={getCssDelay()}
+            className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-b">
+            {content.h3Link[lang]}
+          </a>
         </Link>
 
         {/* <h4>Hello from landing page second section</h4>

@@ -3,11 +3,11 @@ import Link from "next/link";
 export default function Footer(props) {
   return (
     <footer className="mx-auto mt-32 w-full max-w-container px-4 sm:px-6 lg:px-8">
-      <Link passHref href="/about">
-        Who we are
+      <Link passHref legacyBehavior href="/about">
+        <a>Who we are</a>
       </Link>
-      <Link passHref href="/contact">
-        Contact
+      <Link passHref legacyBehavior href="/contact">
+        <a>Contact</a>
       </Link>
 
       <div className="border-t border-slate-900/5 py-10">
@@ -18,16 +18,16 @@ export default function Footer(props) {
           © 2023 ArabLocalMarket Inc. All rights reserved.
         </p>
         <div className="mt-16 flex items-center justify-center space-x-4 text-sm font-semibold leading-6">
-          <Link passHref href="/privacy-policy">
-            Privacy policy
+          <Link passHref legacyBehavior href="/privacy-policy">
+            <a>Privacy policy</a>
           </Link>
           <div className="h-4 w-px bg-slate-500/20"></div>
-          <Link passHref href="/privacy-policy#terms-conditions">
-            Terms and conditions
+          <Link passHref legacyBehavior href="/privacy-policy#terms-conditions">
+            <a>Terms and conditions</a>
           </Link>
           <div className="h-4 w-px bg-slate-500/20"></div>
-          <Link passHref href="/privacy-policy/#changelog">
-            Changelog
+          <Link passHref legacyBehavior href="/privacy-policy/#changelog">
+            <a>Changelog</a>
           </Link>
         </div>
       </div>

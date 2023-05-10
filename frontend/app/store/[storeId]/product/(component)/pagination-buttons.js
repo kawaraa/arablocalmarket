@@ -28,15 +28,14 @@ export default function PaginationButtons({ lang, query, pagination }) {
         ref={divRef}
         className="no-srl-bar w-full overflow-x-scroll flex justify-center -space-x-px scroll-smooth">
         {Array.from({ length: buttons }, (_, i) => i + 1).map((num) => (
-          <Link
-            passHref
-            href={{ pathname, query: { ...query, page: num } }}
-            onClick={scrollUp}
-            className={
-              c + " font-semibold border-bc border-[1px] hover:bg-red hover:text-bg " + getCls(query, num)
-            }
-            key={num}>
-            {num}
+          <Link passHref legacyBehavior href={{ pathname, query: { ...query, page: num } }} key={num}>
+            <a
+              onClick={scrollUp}
+              className={
+                c + " font-semibold border-bc border-[1px] hover:bg-red hover:text-bg " + getCls(query, num)
+              }>
+              {num}
+            </a>
           </Link>
         ))}
       </div>

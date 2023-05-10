@@ -24,8 +24,8 @@ export default function Breadcrumb({ items = [], separator = "/", cls = "" }) {
       {newItems.map((item, i) => (
         <li className={`text-l-c dark:text-d-c ${item.cls || ""}`} key={i}>
           {item.path ? (
-            <Link passHref href={item.path}>
-              {item.content}
+            <Link passHref legacyBehavior href={item.path}>
+              <a>{item.content}</a>
             </Link>
           ) : (
             <span

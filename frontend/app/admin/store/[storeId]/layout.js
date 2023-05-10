@@ -77,12 +77,10 @@ export default function StoreById({ children, params: { storeId } }) {
         onFile={handleCoverChange}
         alt="Store cover image"
         title="Edit store cover">
-        <Link
-          passHref
-          href={`/admin/pos?storeId=${storeId}`}
-          title="Point of sale - Store mode"
-          className="absolute top-5 right-5 w-8">
-          <SvgIcon name="logo" />
+        <Link passHref legacyBehavior href={`/admin/pos?storeId=${storeId}`}>
+          <a title="Point of sale - Store mode" className="absolute top-5 right-5 w-8">
+            <SvgIcon name="logo" />
+          </a>
         </Link>
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
         <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">

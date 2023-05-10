@@ -79,8 +79,8 @@ export function StoreHeaderInfo({ children, id, name, phone, cls }) {
       }`}>
       {children}
 
-      <Link passHref href={"/store/" + id} className={"font-medium mx-2 " + c}>
-        {name}
+      <Link passHref legacyBehavior href={"/store/" + id}>
+        <a className={"font-medium mx-2 " + c}>{name}</a>
       </Link>
 
       <span className="flex-auto"></span>

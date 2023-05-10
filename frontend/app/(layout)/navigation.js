@@ -31,16 +31,16 @@ export default function Navigation() {
       className="z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg ">
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
 
-      <Link
-        passHref
-        className="flex flex-shrink-0 items-center text-md uppercase font-bold"
-        href="/"
-        title="Arab Local Market Slogan (ALM)">
-        {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
-        {/* <span className="text-blue">A</span>
+      <Link passHref legacyBehavior href="/">
+        <a
+          title="Arab Local Market Slogan (ALM)"
+          className="flex flex-shrink-0 items-center text-md uppercase font-bold">
+          {/* <img className="block h-8 w-auto" src="alm-icon.svg" alt="Arab Local Market Logo" /> */}
+          {/* <span className="text-blue">A</span>
         <span className="text-red">L</span>
-        <span className="text-green">M</span> */}
-        A L M
+      <span className="text-green">M</span> */}
+          A L M
+        </a>
       </Link>
 
       <div
@@ -99,8 +99,8 @@ export default function Navigation() {
             onClick={() => setShowMenu(!showMenu)}
             key={i}
             className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
-            <Link passHref href={link.path} className="block p-3 text-lg">
-              {link.text[lang]}
+            <Link passHref legacyBehavior href={link.path}>
+              <a className="block p-3 text-lg">{link.text[lang]}</a>
             </Link>
           </li>
         ))}
@@ -109,29 +109,30 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
-            <Link passHref href={content.navLinks[1].path} className="block p-3 text-lg">
-              {content.navLinks[1].text[lang]}
+            <Link passHref legacyBehavior href={content.navLinks[1].path}>
+              <a className="block p-3 text-lg">{content.navLinks[1].text[lang]}</a>
             </Link>
           </li>
         )}
       </ul>
 
       <div className="flex items-center justify-end flex-auto">
-        <Link passHref href="/cart" className="relative flex mr-2">
-          <span className="w-6 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
-            <SvgIcon name="cart" />
-          </span>
-          <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
-            {cartItemsNum}
-          </span>
+        <Link passHref legacyBehavior href="/cart">
+          <a className="relative flex mr-2">
+            <span className="w-6 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
+              <SvgIcon name="cart" />
+            </span>
+            <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
+              {cartItemsNum}
+            </span>
+          </a>
         </Link>
 
         {!user?.id ? (
-          <Link
-            passHref
-            href={signinLink.path}
-            className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
-            {signinLink.text[lang]}
+          <Link passHref legacyBehavior href={signinLink.path}>
+            <a className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
+              {signinLink.text[lang]}
+            </a>
           </Link>
         ) : (
           <>
@@ -146,11 +147,10 @@ export default function Navigation() {
               {user.notifications.map((note, i) => (
                 // border-lbg border-b-[1px] last:border-none
                 <li className="overflow-hidden even:bg-[#f8fafc]" key={i}>
-                  <Link
-                    passHref
-                    href={"/order/" + note.meta?.path}
-                    className="block w-60 md:w-72 break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
-                    {content.notifications[note.type][lang]}
+                  <Link passHref legacyBehavior href={"/order/" + note.meta?.path}>
+                    <a className="block w-60 md:w-72 break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                      {content.notifications[note.type][lang]}
+                    </a>
                   </Link>
                 </li>
               ))}
@@ -175,11 +175,10 @@ export default function Navigation() {
                   /> */}
               {content.userLinks.map((link, i) => (
                 <li className="" key={i}>
-                  <Link
-                    passHref
-                    href={link.path}
-                    className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
-                    {link.text[lang]}
+                  <Link passHref legacyBehavior href={link.path}>
+                    <a className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+                      {link.text[lang]}
+                    </a>
                   </Link>
                 </li>
               ))}

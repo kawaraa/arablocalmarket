@@ -38,12 +38,10 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
           {tabs.map((t, i) => (
             <li className="flex-1 text-center" key={i}>
               {/* role="tab" */}
-              <Link
-                passHref
-                href={t.path}
-                className={`relative inline-block px-1 whitespace-nowrap py-3 `}
-                onClick={handleBarChange}>
-                {t.text}
+              <Link passHref legacyBehavior href={t.path}>
+                <a onClick={handleBarChange} className={`relative inline-block px-1 whitespace-nowrap py-3 `}>
+                  {t.text}
+                </a>
               </Link>
             </li>
           ))}

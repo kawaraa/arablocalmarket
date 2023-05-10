@@ -14,14 +14,14 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
           <span className="w-2 h-2"></span>
           <div className="flex-1 flex">
             <div className="overflow-hidden flex-1 ml-2">
-              <Link
-                passHref
-                href={`/store/${storeId}/product/${item.productNumber}`}
-                className={
-                  "block truncate text-sm hover:text-pc2 print:text-3xl" +
-                  (bill ? "" : "underline underline-offset-2 text-pc2")
-                }>
-                {item.title}
+              <Link passHref legacyBehavior href={`/store/${storeId}/product/${item.productNumber}`}>
+                <a
+                  className={
+                    "block truncate text-sm hover:text-pc2 print:text-3xl" +
+                    (bill ? "" : "underline underline-offset-2 text-pc2")
+                  }>
+                  {item.title}
+                </a>
               </Link>
 
               <p
