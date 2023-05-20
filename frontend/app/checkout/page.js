@@ -249,14 +249,14 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
                 icon="plus"
                 cls="mt-6 !flex w-40 mx-auto !py-2 !rounded-full"
                 onClick={() => setAddressForm(true)}>
-                {content.newAdr[lang]}
+                {shdCnt.newAdr[lang]}
               </Button>
             </>
           )}
 
           <Modal
             tag="form"
-            title={content.newAdr[lang]}
+            title={shdCnt.newAdr[lang]}
             // title="Shipping Information"
             okBtn="Create"
             onCancel={() => setAddressForm(false)}
@@ -418,7 +418,6 @@ const content = {
   ],
   addressH3: { en: "Saved Addresses", ar: "العناوين المحفوظة" },
   addressP: { en: "Seems you haven't added your address yet", ar: "يبدو أنك لم تقم بإضافة عنوانك حتى الآن" },
-  newAdr: { en: "New address", ar: "عنوان جديد" },
   savedAdr: { en: "Saved Address", ar: "العنوان المحفوظ" },
   adrErr: { en: "Please fill in your address", ar: "يرجى ملء عنوانك" },
   deliveryErr: { en: "Please select a delivery method", ar: "الرجاء تحديد طريقة التسليم" },

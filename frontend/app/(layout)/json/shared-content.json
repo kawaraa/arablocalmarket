@@ -3,10 +3,12 @@
   "foundOrders": { "en": ["Found", "Orders"], "ar": ["يوجد", "طلبات"] },
   "done": { "en": "Done", "ar": "تم" },
   "save": { "en": "Save", "ar": "حفظ" },
+  "create": { "en": "Create", "ar": "إنشاء" },
   "delete": { "en": "Delete", "ar": "حذف" },
   "edit": { "en": "Edit", "ar": "تعديل" },
   "yes": { "en": "Yes", "ar": "نعم" },
   "ex": { "en": "E.g.", "ar": "مثال," },
+  "createStore": { "en": "Create store", "ar": "إنشاء متجر" },
   "customerPos": { "ar": "زبون نقاط البيع", "en": "POS customer" },
   "products": { "en": "Products", "ar": "المنتجات" },
   "category": { "en": "Categories", "ar": "الفئات" },
@@ -30,6 +32,7 @@
       { "en": "sunday", "ar": "الأحد" }
     ]
   },
+  "newAdr": { "en": "New address", "ar": "عنوان جديد" },
   "scanner": { "en": "Scan a product barcode", "ar": "مسح رمز أو رقم المنتج" },
   "scanBtn": { "en": "Show barcode scanner", "ar": "إظهار ماسح الباركود" },
   "noItem": { "en": "No item found", "ar": "لم يتم العثور على أي عنصر" },

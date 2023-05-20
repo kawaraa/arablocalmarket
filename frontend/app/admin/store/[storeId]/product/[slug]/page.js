@@ -197,7 +197,7 @@ export default function ProductById({ params }) {
 
         <div className="flex my-5">
           <Button type="submit" cls="py-2 px-5 text-lg">
-            {!product ? content.create[lang] : shdCnt.save[lang]}
+            {!product ? shdCnt.create[lang] : shdCnt.save[lang]}
           </Button>
 
           {product && (
@@ -248,7 +248,6 @@ const content = {
   },
   variant: { en: "Variants", ar: "الاصناف" },
   addV: { en: "New variant", ar: "صنف جديد" },
-  create: { en: "Create", ar: "إنشاء" },
   confirmTitle: { en: "product delete confirmation", ar: "تأكيد حذف المنتج" },
   confirmP: {
     en: "Are you sure you want to delete this product?",

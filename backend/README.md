@@ -37,24 +37,24 @@ Reset password page is
 #### `Public`
 
 ```
-Order alow create
-Product alow find, findOne
-Rating alow find, findOne
-Store alow find, findOne
-Upload alow upload, findOne
-User alow callback, connect, emailConfirmation, forgotPassword, register, resetPassword, sendEmailConfirmation
+Order alow: create
+Product alow: find, findOne
+Rating alow: find, findOne
+Store alow: find, findOne
+Upload alow: upload, findOne
+User alow: callback, connect, emailConfirmation, forgotPassword, register, resetPassword, sendEmailConfirmation
 ```
 
 #### `Authenticated`
 
 ```
-Customer alow create, update, find, findOne
-Order alow create, update, find, findOne
-Product alow create, update, delete, find, findOne
-Rating alow create, update, delete, find, findOne
-Store alow create, update, delete, find, findOne
-Upload alow upload, findOne
-User alow changePassword, me
+Customer alow: create, update, find, findOne
+Order alow: create, update, find, findOne
+Product alow: create, update, delete, find, findOne
+Rating alow: create, update, delete, find, findOne
+Store alow: create, update, delete, find, findOne
+Upload alow: upload, findOne
+User permission alow: changePassword, me, update
 ```
 
 ### `start`

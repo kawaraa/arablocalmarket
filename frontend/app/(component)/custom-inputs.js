@@ -53,27 +53,34 @@ export function PhoneInputField({ lang, ...p }) {
     />
   );
 }
-export function PswInputField({ lang, confirm, cls, ...p }) {
+export function PswInputField({ lang, newPsw, confirm, cls, ...p }) {
   const [visible, setVisible] = useState(false);
+  let newProps = { name: "password", autoComplete: "current-password" };
+  let t = content.password[lang];
 
-  const newProps = { ...p, ...(!confirm ? {} : { name: "confirmPassword", autoComplete: "new-password" }) };
-  const t = !confirm ? content.password[lang] : content.confirmPassword[lang];
+  if (newPsw) {
+    newProps = { name: "password", autoComplete: "new-password" };
+    t = content.newPassword[lang];
+  } else if (confirm) {
+    newProps = { name: "confirmPassword", autoComplete: "new-password" };
+    t = content.confirmPassword[lang];
+  }
+
   // Todo: add a tooltip that describe the password format
   // Use this onInvalid={console.log} Or tailwind peer: invalid
   return (
     <InputField
       type={visible ? "text" : "password"}
-      name="password"
       required
       min="9"
       max="50"
       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
       // onInvalid={console.log}
-      autoComplete="current-password"
       placeholder={t}
       title={t}
       cls={"items-center " + cls}
-      {...newProps}>
+      {...newProps}
+      {...p}>
       <IconButton icon="eye" onClick={() => setVisible(!visible)} className="w-5 absolute right-2 z-1" />
     </InputField>
   );
@@ -202,6 +209,7 @@ const content = {
   email: { en: "Email address", ar: "البريد الإلكتروني" },
   phone: { en: "Phone number", ar: "رقم الهاتف" },
   password: { en: "Password", ar: "كلمة المرور" },
+  newPassword: { en: "New Password", ar: "كلمة المرور الجديدة" },
   confirmPassword: { en: "Confirm Password", ar: "تأكيد كلمة المرور" },
   price: { en: "Price", ar: "السعر" },
   comparePrice: { en: "Compare price", ar: "السعر المقارن" },

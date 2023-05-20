@@ -166,7 +166,7 @@ export default function NewStore({ params, searchParams }) {
     <>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
         <h1 className="text-xl text-center my-2">
-          {update ? content.updateH1[lang] : content.createH1[lang]}
+          {update ? content.updateH1[lang] : shdCnt.createStore[lang]}
         </h1>
 
         {/* cover */}
@@ -335,7 +335,7 @@ export default function NewStore({ params, searchParams }) {
 
         <div className="flex my-5">
           <Button type="submit" cls="py-2 px-5 text-lg">
-            {update ? shdCnt.save[lang] : content.createBtn[lang]}
+            {update ? shdCnt.save[lang] : shdCnt.create[lang]}
           </Button>
 
           {store && (
@@ -369,7 +369,6 @@ export default function NewStore({ params, searchParams }) {
 }
 
 const content = {
-  createH1: { en: "Create store", ar: "إنشاء متجر" },
   updateH1: { en: "Update store", ar: "تحديث المتجر" },
   imgAlt: { en: "Store cover image", ar: "صورة الغلاف المخزن" },
   imgTitle: { en: "Upload the store cover image", ar: "قم بتحميل صورة غلاف المتجر" },
@@ -395,7 +394,6 @@ const content = {
   businessInfo: { en: "Business info", ar: "معلومات العمل التجارة" },
   cocNumber: { en: "COC Number", ar: "رقم السجل التجاري" },
   vatNumber: { en: "Tax ID / VAT Number", ar: "الرقم الضريبي" },
-  createBtn: { en: "Create", ar: "إنشاء" },
   error: {
     en: "Please locate your store location on the map so your customers can find your it",
     ar: "يرجى تحديد موقع متجرك على الخريطة حتى يتمكن الزبائن من العثور عليه",

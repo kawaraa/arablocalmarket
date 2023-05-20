@@ -41,6 +41,13 @@ export default function SignIn() {
     setLoading(false);
   };
 
+  // Todo: if the user's confirmation email for some reason is not sent, then send it manually.
+  const resendConfirmationEmail = () => {
+    axios.post(`http://localhost:1337/api/auth/send-email-confirmation`, {
+      email: "user@strapi.io", // user's email
+    });
+  };
+
   useEffect(() => {
     if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
   }, [user]);

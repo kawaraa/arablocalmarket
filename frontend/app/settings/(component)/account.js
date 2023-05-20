@@ -1,12 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
+import shdCnt from "../../(layout)/json/shared-content.json";
 import { InputField } from "../../(component)/(styled)/inputs";
 import { EmailInputField, PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
+import { Button } from "../../(component)/(styled)/button";
+import Modal from "../../(component)/(styled)/modal";
 
 export default function Account({ lang, username, email, phone, handleUpdate }) {
+  const [passwordForm, setPasswordForm] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = {};
+    new FormData(e.target).forEach((value, key) => (data[key] = value));
+    await handleUpdate(data);
+    setLoading(false);
+  };
+
   return (
     <section>
-      <h3 className="text-lg font-semibold mb-2 mt-6">Account</h3>
+      <h3 className="text-lg font-semibold mb-2 mt-6">{content.account[lang]}</h3>
       <InputField
         editable
         full
@@ -20,13 +35,9 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         cls="mb-2"
       />
 
-      <EmailInputField
-        editable
-        full
-        defaultValue={email || ""}
-        onBlur={(e) => handleUpdate({ email: e.target.value })}
-        cls="mb-2 13"
-      />
+      <div dir="auto" className="mb-2 flex justify-between items-center px-2 opacity-70">
+        {email}
+      </div>
 
       <PhoneInputField
         editable
@@ -41,17 +52,34 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         <input type="checkbox" />
       </div> */}
 
-      <PswInputField
-        editable
-        full
-        placeholder="********"
-        onBlur={(e) => handleUpdate({ password: e.target.value })}
-        cls="mb-2 656"
-      />
+      <div dir="ltr" className="mb-2 flex justify-between items-center">
+        <span className=" px-2 opacity-70">********</span>
+        <Button type="submit" onClick={() => setPasswordForm(true)} cls="!px-2 !py-1 !text-sm">
+          {shdCnt.edit[lang]}
+        </Button>
+      </div>
+
+      <Modal
+        tag="form"
+        title="Update Password"
+        okBtn="Save"
+        onCancel={() => setPasswordForm(false)}
+        onSubmit={handleSubmit}
+        onApprove={() => {}}
+        loading={loading}
+        open={passwordForm}>
+        <div className="m-1">
+          <PswInputField lang={lang} full name="currentPassword" cls="mb-2 11" />
+          <PswInputField lang={lang} full newPsw name="password" cls="mb-2 22" />
+          <PswInputField lang={lang} full confirm name="passwordConfirmation" cls="mb-2 33" />
+        </div>
+      </Modal>
 
       {/* <div>2AF Switch button</div> */}
     </section>
   );
 }
 
-const content = {};
+const content = {
+  account: { en: "Account", ar: "الحساب" },
+};

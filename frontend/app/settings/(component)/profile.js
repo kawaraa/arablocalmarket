@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "../../(component)/(styled)/button";
 import Modal from "../../(component)/(styled)/modal";
 import { NameInputField } from "../../(component)/custom-inputs";
 import AddressInputs from "../../(component)/address-inputs";
+import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function Profile({ lang, firstName, lastName, address, handleUpdate, setMessage }) {
   const [adr, setAdr] = useState(address || {});
@@ -23,7 +24,7 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
 
   return (
     <section>
-      <h3 className="text-lg font-semibold mb-3">Profile</h3>
+      <h2 className="text-lg font-semibold mb-3">{content.h2[lang]}</h2>
       <div className="flex ">
         <NameInputField
           editable
@@ -42,11 +43,11 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
         />
       </div>
 
-      <h3 className="text-lg font-semibold mt-6 mb-2">Address</h3>
+      <h2 className="text-lg font-semibold mt-6 mb-2">{content.h2Adr[lang]}</h2>
 
       {!adr?.line1 ? (
         <Button type="submit" icon="plus" onClick={() => setAddressForm(true)} cls=" mt-3 ">
-          New address
+          {shdCnt.newAdr[lang]}
         </Button>
       ) : (
         <address
@@ -65,8 +66,8 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
 
       <Modal
         tag="form"
-        title="Create or update Addresses"
-        okBtn="Create"
+        title={shdCnt.newAdr[lang]}
+        okBtn={shdCnt.create[lang]}
         onCancel={() => setAddressForm(false)}
         onSubmit={updateAddress}
         onApprove={() => {}}
@@ -85,4 +86,7 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
   );
 }
 
-const content = {};
+const content = {
+  h2: { en: "Profile", ar: "الملف الشخصي" },
+  h2Adr: { en: "Address", ar: "العنوان" },
+};

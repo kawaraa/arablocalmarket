@@ -2,12 +2,14 @@
   "apiHost": null,
   "signUp": "/api/auth/local/register",
   "signIn": "/api/auth/local",
+  "forgotPassword": "/api/auth/forgot-password",
+  "resetPassword": "/api/auth/reset-password",
   "getUser": "/api/users/me?populate=*",
+  "updateUser": "/api/users/",
+  "updatePassword": "/api/auth/change-password",
   "customer": "/api/customers",
   "store": "/api/stores",
   "product": "/api/products",
   "favorite": "/api/favorites",
-  "order": "/api/orders",
-  "forgotPassword": "/api/auth/forgot-password",
-  "resetPassword": "/api/auth/reset-password"
+  "order": "/api/orders"
 }

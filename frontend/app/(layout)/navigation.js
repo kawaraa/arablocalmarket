@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import shdCnt from "../(layout)/json/shared-content.json";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
@@ -207,7 +208,7 @@ const content = {
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
-    { text: { en: "Create store", ar: "إنشاء متجر" }, path: "/admin/new-store" },
+    { text: shdCnt.createStore, path: "/admin/new-store" },
     { text: { en: "My stores", ar: "متاجري" }, path: "/admin/store?tab=my" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },

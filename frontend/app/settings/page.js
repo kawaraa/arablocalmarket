@@ -1,10 +1,11 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import Profile from "./(component)/profile";
 import Account from "./(component)/account";
 import shdCnt from "../(layout)/json/shared-content.json";
+import { request } from "../(service)/api-provider";
 
 export default function Settings(props) {
   const router = useRouter();
@@ -12,11 +13,17 @@ export default function Settings(props) {
 
   const handleUpdate = async (data) => {
     try {
-      if (!data.address) setAppLoading(true);
-      console.log("changeFirstName:>>> ", data);
-      if (!data.address) setAppLoading(false);
+      if (!data.address && !data.password) setAppLoading(true);
+
+      if (data.password) await request("updatePassword", "POST", data);
+      else {
+        const ur = await request("updateUser", "PUT", { query: user.id, body: data });
+      }
+
+      if (!data.address && !data.password) setAppLoading(false);
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
     } catch (error) {
+      setAppLoading(false);
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
   };

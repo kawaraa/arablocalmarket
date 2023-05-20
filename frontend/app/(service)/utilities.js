@@ -79,4 +79,12 @@ const errors = {
     en: "Invalid recovery link, the link has been already used",
     ar: "رابط الاسترداد غير صالح ، لقد تم استخدام الرابط بالفعل",
   },
+  "passwords do not match": {
+    en: "Passwords do not match",
+    ar: "كلمة المرور غير مطابقة",
+  },
+  "current password is invalid": {
+    en: "Current password is invalid",
+    ar: "كلمة المرور الحالية غير صحيحة",
+  },
 };
