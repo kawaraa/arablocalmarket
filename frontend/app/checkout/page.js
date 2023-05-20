@@ -354,7 +354,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
           <a
             onClick={sendOrderViaWhatsApp}
             href={`https://api.whatsapp.com/send/?phone=${store.meta?.phone}&text=`}
-            rel="noreferrer"
+            rel="noopener noreferrer"
             target="_blank"
             alt={content.whatsAppSand[lang]}
             title={content.whatsAppSand[lang]}

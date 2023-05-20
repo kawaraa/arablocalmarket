@@ -44,12 +44,14 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
           </div>
           {admin && (
             <div className="flex justify-between items-center mt-1">
-              <span title={shdCnt.variants[lang]} className="flex items-center">
+              <div title={shdCnt.variants[lang]} className="flex items-center">
                 {product.variants.length}
-                <span className="w-2 h-2 ml-1 bg-green rounded-full"> </span>
-                <span className="w-2 h-2 m-[1px] bg-red rounded-full"> </span>
-                <span className="w-2 h-2 bg-blue rounded-full"> </span>
-              </span>
+                <div className="flex items-center -space-x-1">
+                  <span className="w-[14px] h-[14px] ml-1 bg-bg1 rounded-full"> </span>
+                  <span className="w-[14px] h-[14px] bg-bg3 rounded-full"> </span>
+                  <span className="w-[14px] h-[14px] bg-bg6 rounded-full"> </span>
+                </div>
+              </div>
 
               <div className="flex items-center">
                 <span className="text-sm">{product.favorites?.data.length || 0}</span>

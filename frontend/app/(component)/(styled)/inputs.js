@@ -341,3 +341,25 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
     </div>
   );
 }
+
+// export function NumberInputWithControl2() {
+//   return (
+//     <div className="relative h-10 w-32 flex rounded-lg mx-3 bg-[#d1d5db]">
+//       <input
+//         type="number"
+//         className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-[transparent] outline-none"
+//         name="quantity"
+//       />
+//       <button
+//         onclick="this.parentElement.children[0].stepDown()"
+//         className="absolute top-0 left-0 h-full w-8 text-2xl flex justify-center items-center bg-[#d1d5db] hover:bg-[#9ca3af] rounded-l cursor-pointer fs">
+//         -
+//       </button>
+//       <button
+//         onclick="this.parentElement.children[0].stepUp()"
+//         className="absolute top-0 right-0 h-full w-8 text-2xl flex justify-center items-center bg-[#d1d5db] hover:bg-[#9ca3af] rounded-r cursor-pointer fs">
+//         +
+//       </button>
+//     </div>
+//   );
+// }

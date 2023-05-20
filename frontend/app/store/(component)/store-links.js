@@ -48,7 +48,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
           <a
             href={`https://wa.me/:${phone}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             title="WhatsApp"
             aria-label="WhatsApp">
             <SvgIcon name="whatsapp" />

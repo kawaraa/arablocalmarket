@@ -93,7 +93,7 @@ export function StoreHeaderInfo({ children, id, name, phone, cls }) {
           <a
             href={"https://wa.me/" + phone}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             title="WhatsApp"
             aria-label="WhatsApp"
             className={"w-7 text-green dark:text-pc " + c}>
