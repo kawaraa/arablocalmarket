@@ -5,12 +5,12 @@ import Loader from "../../(layout)/loader";
 
 export function Button({ children, type = "button", icon, loading, disabled, cls, iconCls, ...p }) {
   let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop transition-all transition `;
-  if (!disabled) c += "hover:bg-gradient-to-tl hover:from-pc2 ";
+  if (!disabled && !loading) c += "hover:bg-gradient-to-tl hover:from-pc2 ";
   if (loading) c += "cursor-progress ";
   c += cls || "";
 
   return (
-    <button type={type} disabled={disabled} className={c} {...p}>
+    <button type={type} disabled={disabled || loading} className={c} {...p}>
       {children}
       {loading ? (
         <Loader size="18" />

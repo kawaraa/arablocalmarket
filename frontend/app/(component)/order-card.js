@@ -9,6 +9,8 @@ import { IconButton } from "./(styled)/button";
 export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), onDelete, order }) {
   const handleClick = (e) => {
     if (e.target.tagName == "A") return;
+
+    // Todo: remove delete functionality, use archive instead
     if (e.target.name == "delete" && admin) return onDelete(order.id);
     onClick(order);
   };
@@ -19,7 +21,7 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
       onClick={handleClick}
       style={style}
       className="card px-2 py-3 my-2 bg-cbg rounded-md cursor-pointer cd_hr md:flex lazy-b">
-      {!admin && (
+      {!admin && order.store.data && (
         <StoreHeaderInfo
           id={order.store.data.id}
           name={order.store.data.attributes.name}

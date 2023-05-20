@@ -43,8 +43,8 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             </div>
           )}
 
-          <div className="flex-auto md:text-left">
-            <h2 className="mb-1 text-lg text-center print:text-3xl print:font-semibold">{title}</h2>
+          <div className="flex-auto">
+            <h2 className="mb-1 text-lg text-center print:text-3xl font-semibold">{title}</h2>
             <div className="max-h-[65vh] overflow-scroll no-srl-bar print:max-h-none print:overflow-auto">
               {p.children}
             </div>
@@ -52,7 +52,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
         </div>
 
         {onApprove && (
-          <div className="flex justify-end">
+          <div dir="ltr" className="flex justify-end">
             <Button
               type={tag == "form" ? "submit" : ""}
               onClick={onApprove}

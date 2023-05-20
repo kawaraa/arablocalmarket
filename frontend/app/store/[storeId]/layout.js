@@ -46,7 +46,7 @@ export default async function StoreLayout({ children, params: { storeId }, searc
               name={store.attributes.name}
               about={store.attributes.about}
               ratings={store.attributes.ratings}
-              phone={store.attributes.meta.phone}
+              phone={store.attributes.meta?.phone}
               scroll="175"
             />
           </section>

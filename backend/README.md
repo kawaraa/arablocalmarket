@@ -54,7 +54,7 @@ Product alow: create, update, delete, find, findOne
 Rating alow: create, update, delete, find, findOne
 Store alow: create, update, delete, find, findOne
 Upload alow: upload, findOne
-User permission alow: changePassword, me, update
+User permission alow: changePassword, me, update, destroy
 ```
 
 ### `start`

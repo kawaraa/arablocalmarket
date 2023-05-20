@@ -81,7 +81,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
 
           <LineItems
             bill
-            storeId={order.storeId || order.store?.data?.id}
+            storeId={order.storeId || order.store?.data?.id || null}
             items={order.lineItems}
             currency={order.currency}
             onRemove={pos ? onRemoveItem : null}
