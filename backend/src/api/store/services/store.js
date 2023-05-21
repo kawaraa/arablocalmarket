@@ -25,23 +25,13 @@ module.exports = createCoreService("api::store.store", ({ strapi }) => ({
       delete store.orders;
     }
 
-    if (store.ratings) {
-      store.ratings = this.calculateStars(userId, store.ratings.data);
-    }
+    if (store.ratings) store.ratings = this.calculateStars(store.ratings.data);
     return store;
   },
 
-  calculateStars(userId, ratings) {
-    let userStars = 0;
+  calculateStars(ratings) {
     const total = ratings.length;
-
-    const totalStars = ratings.reduce((total, rate) => {
-      const stars = rate.stars || rate.attributes?.stars;
-      const user = rate.customer?.user || rate.attributes?.customer?.data?.attributes.user;
-      if (userId && userId == user) userStars = stars;
-      return total + stars;
-    }, 0);
-
-    return { stars: totalStars / total, total, userStars };
+    const totalStars = ratings.reduce((total, rate) => total + (rate.stars || rate.attributes?.stars), 0);
+    return { stars: totalStars / total || 0, total, userStars: 0 };
   },
 }));

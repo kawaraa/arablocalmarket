@@ -10,6 +10,26 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     return super.create(ctx);
   },
 
+  async findOne(ctx) {
+    const result = await super.findOne(ctx);
+
+    if (result.data.attributes.ratings?.data) {
+      result.data.attributes.ratings = strapi
+        .service("api::store.store")
+        .calculateStars(result.data.attributes.ratings.data);
+
+      // Todo: this will not work since the request comes from Vercel server which has no access Token in the header.
+      if (ctx.state.user?.id) {
+        const rating = await strapi.query("api::rating.rating").findOne({
+          data: { where: { customer: { user: ctx.state.user.id }, product: result.data.id } },
+        });
+        result.data.attributes.ratings.userStars = rating.stars;
+      }
+    }
+
+    return result;
+  },
+
   async find(ctx) {
     const { data, meta } = await super.find(ctx);
     if (!data || !data[0]) return { data, meta };
@@ -17,9 +37,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     if (data[0].attributes.ratings?.data) {
       data.forEach((p) => {
         if (!p.attributes.ratings.data[0]) return (p.attributes.ratings = []);
-        p.attributes.ratings = strapi
-          .service("api::store.store")
-          .calculateStars(ctx.state.user?.id, p.attributes.ratings.data);
+        p.attributes.ratings = strapi.service("api::store.store").calculateStars(p.attributes.ratings.data);
       });
     }
     return { data, meta };

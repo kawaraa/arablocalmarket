@@ -11,7 +11,7 @@ export default function StarRating({ stars = 0, onRate, cls }) {
       </span>
       {onRate && (
         <input
-          onInput={(e) => onRate(e.target.value)}
+          onInput={(e) => onRate(+e.target.value)}
           type="range"
           min="0"
           max="5"

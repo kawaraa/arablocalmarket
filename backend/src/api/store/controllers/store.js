@@ -15,10 +15,19 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async findOne(ctx) {
     const result = await super.findOne(ctx);
     if (!result || !result.data) return ctx.notFound();
+    const user = ctx.state.user?.id;
 
     result.data.attributes = strapi
       .service("api::store.store")
-      .removePrivateFields(ctx.state?.user?.id, result.data.attributes);
+      .removePrivateFields(user, result.data.attributes);
+
+    if (result.data.attributes.ratings && user) {
+      const rating = await strapi
+        .query("api::rating.rating")
+        .findOne({ data: { where: { customer: { user: user }, store: result.data.attributes.id } } });
+      result.data.attributes.ratings.userStars = rating.stars;
+    }
+
     return result;
   },
 
@@ -28,7 +37,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
 
     data = data.map(({ id, attributes }) => {
       attributes.id = id;
-      return strapi.service("api::store.store").removePrivateFields(ctx.state?.user?.id, attributes);
+      return strapi.service("api::store.store").removePrivateFields(ctx.state.user?.id, attributes);
     });
 
     return { data, meta };

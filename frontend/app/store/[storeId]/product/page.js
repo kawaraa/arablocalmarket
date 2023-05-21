@@ -62,7 +62,10 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
 
 export async function generateMetadata({ params, searchParams }) {
   const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
-  const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }))?.data;
+  const store = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })
+    .then((res) => res?.data)
+    .catch(() => null);
+
   if (!store?.id) return {};
   const image =
     store.attributes?.cover?.data?.attributes?.url ||

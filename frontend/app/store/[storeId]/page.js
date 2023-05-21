@@ -72,7 +72,9 @@ export default async function StoreOverview({ params, searchParams }) {
 }
 
 export async function generateMetadata({ params, searchParams }) {
-  const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` }))?.data?.attributes;
+  const store = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })
+    .then((res) => res.data?.attributes)
+    .catch(() => null);
   if (!store) return {};
   return { title: store.name + " - ALM", description: store.about };
 }

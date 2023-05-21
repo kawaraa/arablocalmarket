@@ -16,8 +16,7 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
   async findOne(ctx) {
     if (!ctx.state.user?.id) return ctx.unauthorized();
 
-    const options = { where: { user: ctx.state.user.id }, select: ["id"] };
-    ctx.params.id = (await strapi.db.query("api::customer.customer").findOne(options))?.id;
+    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(ctx.state.user.id);
     // Todo: if there is no Customer, create one
 
     if (!ctx.params.id) return ctx.unauthorized();
@@ -46,8 +45,7 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
   },
 
   async update(ctx) {
-    const options = { where: { user: ctx.state.user.id }, select: ["id"] };
-    ctx.params.id = (await strapi.db.query("api::customer.customer").findOne(options)).id;
+    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(ctx.state.user.id);
 
     if (!ctx.params.id) return ctx.unauthorized();
 

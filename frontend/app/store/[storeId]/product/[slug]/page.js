@@ -8,7 +8,7 @@ import { ShareButton } from "../../../../(component)/share-button";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
 const q = "?fields=name,currency,meta";
 const q1 =
-  "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[rating]=*";
+  "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[ratings]=*";
 
 export default async function ProductBySlug({ params, searchParams }) {
   const cookieStore = cookies();
@@ -17,14 +17,16 @@ export default async function ProductBySlug({ params, searchParams }) {
   const storeReq = serverRequest("store", "GET", { query: `/${params.storeId}${q}` });
   // Todo: make product query by ID, name, barcode E.g. UPC/IAN/EAN and description using (slug)
   const productReq = serverRequest("product", "GET", { query: `/${params.slug}${q1}` });
-  const [storeRes, { data }] = await Promise.all([storeReq, productReq]);
+  const data = await Promise.all([storeReq, productReq]).catch(() => null);
+  if (!data || !data[0]) return notFound();
 
-  if (!storeRes.data?.id || !data?.id) return notFound();
+  const [storeRes, productRes] = data;
+  if (!storeRes.data?.id || !productRes.data?.id) return notFound();
 
   storeRes.data.attributes.id = storeRes.data.id;
   const store = storeRes.data.attributes;
-  data.attributes.id = data.id;
-  const product = data.attributes;
+  productRes.data.attributes.id = productRes.data.id;
+  const product = productRes.data.attributes;
 
   // Todo: make this dynamic
   // const jsonLd = {
@@ -39,7 +41,6 @@ export default async function ProductBySlug({ params, searchParams }) {
     <>
       {/* Todo: make this dynamic */}
       {/* <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> */}
-
       <div className="relative flex justify-center items-center h-32 ">
         <Image
           src={product.image.data?.attributes?.url}
@@ -91,7 +92,9 @@ export default async function ProductBySlug({ params, searchParams }) {
 }
 
 export async function generateMetadata({ params, searchParams }) {
-  const product = (await serverRequest("product", "GET", { query: `/${params.slug}${q1}` })).data;
+  const product = await serverRequest("product", "GET", { query: `/${params.slug}${q1}` })
+    .then((res) => res?.data)
+    .catch(() => null);
   if (!product?.id) return {};
 
   const image = product.attributes?.image?.data?.attributes?.url;

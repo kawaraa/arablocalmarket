@@ -4,7 +4,7 @@ module.exports = (plugin) => {
   //   /*******************************  CUSTOM CONTROLERS  ********************************/
   plugin.controllers.user.update = async (ctx) => {
     const userId = ctx.state.user?.id;
-    if (!userId) return (ctx.response.status = 403);
+    if (!userId) return (ctx.response.status = 403); // try ctx.forbidden();
     const data = ctx.request.body;
 
     const immutableFields = Object.keys(data).filter((k) => !mutableFields.includes(k));

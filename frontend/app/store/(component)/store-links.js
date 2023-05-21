@@ -1,6 +1,7 @@
 "use client";
 import Script from "next/script";
 import { useContext, useEffect, useState } from "react";
+import { request } from "../../(service)/api-provider";
 import Modal from "../../(component)/(styled)/modal";
 import StarRating from "../../(component)/(styled)/rating";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
@@ -10,15 +11,20 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 const liCls =
   "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
 
-export default function StoreLinks({ lang, name = "", about = "", phone, ratings, scroll }) {
+export default function StoreLinks({ lang, storeId, name = "", about = "", phone, ratings, scroll }) {
   const { user, addMessage } = useContext(AppSessionContext);
   const [showQR, setShowQR] = useState(false);
   const [showRatingInput, setShowRatingInput] = useState(false);
   const [stars, setStars] = useState(ratings.userStars);
 
-  const handleRating = async (stars) => {
-    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 4 });
-    // Todo: sent the rating to the backend
+  const handleRating = async () => {
+    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 5 });
+    try {
+      await request("rating", "POST", { data: { store: +storeId, stars } });
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
     setShowRatingInput(false);
   };
 
@@ -38,7 +44,7 @@ export default function StoreLinks({ lang, name = "", about = "", phone, ratings
 
   return (
     <>
-      <ul className="absolute bottom-3 px-3 sm:justify-end w-full flex text-bg text-2xl font-bold lazy-b">
+      <ul className="absolute bottom-3 px-3 justify-end w-full flex text-bg text-2xl font-bold lazy-b">
         {phone && (
           <>
             <li className={liCls}>
