@@ -15,6 +15,7 @@ module.exports = (plugin) => {
     return strapi.query("plugin::users-permissions.user").update({ where: { id: userId }, data });
   };
 
+  // Todo: This need to be tested
   plugin.controllers.user.destroy = async (ctx) => {
     const userId = ctx.state.user?.id;
     if (!userId) return (ctx.response.status = 403);
@@ -22,15 +23,18 @@ module.exports = (plugin) => {
     const options = { where: { user: userId }, select: ["id"] };
     const id = (await strapi.db.query("api::customer.customer").findOne(options)).id;
 
-    await strapi.service("api::customer.customer").update(id, { data: { cart: [] } });
     await strapi.query("api::rating.rating").delete({ where: { customer: id } });
 
     const { results } = await strapi.service("api::store.store").find({ where: { owner: userId } });
     await Promise.all(
-      results.map((s) => strapi.query("api::product.product").deleteMany({ where: { storeId: s.id } }))
+      results.map(async (s) => {
+        await strapi.query("api::product.product").deleteMany({ where: { storeId: s.id } });
+        await strapi.query("api::order.order").deleteMany({ where: { store: s.id } });
+      })
     );
 
     await strapi.query("api::store.store").deleteMany({ where: { owner: userId } });
+    await strapi.query("api::customer.customer").delete({ where: { id } });
     return strapi.query("plugin::users-permissions.user").delete({ where: { id: userId } });
   };
 

@@ -9,7 +9,8 @@
   "yes": { "en": "Yes", "ar": "نعم" },
   "ex": { "en": "E.g.", "ar": "مثال," },
   "createStore": { "en": "Create store", "ar": "إنشاء متجر" },
-  "customerPos": { "ar": "زبون نقاط البيع", "en": "POS customer" },
+  "customerPos": { "en": "POS customer", "ar": "زبون نقاط البيع" },
+  "deletedCustomer": { "en": "Deleted User", "ar": "مستخدم محذوف" },
   "products": { "en": "Products", "ar": "المنتجات" },
   "category": { "en": "Categories", "ar": "الفئات" },
   "periods": [

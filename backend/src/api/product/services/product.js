@@ -18,7 +18,6 @@ module.exports = createCoreService("api::product.product", ({ strapi }) => ({
     const results = await strapi.db.query("api::product.product").findMany(options);
     if (!results[0]) return;
 
-    // Todo: try to delete products by storeId using "deleteMany" instead
     await Promise.all(
       results.map(async ({ id, image }) => {
         if (image) await strapi.plugins.upload.services.upload.remove(image);

@@ -63,9 +63,9 @@ const errors = {
     arr: "لا يوجد إنترنت ، يرجى التحقق من اتصالك بالشبكة!",
   },
   "already taken": { en: "Email are already taken", ar: "البريد الإلكتروني مستخدم" },
-  "not confirmed": {
-    en: "You can not sign in if you don't confirm your Email address",
-    ar: "لا يمكنك تسجيل الدخول إذا لم تؤكد عنوان بريدك الإلكتروني",
+  "email is not confirmed": {
+    en: "(01) Your account Email is not confirmed and therefore you can not sign in if you don't confirm your Email address. a new confirmation Email will be sent to your Email address. please check your Email inbox",
+    ar: "(01) البريد الإلكتروني لحسابك لم يتم تأكيده، وبالتالي لا يمكنك تسجيل الدخول إذا لم تؤكد عنوان بريدك الإلكتروني. سيتم إرسال بريد إلكتروني جديد إلى عنوان بريدك الإلكتروني للتأكيد عنوان بريدك الإلكتروني. يرجى التحقق من صندوق البريد الإلكتروني الخاص بك",
   },
   "invalid identifier": {
     en: "Invalid Email or Password",

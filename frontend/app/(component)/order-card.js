@@ -33,7 +33,7 @@ export default function OrderCard({ lang, admin, onClick, style = getCssDelay(),
       <div dir="ltr" className="flex justify-between items-center">
         {admin && (
           <>
-            <User Tag="h3" name={order.customer?.name} />
+            <User Tag="h3" name={order.customer?.name || shdCnt.deletedCustomer[lang]} />
             <span className="flex-1"></span>
           </>
         )}

@@ -34,6 +34,7 @@ export default function ResetPassword({ params, searchParams: { code } }) {
 
   useEffect(() => {
     if (user?.id) router.push("/store");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (

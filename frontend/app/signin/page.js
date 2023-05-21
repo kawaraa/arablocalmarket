@@ -34,22 +34,17 @@ export default function SignIn() {
 
       // Todo: merge the carts stored in the browser with user carts
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 5 });
+      addMessage({ type: "error", text: error.message, duration: 30 });
       window.localStorage.removeItem("accessToken");
+      if (error.message?.includes("(01)")) request("EmailConfiguration", "POST", { email: data.identifier });
     }
 
     setLoading(false);
   };
 
-  // Todo: if the user's confirmation email for some reason is not sent, then send it manually.
-  const resendConfirmationEmail = () => {
-    axios.post(`http://localhost:1337/api/auth/send-email-confirmation`, {
-      email: "user@strapi.io", // user's email
-    });
-  };
-
   useEffect(() => {
     if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (user?.loading) return null;
