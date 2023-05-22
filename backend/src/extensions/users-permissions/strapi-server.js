@@ -12,7 +12,14 @@ module.exports = (plugin) => {
       return ctx.badRequest("The following fields are immutable, " + immutableFields.join(", "));
     }
 
-    return strapi.query("plugin::users-permissions.user").update({ where: { id: userId }, data });
+    const res = await strapi.query("plugin::users-permissions.user").update({ where: { id: userId }, data });
+
+    if (data.firstName || data.lastName) {
+      const cData = { name: res.firstName + " " + res.lastName };
+      await strapi.query("api::customer.customer").update({ where: { user: userId }, data: cData });
+    }
+
+    return res;
   };
 
   // Todo: This need to be tested
@@ -26,15 +33,16 @@ module.exports = (plugin) => {
     await strapi.query("api::rating.rating").delete({ where: { customer: id } });
 
     const { results } = await strapi.service("api::store.store").find({ where: { owner: userId } });
-    await Promise.all(
-      results.map(async (s) => {
-        await strapi.query("api::product.product").deleteMany({ where: { storeId: s.id } });
-        await strapi.query("api::order.order").deleteMany({ where: { store: s.id } });
-      })
-    );
 
-    await strapi.query("api::store.store").deleteMany({ where: { owner: userId } });
-    await strapi.query("api::customer.customer").delete({ where: { id } });
+    const promises = results.map(async (s) => {
+      await strapi.query("api::product.product").deleteMany({ where: { storeId: s.id } });
+      await strapi.query("api::order.order").deleteMany({ where: { store: s.id } });
+    });
+    promises.push(await strapi.query("api::store.store").deleteMany({ where: { owner: userId } }));
+    promises.push(await strapi.query("api::customer.customer").delete({ where: { id } }));
+
+    await Promise.all(promises);
+
     return strapi.query("plugin::users-permissions.user").delete({ where: { id: userId } });
   };
 

@@ -15,11 +15,21 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
   const { user, addMessage } = useContext(AppSessionContext);
   const [showQR, setShowQR] = useState(false);
   const [showRatingInput, setShowRatingInput] = useState(false);
+  const [favoriteStores, setFavoriteStores] = useState([]);
 
   const addToFavorite = async (e) => {
     e.preventDefault();
-    if (!user) return addMessage({ type: "warning", text: shdCnt.favoriteErr[lang], duration: 4 });
-    // Todo: Add store to the singed in user favorite in the backend
+    if (!user) return addMessage({ type: "warning", text: shdCnt.favErr[lang], duration: 4 });
+    const data = { favoriteStores: [...favoriteStores] };
+    if (!favoriteStores.includes(storeId)) data.favoriteStores.push(storeId);
+    else data.favoriteStores = favoriteStores.filter((s) => s != storeId);
+    try {
+      await request("customer", "PUT", { query: `/${user.customerId}`, body: { data } });
+      setFavoriteStores(data.favoriteStores);
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
   };
 
   const generateStoreQR = () => {
@@ -29,6 +39,10 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
   useEffect(() => {
     if (+scroll) setTimeout(() => window.scroll(0, scroll), 500);
   }, [scroll]);
+
+  useEffect(() => {
+    if (user?.favoriteStores) setFavoriteStores(user.favoriteStores.map((s) => s.id));
+  }, [user]);
 
   return (
     <>
@@ -68,7 +82,7 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
             onClick={addToFavorite}
             title="Add to favorite"
             aria-label="Add to favorite"
-            className="fill-none p-[2px]">
+            className={"p-[2px] " + (favoriteStores.includes(storeId) ? "fill-bg" : "fill-none")}>
             <SvgIcon name="favorite" />
           </a>
         </li>
@@ -94,7 +108,7 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
 
       <RatingInputPopup
         ratedStars={ratings.userStars}
-        data={{ store: +storeId }}
+        data={{ store: storeId }}
         open={showRatingInput}
         onClose={setShowRatingInput}
       />

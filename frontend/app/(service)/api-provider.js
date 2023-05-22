@@ -107,18 +107,18 @@ const prepareCart = async (cart) => {
 };
 
 const prepareFavoriteProducts = async (favoriteProducts) => {
-  if (!favoriteProducts | !favoriteProducts[0]) return [];
+  if (!favoriteProducts || !favoriteProducts[0]) return [];
 
   const ids = favoriteProducts.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
   const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
 
   stores.forEach((s) => {
     s.currency = s.currency.split("-")[0];
-    s.phone = s.meta.phone;
+    s.phone = s.meta?.phone;
     delete s.meta;
     s.total = 0;
 
-    s.items = ps
+    s.items = favoriteProducts
       .filter((p) => p.attributes.storeId == s.id)
       .map((p) => {
         const { name, image, variants } = p.attributes;
@@ -133,6 +133,8 @@ const prepareFavoriteProducts = async (favoriteProducts) => {
         };
       });
   });
+
+  return stores;
 };
 
 export function removeAttributes(data) {

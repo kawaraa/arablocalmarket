@@ -1,17 +1,39 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
+import shdCnt from "../(layout)/json/shared-content.json";
 import SvgIcon from "./(styled)/svg-icon";
+import { request } from "../(service)/api-provider";
 
 export default function ProductCardButtons({ productId, variantsNumber, title, admin }) {
-  const { user } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
 
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    console.log("Todo: add product to customer favorite: >>> ", productId);
+  const handleAddToFavorite = async (e) => {
+    if (!user) return addMessage({ type: "warning", text: shdCnt.favErr[lang], duration: 4 });
+
+    const data = { favoriteProducts: [...favoriteProducts] };
+    if (!favoriteProducts.includes(productId)) data.favoriteProducts.push(productId);
+    else data.favoriteProducts = favoriteProducts.filter((s) => s != productId);
+
+    try {
+      await request("customer", "PUT", { query: `/${user.customerId}`, body: { data } });
+      setFavoriteProducts(data.favoriteProducts);
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
   };
 
-  const getCls = () => (user?.favoriteProducts?.includes(productId) ? "text-red fill-red" : "fill-none");
+  useEffect(() => {
+    if (user?.favoriteProducts) {
+      let fItems = [];
+      user.favoriteProducts.forEach((s) => (fItems = fItems.concat(s.items.map((it) => it.productNumber))));
+      setFavoriteProducts(fItems);
+    }
+  }, [user]);
+
+  const getCls = () => (favoriteProducts?.includes(productId) ? "text-red fill-red" : "fill-none");
 
   return (
     <>

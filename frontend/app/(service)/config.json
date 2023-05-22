@@ -11,7 +11,6 @@
   "customer": "/api/customers",
   "store": "/api/stores",
   "product": "/api/products",
-  "favorite": "/api/favorites",
   "order": "/api/orders",
   "rating": "/api/ratings"
 }

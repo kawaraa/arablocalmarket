@@ -1,13 +1,15 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../../../app-session-context";
-import { Button, IconButton } from "../../../../(component)/(styled)/button";
+import { request } from "../../../../(service)/api-provider";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
+import { Button, IconButton } from "../../../../(component)/(styled)/button";
 
-export default function ActionButtons({ variants }) {
+export default function ActionButtons({ id, variants }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
 
   const showWarning = () => addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
 
@@ -44,25 +46,41 @@ export default function ActionButtons({ variants }) {
     window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
     document.getElementById("nav-cart").innerHTML = cartItems.length;
 
-    addMessage({ type: "success", text: content.addedToCart[lang], duration: 2.5 });
+    addMessage({ type: "success", text: shdCnt.done[lang], duration: 2.5 });
   };
 
-  const handleAddToFavorite = () => {
+  const handleAddToFavorite = async () => {
     if (!user) return addMessage({ type: "warning", text: shdCnt.favErr[lang], duration: 4 });
-    const item = checkItemInventory();
-    if (!item) return;
 
-    console.log("Todo: Add this item to favorite", item);
+    const data = { favoriteProducts: [...favoriteProducts] };
+    if (!favoriteProducts.includes(id)) data.favoriteProducts.push(id);
+    else data.favoriteProducts = favoriteProducts.filter((s) => s != id);
 
-    addMessage({ type: "success", text: content.addedToFav[lang], duration: 2.5 });
+    try {
+      await request("customer", "PUT", { query: `/${user.customerId}`, body: { data } });
+      setFavoriteProducts(data.favoriteProducts);
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
   };
+
+  useEffect(() => {
+    if (user?.favoriteProducts) {
+      let fItems = [];
+      user.favoriteProducts.forEach((s) => (fItems = fItems.concat(s.items.map((it) => it.productNumber))));
+      setFavoriteProducts(fItems);
+    }
+  }, [user]);
 
   return (
     <>
       <IconButton
         icon="favorite"
         onClick={handleAddToFavorite}
-        cls="w-12 h-10 px-3 fill-none hover:text-dbg dark:hover:text-pc"
+        cls={`w-12 h-10 px-3 hover:text-dbg dark:hover:text-pc ${
+          favoriteProducts.includes(id) ? "fill-lt" : "fill-none"
+        }`}
       />
 
       <IconButton
@@ -81,6 +99,4 @@ export default function ActionButtons({ variants }) {
 
 const content = {
   buyBtn: { en: "Buy", ar: "شراء" },
-  addedToCart: { en: "Added new item to the cart", ar: "تمت إضافة عنصر جديد إلى سلة التسوق" },
-  addedToFav: { en: "Added new item to the favorite", ar: "تمت إضافة عنصر جديد إلى المفضلة" },
 };

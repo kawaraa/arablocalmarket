@@ -46,7 +46,7 @@ export default async function StoreLayout({ children, params: { storeId }, searc
             </h1>
             <StoreLinks
               lang={lang}
-              storeId={storeId}
+              storeId={+storeId}
               name={store.attributes.name}
               about={store.attributes.about}
               ratings={store.attributes.ratings}

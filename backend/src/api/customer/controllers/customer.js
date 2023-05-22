@@ -48,9 +48,10 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
     ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(ctx.state.user.id);
 
     if (!ctx.params.id) return ctx.unauthorized();
+    delete ctx.request.body.data.user;
+    delete ctx.request.body.data.name;
+    delete ctx.request.body.data.orders;
 
-    ctx.request.body.data.user = ctx.state.user.id + "";
-    ctx.request.body.data.name = ctx.state.user.firstName + " " + ctx.state.user.lastName;
     return super.update(ctx);
   },
 }));
