@@ -1,4 +1,4 @@
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import StoreLinks from "../(component)/store-links";
@@ -9,12 +9,12 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
 
 export default async function StoreLayout({ children, params: { storeId }, searchParams }) {
-  // const headersList = headers();
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  // console.log(headersList.get("accessToken"));
+  const accessToken = cookieStore.get("accessToken")?.value;
+
   // Todo: make the store query by id, title and about
-  const store = await serverRequest("store", "GET", { query: `/${storeId}${q}` })
+  const store = await serverRequest("store", "GET", { query: `/${storeId}${q}`, token: accessToken })
     .then((res) => res.data)
     .catch(() => null);
   if (!store?.id) return notFound();

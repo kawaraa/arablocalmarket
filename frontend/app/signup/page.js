@@ -12,6 +12,7 @@ import {
 } from "../(component)/custom-inputs";
 import { request } from "../(service)/api-provider";
 import Image from "next/image";
+import { Cookies } from "../(service)/utilities";
 
 export default function Signup({}) {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function Signup({}) {
     if (response?.user?.confirmed) {
       window.localStorage.removeItem("accessToken");
       window.localStorage.setItem("accessToken", response.jwt);
+      Cookies.set("accessToken", response.jwt);
 
       const user = await request("getUser").catch(() => null);
       if (user) updateUser(user);

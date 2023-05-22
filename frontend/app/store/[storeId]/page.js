@@ -2,7 +2,8 @@ import { cookies } from "next/headers";
 import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";
-const q = "?fields=owner,deliver,deliveryCost,currency,about&populate=openingHours,address";
+import StarRating from "../../(component)/(styled)/rating";
+const q = "?fields=owner,deliver,deliveryCost,currency,about&populate=openingHours,address,ratings";
 
 export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
@@ -67,6 +68,13 @@ export default async function StoreOverview({ params, searchParams }) {
         {store.address.province} {store.address.country}
       </p>
       <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
+
+      <div className="text-center mt-7">
+        <StarRating stars={store.ratings.stars} cls="text-blur text-3xl" />
+        {store.ratings.total > 0 && (
+          <sub className="absolute -right-1 bottom-0 !text-xs text-bg">{store.ratings.total}</sub>
+        )}
+      </div>
     </>
   );
 }

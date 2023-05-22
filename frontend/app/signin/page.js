@@ -8,6 +8,7 @@ import { InputField } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 import { EmailInputField, PswInputField } from "../(component)/custom-inputs";
 import Image from "next/image";
+import { Cookies } from "../(service)/utilities";
 
 export default function SignIn() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function SignIn() {
       const response = await request("signIn", "POST", data);
       window.localStorage.removeItem("accessToken");
       window.localStorage.setItem("accessToken", response.jwt);
+      Cookies.set("accessToken", response.jwt);
 
       const customer = JSON.parse(window.localStorage.getItem("customer"));
       await request("customer", "POST", { data: { customer } }).catch(() => null);
@@ -36,6 +38,7 @@ export default function SignIn() {
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 30 });
       window.localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
       if (error.message?.includes("(01)")) request("EmailConfiguration", "POST", { email: data.identifier });
     }
 

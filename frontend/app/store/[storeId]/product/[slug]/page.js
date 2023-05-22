@@ -6,6 +6,7 @@ import Options from "../(component)/options";
 import { serverRequest } from "../../../../(service)/api-provider";
 import { ShareButton } from "../../../../(component)/share-button";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
+import RatingInputPopup from "../(component)/rating-input-popup";
 const q = "?fields=name,currency,meta";
 const q1 =
   "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[ratings]=*";
@@ -13,10 +14,11 @@ const q1 =
 export default async function ProductBySlug({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
+  const accessToken = cookieStore.get("accessToken")?.value;
 
   const storeReq = serverRequest("store", "GET", { query: `/${params.storeId}${q}` });
   // Todo: make product query by ID, name, barcode E.g. UPC/IAN/EAN and description using (slug)
-  const productReq = serverRequest("product", "GET", { query: `/${params.slug}${q1}` });
+  const productReq = serverRequest("product", "GET", { query: `/${params.slug}${q1}`, token: accessToken });
   const data = await Promise.all([storeReq, productReq]).catch(() => null);
   if (!data || !data[0]) return notFound();
 
@@ -70,12 +72,16 @@ export default async function ProductBySlug({ params, searchParams }) {
 
       <h2 className="text-lg my-5 text-center">{product.name}</h2>
 
-      <h4 className="text-xl">{shdCnt.desc[lang]}</h4>
+      <h4 dir="auto" className="text-xl">
+        {shdCnt.desc[lang]}
+      </h4>
       <p className="text-sm mt-3 mb-10">
         <span>{product.vendor}</span>
         <br />
         {product.description}
       </p>
+
+      <RatingInputPopup stars={product.ratings.stars} data={{ product: product.id }} />
 
       <div className="flex justify-around items-center fixed bottom-0 right-0 left-0 h-12 bg-lbg dark:bg-dbg">
         <p className="min-w-12 text-red text-xl">
@@ -84,7 +90,6 @@ export default async function ProductBySlug({ params, searchParams }) {
             {product.variants[0].price}
           </span>
         </p>
-
         <ActionButtons {...product} />
       </div>
     </>

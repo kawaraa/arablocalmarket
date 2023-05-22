@@ -1,6 +1,5 @@
 "use client";
 export default function StarRating({ stars = 0, onRate, cls }) {
-  // label, title, aria-label, focus and keyboard interactivity
   return (
     <span className={`relative inline-block ${cls || "text-sm"}`}>
       &#9733;&#9733;&#9733;&#9733;&#9733;
@@ -9,6 +8,7 @@ export default function StarRating({ stars = 0, onRate, cls }) {
         className={`overflow-hidden absolute inset-0 h-1/1 text-orange`}>
         &#9733;&#9733;&#9733;&#9733;&#9733;
       </span>
+      {/* label, title, aria-label, focus and keyboard interactivity */}
       {onRate && (
         <input
           onInput={(e) => onRate(+e.target.value)}

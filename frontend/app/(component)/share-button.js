@@ -33,6 +33,6 @@ export function ShareButton({ title, text, url, cls }) {
 
 const content = {
   title: { en: "Click to share", ar: "انقر للمشاركة" },
-  success: { en: "Copied store link", ar: "تم نسخ رابط المتجر" },
-  error: { en: "Could not copy store link", ar: "تعذر نسخ رابط المتجر" },
+  success: { en: "Copied the link", ar: "تم نسخ الرابط" },
+  error: { en: "Could not copy the link", ar: "تعذر نسخ الرابط" },
 };

@@ -3,11 +3,11 @@ import Script from "next/script";
 import { useContext, useEffect, useState } from "react";
 import { request } from "../../(service)/api-provider";
 import Modal from "../../(component)/(styled)/modal";
-import StarRating from "../../(component)/(styled)/rating";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import { AppSessionContext } from "../../app-session-context";
 import { ShareButton } from "../../(component)/share-button";
 import shdCnt from "../../(layout)/json/shared-content.json";
+import RatingInputPopup from "../[storeId]/product/(component)/rating-input-popup";
 const liCls =
   "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
 
@@ -15,18 +15,6 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
   const { user, addMessage } = useContext(AppSessionContext);
   const [showQR, setShowQR] = useState(false);
   const [showRatingInput, setShowRatingInput] = useState(false);
-  const [stars, setStars] = useState(ratings.userStars);
-
-  const handleRating = async () => {
-    if (!user) return addMessage({ type: "warning", text: content.rateErr[lang], duration: 5 });
-    try {
-      await request("rating", "POST", { data: { store: +storeId, stars } });
-      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
-    } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 5 });
-    }
-    setShowRatingInput(false);
-  };
 
   const addToFavorite = async (e) => {
     e.preventDefault();
@@ -87,49 +75,31 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
         <li className={liCls}>
           <ShareButton title={name} text={about} />
         </li>
-        <li className={liCls}>
+        <li className={liCls + (ratings.userStars > 0 ? " text-pc" : "")}>
           <a
             href="#"
-            title={content.rateH[lang]}
-            aria-label={content.rateH[lang]}
+            title={shdCnt.rateH[lang]}
+            aria-label={shdCnt.rateH[lang]}
             onClick={(e) => e.preventDefault() + setShowRatingInput(true)}>
             &#9733;
           </a>
-          {ratings.total > 0 && (
-            <sub className="absolute -right-1 bottom-0 !text-xs text-bg">{ratings.total}</sub>
-          )}
         </li>
       </ul>
 
       <Modal open={showQR} onCancel={() => setShowQR(false)} center>
-        <div id="qrcode" className="flex justify-center "></div>
+        <div id="qrcode" className="flex justify-center"></div>
 
         <Script src="/qr-generator/index.js" onReady={generateStoreQR}></Script>
       </Modal>
 
-      <Modal
+      <RatingInputPopup
+        ratedStars={ratings.userStars}
+        data={{ store: +storeId }}
         open={showRatingInput}
-        title={content.rateH[lang]}
-        onCancel={() => setShowRatingInput(false)}
-        onApprove={handleRating}
-        okBtn={shdCnt.save[lang]}
-        center>
-        <div className="text-center my-3">
-          <StarRating stars={stars} onRate={setStars} cls="text-blur text-3xl" />
-        </div>
-      </Modal>
+        onClose={setShowRatingInput}
+      />
     </>
   );
 }
 
-const content = {
-  rateH: { en: "Rating", ar: "التقييم" },
-  share: {
-    success: { en: "Copied store link", ar: "تم نسخ رابط المتجر" },
-    error: { en: "Could not copy store link", ar: "تعذر نسخ رابط المتجر" },
-  },
-  rateErr: {
-    en: "Only signed in users can rate the store",
-    ar: "فقط المستخدمين الذين سجلوا الدخول يمكنهم تقييم المتجر",
-  },
-};
+const content = {};

@@ -33,6 +33,7 @@
       { "en": "sunday", "ar": "الأحد" }
     ]
   },
+  "rateH": { "en": "Rating", "ar": "التقييم" },
   "newAdr": { "en": "New address", "ar": "عنوان جديد" },
   "scanner": { "en": "Scan a product barcode", "ar": "مسح رمز أو رقم المنتج" },
   "scanBtn": { "en": "Show barcode scanner", "ar": "إظهار ماسح الباركود" },
@@ -89,6 +90,10 @@
     "ar": "الرجاء إضافة عناصر إلى عربة أولا"
   },
   "noStockErr": { "en": "There is not enough quantity in stock", "ar": "لا توجد كمية كافية في المخزون" },
+  "rateErr": {
+    "en": "Only signed in users can rate stores and products",
+    "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم تقييم المتاجر والمنتجات"
+  },
   "favErr": {
     "en": "Only signed in users can add a store to favorite",
     "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة"
