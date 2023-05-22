@@ -10,6 +10,7 @@ export default function ProductCardButtons({ productId, variantsNumber, title, a
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
   const handleAddToFavorite = async (e) => {
+    e.preventDefault();
     if (!user) return addMessage({ type: "warning", text: shdCnt.favErr[lang], duration: 4 });
 
     const data = { favoriteProducts: [...favoriteProducts] };
