@@ -40,7 +40,7 @@ export default function Stores() {
               lang={lang}
               Tag="li"
               admin={activeTab?.key != "favorite"}
-              link={`/admin/store/${store.id}`}
+              link={`${activeTab?.key == "work" ? "/admin/store/" : "/store/"}${store.id}`}
               name={store.name}
               imageUrl={store.cover.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg"}
               totalOrders={store.orders}

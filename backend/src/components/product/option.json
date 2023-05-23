@@ -7,11 +7,9 @@
   "options": {},
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true,
-      "unique": false,
-      "minLength": 1,
-      "maxLength": 10
+      "type": "enumeration",
+      "enum": ["WEIGHT", "SIZE", "PACKAGING", "COLOR", "FLAVOR", "TYPE", "SCENT"],
+      "required": true
     },
     "value": {
       "type": "string",

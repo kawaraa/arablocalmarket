@@ -17,18 +17,6 @@ export default function AppSessionContextProvider({ children, language, theme })
   const [user, setUser] = useState({ loading: true });
   const [cartItemsNum, setCartItemsNum] = useState(0);
 
-  // const [worker, setWorker] = useState(null);
-  // const [posts, setPosts] = useState([]);
-  // const [editingPost, setEditingPost] = useState("");
-  // const [conversations, setConversations] = useState([]);
-  // const [receivedMessage, setReceivedMessage] = useState({});
-  // const [connected, setConnected] = useState(true);
-  // const [unseenNotifications, setUnseenNotifications] = useState([]);
-  // const [unseenChats, setUnseenChats] = useState([]);
-
-  // const [profile, setProfile] = useState({});
-  // const [editingField, setEditingField] = useState("");
-
   const setAppLoading = (loading) => {
     const loader = document.getElementById("global-screen-loader");
     if (loading) loader.style.display = "flex"; // elements[0].style.opacity = "0";
@@ -65,41 +53,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     setRange(range);
   };
 
-  // const addPost = (post) => setPosts([post, ...posts]); // posts.splice(0, 0, detail);
-  // const updatePost = (post) => {
-  //   const index = posts.findIndex((p) => p.id === post.id);
-  //   if (index > -1) Object.keys(posts[index]).forEach((k) => (posts[index][k] = post[k]));
-  //   setPosts(posts);
-  // };
-  // const removePost = (id) => setPosts(posts.filter((post) => post.id !== id));
-
-  // const openConversation = (conversation) => {
-  //   const index = conversations.findIndex((con) => con.id === conversation.id);
-  //   removeUnseenChat(conversation.id);
-  //   if (index > -1) return;
-  //   conversation.messages = [];
-  //   setConversations([...conversations, conversation]);
-  // };
-  // const closeConversation = (id) => {
-  //   setConversations(conversations.filter((con) => con.id !== id));
-  // };
-  // const updateConversationMessages = (conversation) => {
-  //   const conversationsCopy = [...conversations];
-  //   conversationsCopy.forEach((con) => {
-  //     if (con.id === conversation.id) con.messages = conversation.messages;
-  //   });
-  //   setConversations(conversationsCopy);
-  // };
-
-  // const addNotification = (notification) => {
-  //   const index = unseenNotifications.findIndex((note) => note.id === notification.id);
-  //   if (index < 0) setUnseenNotifications([...unseenNotifications, notification]);
-  // };
-  // const removeNotification = (notification) => {
-  //   setUnseenNotifications(unseenNotifications.filter((not) => not.id !== notification.id));
-  // };
-  // const removeUnseenChat = (id) => setUnseenChats(unseenChats.filter((chat) => chat.id !== id));
-
   const updateUser = (user) => {
     setAppLoading(true);
     if (user) window.localStorage.setItem("user", JSON.stringify(user));
@@ -107,20 +60,10 @@ export default function AppSessionContextProvider({ children, language, theme })
     setUser(user);
     setAppLoading(false);
   };
+  const refetchUser = () => fetchUser().then(updateUser).catch(console.log);
 
-  const requestNotificationPermission = () => {
-    const error = "Notifications are not supported";
-    return new Promise((resolve, reject) => {
-      if (!Notification || typeof Notification.requestPermission !== "function") reject(error);
-      if (Notification.permission === "granted") return resolve(Notification.permission);
-      try {
-        Notification.requestPermission().then(resolve).catch(reject);
-      } catch (error) {
-        // Safari doesn't return a promise for requestPermissions and it throws a Error. instead it takes a callback.
-        Notification.requestPermission((res) => (res ? resolve(res) : reject(res)));
-      }
-    });
-  };
+  const addToCart = (items) => {};
+  const removeFromCart = (items) => {};
 
   useEffect(() => {
     const localCart = JSON.parse(window?.localStorage.getItem("cartItems") || null)?.length || 0;
@@ -146,16 +89,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   const conversationsCopy = [...conversations];
-  //   const index = conversationsCopy.findIndex((conversation) => conversation.id === receivedMessage.chatId);
-  //   if (index < 0) setUnseenChats([...unseenChats, { id: receivedMessage.chatId }]);
-  //   else {
-  //     conversationsCopy[index].messages.unshift(receivedMessage);
-  //     setConversations(conversationsCopy);
-  //   }
-  // }, [receivedMessage]);
-
   const state = {
     setAppLoading,
     addMessage,
@@ -169,38 +102,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     updateRange,
     user,
     updateUser,
+    refetchUser,
     cartItemsNum,
     setCartItemsNum,
-    requestNotificationPermission,
-
-    // worker,
-    // setWorker,
-    // posts,
-    // setPosts,
-    // addPost,
-    // updatePost,
-    // removePost,
-    // editingPost,
-    // setEditingPost,
-    // conversations,
-    // openConversation,
-    // closeConversation,
-    // updateConversationMessages,
-    // receivedMessage,
-    // setReceivedMessage,
-    // connected,
-    // setConnected,
-    // unseenNotifications,
-    // setUnseenNotifications,
-    // addNotification,
-    // removeNotification,
-    // unseenChats,
-    // setUnseenChats,
-    // removeUnseenChat,
-    // editingField,
-    // setEditingField,
-    // profile,
-    // setProfile,
   };
 
   return (
@@ -212,8 +116,108 @@ export default function AppSessionContextProvider({ children, language, theme })
   );
 }
 
+// const [worker, setWorker] = useState(null);
+// const [posts, setPosts] = useState([]);
+// const [editingPost, setEditingPost] = useState("");
+// const [conversations, setConversations] = useState([]);
+// const [receivedMessage, setReceivedMessage] = useState({});
+// const [connected, setConnected] = useState(true);
+// const [unseenNotifications, setUnseenNotifications] = useState([]);
+// const [unseenChats, setUnseenChats] = useState([]);
+
+// const [profile, setProfile] = useState({});
+// const [editingField, setEditingField] = useState("");
+
 // const notifications = [
 //   { type: "NEW_ORDER", seen: false, meta: { path: "1" } },
 //   { type: "DELIVERED", seen: false, meta: { path: "1" } },
 // ];
 // const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };
+// const requestNotificationPermission = () => {
+//   const error = "Notifications are not supported";
+//   return new Promise((resolve, reject) => {
+//     if (!Notification || typeof Notification.requestPermission !== "function") reject(error);
+//     if (Notification.permission === "granted") return resolve(Notification.permission);
+//     try {
+//       Notification.requestPermission().then(resolve).catch(reject);
+//     } catch (error) {
+//       // Safari doesn't return a promise for requestPermissions and it throws a Error. instead it takes a callback.
+//       Notification.requestPermission((res) => (res ? resolve(res) : reject(res)));
+//     }
+//   });
+// };
+
+// const addPost = (post) => setPosts([post, ...posts]); // posts.splice(0, 0, detail);
+// const updatePost = (post) => {
+//   const index = posts.findIndex((p) => p.id === post.id);
+//   if (index > -1) Object.keys(posts[index]).forEach((k) => (posts[index][k] = post[k]));
+//   setPosts(posts);
+// };
+// const removePost = (id) => setPosts(posts.filter((post) => post.id !== id));
+
+// const openConversation = (conversation) => {
+//   const index = conversations.findIndex((con) => con.id === conversation.id);
+//   removeUnseenChat(conversation.id);
+//   if (index > -1) return;
+//   conversation.messages = [];
+//   setConversations([...conversations, conversation]);
+// };
+// const closeConversation = (id) => {
+//   setConversations(conversations.filter((con) => con.id !== id));
+// };
+// const updateConversationMessages = (conversation) => {
+//   const conversationsCopy = [...conversations];
+//   conversationsCopy.forEach((con) => {
+//     if (con.id === conversation.id) con.messages = conversation.messages;
+//   });
+//   setConversations(conversationsCopy);
+// };
+
+// const addNotification = (notification) => {
+//   const index = unseenNotifications.findIndex((note) => note.id === notification.id);
+//   if (index < 0) setUnseenNotifications([...unseenNotifications, notification]);
+// };
+// const removeNotification = (notification) => {
+//   setUnseenNotifications(unseenNotifications.filter((not) => not.id !== notification.id));
+// };
+// const removeUnseenChat = (id) => setUnseenChats(unseenChats.filter((chat) => chat.id !== id));
+
+// useEffect(() => {
+//   const conversationsCopy = [...conversations];
+//   const index = conversationsCopy.findIndex((conversation) => conversation.id === receivedMessage.chatId);
+//   if (index < 0) setUnseenChats([...unseenChats, { id: receivedMessage.chatId }]);
+//   else {
+//     conversationsCopy[index].messages.unshift(receivedMessage);
+//     setConversations(conversationsCopy);
+//   }
+// }, [receivedMessage]);
+
+// worker,
+// setWorker,
+// posts,
+// setPosts,
+// addPost,
+// updatePost,
+// removePost,
+// editingPost,
+// setEditingPost,
+// conversations,
+// openConversation,
+// closeConversation,
+// updateConversationMessages,
+// receivedMessage,
+// setReceivedMessage,
+// connected,
+// setConnected,
+// unseenNotifications,
+// setUnseenNotifications,
+// addNotification,
+// removeNotification,
+// unseenChats,
+// setUnseenChats,
+// removeUnseenChat,
+// editingField,
+// setEditingField,
+// profile,
+// setProfile,
+// requestNotificationPermission,

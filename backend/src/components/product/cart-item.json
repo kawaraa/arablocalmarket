@@ -7,12 +7,14 @@
   "options": {},
   "attributes": {
     "storeId": {
-      "type": "string",
-      "required": true
+      "type": "biginteger",
+      "required": true,
+      "min": "0"
     },
     "productNumber": {
-      "type": "string",
-      "required": true
+      "type": "biginteger",
+      "required": true,
+      "min": "0"
     },
     "barcode": {
       "type": "string",

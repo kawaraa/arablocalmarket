@@ -81,7 +81,7 @@ const prepareCart = async (cart) => {
 
   stores.forEach((s) => {
     s.currency = s.currency.split("-")[0];
-    s.phone = s.meta.phone;
+    s.phone = s.meta?.phone;
     delete s.meta;
     s.total = 0;
 
@@ -103,7 +103,7 @@ const prepareCart = async (cart) => {
     });
   });
 
-  user.cart = stores.filter((c) => !!c.items[0]);
+  return stores.filter((c) => !!c.items[0]);
 };
 
 const prepareFavoriteProducts = async (favoriteProducts) => {
