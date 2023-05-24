@@ -53,7 +53,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     window.localStorage.setItem("range", range);
     setRange(range);
   };
-  const updateUser = (user, cashed) => {
+  const updateUser = (user) => {
     setAppLoading(true);
     const localCart = JSON.parse(window.localStorage.getItem("cart")) || [];
     if (!user) {
@@ -63,11 +63,9 @@ export default function AppSessionContextProvider({ children, language, theme })
       const cart = mergeCarts(user.cart, localCart);
       setCart(cart);
       window.localStorage.removeItem("cart");
-      if (!cashed) {
-        delete user.cart;
-        window.localStorage.setItem("user", JSON.stringify(user));
-        syncUserCart(cart).catch(() => null);
-      }
+      delete user.cart;
+      window.localStorage.setItem("user", JSON.stringify(user));
+      syncUserCart(cart).catch(() => null);
     }
     setUser(user);
     setAppLoading(false);
@@ -109,7 +107,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     fetchUser()
       .then(updateUser)
-      .catch((err) => updateUser(JSON.parse(window.localStorage.getItem("user")), true));
+      .catch((err) => setUser(null) + setAppLoading(false));
 
     registerServiceWorker();
     // eslint-disable-next-line react-hooks/exhaustive-deps

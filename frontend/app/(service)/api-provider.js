@@ -127,7 +127,7 @@ const prepareFavoriteProducts = async (favoriteProducts) => {
           productNumber: p.id,
           barcode: variants[0].barcode,
           title: name,
-          imageUrl: image.data?.attributes?.url,
+          imageUrl: image.data?.attributes?.formats.thumbnail.url,
           price: variants[0].price,
           discount: p.discount || 0,
         };

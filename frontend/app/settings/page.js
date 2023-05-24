@@ -37,7 +37,7 @@ export default function Settings(props) {
       window.localStorage.removeItem("accessToken");
       setLoading(false);
       setConfirmDeletion(false);
-      setTimeout(() => updateUser(null), 200);
+      setTimeout(() => updateUser(null), 300);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -56,7 +56,7 @@ export default function Settings(props) {
         <Profile lang={lang} {...user} handleUpdate={handleUpdate} setMessage={addMessage} />
         <Account lang={lang} {...user} handleUpdate={handleUpdate} />
 
-        {/* <div className="text-center pt-10">
+        <div className="text-center pt-10">
           <Button
             icon="bin"
             onClick={() => setConfirmDeletion(true)}
@@ -64,7 +64,7 @@ export default function Settings(props) {
             iconCls="w-5">
             {content.deleteBtn[lang]}
           </Button>
-        </div> */}
+        </div>
       </article>
 
       <Modal
