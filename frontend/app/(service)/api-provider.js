@@ -142,6 +142,30 @@ export function removeAttributes(data) {
   return data.attributes;
 }
 
+export function syncUserCart(storeCarts, customerId) {
+  const cart = [];
+  storeCarts.forEach(({ id, items }) => {
+    items.forEach(({ productNumber, barcode, quantity }) =>
+      cart.push({ storeId: id, productNumber, barcode, quantity })
+    );
+  });
+  return request("customer", "PUT", { query: `/${customerId}`, body: { data: { cart } } });
+}
+
+export function mergeCarts(userCart, localCart) {
+  if (!localCart[0]) return userCart;
+  localCart.forEach((storeCart) => {
+    const index = userCart.findIndex((sCart) => sCart.id == storeCart.id);
+    if (index < 0) return userCart.push(storeCart);
+    storeCart.items.forEach((item) => {
+      const i = userCart[index].items.findIndex((it) => it.barcode == item.barcode);
+      if (i < 0) return userCart[index].items.push(item);
+      userCart[index].items[i].quantity = item.quantity;
+    });
+  });
+  return userCart;
+}
+
 export function registerServiceWorker() {
   if ("serviceWorker" in navigator && !window.location.origin.includes("localhost")) {
     navigator.serviceWorker.getRegistrations().then(async (registrations) => {

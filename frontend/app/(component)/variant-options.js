@@ -16,7 +16,7 @@ export default function VariantOptions({ name, values, onSelect, selectedOptions
             />
             <label
               htmlFor={v}
-              className="text-center w-full py-[5px] px-[10px] text-sm border border-bf rounded-full dark:text-dt peer-checked:border-bc peer-checked:bg-red peer-checked:text-dt">
+              className="text-center w-full py-[5px] px-[10px] text-sm border border-bf rounded-full dark:text-dt peer-checked:border-bc peer-checked:bg-red peer-checked:text-dt peer-disabled:opacity-60">
               {v}
             </label>
           </li>

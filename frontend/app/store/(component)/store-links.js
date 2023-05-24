@@ -37,7 +37,7 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
   };
 
   useEffect(() => {
-    if (+scroll) setTimeout(() => window.scroll(0, scroll), 500);
+    if (+scroll) setTimeout(() => window.scroll(0, scroll), 800);
   }, [scroll]);
 
   useEffect(() => {

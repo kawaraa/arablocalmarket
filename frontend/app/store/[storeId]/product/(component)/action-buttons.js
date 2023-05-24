@@ -8,45 +8,25 @@ import { Button, IconButton } from "../../../../(component)/(styled)/button";
 
 export default function ActionButtons({ id, variants }) {
   const router = useRouter();
-  const { lang, user, addMessage } = useContext(AppSessionContext);
+  const { lang, user, addToCart, addMessage } = useContext(AppSessionContext);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
   const showWarning = () => addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
-
-  const checkItemInventory = () => {
-    const item = (JSON.parse(window.localStorage.getItem("checkoutItems")) || [])[0];
-    if (!item) return showWarning();
-
-    const index = variants.findIndex((v) => v.barcode == item.barcode);
-    const variant = variants[index];
-
-    if (!variant) return showWarning();
-    if (+variant.quantity - +item.quantity < 0) {
-      return addMessage({ type: "warning", text: shdCnt.noStockErr[lang], duration: 4 });
-    }
-
-    return item;
-  };
 
   const handleBuy = () => {
     if (!checkItemInventory()) return;
     router.push("/checkout");
   };
 
-  const handleAddToCart = () => {
-    const item = checkItemInventory();
-    if (!item) return;
+  const handleAddToCart = async () => {
+    const [item] = JSON.parse(window.localStorage.getItem("checkoutItems")) || [];
+    if (!item) return showWarning();
+
     item.currency = item.currency.split("-")[0];
-
-    const cartItems = JSON.parse(window.localStorage.getItem("cartItems")) || [];
-    const itemIndex = cartItems.findIndex((it) => it.barcode == item.barcode);
-    if (itemIndex < 0) cartItems.push(item);
-    else cartItems[itemIndex].quantity = item.quantity;
-
-    window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    document.getElementById("nav-cart").innerHTML = cartItems.length;
-
-    addMessage({ type: "success", text: shdCnt.done[lang], duration: 2.5 });
+    const { phone, currency, productNumber, barcode, quantity, title, imageUrl, price, discount } = item;
+    const newItem = { productNumber, barcode, title, imageUrl, price, discount, quantity };
+    const store = { id: item.storeId, name: item.storeName, phone, currency, items: [newItem] };
+    addToCart(store);
   };
 
   const handleAddToFavorite = async () => {

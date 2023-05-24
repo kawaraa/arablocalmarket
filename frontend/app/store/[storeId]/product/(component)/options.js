@@ -9,16 +9,27 @@ export default function Options({ store, id, variants, name, image, discount }) 
   const { lang, addMessage } = useContext(AppSessionContext);
   const [item, setItem] = useState({ options: [], quantity: 1 });
   const [options, setOptions] = useState({});
+  const [maxQuantity, setMaxQuantity] = useState(0);
 
-  let index = variants.findIndex(
-    (v) => v.options.filter((o) => item.options.includes(o.value)).length == item.options.length
-  );
-  if (index < 0) index = 0;
+  const getVariant = (ops) => {
+    ops = ops.filter((o) => o);
+    const v = variants.find((v) => v.options.filter((o) => ops.includes(o.value)).length == ops.length);
+    if (!v || v.quantity < 1) {
+      return addMessage({ type: "warning", text: shdCnt.noStockErr[lang], duration: 6 });
+    }
+    return v;
+  };
 
   const updateItemOptions = (optionIndex, value) => {
-    const variant = variants[index];
-    const copy = { ...item };
-    copy.options[optionIndex] = value;
+    if (optionIndex > 0 && !item.options[optionIndex - 1]) {
+      const n = (shdCnt.options.values[Object.keys(options)[optionIndex - 1]][lang] || name).toLowerCase();
+      return addMessage({ type: "warning", text: content.selectErr[lang].replace("xxx", n), duration: 6 });
+    }
+
+    let ops = optionIndex == 0 ? [] : [...item.options];
+    ops[optionIndex] = value;
+    const v = getVariant(ops);
+    if (!v) return;
 
     const checkoutItem = {
       storeId: store.id,
@@ -26,61 +37,55 @@ export default function Options({ store, id, variants, name, image, discount }) 
       phone: store.meta?.phone,
       currency: store.currency,
       productNumber: id,
-      barcode: variant.barcode,
-      title: name + " " + variant.options.map((o) => o.value).join(" - "),
+      barcode: v.barcode,
+      title: name + " " + v.options.map((o) => o.value).join(" - "),
       imageUrl: image.data?.attributes.formats.thumbnail.url,
-      price: variant.price,
+      price: v.price,
       discount: discount || 0,
-      quantity: copy.quantity,
+      quantity: item.quantity,
     };
 
-    window.localStorage.setItem("checkoutItems", JSON.stringify([checkoutItem]));
-    document.getElementById("product-price").innerHTML = variant.price;
-    document.getElementById("product-stock").innerHTML = +variant.quantity - +copy.quantity;
+    if (ops.length == v.options.length) {
+      window.localStorage.setItem("checkoutItems", JSON.stringify([checkoutItem]));
+    }
+    document.getElementById("product-price").innerHTML = v.price;
+    document.getElementById("product-stock").innerHTML = v.quantity - +item.quantity;
 
-    setItem(copy);
+    setMaxQuantity(v.quantity);
+    setItem({ ...item, options: ops });
   };
 
   const updateItemQuantity = (num) => {
-    const stock = +variants[index].quantity;
-    const items = JSON.parse(window.localStorage.getItem("checkoutItems"));
-    if (!items) return addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
+    const [chItem] = JSON.parse(window.localStorage.getItem("checkoutItems")) || [];
+    if (!chItem) return addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
 
-    items[0].quantity = num < 1 ? 1 : num > stock ? stock : num;
-    window.localStorage.setItem("checkoutItems", JSON.stringify(items));
+    const v = getVariant(item.options);
+    if (!v) return;
 
-    const copy = { ...item };
-    copy.quantity = items[0].quantity;
+    chItem.quantity = num < 1 ? 1 : num > v.quantity ? v.quantity : num;
+    window.localStorage.setItem("checkoutItems", JSON.stringify([chItem]));
 
-    document.getElementById("product-stock").innerHTML = stock - copy.quantity;
-    setItem(copy);
+    document.getElementById("product-stock").innerHTML = v.quantity - chItem.quantity;
+    setItem({ ...item, quantity: chItem.quantity });
   };
 
   useEffect(() => {
+    window.localStorage.removeItem("checkoutItems");
+
     const options = {};
     for (const variant of variants) {
-      const sV = variant.options.find((opt) => !item.options[0] || item.options.includes(opt.value));
-      variant.options.forEach((opt, i) => {
-        if (sV || i === 0) {
-          if (options[opt.name]) options[opt.name].add(opt.value);
-          else options[opt.name] = new Set([opt.value]);
-        }
+      variant.options.forEach((opt) => {
+        if (options[opt.name]) options[opt.name].add(opt.value);
+        else options[opt.name] = new Set([opt.value]);
       });
     }
 
     Object.keys(options).forEach((name) => (options[name] = Array.from(options[name])));
     setOptions(options);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.options, variants]);
 
-  useEffect(() => {
-    if (variants) {
-      const { options } = variants[index];
-      const copy = { ...item };
-      copy.options[0] = options[0].value;
-      setItem(copy);
-      options.forEach((o, i) => updateItemOptions(i, o.value));
-    }
+    const variant = variants.find((v) => v.quantity > 0);
+    if (variant) updateItemOptions(0, variant.options[0].value);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variants]);
 
@@ -101,7 +106,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
         value={item.quantity}
         step="1"
         min="1"
-        max={variants[index].quantity}
+        max={maxQuantity}
         onChange={updateItemQuantity}
         title="Quantity"
         cls="mt-7 mb-3"
@@ -109,3 +114,7 @@ export default function Options({ store, id, variants, name, image, discount }) 
     </>
   );
 }
+
+const content = {
+  selectErr: { en: "Please select xxx first", ar: "الرجاء تحديد xxx أولاً" },
+};

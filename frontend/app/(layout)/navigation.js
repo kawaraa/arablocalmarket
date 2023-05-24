@@ -14,7 +14,7 @@ import Image from "next/image";
 export default function Navigation() {
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
-  const { lang, updateLang, themeMode, updateThemeMode, user, cartItemsNum } = useContext(AppSessionContext);
+  const { lang, updateLang, themeMode, updateThemeMode, cart, user } = useContext(AppSessionContext);
   const signinLink = content.navLinks[content.navLinks.length - 1];
   const initials = !user?.firstName ? null : user.firstName[0] + user.lastName[0];
 
@@ -124,7 +124,7 @@ export default function Navigation() {
               <SvgIcon name="cart" />
             </span>
             <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
-              {cartItemsNum}
+              {cart.reduce((t, s) => t + s.items.length, 0)}
             </span>
           </a>
         </Link>

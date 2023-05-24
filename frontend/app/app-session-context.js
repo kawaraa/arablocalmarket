@@ -1,9 +1,10 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
 import Messages from "./(component)/(styled)/messages";
-import { fetchUser, registerServiceWorker } from "./(service)/api-provider";
+import { fetchUser, registerServiceWorker, mergeCarts, syncUserCart } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
 import ImagePreview from "./(component)/(styled)/image-preview";
+import shdCnt from "./(layout)/json/shared-content.json";
 // import { Validator } from "k-utilities";
 
 export const AppSessionContext = createContext();
@@ -14,8 +15,8 @@ export default function AppSessionContextProvider({ children, language, theme })
   const [themeMode, setThemeMode] = useState(theme);
   const [coordinates, setCoordinates] = useState([0, 0]);
   const [range, setRange] = useState(1.5);
+  const [cart, setCart] = useState([]);
   const [user, setUser] = useState({ loading: true });
-  const [cartItemsNum, setCartItemsNum] = useState(0);
 
   const setAppLoading = (loading) => {
     const loader = document.getElementById("global-screen-loader");
@@ -52,23 +53,48 @@ export default function AppSessionContextProvider({ children, language, theme })
     window.localStorage.setItem("range", range);
     setRange(range);
   };
-
-  const updateUser = (user) => {
+  const updateUser = (user, cashed) => {
     setAppLoading(true);
-    if (user) window.localStorage.setItem("user", JSON.stringify(user));
-    else window.localStorage.removeItem("user");
+    const localCart = JSON.parse(window.localStorage.getItem("cart")) || [];
+    if (!user) {
+      window.localStorage.removeItem("user");
+      setCart(localCart);
+    } else {
+      const cart = mergeCarts(user.cart, localCart);
+      setCart(cart);
+      window.localStorage.removeItem("cart");
+      if (!cashed) {
+        delete user.cart;
+        window.localStorage.setItem("user", JSON.stringify(user));
+        syncUserCart(cart).catch(() => null);
+      }
+    }
     setUser(user);
     setAppLoading(false);
   };
   const refetchUser = () => fetchUser().then(updateUser).catch(console.log);
 
-  const addToCart = (items) => {};
-  const removeFromCart = (items) => {};
-
-  useEffect(() => {
-    const localCart = JSON.parse(window?.localStorage.getItem("cartItems") || null)?.length || 0;
-    setCartItemsNum(localCart || user?.cart?.length || 0);
-  }, [user]);
+  const addToCart = (storeCart) => {
+    const copyCart = [...cart];
+    updateCart(mergeCarts(copyCart, [storeCart]));
+  };
+  const removeFromCart = (storeId, barcode) => {
+    let copyCart = [...cart];
+    const index = copyCart.findIndex((c) => c.id == storeId);
+    if ((storeId && !barcode) || copyCart[index].items.length == 1) copyCart.splice(index, 1);
+    else copyCart[index].items = copyCart[index].items.filter((i) => i.barcode != barcode);
+    updateCart(copyCart);
+  };
+  const updateCart = async (cart) => {
+    try {
+      if (user) await syncUserCart(cart);
+      else window.localStorage.setItem("cart", JSON.stringify(cart));
+      setCart(cart);
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+    } catch (error) {
+      addMessage({ type: "error", text: error.message, duration: 5 });
+    }
+  };
 
   useEffect(() => {
     const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
@@ -83,7 +109,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
     fetchUser()
       .then(updateUser)
-      .catch((err) => updateUser(JSON.parse(window.localStorage.getItem("user") || null)));
+      .catch((err) => updateUser(JSON.parse(window.localStorage.getItem("user")), true));
 
     registerServiceWorker();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,8 +129,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     user,
     updateUser,
     refetchUser,
-    cartItemsNum,
-    setCartItemsNum,
+    cart,
+    addToCart,
+    removeFromCart,
   };
 
   return (

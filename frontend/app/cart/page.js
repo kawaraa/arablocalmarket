@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
-import { fetchUser, request } from "../(service)/api-provider";
+import { request } from "../(service)/api-provider";
 import Tabs from "../(component)/(styled)/tabs";
 import StoreItems from "./(component)/store-items";
 import EmptyState from "../(component)/(styled)/empty-state";
@@ -10,36 +10,14 @@ import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function Cart({ params, searchParams }) {
   const router = useRouter();
-  const { lang, user, updateUser, setAppLoading, addMessage, setCartItemsNum } =
+  const { lang, user, refetchUser, setAppLoading, addMessage, cart, removeFromCart } =
     useContext(AppSessionContext);
   const [activeTab, setActiveTab] = useState(null);
   const [selectedStore, setSelectedStore] = useState(null);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [cart, setCart] = useState([]);
 
   const tabs = content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }));
   const favorite = activeTab?.path?.includes("favorite");
-
-  const deleteFromCart = async (storeId, barcodes) => {
-    const check = (b) => barcodes.includes(b);
-    const copy = [...cart];
-    copy.forEach((c) => c.id == storeId && (c.items = c.items.filter((it) => !check(it.barcode))));
-    const c = copy.filter((c) => !!c.items[0]);
-    setAppLoading(true);
-
-    // if (!user) {
-    let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
-    cartItems = cartItems.filter((it) => it.storeId == storeId && !check(it.barcode));
-    window.localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    // } else {
-    //   try {
-    //     // Todo: remove the item from the backend
-    //   } catch (error) {}
-    // }
-
-    setCart(c);
-    setAppLoading(false);
-  };
 
   const deleteFromFavorite = async (storeId, barcodes) => {
     if (!user?.favoriteProducts) return;
@@ -58,9 +36,8 @@ export default function Cart({ params, searchParams }) {
     try {
       const data = { favoriteProducts };
       await request("customer", "PUT", { query: `/${user.customerId}`, body: { data } });
-      setFavoriteProducts(data.favoriteProducts);
-      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
       setFavoriteProducts(copy.filter((c) => !!c.items[0]));
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -81,52 +58,14 @@ export default function Cart({ params, searchParams }) {
     }));
 
     window.localStorage.setItem("checkoutItems", JSON.stringify(items));
-    let cartItems = JSON.parse(window.localStorage.getItem("cartItems"));
-    cartItems = JSON.stringify(cartItems.filter((it) => it.storeId != selectedStore.id));
-    window.localStorage.setItem("cartItems", cartItems);
-
+    removeFromCart(selectedStore.id);
     router.push("/checkout");
   };
-
-  const mergeCartItem = async (item) => {
-    try {
-      console.log("Todo: Merge the local cart item with the user cart items ", item);
-    } catch (err) {
-      //
-    }
-  };
-
-  const mergeUserAndLocalCarts = (items) => {
-    if (!items || !items[0]) return [];
-    const stores = [...(user?.cart || [])];
-
-    items.forEach((item) => {
-      const { phone, currency, productNumber, barcode, quantity, title, imageUrl, price, discount } = item;
-      const newItem = { productNumber, barcode, title, imageUrl, price, discount, quantity };
-      const store = { id: item.storeId, name: item.storeName, phone, currency, items: [newItem] };
-
-      if (user && !user.cart?.find((c) => c.items.find((it) => it.barcode == barcode))) mergeCartItem(item);
-
-      const storeIndex = stores.findIndex((s) => s.id == item.storeId);
-      if (storeIndex < 0) return stores.push(store);
-
-      const itemIndex = stores[storeIndex].items.findIndex((item) => item.barcode == barcode);
-      if (itemIndex < 0) stores[storeIndex].items.push(newItem);
-      else stores[storeIndex].items[itemIndex].quantity = quantity;
-    });
-
-    return stores;
-  };
-
-  useEffect(() => {
-    setCartItemsNum(cart.length);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart]);
 
   useEffect(() => {
     document.title = (activeTab?.text || "Shipping Cart") + " - ALM";
     setSelectedStore(null);
-    if (favorite) fetchUser().then(updateUser);
+    if (favorite) refetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
@@ -135,9 +74,6 @@ export default function Cart({ params, searchParams }) {
 
     setAppLoading(true);
     setFavoriteProducts(user?.favoriteProducts || []);
-
-    setCart(mergeUserAndLocalCarts(JSON.parse(window.localStorage.getItem("cartItems"))));
-
     setAppLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -162,7 +98,7 @@ export default function Cart({ params, searchParams }) {
               favorite={favorite}
               {...s}
               onCheck={setSelectedStore}
-              onRemove={deleteFromCart}
+              onRemove={removeFromCart}
               key={i}
             />
           ))}
