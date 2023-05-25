@@ -111,7 +111,7 @@ export default function NewStore({ params, searchParams }) {
         id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
       }
 
-      router.replace(`/admin/store/${id}/product`);
+      window.location.replace(`/admin/store/${id}/product`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -124,7 +124,7 @@ export default function NewStore({ params, searchParams }) {
     try {
       await request("store", "DELETE", { query: `/${searchParams.id}` });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      router.replace(`/admin/store`);
+      window.location.replace(`/admin/store`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }

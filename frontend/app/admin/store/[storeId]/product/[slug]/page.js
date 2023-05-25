@@ -59,7 +59,7 @@ export default function ProductById({ params }) {
       }
 
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      router.replace(`/store/${params.storeId}/product/${id}`);
+      window.location.replace(`/store/${params.storeId}/product/${id}`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -72,7 +72,7 @@ export default function ProductById({ params }) {
     try {
       await request("product", "DELETE", { query: `/${product.id}?storeId=${params.storeId}` });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      router.replace(`/admin/store/${params.storeId}/product`);
+      window.location.replace(`/admin/store/${params.storeId}/product`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }

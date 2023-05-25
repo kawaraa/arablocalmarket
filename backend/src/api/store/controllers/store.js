@@ -4,6 +4,10 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async create(ctx) {
+    const options = { select: ["id"], where: { owner: ctx.state.user.id } };
+    const stores = await strapi.query("api::store.store").findMany(options);
+    if (stores.length > 2) return ctx.notAcceptable("stores limit");
+
     const newStore = JSON.parse(ctx.request.body.data);
     newStore.owner = +ctx.state.user.id;
     newStore.meta = { phone: ctx.state.user.phone };
@@ -46,7 +50,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async update(ctx) {
     const id = ctx.params.id;
     const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
-    const store = await strapi.db.query("api::store.store").findOne(options);
+    const store = await strapi.query("api::store.store").findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
     if (ctx.request.files && store.cover) strapi.plugins.upload.services.upload.remove(store.cover);
     delete ctx.request.body.data.owner;
@@ -57,7 +61,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
     const id = ctx.params.id;
 
     const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
-    const store = await strapi.db.query("api::store.store").findOne(options);
+    const store = await strapi.query("api::store.store").findOne(options);
 
     if (!store || !store.id) return ctx.unauthorized();
 

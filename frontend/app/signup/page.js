@@ -55,7 +55,7 @@ export default function Signup({}) {
   };
 
   if (user?.loading) return null;
-  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store" : "store");
+  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">

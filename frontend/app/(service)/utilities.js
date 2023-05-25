@@ -87,4 +87,8 @@ const errors = {
     en: "Current password is invalid",
     ar: "كلمة المرور الحالية غير صحيحة",
   },
+  "stores limit": {
+    en: "You have reached the maximum stores limit",
+    ar: "لقد وصلت إلى الحد الأقصى المسموح به للمخازن",
+  },
 };
