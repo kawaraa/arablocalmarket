@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import shdCnt from "../(layout)/json/shared-content.json";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
@@ -55,7 +54,7 @@ export default function Navigation() {
         className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
           showMenu && "left-[0]"
         }`}>
-        <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
+        <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-3">
           <div className="relative w-7 rounded-md">
             <Image
               src={`/img/${lang}.png`}
@@ -78,7 +77,7 @@ export default function Navigation() {
             </select>
           </div>
         </li>
-        <li className="absolute top-3 right-3 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-1">
+        <li className="absolute top-3 right-3 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:mx-3">
           <div className="relative w-7 ">
             <SvgIcon name={content.themeModeIconsMap[themeMode]} />
             <select
@@ -101,7 +100,9 @@ export default function Navigation() {
             key={i}
             className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
             <Link passHref legacyBehavior href={link.path}>
-              <a className="block p-3 text-lg">{link.text[lang]}</a>
+              <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
+                {link.text[lang]}
+              </a>
             </Link>
           </li>
         ))}
@@ -111,7 +112,9 @@ export default function Navigation() {
             onClick={() => setShowMenu(!showMenu)}
             className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
             <Link passHref legacyBehavior href={content.navLinks[1].path}>
-              <a className="block p-3 text-lg">{content.navLinks[1].text[lang]}</a>
+              <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
+                {content.navLinks[1].text[lang]}
+              </a>
             </Link>
           </li>
         )}
@@ -208,8 +211,8 @@ const content = {
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
-    { text: shdCnt.createStore, path: "/admin/new-store" },
     { text: { en: "My stores", ar: "متاجري" }, path: "/admin/store?tab=my" },
+    { text: { en: "clients", ar: "العملاء" }, path: "/admin/client" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },
   ],

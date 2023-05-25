@@ -34,6 +34,7 @@ module.exports = {
       bg6: "#b8f5d9",
       bg7: "#fcdcdc",
       bg8: "#A9A9A9",
+      bg9: "#ac9ffc",
 
       // "ico-bg": "#9bface", // Icon & Button Background
       // "ico-c": "#121212", // Icon & Button Color
@@ -64,7 +65,8 @@ module.exports = {
       10: "10",
     },
     backgroundImage: {
-      "gradient-to-tl": "linear-gradient(to top left, var(--tw-gradient-stops) 65%)",
+      "gradient-to-tl": "linear-gradient(to top left, var(--tw-gradient-stops) 80%)",
+      "gradient-to-br": "linear-gradient(to bottom right, var(--tw-gradient-stops) 80%)",
       "gradient-from-c": "radial-gradient(var(--tw-gradient-stops))",
     },
   },

@@ -65,16 +65,7 @@ export default function StoreProducts({ params, searchParams }) {
   if (user?.loading || !store) return null;
   else if (!user) return router.replace("/signin");
   return (
-    <div>
-      <LinkButton
-        href={content.createProduct.path.replace("storeId", store.id)}
-        title={content.createProduct.text[lang]}
-        icon="plus"
-        // onClick={() => setLoading(true)}
-        cls="fixed z-1 bottom-7 right-7 w-12 h-12 !p-0 rounded-lg"
-        iconCls="w-full"
-      />
-
+    <>
       <div className="flex items-center mb-3">
         <SearchBox onFinish={refresh} cls="flex-1" />
         <BarcodeScannerPopup lang={lang} onBarcodeDetect={refresh} onError={onScanErr} btnCls="w-10" />
@@ -97,8 +88,16 @@ export default function StoreProducts({ params, searchParams }) {
         ))}
       </ul>
 
+      <LinkButton
+        href={content.createProduct.path.replace("storeId", store.id)}
+        title={content.createProduct.text[lang]}
+        icon="plus"
+        // onClick={() => setLoading(true)}
+        cls="fixed z-1 bottom-7 right-7 w-12 h-12 !p-0 rounded-lg"
+        iconCls="w-full"
+      />
       {loading && <Loader size="30" wrapperCls="my-5" />}
-    </div>
+    </>
   );
 }
 

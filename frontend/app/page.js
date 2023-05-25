@@ -13,19 +13,13 @@ export default async function LandingPage({ params, searchParams }) {
   return (
     <>
       <CheckUser />
-      <section className="absolute inset-0 h-[100vh] w-full bg-hpbg dark:bg-dbg border-b border-b-2 border-b-bc">
+      <section className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
-          className="relative h-1/3 md:h-1/2 mt-24 md:mt-16 md:pt-6 md:w-2/3 mx-auto rounded-xl bg-d-c-bg lazy-b"
-          style={{
-            ...getCssDelay(),
-            backgroundImage: "url('/img/landing-page.png')",
-            backgroundSize: "contain",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}>
-          <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div>
+          className="relative sm:mb-10 flex-auto mt-10 md:pt-6 mx-auto rounded-xl bg-[url(/img/landing-page.png)] bg-contain bg-no-repeat bg-center lazy-b"
+          style={{ ...getCssDelay() }}>
+          {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
 
-          <h1 className="mt-5 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
+          <h1 className="mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
             {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
           </h1>
 
@@ -35,7 +29,7 @@ export default async function LandingPage({ params, searchParams }) {
           </p>
         </div>
 
-        <article dir="auto" className="relative text-center top-0 px-4 pt-6 md:pt-3 w-full">
+        <article dir="auto" className="relative text-center top-0 px-4 w-full">
           <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
             {content.h1P[lang]}
           </p>
@@ -46,7 +40,7 @@ export default async function LandingPage({ params, searchParams }) {
 
           <Link passHref legacyBehavior href="/store">
             <a
-              className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-pc2  rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
+              className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-bg9 rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
               style={getCssDelay()}>
               {content.findStoreLink[lang]}
             </a>
@@ -56,33 +50,61 @@ export default async function LandingPage({ params, searchParams }) {
             href="#section2"
             title={content.readMore[lang]}
             aria-label={content.readMore[lang]}
-            className="block w-10 mt-14 md:mt-8 mx-auto hover:text-dbg animate-bounce">
+            className="block w-10 mt-8 mx-auto hover:text-dbg animate-bounce">
             <SvgIcon name="arrowDownInCircle" />
           </a>
         </article>
       </section>
 
-      <section id="section2" className="mt-[100vh] text-center">
-        <h3 className="text-lg mt-5 mb-3 font-bold lazy-b" style={getCssDelay()}>
-          {content.h3[lang]}
+      <div id="section2" className="h-16"></div>
+
+      <section className="min-h-screen pt-14 pb-24 px-1 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-dbg text-center bg-pc bg-gradient-to-tl from-bg9">
+        <h3 className="text-4xl mb-4 font-bold mb-sm lazy-b" style={getCssDelay()}>
+          {content.h4[lang]}
         </h3>
-        <p className="text-lg my-5 mb-3 lazy-b" style={getCssDelay()}>
-          {content.h3P[lang]}
+        <p className="text-lg lazy-b" style={getCssDelay()}>
+          {content.h4P[lang][0]}
         </p>
+        <p className="text-lg lazy-b" style={getCssDelay()}>
+          {content.h4P[lang][1]}
+        </p>
+
+        <h4 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
+          {content.h3[lang]}
+        </h4>
+        <div className="mb-10 flex justify-around">
+          <div>
+            <p className="font-semibold lazy-b" style={getCssDelay()}>
+              {content.h3P[lang][0]}
+            </p>
+            gift image
+          </div>
+          <div>
+            <p className="font-semibold my-0 lazy-b" style={getCssDelay()}>
+              {content.h3P[lang][1]}
+            </p>
+            gift image
+          </div>
+          <div>
+            <p className="font-semibold my-0 lazy-b" style={getCssDelay()}>
+              {content.h3P[lang][2]}
+            </p>
+            gift image
+          </div>
+        </div>
 
         <Link passHref legacyBehavior href="/join">
           <a
             style={getCssDelay()}
-            className="inline-block text-sm bg-dbg text-dt px-2 rounded-full duration-200 hover:opacity-50 hover:shadow-xl lazy-b">
-            {content.h3Link[lang]}
+            className="inline-block mt-3 px-6 py-3 text-lg bg-dbg text-bg rounded-full duration-200 hover:opacity-90 hover:shadow-xl lazy-b">
+            {content.h4Link[lang]}
           </a>
         </Link>
-
-        {/* <h4>Hello from landing page second section</h4>
-        <p>Here we will show you what the app can do for you, the App features and how to use it.</p>
-        <p>Some images, GIFTs and videos </p> */}
       </section>
-      <Footer />
+      {/* 
+        <p>Todo: Here should show what the app can do for you, the App features and how to use it.</p>
+        <p>Some images, GIFTs and videos </p> */}
+      <Footer lang={lang} />
     </>
   );
 }
@@ -104,18 +126,26 @@ const content = {
     ar: "ابحث عن متجر عربي وسوبر ماركت بالقرب منك.",
   },
   findStoreLink: { en: "Find a store to order from", ar: "ابحث عن متجر للطلب منه" },
+  h4: { en: "Grow your business here", ar: "نمي عملك هنا" },
+  h4P: {
+    en: [
+      "Are you a store owner or you have a grocery store and want to grow your business?",
+      "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
+    ],
+    ar: [
+      "هل أنت صاحب متجر أو لديك متجر بقالة وترغب في تنمية عملك؟",
+      "فأنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
+    ],
+  },
   h3: {
-    en: "Are you a store owner and you want to create a store to list your products?",
-    ar: "هل أنت صاحب متجر وتريد إنشاء متجر لعرض منتجاتك؟",
+    en: "Create your first store and set it up in 3 steps",
+    ar: "أنشئ متجرك الأول وقم بإعداده في 3 خطوات",
   },
   h3P: {
-    en: "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
-    ar: "فأنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
+    en: ["Create a store", "Setup billing information", "List your products"],
+    ar: ["أنشئ متجرًا", "أضاف معلومات الدفع", "أضف منتجاتك"],
   },
-  h3Link: {
-    en: "Create a store",
-    ar: "أنشئ متجرًا",
-  },
+  h4Link: { en: "Start free", ar: "ابدأ مجانا" },
   readMore: {
     en: "Read more on how to create a store and manage you the store inventory",
     ar: "اقرأ المزيد حول كيفية إنشاء متجر وإدارة مخزون المتجر",

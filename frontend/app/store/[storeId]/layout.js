@@ -76,6 +76,6 @@ const content = {
   tabs: [
     { key: "3", path: "/store/storeId/product", text: shdCnt.products },
     { key: "2", path: "/store/storeId/category", text: shdCnt.category },
-    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "نظرة عامة" } },
+    { key: "1", path: "/store/storeId", text: { en: "Overview", ar: "حول المتجر" } },
   ],
 };

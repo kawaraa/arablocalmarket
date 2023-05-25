@@ -79,6 +79,7 @@ export default function Settings(props) {
           {content.confirmP[lang][1]}
         </p>
         <p className="my-5">{content.confirmP[lang][2]}</p>
+        <p className="my-5">{content.confirmP[lang][3]}</p>
       </Modal>
     </>
   );
@@ -92,11 +93,13 @@ const content = {
     en: [
       "Please note:",
       "Deleting the account will also delete all the stores and all products",
+      "You will also lose your referred clients if you have any, and therefor you will not receive any payout or earnings anymore.",
       "Are you sure you want to delete this your account?",
     ],
     ar: [
       "يرجى الملاحظة:",
       "سيؤدي حذف الحساب أيضًا إلى حذف جميع المتاجر وجميع المنتجات",
+      "ستفقد أيضًا عملائك المحالين إذا كان لديك أي منهم، وبالتالي لن تتلقى أي مدفوعات أو أرباح بعد الآن",
       "هل أنت متأكد أنك تريد حذف هذا حسابك؟",
     ],
   },

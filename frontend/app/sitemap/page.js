@@ -1,19 +1,16 @@
 import { cookies } from "next/headers";
 
-export default function Contact({ searchParams }) {
+export default function Sitemap({ searchParams }) {
+  console.log("Sitemap: >>>");
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  console.log("Contact: >>>");
-
   return (
-    <div>
-      <h1>Contact</h1>
-      <div>
-        <p>Technical issue</p>
-        <p>Suggest new feature</p>
-      </div>
-    </div>
+    <section>
+      <article>
+        <h1>{content.h1[lang]}</h1>
+      </article>
+    </section>
   );
 }
 
@@ -21,9 +18,11 @@ export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
   return {
-    // title: content.title[lang] + " - ALM",
+    title: content.h1[lang] + " - ALM",
     // description: content.desc[lang],
   };
 }
 
-const content = {};
+const content = {
+  h1: { en: "Sitemap", ar: "خريطة الموقع" },
+};
