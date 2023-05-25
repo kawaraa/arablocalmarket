@@ -9,12 +9,12 @@ export default function Footer({ lang = "en" }) {
       </p>
 
       <div class="flex mt-10 justify-around">
-        {content.linksGroup.map((g) => (
-          <div className="">
+        {content.linksGroup.map((g, i) => (
+          <div className="" key={i}>
             <h3 className="text-base font-bold">{g.h[lang]}</h3>
             <ul className="mt-1 text-sm">
-              {g.links.map((link) => (
-                <li>
+              {g.links.map((link, i) => (
+                <li key={i}>
                   <Link passHref legacyBehavior href={link.path}>
                     <a className="inline-block my-2 hover:underline underline-offset-4 hover:text-black">
                       {link.text[lang]}
