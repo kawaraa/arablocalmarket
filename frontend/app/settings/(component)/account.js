@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import { InputField } from "../../(component)/(styled)/inputs";
-import { EmailInputField, PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
+import { PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
 import { Button } from "../../(component)/(styled)/button";
 import Modal from "../../(component)/(styled)/modal";
 
@@ -21,7 +21,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
 
   return (
     <section>
-      <h3 className="text-lg font-semibold mb-2 mt-6">{content.account[lang]}</h3>
+      <h3 className="text-lg font-semibold mb-2 mt-6">{content.h[lang]}</h3>
       <InputField
         editable
         full
@@ -81,5 +81,5 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
 }
 
 const content = {
-  account: { en: "Account", ar: "الحساب" },
+  h: { en: "Account", ar: "الحساب" },
 };

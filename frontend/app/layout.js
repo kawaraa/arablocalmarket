@@ -6,7 +6,7 @@ import ScrollToTopBtn from "./(component)/scroll-to-top-btn";
 import "./global.css";
 
 // revalidate all the underneath routes and layouts
-export const revalidate = 60;
+// export const revalidate = 60;
 
 export default function RootLayout({ children, searchParams }) {
   const cookieStore = cookies();

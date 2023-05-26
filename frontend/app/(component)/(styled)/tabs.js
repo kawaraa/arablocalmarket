@@ -28,7 +28,7 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
   }, [p, current]);
 
   return (
-    <div className={` mb-3 md:mb-6 border border-bc shadow rounded-md ${cls}`}>
+    <div className={`mb-3 md:mb-6 border border-bc shadow rounded-md ${cls}`}>
       {title && <h2 className="pb-3 font-semibold text-lt text-xl font-medium">{title}</h2>}
 
       {/* flex-auto col-span-full xl:col-span-6  */}

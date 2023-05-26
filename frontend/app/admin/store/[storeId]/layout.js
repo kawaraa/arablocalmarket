@@ -90,9 +90,17 @@ export default function StoreById({ children, params: { storeId } }) {
         <IconButton
           icon="eye"
           onClick={() => router.push(`/store/${storeId}/product`)}
-          cls="w-10 absolute right-5 bottom-2 text-bg"
+          cls="w-8 absolute right-5 bottom-2 bg-blur text-bg rounded py-0"
         />
       </ImageUpload>
+      <div className="flex items-center justify-between px-3 py-1 bg-bg3 text-sm text-t">
+        <p className="">Your store plan is about to ends.</p>
+        <Link
+          href={"/pricing?storeId=" + storeId}
+          className="font-semibold hover:text-bg underline underline-offset-4 transition">
+          Reactivate
+        </Link>
+      </div>
 
       <section className="mt-5 mb-3 flex justify-between">
         <InputField

@@ -8,7 +8,8 @@ export default function Footer({ lang = "en" }) {
         © 2023 ArabLocalMarket Inc. {content.rights[lang]}
       </p>
 
-      <div class="flex mt-10 justify-around">
+      {/* Todo: list Facebook and Youtube here E.g. https://tailwindui.com/components/marketing/sections/footers */}
+      <div className="flex mt-10 justify-around">
         {content.linksGroup.map((g, i) => (
           <div className="" key={i}>
             <h3 className="text-base font-bold">{g.h[lang]}</h3>

@@ -8,6 +8,8 @@ import shdCnt from "../(layout)/json/shared-content.json";
 import { request } from "../(service)/api-provider";
 import { Button } from "../(component)/(styled)/button";
 import Modal from "../(component)/(styled)/modal";
+import Billing from "./(component)/billing";
+import Payout from "./(component)/payout";
 
 export default function Settings(props) {
   const router = useRouter();
@@ -44,7 +46,8 @@ export default function Settings(props) {
   };
 
   useEffect(() => {
-    document.title = "Admin Settings - ALM";
+    document.title = content.h1[lang] + " - ALM";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (user?.loading) return null;
@@ -55,6 +58,8 @@ export default function Settings(props) {
         <h1 className="text-2xl mb-6">{content.h1[lang]}</h1>
         <Profile lang={lang} {...user} handleUpdate={handleUpdate} setMessage={addMessage} />
         <Account lang={lang} {...user} handleUpdate={handleUpdate} />
+        <Billing lang={lang} />
+        <Payout lang={lang} />
 
         <div className="text-center pt-10">
           <Button

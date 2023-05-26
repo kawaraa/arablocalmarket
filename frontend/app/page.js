@@ -56,10 +56,10 @@ export default async function LandingPage({ params, searchParams }) {
         </article>
       </section>
 
-      <div id="section2" className="h-16"></div>
+      <div id="section2" className="h-12"></div>
 
       <section className="min-h-screen pt-14 pb-24 px-1 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-dbg text-center bg-pc bg-gradient-to-tl from-bg9">
-        <h3 className="text-4xl mb-4 font-bold mb-sm lazy-b" style={getCssDelay()}>
+        <h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm lazy-b" style={getCssDelay()}>
           {content.h4[lang]}
         </h3>
         <p className="text-lg lazy-b" style={getCssDelay()}>
@@ -93,11 +93,11 @@ export default async function LandingPage({ params, searchParams }) {
           </div>
         </div>
 
-        <Link passHref legacyBehavior href="/join">
+        <Link passHref legacyBehavior href="/admin/store?tab=my">
           <a
             style={getCssDelay()}
             className="inline-block mt-3 px-6 py-3 text-lg bg-dbg text-bg rounded-full duration-200 hover:opacity-90 hover:shadow-xl lazy-b">
-            {content.h4Link[lang]}
+            {content.h3Link[lang]}
           </a>
         </Link>
       </section>
@@ -145,7 +145,7 @@ const content = {
     en: ["Create a store", "Setup billing information", "List your products"],
     ar: ["أنشئ متجرًا", "أضاف معلومات الدفع", "أضف منتجاتك"],
   },
-  h4Link: { en: "Start free", ar: "ابدأ مجانا" },
+  h3Link: { en: "Start free", ar: "ابدأ مجانا" },
   readMore: {
     en: "Read more on how to create a store and manage you the store inventory",
     ar: "اقرأ المزيد حول كيفية إنشاء متجر وإدارة مخزون المتجر",
