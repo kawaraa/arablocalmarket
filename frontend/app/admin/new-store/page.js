@@ -17,7 +17,6 @@ import Collapse from "../../(component)/collapse";
 import ImageUpload from "../../(component)/(styled)/upload-image";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import Modal from "../../(component)/(styled)/modal";
-import Link from "next/link";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const q =
   "?fields=owner,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
@@ -166,16 +165,8 @@ export default function NewStore({ params, searchParams: { id, subscription } })
   if (!user || user?.loading) return null;
   return (
     <>
-      <div className="flex items-center justify-between px-3 py-1 bg-bg3 text-sm text-t">
-        <p className="">The plan of this store is "Basic"</p>
-        <Link
-          href={"/pricing?storeId=" + id}
-          className="font-semibold hover:text-bg underline underline-offset-4 transition">
-          Upgrade
-        </Link>
-      </div>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
-        <h1 className="text-xl text-center my-2">{id ? content.updateH1[lang] : shdCnt.createStore[lang]}</h1>
+        <h1 className="text-xl text-center my-5">{id ? content.updateH1[lang] : shdCnt.createStore[lang]}</h1>
 
         {/* cover */}
         {!id && (

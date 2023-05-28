@@ -8,7 +8,7 @@ import SearchBox from "../../(component)/(styled)/search-box";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
 import shdCnt from "../../(layout)/json/shared-content.json";
 
-export default function StoreSearch({ text, userLocation = [0, 0] }) {
+export default function StoreSearch({ text }) {
   const router = useRouter();
   const pathname = usePathname();
   const { lang, coordinates, range, updateCoordinates, updateRange, addMessage } =
@@ -30,13 +30,13 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
-  useEffect(() => {
-    const setFilter = (arg) => setTimeout(() => setShowFilter(arg), 500);
+  // useEffect(() => {
+  //   const setFilter = (arg) => setTimeout(() => setShowFilter(arg), 500);
 
-    if (!coordinates[0]) setFilter(true);
-    else if (coordinates[0] && userLocation[0] == 0) window.location.reload();
-    else setFilter(false);
-  }, [coordinates, userLocation]);
+  //   if (!coordinates[0]) setFilter(true);
+  //   else if (coordinates[0] && userLocation[0] == 0) window.location.reload();
+  //   else setFilter(false);
+  // }, [coordinates, userLocation]);
 
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";

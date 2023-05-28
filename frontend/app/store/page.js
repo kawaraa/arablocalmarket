@@ -8,20 +8,20 @@ import PaginationButtons from "./[storeId]/product/(component)/pagination-button
 import CoordinatesCriteria from "./(component)/coordinates-criteria";
 
 export default async function StoresNearby({ searchParams }) {
-  // const headersList = headers();
-
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  let coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
+  const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "1.5");
   const search = searchParams.search?.toLowerCase();
   const page = searchParams.page || 1;
 
-  // This is not needed if reloading the page in this file: app/store/(component)/store-search.js
+  // This for detecting the user location via the IP Address
+  // const headersList = headers();
   // if (coordinates[0] == 0) {
   //   const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
   //   if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
   // }
+
   const criteria = new CoordinatesCriteria(...coordinates, range);
   const { data, meta } = await getData(page, criteria, search);
   data.forEach((store) => {
@@ -30,7 +30,7 @@ export default async function StoresNearby({ searchParams }) {
 
   return (
     <>
-      <StoreSearch text={search} userLocation={coordinates} />
+      <StoreSearch text={search} />
 
       <h1 className="mb-4 text-center">
         {content.h1[lang][0]} <strong>( {meta.pagination.total} )</strong> {content.h1[lang][1]}
@@ -75,19 +75,18 @@ export async function generateMetadata({ params, searchParams }) {
 
 async function getData(page, criteria, search) {
   // Todo: includes in the filters the following: open, payments, deliver, deliveryCost, whatsAppOrder
-  const { range, minLat, maxLat, minLng, maxLng } = criteria;
+  const { range, lat, lng, minLat, maxLat, minLng, maxLng } = criteria;
 
   let sq = "";
   if (search) {
     sq = `filters[$or][0][name][$contains]=${search}&filters[$or][1][about][$contains]=${search}&`;
   }
 
-  // Todo: Remove this query
-  const query = `?${sq}populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
+  let query = `?${sq}populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
 
-  // Todo: Use this query instead, it's tested
-  // const query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
-
+  if (lat != 0 && lng != 0) {
+    query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
+  }
   return serverRequest("store", "GET", { query });
 }
 

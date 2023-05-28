@@ -95,7 +95,7 @@ export default function StoreById({ children, params: { storeId } }) {
 
       <Dropdown
         event="click"
-        cls="!absolute -mt-10 right-4 z-1"
+        cls="!absolute -mt-10 right-4 z-2"
         icon="threeDots"
         iconCls="w-8 md:w-8"
         btnCls="!rounded-lg"

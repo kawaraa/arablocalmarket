@@ -14,6 +14,7 @@ const plans = [
     features: [
       { en: "Products limit: 200", ar: "حد المنتجات: 200" },
       { en: "Trial: 30 days", ar: "التجربة: 30 يومًا" },
+      { en: "Cancel anytime", ar: "إلغاء في أي وقت" },
     ],
   },
   {
@@ -28,6 +29,7 @@ const plans = [
     features: [
       { en: "Products limit: 500", ar: "حد المنتجات: 500" },
       { en: "Trial: 30 days", ar: "التجربة: 30 يومًا" },
+      { en: "Cancel anytime", ar: "إلغاء في أي وقت" },
     ],
   },
   {
@@ -42,6 +44,7 @@ const plans = [
     features: [
       { en: "Products limit: 1000", ar: "حد المنتجات: 1000" },
       { en: "Trial: 30 days", ar: "التجربة: 30 يومًا" },
+      { en: "Cancel anytime", ar: "إلغاء في أي وقت" },
     ],
   },
 ];

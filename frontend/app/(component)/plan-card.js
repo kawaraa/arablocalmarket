@@ -3,9 +3,9 @@ import SvgIcon from "./(styled)/svg-icon";
 
 export default function PlanCard({ children, lang, plan }) {
   return (
-    <article className="overflow-hidden flex-1 md:max-w-sm md:mx-3 rounded-lg card">
+    <article className="overflow-hidden flex-1 flex flex-col md:max-w-sm md:mx-3 rounded-lg card">
       <div className="h-0.5 bg-pc mb-5"></div>
-      <header className="min-h-[130px] px-5 mb-3">
+      <header className="px-2 mb-5 flex-1">
         <h3 className="mb-3 text-lg text-center font-semibold">{plan.name[lang]}</h3>
         <p className="text-center">{plan.desc[lang]}</p>
       </header>
@@ -16,30 +16,32 @@ export default function PlanCard({ children, lang, plan }) {
           {content.period[lang]}
         </span>
       </div>
-      <h6 dir="auto" className="text-sm p-5 border-t-[1px] border-bc font-semibold uppercase">
-        {content.include[lang]}
-      </h6>
-      <ul dir="auto" className="p-5 pt-0 min-h-[50px]">
-        {plan.features.map((feature, i) => (
-          <li className="flex items-center py-1" key={i}>
-            <div className="w-5 text-green">
-              <SvgIcon name="checkMark" />
-            </div>
-            <div className="text-sm mx-2">{feature[lang]}</div>
-          </li>
-        ))}
-      </ul>
-      {children || (
-        <LinkButton
-          href={
-            plan?.storeId
-              ? `/payment?storeId=${plan.storeId}&plan=${plan.subscription}`
-              : `/admin/new-store?subscription=${plan.subscription}`
-          }
-          cls="!flex max-w-[120px] mx-auto md:max-w-full md:mx-5 mb-5 !rounded-full">
-          {content.link[lang]}
-        </LinkButton>
-      )}
+      <div className=" flex-1">
+        <h6 dir="auto" className="text-sm p-5 border-t-[1px] border-bc font-semibold uppercase">
+          {content.include[lang]}
+        </h6>
+        <ul dir="auto" className="p-5 pt-0 min-h-[50px]">
+          {plan.features.map((feature, i) => (
+            <li className="flex items-center py-1" key={i}>
+              <div className="w-5 text-green">
+                <SvgIcon name="checkMark" />
+              </div>
+              <div className="text-sm mx-2">{feature[lang]}</div>
+            </li>
+          ))}
+        </ul>
+        {children || (
+          <LinkButton
+            href={
+              plan?.storeId
+                ? `/payment?storeId=${plan.storeId}&plan=${plan.subscription}`
+                : `/admin/new-store?subscription=${plan.subscription}`
+            }
+            cls="!flex max-w-[120px] mx-auto md:max-w-full md:mx-5 mb-5 !rounded-full">
+            {content.link[lang]}
+          </LinkButton>
+        )}{" "}
+      </div>
     </article>
   );
 }

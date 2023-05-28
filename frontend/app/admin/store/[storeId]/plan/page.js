@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
 import { AppSessionContext } from "../../../../app-session-context";
 import { request } from "../../../../(service)/api-provider";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
@@ -7,7 +8,6 @@ import plans from "../../../../(layout)/plans";
 import PlanCard from "../../../../(component)/plan-card";
 import { Button } from "../../../../(component)/(styled)/button";
 import Modal from "../../../../(component)/(styled)/modal";
-import Link from "next/link";
 
 export default function StorePlan({ params: { storeId } }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
@@ -32,10 +32,15 @@ export default function StorePlan({ params: { storeId } }) {
   const handleUpgrade = async (priceId) => {
     setAppLoading(true);
     try {
-      setSubscription(
-        await request("stripe", "PUT", { query: `/upgrade?storeId=${storeId}&priceId=${priceId}` })
-      );
-      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+      if (isEnded(subscription?.currentPeriodEnd)) {
+        //
+        console.log("Reactivate");
+      } else {
+        setSubscription(
+          await request("stripe", "PUT", { query: `/upgrade?storeId=${storeId}&priceId=${priceId}` })
+        );
+        addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+      }
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
@@ -164,7 +169,7 @@ export default function StorePlan({ params: { storeId } }) {
             <PlanCard lang={lang} plan={plan} key={i}>
               <div className="text-center">
                 <Button
-                  disabled={subscription.id == plan.subscription}
+                  disabled={!isEnded(subscription?.currentPeriodEnd) && subscription.id == plan.subscription}
                   onClick={() => handleUpgrade(plan.subscription)}
                   cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
                   {subscription.id != plan.subscription ? content.select[lang] : content.selected[lang]}
