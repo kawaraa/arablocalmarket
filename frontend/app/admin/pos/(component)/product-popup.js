@@ -68,7 +68,7 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
   }, [product]);
 
   return (
-    <Modal open={open} onCancel={onCancel} onApprove={handleAddItem} okBtn={shdCnt.add[lang]}>
+    <Modal lang={lang} open={open} onCancel={onCancel} onApprove={handleAddItem} okBtn={shdCnt.add[lang]}>
       {product && (
         <div dir="auto" className="mt-10">
           {Object.keys(options).map((name, i) => (

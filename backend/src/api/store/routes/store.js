@@ -1,9 +1,5 @@
-'use strict';
+"use strict"; /** store router */
 
-/**
- * store router
- */
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::store.store');
+module.exports = createCoreRouter("api::store.store");

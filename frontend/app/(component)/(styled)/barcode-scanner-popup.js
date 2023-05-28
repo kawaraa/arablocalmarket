@@ -33,7 +33,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
           cls={"p-1 cursor-pointer hover:text-pc transition " + btnCls}
         />
       )}
-      <Modal title={shdCnt.scanner[lang]} open={showScanner} center>
+      <Modal lang={lang} title={shdCnt.scanner[lang]} open={showScanner} center>
         {browserSupportBarcodeScanner ? (
           <BrowserBarcodeDetecter
             lang={lang}

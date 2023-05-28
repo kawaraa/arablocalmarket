@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -79,6 +78,12 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "stripeId": {
+      "type": "string",
+      "private": true,
+      "unique": true,
+      "maxLength": 100
     },
     "address": {
       "type": "component",

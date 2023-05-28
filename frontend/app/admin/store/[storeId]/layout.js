@@ -7,9 +7,10 @@ import Tabs from "../../../(component)/(styled)/tabs";
 import { InputField, ToggleSwitch } from "../../../(component)/(styled)/inputs";
 import SvgIcon from "../../../(component)/(styled)/svg-icon";
 import ImageUpload from "../../../(component)/(styled)/upload-image";
-import { IconButton, LinkButton } from "../../../(component)/(styled)/button";
+import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
+import Dropdown from "../../../(component)/(styled)/dropdown";
 const q = "?fields=name,open&populate=cover";
 
 export default function StoreById({ children, params: { storeId } }) {
@@ -63,14 +64,14 @@ export default function StoreById({ children, params: { storeId } }) {
   };
 
   useEffect(() => {
-    fetchStore();
+    if (!user && !user?.loading) router.replace("/signin");
+    else if (!user?.loading) fetchStore();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
-  if (user?.loading || !store) return null;
-  else if (!user) return router.replace("/signin");
+  if (!user || user?.loading || !store) return null;
   return (
-    <article>
+    <article className="relative">
       <ImageUpload
         id="store-cover"
         imageUrl={image}
@@ -83,24 +84,39 @@ export default function StoreById({ children, params: { storeId } }) {
           </a>
         </Link>
         {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
-        <LinkButton href={"/admin/new-store?id=" + storeId} cls="absolute bottom-2 left-5 ">
-          {shdCnt.edit[lang]}
-        </LinkButton>
 
-        <IconButton
+        <LinkButton
           icon="eye"
-          onClick={() => router.push(`/store/${storeId}/product`)}
-          cls="w-8 absolute right-5 bottom-2 bg-blur text-bg rounded py-0"
+          href={`/store/${storeId}/product`}
+          cls="absolute left-5 bottom-2 !bg-blur !text-bg rounded !py-0 !px-1 hover:bg-blur"
+          iconCls="w-6"
         />
       </ImageUpload>
-      <div className="flex items-center justify-between px-3 py-1 bg-bg3 text-sm text-t">
-        <p className="">Your store plan is about to ends.</p>
-        <Link
-          href={"/pricing?storeId=" + storeId}
-          className="font-semibold hover:text-bg underline underline-offset-4 transition">
-          Reactivate
-        </Link>
-      </div>
+
+      <Dropdown
+        event="click"
+        cls="!absolute -mt-10 right-4 z-1"
+        icon="threeDots"
+        iconCls="w-8 md:w-8"
+        btnCls="!rounded-lg"
+        title="View store options">
+        <li className="overflow-hidden w-28 even:bg-[#f8fafc]">
+          <Link
+            passHref
+            href={"/admin/new-store?id=" + storeId}
+            className="block break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+            {shdCnt.edit[lang]}
+          </Link>
+        </li>
+        <li className="overflow-hidden w-28 even:bg-[#f8fafc]">
+          <Link
+            passHref
+            href={`/admin/store/${storeId}/plan`}
+            className="block break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
+            {content.plan[lang]}
+          </Link>
+        </li>
+      </Dropdown>
 
       <section className="mt-5 mb-3 flex justify-between">
         <InputField
@@ -134,6 +150,7 @@ export default function StoreById({ children, params: { storeId } }) {
 }
 
 const content = {
+  plan: { en: "Plan", ar: "الاشتراك" },
   tabs: [
     { key: "1", path: "/admin/store/storeId", text: { en: "Orders", ar: "الطلبات" } },
     { key: "3", path: "/admin/store/storeId/product", text: { en: "Products", ar: "المنتجات" } },

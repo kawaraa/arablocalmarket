@@ -60,6 +60,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
       </div>
 
       <Modal
+        lang={lang}
         tag="form"
         title="Update Password"
         okBtn="Save"

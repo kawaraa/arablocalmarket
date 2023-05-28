@@ -21,6 +21,10 @@
       "type": "string",
       "required": false
     },
+    "province": {
+      "type": "string",
+      "required": false
+    },
     "country": {
       "type": "string",
       "required": false
@@ -32,10 +36,6 @@
     "currentLng": {
       "type": "float",
       "required": true
-    },
-    "province": {
-      "type": "string",
-      "required": false
     }
   }
 }

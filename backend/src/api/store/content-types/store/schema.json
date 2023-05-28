@@ -88,22 +88,30 @@
     "vatNumber": {
       "type": "string"
     },
-    "stripeId": {
-      "type": "string",
-      "unique": true,
-      "private": true
-    },
-    "stripeSubscriptionId": {
+    "subscriptionId": {
       "type": "string",
       "unique": true,
       "private": true
     },
     "subscriptionStatus": {
       "type": "enumeration",
-      "enum": ["TRIAL", "ACTIVE", "CANCELED", "INCOMPLETE", "EXPIRED", "UNPAID"],
+      "enum": [
+        "TRIAL",
+        "ACTIVE",
+        "CANCELED",
+        "INCOMPLETE",
+        "EXPIRED",
+        "UNPAID",
+        "trialing",
+        "active",
+        "incomplete",
+        "incomplete_expired",
+        "past_due",
+        "canceled",
+        "unpaid"
+      ],
       "default": "TRIAL",
-      "required": true,
-      "private": true
+      "required": true
     },
     "orders": {
       "type": "relation",

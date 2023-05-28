@@ -16,9 +16,12 @@ export default function Stores() {
   useEffect(() => {
     document.title = "Admin Stores - ALM";
   }, []);
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+  if (!user || user?.loading) return null;
 
   let result = activeTab?.key == "work" ? user.workStores : user.myStores;
   if (activeTab?.key == "favorite") result = user.favoriteStores;

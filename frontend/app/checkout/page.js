@@ -255,6 +255,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
           )}
 
           <Modal
+            lang={lang}
             tag="form"
             title={shdCnt.newAdr[lang]}
             // title="Shipping Information"
@@ -365,6 +366,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
       </div>
 
       <Modal
+        lang={lang}
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setConfirmCheckout(false)}

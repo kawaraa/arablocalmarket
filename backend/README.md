@@ -55,6 +55,7 @@ Rating alow: create, update, delete, find, findOne
 Store alow: create, update, delete, find, findOne
 Upload alow: upload, findOne
 User permission alow: changePassword, me, update, destroy
+Stripe allow: findOne, upgrade, cancel, webhook
 ```
 
 ### `start`

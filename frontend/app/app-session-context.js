@@ -6,6 +6,7 @@ import { Cookies } from "./(service)/utilities";
 import ImagePreview from "./(component)/(styled)/image-preview";
 import shdCnt from "./(layout)/json/shared-content.json";
 // import { Validator } from "k-utilities";
+const currency = process.env.NEXT_PUBLIC_CURRENCY || "€";
 
 export const AppSessionContext = createContext();
 
@@ -130,6 +131,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     cart,
     addToCart,
     removeFromCart,
+    currency,
   };
 
   return (

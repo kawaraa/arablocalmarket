@@ -53,8 +53,12 @@ export default function Orders(props) {
     ready: !!user?.id,
   });
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  if (!user || user?.loading) return null;
   return (
     <>
       <h1 dir="auto" className="text-lg my-5 font-medium lazy-l">

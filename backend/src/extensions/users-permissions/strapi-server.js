@@ -38,6 +38,11 @@ module.exports = (plugin) => {
     });
     promises.push(strapi.query("api::store.store").deleteMany({ data: { where: { owner: userId } } }));
     promises.push(strapi.query("api::customer.customer").delete({ where: { id } }));
+    // Todo: Cancel all the subscription.
+    // Todo: Delete the customer from Stripe.
+
+    // promises.push(strapi.service("api::stripe.stripe").CancelSubscriptions(""));
+    // promises.push(strapi.service("api::stripe.stripe").deleteCustomer(ctx.state.user.strapiId));
 
     await Promise.all(promises);
     return strapi.query("plugin::users-permissions.user").delete({ where: { id: userId } });

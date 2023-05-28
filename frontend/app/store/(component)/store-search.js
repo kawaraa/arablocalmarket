@@ -67,6 +67,7 @@ export default function StoreSearch({ text, userLocation = [0, 0] }) {
       </div>
 
       <Modal
+        lang={lang}
         title={content.modalTitle[lang]}
         okBtn={shdCnt.save[lang]}
         open={showFilter}

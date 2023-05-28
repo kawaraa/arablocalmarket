@@ -62,8 +62,12 @@ export default function StoreProducts({ params, searchParams }) {
     ready: !!store?.id,
   });
 
-  if (user?.loading || !store) return null;
-  else if (!user) return router.replace("/signin");
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  if (!user || user?.loading) return null;
   return (
     <>
       <div className="flex items-center mb-3">

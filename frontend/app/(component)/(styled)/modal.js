@@ -3,7 +3,8 @@ import Transition from "../../(layout)/transitions";
 import { Button, IconButton } from "./button";
 import SvgIcon from "./svg-icon";
 
-export default function Modal({ tag, title, okBtn, open, loading, onCancel, onApprove, icon, center, ...p }) {
+export default function Modal(props) {
+  const { lang = "en", tag, title, okBtn, open, loading, onCancel, onApprove, icon, center, ...p } = props;
   const cls = open ? "!h-full p-4 opacity-100" : "";
   const c = center ? "top-1/2 -translate-y-1/2" : "bottom-10 md:bottom-1/2 md:translate-y-1/2";
 
@@ -29,7 +30,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
             icon="crossMark"
             onClick={onCancel}
             disabled={!!loading}
-            title="Cancel and close the modal window"
+            title={content.cancel[lang]}
             cls="w-8 absolute top-3 right-3 hover:text-red print:hidden"
           />
         )}
@@ -66,3 +67,7 @@ export default function Modal({ tag, title, okBtn, open, loading, onCancel, onAp
     </>
   );
 }
+
+const content = {
+  cancel: { en: "Cancel and close the modal window", ar: "إلغاء وإغلاق النافذة" },
+};

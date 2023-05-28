@@ -48,6 +48,7 @@ export default function ProductSearch({ text, scroll, onSearch }) {
       </div>
 
       <Modal
+        lang={lang}
         title={content.filter[lang]}
         okBtn={content.okBtn[lang]}
         open={showFilter}

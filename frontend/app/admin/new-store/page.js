@@ -23,7 +23,7 @@ const q =
   "?fields=owner,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
 const openingHour = { open: "AM-07.00", close: "PM-07.00" };
 
-export default function NewStore({ params, searchParams }) {
+export default function NewStore({ params, searchParams: { id, subscription } }) {
   const router = useRouter();
   const { lang, setAppLoading, user, addMessage } = useContext(AppSessionContext);
   const [store, setStore] = useState(null);
@@ -33,7 +33,6 @@ export default function NewStore({ params, searchParams }) {
   const [onDeliveryPayment, setOnDeliveryPayment] = useState(null);
   const [onlinePayment, setOnlinePayment] = useState(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-  const update = !!searchParams.id;
 
   const handleError = (text) => {
     addMessage({ type: "error", text, duration: 5 });
@@ -103,10 +102,10 @@ export default function NewStore({ params, searchParams }) {
 
       let id = null;
       if (!store) {
-        const formData = new FormData();
-        formData.append("files.cover", file, file.name);
-        formData.append("data", JSON.stringify(data));
-        id = (await request("store", "POST", formData)).data.id;
+        const d = { body: new FormData(), query: `?subscription=${subscription}` };
+        d.body.append("files.cover", file, file.name);
+        d.body.append("data", JSON.stringify(data));
+        id = (await request("store", "POST", d)).data.id;
       } else {
         delete data.name;
         id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
@@ -123,7 +122,7 @@ export default function NewStore({ params, searchParams }) {
     setDeleteConfirmation(false);
     setAppLoading(true);
     try {
-      await request("store", "DELETE", { query: `/${searchParams.id}` });
+      await request("store", "DELETE", { query: `/${id}` });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
       window.location.replace(`/admin/store`);
     } catch (error) {
@@ -157,29 +156,29 @@ export default function NewStore({ params, searchParams }) {
   };
 
   useEffect(() => {
-    if (searchParams.id) fetchStoreById(searchParams.id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+    if (!user && !user?.loading) router.replace("/signin");
+    else if (!id && !subscription) router.replace("/pricing");
+    else if (id) fetchStoreById(id);
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, id, subscription]);
+
+  if (!user || user?.loading) return null;
   return (
     <>
       <div className="flex items-center justify-between px-3 py-1 bg-bg3 text-sm text-t">
         <p className="">The plan of this store is "Basic"</p>
         <Link
-          href={"/pricing?storeId=" + searchParams.id}
+          href={"/pricing?storeId=" + id}
           className="font-semibold hover:text-bg underline underline-offset-4 transition">
           Upgrade
         </Link>
       </div>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
-        <h1 className="text-xl text-center my-2">
-          {update ? content.updateH1[lang] : shdCnt.createStore[lang]}
-        </h1>
+        <h1 className="text-xl text-center my-2">{id ? content.updateH1[lang] : shdCnt.createStore[lang]}</h1>
 
         {/* cover */}
-        {!update && (
+        {!id && (
           <ImageUpload
             id="store-cover"
             // name="cover"
@@ -190,7 +189,7 @@ export default function NewStore({ params, searchParams }) {
           />
         )}
 
-        {!update && (
+        {!id && (
           <InputField type="text" name="name" required min="4" max="30" full cls="mb-2 flex-col">
             <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
           </InputField>
@@ -344,7 +343,7 @@ export default function NewStore({ params, searchParams }) {
 
         <div className="flex my-5">
           <Button type="submit" cls="py-2 px-5 text-lg">
-            {update ? shdCnt.save[lang] : shdCnt.create[lang]}
+            {id ? shdCnt.save[lang] : shdCnt.create[lang]}
           </Button>
 
           {store && (
@@ -362,6 +361,7 @@ export default function NewStore({ params, searchParams }) {
       </form>
 
       <Modal
+        lang={lang}
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setDeleteConfirmation(false)}

@@ -1,7 +1,6 @@
 "use strict"; /** store service */
 
 const { createCoreService } = require("@strapi/strapi").factories;
-
 module.exports = createCoreService("api::store.store", ({ strapi }) => ({
   async checkStoreOwner(ctx, storeId) {
     let id = storeId || ctx.request.body?.data?.storeId;
@@ -33,5 +32,9 @@ module.exports = createCoreService("api::store.store", ({ strapi }) => ({
     const total = ratings.length;
     const totalStars = ratings.reduce((total, rate) => total + (rate.stars || rate.attributes?.stars), 0);
     return { stars: totalStars / total || 0, total, userStars: 0 };
+  },
+
+  getStripeFields(id) {
+    return strapi.query("api::store.store").findOne({ where: { id }, select: ["subscriptionId"] });
   },
 }));

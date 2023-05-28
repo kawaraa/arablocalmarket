@@ -14,8 +14,12 @@ export default function Admin({ params, searchParams }) {
     document.title = "Admin dashboard - ALM";
   }, []);
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  if (!user || user?.loading) return null;
   return (
     <article>
       <h1 className="mx-2 my-3">Admin dashboard</h1>

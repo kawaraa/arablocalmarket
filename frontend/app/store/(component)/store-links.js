@@ -100,7 +100,7 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
         </li>
       </ul>
 
-      <Modal open={showQR} onCancel={() => setShowQR(false)} center>
+      <Modal lang={lang} open={showQR} onCancel={() => setShowQR(false)} center>
         <div id="qrcode" className="flex justify-center"></div>
 
         <Script src="/qr-generator/index.js" onReady={generateStoreQR}></Script>

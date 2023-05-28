@@ -42,6 +42,7 @@ export default function RatingInputPopup({ stars, ratedStars, total, data, open,
       )}
 
       <Modal
+        lang={lang}
         open={showRatingInput}
         title={content.rateH[lang]}
         onCancel={() => setShowRatingInput(false)}

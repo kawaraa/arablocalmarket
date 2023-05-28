@@ -215,6 +215,7 @@ export default function ProductById({ params }) {
       </form>
 
       <Modal
+        lang={lang}
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setDeleteConfirmation(false)}

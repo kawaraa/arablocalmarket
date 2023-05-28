@@ -2,7 +2,7 @@
 import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
-import messages from "../(layout)/json/messages.json";
+import shdCnt from "../(layout)/json/shared-content.json";
 import { Button } from "../(component)/(styled)/button";
 import {
   EmailInputField,
@@ -38,7 +38,7 @@ export default function Signup({}) {
     new FormData(e.target).forEach((value, key) => (data[key] = value));
     try {
       const { email, password, confirmPassword, firstName, lastName } = data;
-      if (password != confirmPassword) throw new Error(messages.pswErr[lang]);
+      if (password != confirmPassword) throw new Error(shdCnt.pswErr[lang]);
       delete data.confirmPassword;
       data.username = (firstName + lastName + email.slice(0, email.indexOf("@"))).toLowerCase();
 
@@ -54,8 +54,11 @@ export default function Signup({}) {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
+  }, [user]);
+
   if (user?.loading) return null;
-  else if (user?.myStores) return router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
   return (
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">

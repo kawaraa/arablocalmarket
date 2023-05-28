@@ -44,6 +44,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
 
   return (
     <Modal
+      lang={lang}
       title={content.modalTitle[lang]}
       open={open}
       onCancel={onClose}

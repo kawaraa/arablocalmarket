@@ -21,7 +21,7 @@ export default function SelectLanguage({ language }) {
   }, [lang, language]);
 
   return (
-    <Modal open={open} center>
+    <Modal lang={lang} open={open} center title={content.h[lang]}>
       <div className="flex justify-center items-center">
         <CheckCard
           type="radio"
@@ -41,3 +41,7 @@ export default function SelectLanguage({ language }) {
     </Modal>
   );
 }
+
+const content = {
+  h: { en: "Chose language", ar: "اختار اللغة" },
+};

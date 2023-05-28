@@ -12,8 +12,12 @@ export default function Dashboard({}) {
     document.title = "Admin Dashboard - ALM";
   }, []);
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  if (!user || user?.loading) return null;
   return (
     <div>
       <h1>Dashboard!</h1>

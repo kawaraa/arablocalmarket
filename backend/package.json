@@ -13,12 +13,13 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/strapi": "4.7.0",
+    "@strapi/strapi": "^4.10.6",
     "@strapi/plugin-i18n": "4.7.0",
     "@strapi/plugin-users-permissions": "4.7.0",
     "better-sqlite3": "^8.2.0",
     "@strapi-community/strapi-provider-upload-google-cloud-storage": "^4.6.1",
-    "@strapi/provider-email-nodemailer": "^4.9.0"
+    "@strapi/provider-email-nodemailer": "^4.9.0",
+    "stripe": "^12.7.0"
   },
   "strapi": {
     "telemetryDisabled": true

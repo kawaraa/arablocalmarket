@@ -1,12 +1,10 @@
 import { cookies } from "next/headers";
-import Plan from "./(component)/plan";
+import PlanCard from "../(component)/plan-card";
+import plans from "../(layout)/plans";
 
 export default async function pricing({ searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  console.log("Pricing", searchParams, searchParams.storeId);
-
-  const plans = await getData(searchParams.storeId);
 
   return (
     <section>
@@ -14,32 +12,27 @@ export default async function pricing({ searchParams }) {
       <p className="text-center">{content.h1P[lang]}</p>
 
       <p className="mt-10 mb-3 text-sm">
-        The selected plan will renew on <strong className="font-medium">the first of each month</strong>.
+        The selected plan will renew on <strong className="font-medium">the first of each month</strong>, No
+        commitment, cancel anytime..
       </p>
-      <p>No commitment, cancel anytime.</p>
 
       <div className="space-y-5 md:space-y-0 md:flex md:justify-between ">
         {plans.map((plan, i) => (
-          <Plan lang={lang} plan={plan} key={i} />
+          <PlanCard lang={lang} plan={plan} key={i} />
         ))}
       </div>
     </section>
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-  return {
-    title: content.title[lang] + " - ALM",
-    // description: content.desc[lang],
-  };
-}
-
-async function getData(storeId) {
-  const plan = { storeId, id: 1 };
-  return [plan, plan, plan];
-}
+// export async function generateMetadata({ params, searchParams }) {
+//   const cookieStore = cookies();
+//   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+//   return {
+//     title: content.title[lang] + " - ALM",
+//     // description: content.desc[lang],
+//   };
+// }
 
 const content = {
   title: { en: "Pricing", ar: "الأسعار" },

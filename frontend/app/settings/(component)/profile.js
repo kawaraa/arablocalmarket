@@ -65,6 +65,7 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
       )}
 
       <Modal
+        lang={lang}
         tag="form"
         title={shdCnt.newAdr[lang]}
         okBtn={shdCnt.create[lang]}

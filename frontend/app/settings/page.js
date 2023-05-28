@@ -49,9 +49,12 @@ export default function Settings(props) {
     document.title = content.h1[lang] + " - ALM";
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  if (user?.loading) return null;
-  else if (!user) return router.replace("/signin");
+  if (!user || user?.loading) return null;
   return (
     <>
       <article className="mt-4 max-w-md mx-auto">
@@ -73,6 +76,7 @@ export default function Settings(props) {
       </article>
 
       <Modal
+        lang={lang}
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setConfirmDeletion(false)}
