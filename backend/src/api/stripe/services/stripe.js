@@ -4,7 +4,12 @@ const redirect = process.env.STRIPE_CHECKOUT_REDIRECT_URL;
 
 // { strapi }
 module.exports = () => ({
-  // Stripe service methods
+  async getPlan(priceId) {
+    // return stripe.plans.retrieve(priceId);
+    const { data } = await stripe.prices.list({ expand: ["data.product"] });
+    return data.find((p) => p.id == priceId);
+  },
+
   async createCustomer(data) {
     return stripe.customers.create(data);
   },
@@ -21,12 +26,12 @@ module.exports = () => ({
   //   return customer;
   // },
 
-  // async setDefaultPaymentMethod(stripeCustomerId, paymentMethodId) {
-  //   const customer = await stripe.customers.update(stripeCustomerId, {
-  //     invoice_settings: { default_payment_method: paymentMethodId },
-  //   });
-  //   return customer;
-  // },
+  async getPaymentMethods(customerId) {
+    return stripe.customers.listPaymentMethods(customerId);
+  },
+  async deletePaymentMethod(paymentMethodId) {
+    return stripe.paymentMethods.detach(paymentMethodId);
+  },
   async deleteCustomer(stripeCustomerId) {
     return stripe.customers.del(stripeCustomerId);
   },
@@ -37,20 +42,9 @@ module.exports = () => ({
   // async getInvoicesByCustomer(stripeCustomerId) {
   //   return stripe.invoices.list({ customer: stripeCustomerId });
   // },
-
   // getInvoicesBySub(subId) {
   //   return stripe.invoices.retrieve({ query: `subscriptionId=${subId}` });
   // { subscriptionId: subscriptionId }
-  // },
-
-  // createCheckout(customerId, priceId, storeId) {
-  //   return stripe.checkout.sessions.create({
-  //     mode: "subscription",
-  //     customer: customerId,
-  //     line_items: [{ price: priceId, quantity: 1 }],
-  //     success_url: `${redirect}/success?storeId=${storeId}`,
-  //     cancel_url: `${redirect}/failed?storeId=${storeId}`,
-  //   });
   // },
 
   startTrial(customerId, priceId, storeId) {
@@ -90,4 +84,14 @@ module.exports = () => ({
   getSubscription(subscriptionId) {
     return stripe.subscriptions.retrieve(subscriptionId);
   },
+
+  // createCheckout(customerId, priceId, storeId) {
+  //   return stripe.checkout.sessions.create({
+  //     mode: "subscription",
+  //     customer: customerId,
+  //     line_items: [{ price: priceId, quantity: 1 }],
+  //     success_url: `${redirect}/success?storeId=${storeId}`,
+  //     cancel_url: `${redirect}/failed?storeId=${storeId}`,
+  //   });
+  // },
 });

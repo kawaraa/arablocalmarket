@@ -1,17 +1,13 @@
 "use strict"; /** A set of functions called "actions" for `stripe` */
 
 module.exports = {
-  // exampleAction: async (ctx, next) => {
-  //   try {
-  //     ctx.body = 'ok';
-  //   } catch (err) {
-  //     ctx.body = err;
-  //   }
-  // }
-
   async findOne(ctx) {
     const store = await strapi.service("api::store.store").getStripeFields(ctx.query.storeId);
     const sub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
+    const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(ctx.state.user.stripeId);
+
+    const { id, type, created, card } = data.find((p) => p.id == sub.default_payment_method) || {};
+    // const pm = { id, type, created, brand: card?.brand, last4: card?.last4, country: card?.country };
 
     return {
       id: sub.plan.id, // priceId
@@ -27,12 +23,15 @@ module.exports = {
       currentPeriodEnd: sub.current_period_end,
       billingMethod: sub.collection_method, // "send_invoice", "charge_automatically"
       canceledAt: sub.canceled_at,
-      paymentMethod: sub.default_payment_method, // // null, "card_1NC4fQHfSNaTv5C9kop9ixuW"
+      paymentMethod: type, // // null, "card_1NC4fQHfSNaTv5C9kop9ixuW"
       invoices: [], // Todo: Invoices: amount, date
     };
   },
   async upgradeDowngrade(ctx) {
-    // Todo: check products number on downgrade
+    const ps = await strapi.query("api::product.product").count({ where: { storeId: ctx.query.storeId } });
+    const plan = await strapi.service("api::stripe.stripe").getPlan(ctx.query.priceId);
+    if (+plan.product.metadata.products < ps) return ctx.notAcceptable("Too many products");
+
     const store = await strapi.service("api::store.store").getStripeFields(ctx.query.storeId);
     const currentSub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
 
@@ -78,11 +77,26 @@ module.exports = {
 
     return { paymentUrl: invoice.hosted_invoice_url };
   },
-
   async checkout(ctx) {
     const store = await strapi.service("api::store.store").getStripeFields(ctx.params.storeId);
     const currentSub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
     const invoice = await strapi.service("api::stripe.stripe").getInvoice(currentSub.latest_invoice);
     return { paymentUrl: invoice.hosted_invoice_url };
+  },
+  async paymentMethods(ctx) {
+    const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(ctx.state.user.stripeId);
+    return data.map(({ id, type, created, card }) => ({
+      id,
+      type,
+      created,
+      brand: card?.brand,
+      last4: card?.last4,
+      country: card?.country,
+    }));
+  },
+  async deletePaymentMethod({ state, params }) {
+    const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(state.user.stripeId);
+    await strapi.service("api::stripe.stripe").deletePaymentMethod(data.find((p) => p.id == params.id)?.id);
+    return { success: true };
   },
 };

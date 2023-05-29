@@ -23,8 +23,7 @@ export default function StorePlan({ params: { storeId } }) {
   const cls = "flex justify-between mb-3 pb-1 border-b-[1px] border-b-bc";
 
   const getValue = (value = "") => {
-    const key = Object.keys(content.values).find((k) => value?.includes(k)) || value;
-    return content.values[key] ? content.values[key][lang] : content.no[lang];
+    return content.values[value] ? content.values[value][lang] : value || content.no[lang];
   };
   const getDateValue = (v) => (v && new Date(+(v + "000")).toLocaleDateString("nl")) || content.no[lang];
   const d = subscription?.currentPeriodEnd || 0;
@@ -43,7 +42,7 @@ export default function StorePlan({ params: { storeId } }) {
         addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
       }
     } catch (err) {
-      addMessage({ type: "error", text: err.message, duration: 5 });
+      addMessage({ type: "error", text: err.message, duration: 8 });
     }
     setShowPlans(false);
     setAppLoading(false);
@@ -125,14 +124,15 @@ export default function StorePlan({ params: { storeId } }) {
                     cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg3">
                     {active ? content.cancel[lang] : getValue(subscription?.status)}
                   </Button>
-                  {subscription?.status == "incomplete" && (
-                    <Button
-                      loading={loading}
-                      onClick={payAgain}
-                      cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
-                      {content.pay[lang]}
-                    </Button>
-                  )}
+                  {subscription?.status == "incomplete" ||
+                    (subscription?.status == "trialing" && (
+                      <Button
+                        loading={loading}
+                        onClick={payAgain}
+                        cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg1">
+                        {content.pay[lang]}
+                      </Button>
+                    ))}
                 </div>
               </PlanCard>
               <div className="w-5 h-10 "></div>

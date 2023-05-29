@@ -161,7 +161,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, id, subscription]);
 
-  if (!user || user?.loading) return null;
+  if (!user || user?.loading || (!id && !subscription)) return null;
   return (
     <>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">

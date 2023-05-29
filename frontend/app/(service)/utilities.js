@@ -91,4 +91,8 @@ const errors = {
     en: "You have reached the maximum stores limit",
     ar: "لقد وصلت إلى الحد الأقصى المسموح به للمخازن",
   },
+  "many products": {
+    en: "The number of the products is higher then the plan limit, please delete some products and then try again",
+    ar: "عدد المنتجات أعلى من حد الاشتراك، يرجى حذف بعض المنتجات ثم المحاولة مرة أخرى",
+  },
 };

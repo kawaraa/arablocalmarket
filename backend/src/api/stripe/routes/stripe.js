@@ -45,5 +45,23 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/stripe/payment-method",
+      handler: "stripe.paymentMethods",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: "DELETE",
+      path: "/stripe/payment-method/:id",
+      handler: "stripe.deletePaymentMethod",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

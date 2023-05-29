@@ -94,6 +94,7 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   },
 
   async delete(ctx) {
+    // Todo: either do not let the user delete a store with active or cancel the plan first.
     const id = ctx.params.id;
     const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
     const store = await strapi.query("api::store.store").findOne(options);
