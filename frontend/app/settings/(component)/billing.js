@@ -10,5 +10,5 @@ export default function Billing({ lang }) {
 }
 
 const content = {
-  h: { en: "Billing", ar: "معلومات الدفع" },
+  h: { en: "Payment method", ar: "طريقة الدفع" },
 };

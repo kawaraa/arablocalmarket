@@ -35,6 +35,8 @@ module.exports = createCoreService("api::store.store", ({ strapi }) => ({
   },
 
   getStripeFields(id) {
-    return strapi.query("api::store.store").findOne({ where: { id }, select: ["subscriptionId"] });
+    return strapi
+      .query("api::store.store")
+      .findOne({ where: { id }, select: ["subscriptionId", "subscriptionStatus"] });
   },
 }));

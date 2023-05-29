@@ -1,9 +1,6 @@
 "use strict"; /** stripe service */
 const stripe = require("stripe")(process.env.STRIPE_API_KEY);
-
-// const priceId = process.env.STRIPE_PRICE_ID;
-// const successUrl = process.env.STRIPE_CHECKOUT_SUCCESS_URL;
-// const cancelUrl = process.env.STRIPE_CHECKOUT_CANCEL_URL;
+const redirect = process.env.STRIPE_CHECKOUT_REDIRECT_URL;
 
 // { strapi }
 module.exports = () => ({
@@ -24,25 +21,47 @@ module.exports = () => ({
   //   return customer;
   // },
 
-  // getInvoicesBySub(subId) {
-  //   return stripe.invoices.retrieve({ query: `subscriptionId=${subId}` });
-  // },
-  async deleteCustomer(stripeCustomerId) {
-    return stripe.customers.del(stripeCustomerId);
-  },
   // async setDefaultPaymentMethod(stripeCustomerId, paymentMethodId) {
   //   const customer = await stripe.customers.update(stripeCustomerId, {
   //     invoice_settings: { default_payment_method: paymentMethodId },
   //   });
   //   return customer;
   // },
+  async deleteCustomer(stripeCustomerId) {
+    return stripe.customers.del(stripeCustomerId);
+  },
+
+  async getInvoice(invoiceId) {
+    return stripe.invoices.retrieve(invoiceId);
+  },
+  // async getInvoicesByCustomer(stripeCustomerId) {
+  //   return stripe.invoices.list({ customer: stripeCustomerId });
+  // },
+
+  // getInvoicesBySub(subId) {
+  //   return stripe.invoices.retrieve({ query: `subscriptionId=${subId}` });
+  // { subscriptionId: subscriptionId }
+  // },
+
+  // createCheckout(customerId, priceId, storeId) {
+  //   return stripe.checkout.sessions.create({
+  //     mode: "subscription",
+  //     customer: customerId,
+  //     line_items: [{ price: priceId, quantity: 1 }],
+  //     success_url: `${redirect}/success?storeId=${storeId}`,
+  //     cancel_url: `${redirect}/failed?storeId=${storeId}`,
+  //   });
+  // },
 
   startTrial(customerId, priceId, storeId) {
     return stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
-      payment_settings: { save_default_payment_method: "on_subscription" },
       trial_period_days: "30",
+      trial_settings: { end_behavior: { missing_payment_method: "cancel" } },
+      cancel_at_period_end: false,
+      proration_behavior: "none",
+      payment_settings: { save_default_payment_method: "on_subscription" },
       collection_method: "send_invoice",
       days_until_due: "1",
       metadata: { storeId },
@@ -52,11 +71,13 @@ module.exports = () => ({
     return stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
+      trial_period_days: "0",
       cancel_at_period_end: false,
-      // payment_settings: { save_default_payment_method: "on_subscription" },
-      collection_method: "send_invoice",
+      proration_behavior: "none",
+      payment_settings: { save_default_payment_method: "on_subscription" },
+      collection_method: "charge_automatically",
+      payment_behavior: "default_incomplete",
       // expand: ["latest_invoice.payment_intent"],
-      // trial_settings: { end_behavior: { missing_payment_method: "pause" } },
       metadata: { storeId },
     });
   },

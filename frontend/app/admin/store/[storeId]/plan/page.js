@@ -12,7 +12,7 @@ import Modal from "../../../../(component)/(styled)/modal";
 export default function StorePlan({ params: { storeId } }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
-  const [subscription, setSubscription] = useState(null);
+  const [subscription, setSubscription] = useState({ loading: true });
   const [showPlans, setShowPlans] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
@@ -27,17 +27,18 @@ export default function StorePlan({ params: { storeId } }) {
     return content.values[key] ? content.values[key][lang] : content.no[lang];
   };
   const getDateValue = (v) => (v && new Date(+(v + "000")).toLocaleDateString("nl")) || content.no[lang];
-  const isEnded = (date) => (+(date + "000") - Date.now()) / 1000 / 60 / 60 / 24 > 0;
+  const d = subscription?.currentPeriodEnd || 0;
+  const ended = (+(d + "000") - Date.now()) / 1000 / 60 / 60 / 24 <= 0;
 
   const handleUpgrade = async (priceId) => {
     setAppLoading(true);
     try {
-      if (isEnded(subscription?.currentPeriodEnd)) {
-        //
-        console.log("Todo: Reactivate done here");
+      if (ended) {
+        const session = await request("stripe", "POST", { query: "/create", body: { storeId, priceId } });
+        window.location.href = session.url;
       } else {
         setSubscription(
-          await request("stripe", "PUT", { query: `/upgrade?storeId=${storeId}&priceId=${priceId}` })
+          await request("stripe", "PUT", { query: `/update?storeId=${storeId}&priceId=${priceId}` })
         );
         addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
       }
@@ -47,7 +48,16 @@ export default function StorePlan({ params: { storeId } }) {
     setShowPlans(false);
     setAppLoading(false);
   };
-
+  const payAgain = async () => {
+    setAppLoading(true);
+    try {
+      const session = await request("stripe", "GET", { query: `/checkout/${storeId}` });
+      window.location.href = session.paymentUrl;
+    } catch (err) {
+      addMessage({ type: "error", text: err.message, duration: 5 });
+    }
+    setAppLoading(false);
+  };
   const handleCancel = async () => {
     setLoading(true);
     try {
@@ -65,6 +75,7 @@ export default function StorePlan({ params: { storeId } }) {
     try {
       setSubscription(await request("stripe", "GET", { query: `/subscription?storeId=${id}` }));
     } catch (err) {
+      setSubscription(null);
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
     setAppLoading(false);
@@ -77,11 +88,10 @@ export default function StorePlan({ params: { storeId } }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!subscription) return null;
   return (
     <>
       <div className="min-h-[45vh]">
-        {isEnded(subscription?.currentPeriodEnd) && (
+        {!subscription?.loading && ended && (
           <div
             dir="ltr"
             className="flex items-center justify-between mb-5 -mt-3 md:-mt-6 px-3 py-1 bg-bg3 text-sm text-t">
@@ -112,9 +122,17 @@ export default function StorePlan({ params: { storeId } }) {
                     loading={loading}
                     disabled={!active}
                     onClick={() => setShowWarning(true)}
-                    cls={"min-w-[100px] md:mx-5 mb-5 !rounded-full " + (active ? "" : "!bg-bg3")}>
+                    cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg3">
                     {active ? content.cancel[lang] : getValue(subscription?.status)}
                   </Button>
+                  {subscription?.status == "incomplete" && (
+                    <Button
+                      loading={loading}
+                      onClick={payAgain}
+                      cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
+                      {content.pay[lang]}
+                    </Button>
+                  )}
                 </div>
               </PlanCard>
               <div className="w-5 h-10 "></div>
@@ -134,7 +152,7 @@ export default function StorePlan({ params: { storeId } }) {
             <li className={cls}>
               {content.keys.trialPeriod[lang]}:{" "}
               <strong>
-                {subscription?.trialPeriod} {content.values.d[lang]}
+                {subscription?.trialPeriod || 0} {content.values.d[lang]}
               </strong>
             </li>
             <li className={cls}>
@@ -169,10 +187,10 @@ export default function StorePlan({ params: { storeId } }) {
             <PlanCard lang={lang} plan={plan} key={i}>
               <div className="text-center">
                 <Button
-                  disabled={!isEnded(subscription?.currentPeriodEnd) && subscription.id == plan.subscription}
+                  disabled={!ended && subscription?.id == plan.subscription}
                   onClick={() => handleUpgrade(plan.subscription)}
                   cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
-                  {subscription.id != plan.subscription ? content.select[lang] : content.selected[lang]}
+                  {subscription?.id != plan.subscription ? content.select[lang] : content.selected[lang]}
                 </Button>
               </div>
             </PlanCard>
@@ -188,12 +206,16 @@ export default function StorePlan({ params: { storeId } }) {
         okBtn={shdCnt.yes[lang]}
         onApprove={handleCancel}
         loading={loading}>
-        <p dir="auto" className="my-5">
+        <p dir="auto" className="mt-5">
           <strong>{content.confirmP[lang][0]} </strong>
-          {content.confirmP[lang][1]}
+          {content.confirmP[lang][1]} <strong>{getDateValue(subscription?.currentPeriodEnd)}</strong>
+        </p>
+        <p dir="auto" className="mb-5">
+          {content.confirmP[lang][2]} <strong>{getDateValue(subscription?.currentPeriodEnd)}</strong>,{" "}
+          {content.confirmP[lang][3]}
         </p>
         <p dir="auto" className="my-5">
-          {content.confirmP[lang][2]}
+          {content.confirmP[lang][4]}
         </p>
       </Modal>
     </>
@@ -206,6 +228,7 @@ const content = {
   no: { en: "Not specified", ar: "غير محدد" },
   cancel: { en: "Cancel", ar: "إلغاء" },
   upgrade: { en: "Upgrade", ar: "ترقية" },
+  pay: { en: "Pay", ar: "دفع" },
   reactivate: { en: "Reactivate", ar: "اعادة تنشط" },
   select: { en: "Select", ar: "اختار" },
   selected: { en: "Selected", ar: "مختار" },
@@ -231,7 +254,7 @@ const content = {
     card: { en: "Card", ar: "بطاقة إئتمان" },
     trialing: { en: "Trial", ar: "تجربة" },
     active: { en: "Active", ar: "نشط" },
-    incomplete: { en: "Incomplete", ar: "غير مكتمل" },
+    incomplete: { en: "Incomplete", ar: "الدفع غير مكتمل" },
     incomplete_expired: { en: "Expired", ar: "منتهية الصلاحية" },
     past_due: { en: "Past due", ar: "تجاوز موعد الاستحقاق" },
     canceled: { en: "Canceled", ar: "ألغيت" },
@@ -243,12 +266,16 @@ const content = {
   confirmP: {
     en: [
       "Please note:",
-      "If you cancel the store plan you will not be able to reactivate it",
+      "If you cancel the store plan you will not be able to reactivate it until",
+      "The store will stay active till",
+      "then will become inactive, and thereafter you can activate it again",
       "Are you sure you want to cancel it?",
     ],
     ar: [
       "يرجى الملاحظة:",
-      "إذا قمت بإلغاء اشتراك المتجر ، فلن تتمكن من إعادة تنشيطها",
+      "إذا قمت بإلغاء اشتراك المتجر فلن تتمكن من إعادة تفعيله إلا بعد",
+      "سيبقى المتجر نشطًا حتى",
+      "ثم سيصبح غير نشط، وبعد ذلك يمكنك تفعيل مرة أخرى",
       "هل أنت متأكد أنك تريد ألغها؟",
     ],
   },

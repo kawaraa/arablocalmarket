@@ -52,10 +52,10 @@ Customer alow: create, update, find, findOne
 Order alow: create, update, find, findOne
 Product alow: create, update, delete, find, findOne
 Rating alow: create, update, delete, find, findOne
-Store alow: create, update, delete, find, findOne
+Store alow: create, update, updateStatus, delete, find, findOne
 Upload alow: upload, findOne
 User permission alow: changePassword, me, update, destroy
-Stripe allow: findOne, upgrade, cancel, webhook
+Stripe allow: create, findOne, upgradeDowngrade, checkout, cancel, webhook
 ```
 
 ### `start`

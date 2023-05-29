@@ -10,5 +10,5 @@ export default function Payout({ lang }) {
 }
 
 const content = {
-  h: { en: "Payout", ar: "المدفوعات" },
+  h: { en: "Payout bank account", ar: "طريقة تلقي المدفوعات" },
 };

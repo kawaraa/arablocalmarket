@@ -10,10 +10,8 @@ module.exports = {
   // }
 
   async findOne(ctx) {
-    const store = await strapi.service("api::store.store").findOne(ctx.query.storeId);
+    const store = await strapi.service("api::store.store").getStripeFields(ctx.query.storeId);
     const sub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
-    // const invoices = await strapi.service("api::stripe.stripe").getInvoicesBySub(sub?.id);
-    // console.log(invoices);
 
     return {
       id: sub.plan.id, // priceId
@@ -33,13 +31,14 @@ module.exports = {
       invoices: [], // Todo: Invoices: amount, date
     };
   },
-  async upgrade(ctx) {
-    const store = await strapi.service("api::store.store").findOne(ctx.query.storeId);
+  async upgradeDowngrade(ctx) {
+    // Todo: check products number on downgrade
+    const store = await strapi.service("api::store.store").getStripeFields(ctx.query.storeId);
     const currentSub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
 
     const sub = await strapi.service("api::stripe.stripe").updateSubscription(currentSub.id, {
       cancel_at_period_end: false,
-      proration_behavior: "create_prorations",
+      proration_behavior: "none",
       items: [{ id: currentSub.items.data[0].id, price: ctx.query.priceId }],
     });
 
@@ -62,43 +61,28 @@ module.exports = {
     };
   },
   async cancel(ctx) {
-    const store = await strapi.service("api::store.store").findOne(ctx.query.storeId);
+    const store = await strapi.service("api::store.store").getStripeFields(ctx.query.storeId);
     await strapi.service("api::stripe.stripe").cancelSubscription(store.subscriptionId);
     return { success: true };
   },
   async create(ctx) {
-    // ctx.state.user.stripeId
-    // ctx.query.storeId
-    // const store = await strapi.service("api::store.store").findOne(ctx.query.storeId);
-
-    const { id, status } = await strapi
+    const c = ctx.state.user.stripeId;
+    const { storeId, priceId } = ctx.request.body;
+    const { id, status, latest_invoice } = await strapi
       .service("api::stripe.stripe")
-      .createSubscription(c.id, priceId, storeId, "30");
-
-    const userRes = await strapi
-      .query("plugin::users-permissions.user")
-      .update({ where: { id: userId }, data: { stripeId: c.id } });
-    const storeRes = strapi
+      .createSubscription(c, priceId, storeId);
+    await strapi
       .query("api::store.store")
-      .update({ where: { id: res.data.id }, data: { subscriptionId: id, subscriptionStatus: status } });
+      .update({ where: { id: storeId }, data: { subscriptionId: id, subscriptionStatus: status } });
+    const invoice = await strapi.service("api::stripe.stripe").getInvoice(latest_invoice);
 
-    await createSubscription;
+    return { paymentUrl: invoice.hosted_invoice_url };
   },
 
-  async webhook(ctx) {
-    console.log("<<<<<<<< webhook >>>>>>>>>");
-
-    const email = "alm@kawaraa.com";
-    const name = "firstName lastName";
-    const address = { line1: "dfw", postal_code: "23424", city: "A", country: "C" };
-
-    // return strapi.service("api::stripe.stripe").createCustomer({ name, email, address });
-
-    // return strapi.service("api::stripe.stripe").getCustomer("cus_Ny0GHwIesRGSTJ");
-    // return strapi.service("api::stripe.stripe").getSubscription("sub_1NC5DFHfSNaTv5C9PDlMjoOK");
-
-    // return strapi
-    //   .service("api::stripe.stripe")
-    //   .createSubscription("cus_Ny5mdKtuH7zJLv", "price_1NC4LfHfSNaTv5C9X2rCSDbN");
+  async checkout(ctx) {
+    const store = await strapi.service("api::store.store").getStripeFields(ctx.params.storeId);
+    const currentSub = await strapi.service("api::stripe.stripe").getSubscription(store?.subscriptionId);
+    const invoice = await strapi.service("api::stripe.stripe").getInvoice(currentSub.latest_invoice);
+    return { paymentUrl: invoice.hosted_invoice_url };
   },
 };

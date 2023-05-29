@@ -59,12 +59,10 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async find(ctx) {
     let { data, meta } = await super.find(ctx);
     if (!data || !data[0]) return { data, meta };
-
     data = data.map(({ id, attributes }) => {
       attributes.id = id;
       return strapi.service("api::store.store").removePrivateFields(ctx.state.user?.id, attributes);
     });
-
     return { data, meta };
   },
 
@@ -78,12 +76,21 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
       const d = JSON.parse(ctx.request.body.data);
       delete d.owner;
       delete d.publishedAt;
+      delete d.subscriptionStatus;
       ctx.request.body.data = JSON.stringify(d);
     } else {
       delete ctx.request.body.data.owner;
       delete ctx.request.body.data.publishedAt;
+      delete ctx.request.body.data.subscriptionStatus;
     }
     return super.update(ctx);
+  },
+
+  async updateStatus(ctx) {
+    const { subscriptionId } = await strapi.service("api::store.store").getStripeFields(ctx.params.id);
+    const { status } = await strapi.service("api::stripe.stripe").getSubscription(subscriptionId);
+    await strapi.service("api::store.store").update(ctx.params.id, { data: { subscriptionStatus: status } });
+    return { success: true };
   },
 
   async delete(ctx) {

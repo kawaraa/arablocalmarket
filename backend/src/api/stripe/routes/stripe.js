@@ -1,14 +1,14 @@
 module.exports = {
   routes: [
-    // {
-    //   method: "GET",
-    //   path: "/stripe/subscriptions",
-    //   handler: "stripe.find",
-    //   config: {
-    //     policies: [],
-    //     middlewares: [],
-    //   },
-    // },
+    {
+      method: "POST",
+      path: "/stripe/create",
+      handler: "stripe.create",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
     {
       method: "GET",
       path: "/stripe/subscription",
@@ -20,8 +20,17 @@ module.exports = {
     },
     {
       method: "PUT",
-      path: "/stripe/upgrade",
-      handler: "stripe.upgrade",
+      path: "/stripe/update",
+      handler: "stripe.upgradeDowngrade",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: "GET",
+      path: "/stripe/checkout/:storeId",
+      handler: "stripe.checkout",
       config: {
         policies: [],
         middlewares: [],
@@ -31,15 +40,6 @@ module.exports = {
       method: "DELETE",
       path: "/stripe/cancel",
       handler: "stripe.cancel",
-      config: {
-        policies: [],
-        middlewares: [],
-      },
-    },
-    {
-      method: "POST",
-      path: "/stripe/webhook",
-      handler: "stripe.webhook",
       config: {
         policies: [],
         middlewares: [],
