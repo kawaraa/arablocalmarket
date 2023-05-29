@@ -51,7 +51,7 @@ export default function Navigation() {
         }`}></div>
 
       <ul
-        className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
+        className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-transparent md:shadow-none transition-all duration-200 ${
           showMenu && "left-[0]"
         }`}>
         <li className="absolute top-3 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-3">
@@ -98,7 +98,7 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             key={i}
-            className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
+            className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-transparent md:hover:text-lt text-sm">
             <Link passHref legacyBehavior href={link.path}>
               <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
                 {link.text[lang]}
@@ -110,7 +110,7 @@ export default function Navigation() {
         {user?.id && "user has a store" && (
           <li
             onClick={() => setShowMenu(!showMenu)}
-            className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
+            className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-transparent md:hover:text-lt text-sm font-medium">
             <Link passHref legacyBehavior href={content.navLinks[1].path}>
               <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
                 {content.navLinks[1].text[lang]}

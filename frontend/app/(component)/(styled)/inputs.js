@@ -44,7 +44,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
             aria-label={p.title}
             className={`${
               !full ? "absolute" : ""
-            } w-full bg-cbg appearance-none px-2 py-1 disabled:cursor-no-drop  ${
+            } w-full bg-cbg appearance-none px-2 py-1 leading-none disabled:cursor-no-drop ${
               editable ? "pr-10" : "card " + (p.disabled ? "" : "cd_hr")
             } fs ${inCls || "rounded-md"}`}
             {...p}
@@ -91,7 +91,7 @@ export function InputWithSelect({ label, options, value, onChange, cls, ...p }) 
           defaultValue={values[0]}
           onChange={(e) => onChange(e.target.value + "-" + (selectRef.current?.value || ""))}
           autoComplete="one"
-          className="w-full px-2 py-1 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
+          className="w-full px-2 py-1 leading-none bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
           {...p}
         />
 
@@ -151,7 +151,7 @@ export function CheckCard({ Tag = "label", children, cls, inCls, ...p }) {
         id={cls}
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className={`absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs ${inCls}`}
+        className={`absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-transparent dark:checked:bg-transparent checked:border-4 rounded-lg fs ${inCls}`}
         {...p}
       />
       {children}
@@ -186,7 +186,7 @@ export function ToggleSwitch({ children, label, size = 50, cls, ...p }) {
   );
 }
 
-// Todo: https://codepen.io/pen?&editors=001
+// Todo: Not done yet > https://codepen.io/pen?&editors=001
 /* <ContentToggleSwitch name="status" checked={status} onCheck={({ checked }) => setStatus(checked)} /> */
 export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   const handler = ({ target: { name, checked } }) => onCheck && onCheck({ name, checked });
@@ -202,7 +202,7 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
         checked={checked}
         onChange={handler}
         id={cls}
-        className="absolute inset-0 w-full h-full bg-[transparent] border border-bc rounded-full appearance-none fs"
+        className="absolute inset-0 w-full h-full bg-transparent border border-bc rounded-full appearance-none fs"
         {...p}
       />
       <span className={`block px-2`}>open</span>
@@ -330,7 +330,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center font-semibold md:-mr-3 bg-[transparent] text-lg ${
+          className={`appearance-none text-center leading-none font-semibold md:-mr-3 bg-transparent text-lg ${
             inCls || "w-12"
           }`}
           {...p}
@@ -347,7 +347,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
 //     <div className="relative h-10 w-32 flex rounded-lg mx-3 bg-[#d1d5db]">
 //       <input
 //         type="number"
-//         className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-[transparent] outline-none"
+//         className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-transparent outline-none"
 //         name="quantity"
 //       />
 //       <button

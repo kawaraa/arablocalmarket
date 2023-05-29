@@ -30,7 +30,7 @@ export default function SearchBox({ label, onSearch, search, onBlur, onFinish, c
         {...valueAttr}
         autoComplete="search"
         placeholder={label}
-        className={`w-full p-1 pl-3 pr-8 text-md bg-[transparent] rounded-lg card cd_hr fs peer duration-150 ${
+        className={`w-full p-1 pl-3 pr-8 text-md bg-transparent leading-none rounded-lg card cd_hr fs peer duration-150 ${
           inCls || ""
         }`}
       />

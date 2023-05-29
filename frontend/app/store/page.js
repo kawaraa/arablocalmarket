@@ -85,7 +85,7 @@ async function getData(page, criteria, search) {
   let query = `?${sq}populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
 
   if (lat != 0 && lng != 0) {
-    query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
+    query = `?filters[$and][0][address][currentLat][$gte]=${minLat}&filters[$and][1][address][currentLat][$lte]=${maxLat}&filters[$and][2][address][currentLng][$gte]=${minLng}&filters[$and][3][address][currentLng][$lte]=${maxLng}&${sq}&populate[cover]=*&populate[ratings]=*&populate[address]=*&pagination[page]=${page}&pagination[pageSize]=50`;
   }
   return serverRequest("store", "GET", { query });
 }

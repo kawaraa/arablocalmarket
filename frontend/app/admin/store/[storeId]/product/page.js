@@ -67,7 +67,7 @@ export default function StoreProducts({ params, searchParams }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  if (!user || user?.loading) return null;
+  if (!user || user?.loading || !store) return null;
   return (
     <>
       <div className="flex items-center mb-3">

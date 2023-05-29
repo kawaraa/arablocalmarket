@@ -34,15 +34,16 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
   };
 
   useEffect(() => {
-    if (adr.country) setCountry(adr.country || "netherlands");
+    if (adr.country && !country) setCountry(adr.country || "netherlands");
     if (adr.province) setProvince(adr.province);
     if (adr.city) setCity(adr.city);
     if (adr.postalCode) setPostalCode(adr.postalCode);
     if (adr.line1) setLine1(adr.line1);
     if (adr.line2) setLine2(adr.line2);
-    if (adr.currentLat) setLat(adr.currentLat);
-    if (adr.currentLng) setLng(adr.currentLng);
-  }, [adr]);
+    if (adr.currentLat && !lat) setLat(adr.currentLat);
+    if (adr.currentLng && !lng) setLng(adr.currentLng);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [adr.country]);
 
   const renderCountries = () => {
     const options = [];

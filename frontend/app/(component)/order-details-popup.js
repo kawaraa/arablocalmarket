@@ -64,7 +64,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
                 name="status"
                 id="order-status"
                 onChange={({ target }) => onChange(target)}
-                className="absolute inset-0 appearance-none text-[transparent] bg-[transparent] rounded-full print:hidden">
+                className="absolute inset-0 appearance-none text-transparent bg-transparent rounded-full print:hidden">
                 {Object.keys(shdCnt.status).map((k, i) => (
                   <option value={k} key={i}>
                     {shdCnt.status[k][lang] || k}

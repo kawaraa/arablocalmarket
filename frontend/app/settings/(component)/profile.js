@@ -32,8 +32,8 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
           first
           defaultValue={firstName || ""}
           onBlur={(e) => handleUpdate({ firstName: e.target.value })}
-          cls="mr-2"
         />
+        <div className="w-3 h-3"></div>
         <NameInputField
           editable
           full

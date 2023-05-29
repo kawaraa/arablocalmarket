@@ -32,10 +32,10 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         max="15"
         defaultValue={username || ""}
         onBlur={(e) => handleUpdate({ username: e.target.value })}
-        cls="mb-2"
+        cls="mb-5"
       />
 
-      <div dir="auto" className="mb-2 flex justify-between items-center px-2 opacity-70">
+      <div dir="auto" className="mb-5 flex justify-between items-center px-2 opacity-70">
         {email}
       </div>
 
@@ -44,7 +44,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         full
         defaultValue={phone || ""}
         onBlur={(e) => handleUpdate({ phone: e.target.value })}
-        cls="mb-2 242"
+        cls="mb-6 242"
       />
 
       {/* <div>
@@ -52,7 +52,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         <input type="checkbox" />
       </div> */}
 
-      <div dir="ltr" className="mb-2 flex justify-between items-center">
+      <div dir="ltr" className="mb-5 flex justify-between items-center">
         <span className=" px-2 opacity-70">********</span>
         <Button type="submit" onClick={() => setPasswordForm(true)} cls="!px-2 !py-1 !text-sm">
           {shdCnt.edit[lang]}

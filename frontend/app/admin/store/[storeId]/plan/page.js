@@ -34,7 +34,7 @@ export default function StorePlan({ params: { storeId } }) {
     try {
       if (isEnded(subscription?.currentPeriodEnd)) {
         //
-        console.log("Reactivate");
+        console.log("Todo: Reactivate done here");
       } else {
         setSubscription(
           await request("stripe", "PUT", { query: `/upgrade?storeId=${storeId}&priceId=${priceId}` })

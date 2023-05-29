@@ -41,7 +41,6 @@ export default function NewStore({ params, searchParams: { id, subscription } })
     if (!checked) setDays(newDays);
     else if (checked && days.length == newDays.length) setDays([...days, { day: name, ...openingHour }]);
   };
-
   const updateDay = (day) => {
     const copy = [...days];
     const index = copy.findIndex((d) => d.day == day.day);
