@@ -37,7 +37,7 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v3
-      - run: rm ~/.pm2/logs/*
+      - run: rm -f ~/.pm2/logs/*
       - run: cp ~/actions-runner/_work/arablocalmarket/.env .env
       # - run: cp ~/actions-runner/_work/arablocalmarket/alm-bucket.json alm-bucket.json
       - run: npm i --production
