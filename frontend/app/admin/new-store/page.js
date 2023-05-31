@@ -352,6 +352,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
 
       <Modal
         lang={lang}
+        icon="warning"
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setDeleteConfirmation(false)}

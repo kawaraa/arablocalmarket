@@ -34,17 +34,17 @@ export default function Modal(props) {
             cls="w-8 absolute top-3 right-3 hover:text-red print:hidden"
           />
         )}
-        <div className="block pb-4 md:flex justify-start">
+        <div dir="ltr" className="block pb-4 md:flex justify-start">
           {icon && (
             <div
               className={`h-12 w-12 shrink-0 p-2 mx-auto mt-1 mb-3 md:mr-2 rounded-full ${
-                icon === "warning" ? "bg-lb text-red" : "bg-pc text-t"
+                icon === "warning" ? "bg-bg1 text-red" : "bg-pc text-t"
               }`}>
               {typeof icon === "string" ? <SvgIcon name={icon} /> : icon}
             </div>
           )}
 
-          <div className="flex-auto">
+          <div dir="auto" className="flex-auto">
             <h2 className="mb-1 text-lg text-center print:text-3xl font-semibold">{title}</h2>
             <div className="max-h-[65vh] overflow-scroll no-srl-bar print:max-h-none print:overflow-auto">
               {p.children}

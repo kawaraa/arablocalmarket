@@ -206,6 +206,7 @@ export default function StorePlan({ params: { storeId } }) {
 
       <Modal
         lang={lang}
+        icon="warning"
         open={showWarning}
         title={content.confirmTitle[lang]}
         onCancel={() => setShowWarning(false)}

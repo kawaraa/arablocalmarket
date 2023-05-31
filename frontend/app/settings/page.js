@@ -77,6 +77,7 @@ export default function Settings(props) {
 
       <Modal
         lang={lang}
+        icon="warning"
         title={content.confirmTitle[lang]}
         okBtn={shdCnt.yes[lang]}
         onCancel={() => setConfirmDeletion(false)}
