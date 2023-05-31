@@ -4,6 +4,7 @@ import { getCssDelay } from "./(service)/style-methods";
 import Footer from "./(layout)/footer";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 import CheckUser from "./(component)/check-user";
+import Image from "next/image";
 
 export default async function LandingPage({ params, searchParams }) {
   const cookieStore = cookies();
@@ -70,34 +71,21 @@ export default async function LandingPage({ params, searchParams }) {
         </p>
 
         <h3 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
-          {content.steps[lang]}
+          {content.stepsH[lang]}
         </h3>
-        <div className="mb-10 flex flex-col md:flex-row justify-around">
-          <article className="lazy-b">
-            <h4 className="font-semibold" style={getCssDelay()}>
-              {content.stepsP[lang][0]}
-            </h4>
-            gift image
-          </article>
-          <article className="lazy-b">
-            <h4 className="font-semibold" style={getCssDelay()}>
-              {content.stepsP[lang][1]}
-            </h4>
-            gift image
-          </article>
-          <article className="lazy-b">
-            <h4 className="font-semibold" style={getCssDelay()}>
-              {content.stepsP[lang][2]}
-            </h4>
-            gift image
-          </article>
-          <article className="lazy-b">
-            <h4 className="font-semibold" style={getCssDelay()}>
-              {content.stepsP[lang][3]}
-            </h4>
-            gift image
-          </article>
-        </div>
+        <ul className="mb-10 flex flex-wrap items-center justify-around space-x-3">
+          {content.steps.map((step, i) => (
+            <li id={i + 1} className="mt-5 lazy-b">
+              <h4 className="font-semibold" style={getCssDelay()}>
+                <span className="text-lg font-semibold">{i + 1} </span>
+                {step[lang]}
+              </h4>
+              <div className="overflow-hidden h-80 mt-5 rounded-lg">
+                <Image src={step.image} width="200" height="400" alt={step.alt} className="h-full" />
+              </div>
+            </li>
+          ))}
+        </ul>
 
         <Link passHref legacyBehavior href="/admin/store?tab=my">
           <a
@@ -143,15 +131,49 @@ const content = {
       "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
     ],
   },
-  steps: {
+  stepsH: {
     en: "Create your first store and set it up in 4 steps",
     ar: "أنشئ متجرك الأول وقم بإعداده في 4 خطوات",
   },
-  stepsP: {
+  steps: [
     // Enrol Flow.
-    en: ["Signup", "Select a plan", "Create a store", "List your products"],
-    ar: ["إنشاء حساب", "حدد اشتراكًا", "أنشئ متجرً", "أضف منتجاتك"],
-  },
+    {
+      en: "Signup",
+      ar: "إنشاء حساب",
+      image: "/img/step-1.png",
+      alt: {
+        en: "Step 1 Create ArabLocalMarket account / signup",
+        ar: "الخطوة 1 إنشاء حساب / تسجيل في ArabLocalMarket",
+      },
+    },
+    {
+      en: "Select a plan",
+      ar: "حدد اشتراكًا",
+      image: "/img/step-2.gif",
+      alt: {
+        en: "Step 2 Select a store plan from the available plan on ArabLocalMarket",
+        ar: "الخطوة 2 حدد اشتراك للمتجر من الاشتراكات المتاحة على ArabLocalMarket",
+      },
+    },
+    {
+      en: "Create a store",
+      ar: "أنشئ متجرً",
+      image: "/img/step-3.gif",
+      alt: {
+        en: "Step 2 Create a store based on the plan you chose",
+        ar: "الخطوة 2 قم بإنشاء متجر بناءً على الاشتراك التي اخترته",
+      },
+    },
+    {
+      en: "List your products",
+      ar: "أضف منتجاتك",
+      image: "/img/step-4.gif",
+      alt: {
+        en: "Step 2 List your products in the store you created",
+        ar: "الخطوة 2 أضف منتجاتك إلى المتجر الذي أنشأته",
+      },
+    },
+  ],
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
   readMore: {
     en: "Read more on how to create a store and manage you the store inventory",

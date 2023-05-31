@@ -12,7 +12,7 @@ export default async function pricing({ searchParams }) {
 
   return (
     <section>
-      <h1 className="mt-16 mb-4 text-4xl text-center font-bold">{content.h1[lang]}</h1>
+      <h1 className="mt-16 mb-4 text-3xl text-center font-bold">{content.h1[lang]}</h1>
       <p className="text-center">{content.h1P[lang][0]}</p>
 
       <p className="mt-10 mb-3 text-sm">

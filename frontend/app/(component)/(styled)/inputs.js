@@ -44,7 +44,7 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
             aria-label={p.title}
             className={`${
               !full ? "absolute" : ""
-            } w-full bg-cbg appearance-none px-2 py-1 leading-none disabled:cursor-no-drop ${
+            } w-full bg-cbg appearance-none px-2 py-1 leading-7 disabled:cursor-no-drop ${
               editable ? "pr-10" : "card " + (p.disabled ? "" : "cd_hr")
             } fs ${inCls || "rounded-md"}`}
             {...p}
@@ -91,7 +91,7 @@ export function InputWithSelect({ label, options, value, onChange, cls, ...p }) 
           defaultValue={values[0]}
           onChange={(e) => onChange(e.target.value + "-" + (selectRef.current?.value || ""))}
           autoComplete="one"
-          className="w-full px-2 py-1 leading-none bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
+          className="w-full px-2 py-1 leading-7 bg-cbg card appearance-none rounded-l-md hover:border-bf fs"
           {...p}
         />
 
@@ -330,7 +330,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center leading-none font-semibold md:-mr-3 bg-[transparent] text-lg ${
+          className={`appearance-none text-center leading-7 font-semibold md:-mr-3 bg-[transparent] text-lg ${
             inCls || "w-12"
           }`}
           {...p}

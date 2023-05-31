@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import shdCnt from "../(layout)/json/shared-content.json";
@@ -94,18 +94,13 @@ export default function Signup({}) {
         <PhoneInputField full lang={lang} cls="4 shadow-sm" inCls="text-lg rounded-md" />
 
         <div className="flex -space-x-px shadow-sm">
-          <PswInputField
-            full
-            lang={lang}
-            cls="5 w-1/2"
-            inCls={`py-[6px] rounded-${lang == "ar" ? "r" : "l"}-md`}
-          />
+          <PswInputField full lang={lang} cls="5 w-1/2" inCls={`rounded-${lang == "ar" ? "r" : "l"}-md`} />
           <PswInputField
             full
             lang={lang}
             confirm
             cls="6 w-1/2"
-            inCls={`py-[6px] rounded-${lang == "ar" ? "l" : "r"}-md`}
+            inCls={`rounded-${lang == "ar" ? "l" : "r"}-md`}
           />
         </div>
 
