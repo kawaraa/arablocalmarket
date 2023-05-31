@@ -1,7 +1,7 @@
 import { LinkButton } from "./(styled)/button";
 import SvgIcon from "./(styled)/svg-icon";
 
-export default function PlanCard({ children, lang, plan }) {
+export default function PlanCard({ children, lang, plan, referralId }) {
   return (
     <article className="overflow-hidden flex-1 flex flex-col md:max-w-sm md:mx-3 rounded-lg card">
       <div className="h-0.5 bg-pc mb-5"></div>

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import Variant from "../(component)/variant";
+import Variant from "../variant";
 import { Button, IconButton } from "../../../../../(component)/(styled)/button";
 import { InputField, Textarea } from "../../../../../(component)/(styled)/inputs";
 import ImageUpload from "../../../../../(component)/(styled)/upload-image";

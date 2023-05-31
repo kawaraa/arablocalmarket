@@ -39,4 +39,10 @@ module.exports = createCoreService("api::store.store", ({ strapi }) => ({
       .query("api::store.store")
       .findOne({ where: { id }, select: ["subscriptionId", "subscriptionStatus"] });
   },
+
+  isPublic(store, user) {
+    const owner = store.owner || store.attributes.owner;
+    const status = store.subscriptionStatus || store.attributes.subscriptionStatus;
+    return owner == user || ["active", "trialing"].includes(status);
+  },
 }));

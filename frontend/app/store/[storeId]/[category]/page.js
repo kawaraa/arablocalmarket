@@ -49,7 +49,7 @@ export default async function Category({ params: { storeId }, searchParams }) {
 }
 
 const getTotal = async (storeId, category) => {
-  const query = `?filters[storeId][$eq]=${storeId}&filters[category][$eq]=${category}&fields=id&pagination[pageSize]=1`;
+  const query = `?filters[storeId][$eqi]=${storeId}&filters[category][$eqi]=${category}&fields=id&pagination[pageSize]=1`;
   const { data, meta } = await serverRequest("product", "GET", { query });
   return meta.pagination.total;
 };

@@ -151,7 +151,7 @@ export function CheckCard({ Tag = "label", children, cls, inCls, ...p }) {
         id={cls}
         title={p.title || p.name}
         aria-label={p.title || p.name}
-        className={`absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-transparent dark:checked:bg-transparent checked:border-4 rounded-lg fs ${inCls}`}
+        className={`absolute top-0 left-0 w-full h-full appearance-none border-pc bg-[rgb(0,0,0,0.1)] dark:bg-blur checked:bg-[transparent] dark:checked:bg-[transparent] checked:border-4 rounded-lg fs ${inCls}`}
         {...p}
       />
       {children}
@@ -202,7 +202,7 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
         checked={checked}
         onChange={handler}
         id={cls}
-        className="absolute inset-0 w-full h-full bg-transparent border border-bc rounded-full appearance-none fs"
+        className="absolute inset-0 w-full h-full bg-[transparent] border border-bc rounded-full appearance-none fs"
         {...p}
       />
       <span className={`block px-2`}>open</span>
@@ -330,7 +330,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center leading-none font-semibold md:-mr-3 bg-transparent text-lg ${
+          className={`appearance-none text-center leading-none font-semibold md:-mr-3 bg-[transparent] text-lg ${
             inCls || "w-12"
           }`}
           {...p}
@@ -347,7 +347,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
 //     <div className="relative h-10 w-32 flex rounded-lg mx-3 bg-[#d1d5db]">
 //       <input
 //         type="number"
-//         className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-transparent outline-none"
+//         className="appearance-none absolute inset-0 w-full h-full text-center pl-4 font-semibold bg-[transparent] outline-none"
 //         name="quantity"
 //       />
 //       <button

@@ -47,7 +47,7 @@ module.exports = () => ({
   // { subscriptionId: subscriptionId }
   // },
 
-  startTrial(customerId, priceId, storeId) {
+  startTrial(customerId, priceId, storeId, referralId) {
     return stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
@@ -58,7 +58,7 @@ module.exports = () => ({
       payment_settings: { save_default_payment_method: "on_subscription" },
       collection_method: "send_invoice",
       days_until_due: "1",
-      metadata: { storeId },
+      metadata: { storeId, referralId },
     });
   },
   createSubscription(customerId, priceId, storeId) {
@@ -79,19 +79,22 @@ module.exports = () => ({
     return stripe.subscriptions.update(subId, data);
   },
   cancelSubscription(subId) {
-    return stripe.subscriptions.cancel(subId);
+    return stripe.subscriptions.update(subId, { cancel_at_period_end: true });
   },
   getSubscription(subscriptionId) {
     return stripe.subscriptions.retrieve(subscriptionId);
   },
 
+  // verifyWebHook(body, sig, secret) {
+  //   return stripe.webhooks.constructEvent(body, sig, secret);
+  // },
   // createCheckout(customerId, priceId, storeId) {
   //   return stripe.checkout.sessions.create({
   //     mode: "subscription",
   //     customer: customerId,
   //     line_items: [{ price: priceId, quantity: 1 }],
-  //     success_url: `${redirect}/success?storeId=${storeId}`,
-  //     cancel_url: `${redirect}/failed?storeId=${storeId}`,
+  //     success_url: `/${redirect}/success?storeId=${storeId}`,
+  //     cancel_url: `/${redirect}/failed?storeId=${storeId}`,
   //   });
   // },
 });

@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import StoreLinks from "../(component)/store-links";
+import StoreLinks from "../store-links";
 import EmptyState from "../../(component)/(styled)/empty-state";
 import Tabs from "../../(component)/(styled)/tabs";
 import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
-const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
+const q = "?fields=owner,subscriptionStatus,name,open,about,meta&populate=cover,ratings";
 
 export default async function StoreLayout({ children, params: { storeId }, searchParams }) {
   const cookieStore = cookies();

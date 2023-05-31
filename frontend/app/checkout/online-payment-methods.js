@@ -1,6 +1,6 @@
 "use client";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
-import shdCnt from "../../(layout)/json/shared-content.json";
+import SvgIcon from "../(component)/(styled)/svg-icon";
+import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function OnlinePaymentMethods({ lang, cnt, user, payments, selected }) {
   const cardMethod = payments.find((p) => p.type == "ONLINE" && p.method == "card");

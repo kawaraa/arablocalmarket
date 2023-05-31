@@ -9,10 +9,11 @@ import { CheckInput, CheckCard } from "../(component)/(styled)/inputs";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import AddressInputs from "../(component)/address-inputs";
 import { NameInputField, PhoneInputField } from "../(component)/custom-inputs";
-import OnDeliveryPaymentMethods from "./(component)/on-delivery-payment-methods";
-import OnlinePaymentMethods from "./(component)/online-payment-methods";
+import OnDeliveryPaymentMethods from "./on-delivery-payment-methods";
+import OnlinePaymentMethods from "./online-payment-methods";
 import shdCnt from "../(layout)/json/shared-content.json";
-const q = "?fields=name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=address,payments";
+const q =
+  "?fields=subscriptionStatus,name,deliver,deliveryCost,currency,whatsAppOrder,meta&populate=address,payments";
 
 export default function Checkout({}) {
   const router = useRouter();

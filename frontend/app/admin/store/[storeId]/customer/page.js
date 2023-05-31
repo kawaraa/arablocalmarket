@@ -13,7 +13,7 @@ export default function Customer({ params }) {
 
   const fetchCustomers = async (id) => {
     try {
-      const query = `?filters[orders][store][id][$eq]=${id}&fields=user,name`;
+      const query = `?filters[orders][store][id][$eqi]=${id}&fields=user,name`;
       const { data } = await request("customer", "GET", { query });
       setCustomers(
         data.map(({ id, attributes }) => {

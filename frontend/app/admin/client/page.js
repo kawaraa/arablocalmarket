@@ -1,18 +1,39 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import Tabs from "../../(component)/(styled)/tabs";
+import Link from "next/link";
 
 export default function Client({ params, searchParams }) {
+  const router = useRouter();
   const { lang, user } = useContext(AppSessionContext);
 
   console.log("Client: >>>");
 
+  useEffect(() => {
+    if (!user && !user?.loading) router.replace("/signin");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  if (!user || user.loading) return null;
   return (
     <div>
       <h1>{content.h1[lang]}</h1>
-
+      <p>Here you will see all the clients have joined ArabLocalMarket through your referral link</p>
+      <p>Client referral Earning is 25% </p>
+      <p>Representative page Become Representative</p>
+      <div>
+        <strong>Referral / Affiliate link: </strong>
+        <span>
+          {window.origin}/{user.id}
+        </span>
+      </div>
+      <p>Total earnings, Paid, Pending, Payable</p>
+      <div>Table with the following header: Name, Plan, Earning</div>
+      €30 / €7.5
+      <p>Monthly earnings / Monthly income</p>
       {/* <Tabs
         tabs={content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }))}
         onTabChange={setActiveTab}

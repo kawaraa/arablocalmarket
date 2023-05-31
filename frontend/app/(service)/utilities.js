@@ -1,8 +1,7 @@
 export class Cookies {
-  static set(name, value) {
-    if (!name) value = Date.now() + value * 24 * 60 * 60 * 1000;
-    // document.cookie = `${name || "expires"}=;path=/;`; // Delete cookie
-    document.cookie = `${name || "expires"}=${value};path=/;`; // create cookie
+  static set(name, value, expireDays = 180, date = new Date()) {
+    date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};"expires"=${date.toUTCString()};path=/;`;
   }
   static get(name) {
     return Cookies.getAll()[name] || null;
@@ -11,10 +10,8 @@ export class Cookies {
     return Cookies.parse(document.cookie);
   }
   static remove(name) {
-    // const cookies = Cookies.getAll();
-    // delete cookies[name];
-    // document.cookie = Object.keys(cookies).reduce((total, name) => total + `${name}=${cookies[name]}`, "");
-    document.cookie = `${name}=;path=/;`; // Delete cookie
+    // To delete a cookie, Just set the expires parameter to a past date:
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
   static parse(cookies) {
     const result = {};

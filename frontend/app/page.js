@@ -59,45 +59,51 @@ export default async function LandingPage({ params, searchParams }) {
       <div id="section2" className="h-12"></div>
 
       <section className="min-h-screen pt-14 pb-24 px-1 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-dbg text-center bg-pc bg-gradient-to-tl from-bg9">
-        <h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm lazy-b" style={getCssDelay()}>
-          {content.h4[lang]}
+        <h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm" style={getCssDelay()}>
+          {content.h3[lang]}
         </h3>
         <p className="text-lg lazy-b" style={getCssDelay()}>
-          {content.h4P[lang][0]}
+          {content.h3P[lang][0]}
         </p>
         <p className="text-lg lazy-b" style={getCssDelay()}>
-          {content.h4P[lang][1]}
+          {content.h3P[lang][1]}
         </p>
 
-        <h4 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
-          {content.h3[lang]}
-        </h4>
-        <div className="mb-10 flex justify-around">
-          <div>
-            <p className="font-semibold lazy-b" style={getCssDelay()}>
-              {content.h3P[lang][0]}
-            </p>
+        <h3 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
+          {content.steps[lang]}
+        </h3>
+        <div className="mb-10 flex flex-col md:flex-row justify-around">
+          <article className="lazy-b">
+            <h4 className="font-semibold" style={getCssDelay()}>
+              {content.stepsP[lang][0]}
+            </h4>
             gift image
-          </div>
-          <div>
-            <p className="font-semibold my-0 lazy-b" style={getCssDelay()}>
-              {content.h3P[lang][1]}
-            </p>
+          </article>
+          <article className="lazy-b">
+            <h4 className="font-semibold" style={getCssDelay()}>
+              {content.stepsP[lang][1]}
+            </h4>
             gift image
-          </div>
-          <div>
-            <p className="font-semibold my-0 lazy-b" style={getCssDelay()}>
-              {content.h3P[lang][2]}
-            </p>
+          </article>
+          <article className="lazy-b">
+            <h4 className="font-semibold" style={getCssDelay()}>
+              {content.stepsP[lang][2]}
+            </h4>
             gift image
-          </div>
+          </article>
+          <article className="lazy-b">
+            <h4 className="font-semibold" style={getCssDelay()}>
+              {content.stepsP[lang][3]}
+            </h4>
+            gift image
+          </article>
         </div>
 
         <Link passHref legacyBehavior href="/admin/store?tab=my">
           <a
             style={getCssDelay()}
             className="inline-block mt-3 px-6 py-3 text-lg bg-dbg text-bg rounded-full duration-200 hover:opacity-90 hover:shadow-xl lazy-b">
-            {content.h3Link[lang]}
+            {content.stepsLink[lang]}
           </a>
         </Link>
       </section>
@@ -126,26 +132,27 @@ const content = {
     ar: "ابحث عن متجر عربي وسوبر ماركت بالقرب منك.",
   },
   findStoreLink: { en: "Find a store to order from", ar: "ابحث عن متجر للطلب منه" },
-  h4: { en: "Grow your business here", ar: "نمي عملك هنا" },
-  h4P: {
+  h3: { en: "Grow your business here", ar: "نمي عملك هنا" },
+  h3P: {
     en: [
       "Are you a store owner or you have a grocery store and want to grow your business?",
       "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
     ],
     ar: [
       "هل أنت صاحب متجر أو لديك متجر بقالة وترغب في تنمية عملك؟",
-      "فأنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
+      "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
     ],
   },
-  h3: {
-    en: "Create your first store and set it up in 3 steps",
-    ar: "أنشئ متجرك الأول وقم بإعداده في 3 خطوات",
+  steps: {
+    en: "Create your first store and set it up in 4 steps",
+    ar: "أنشئ متجرك الأول وقم بإعداده في 4 خطوات",
   },
-  h3P: {
-    en: ["Create a store", "Setup billing information", "List your products"],
-    ar: ["أنشئ متجرًا", "أضاف معلومات الدفع", "أضف منتجاتك"],
+  stepsP: {
+    // Enrol Flow.
+    en: ["Signup", "Select a plan", "Create a store", "List your products"],
+    ar: ["إنشاء حساب", "حدد اشتراكًا", "أنشئ متجرً", "أضف منتجاتك"],
   },
-  h3Link: { en: "Start free", ar: "ابدأ مجانا" },
+  stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
   readMore: {
     en: "Read more on how to create a store and manage you the store inventory",
     ar: "اقرأ المزيد حول كيفية إنشاء متجر وإدارة مخزون المتجر",

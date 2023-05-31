@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import shdCnt from "../../(layout)/json/shared-content.json";
-import { InputField } from "../../(component)/(styled)/inputs";
-import { PhoneInputField, PswInputField } from "../../(component)/custom-inputs";
-import { Button } from "../../(component)/(styled)/button";
-import Modal from "../../(component)/(styled)/modal";
+import shdCnt from "../(layout)/json/shared-content.json";
+import { InputField } from "../(component)/(styled)/inputs";
+import { PhoneInputField, PswInputField } from "../(component)/custom-inputs";
+import { Button } from "../(component)/(styled)/button";
+import Modal from "../(component)/(styled)/modal";
 
 export default function Account({ lang, username, email, phone, handleUpdate }) {
   const [passwordForm, setPasswordForm] = useState(false);
@@ -35,7 +35,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
         cls="mb-5"
       />
 
-      <div dir="auto" className="mb-5 flex justify-between items-center px-2 opacity-70">
+      <div dir="auto" className="mb-5 flex justify-between items-center px-2 opacity-60">
         {email}
       </div>
 
@@ -53,7 +53,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
       </div> */}
 
       <div dir="ltr" className="mb-5 flex justify-between items-center">
-        <span className=" px-2 opacity-70">********</span>
+        <span className=" px-2 opacity-60">********</span>
         <Button type="submit" onClick={() => setPasswordForm(true)} cls="!px-2 !py-1 !text-sm">
           {shdCnt.edit[lang]}
         </Button>

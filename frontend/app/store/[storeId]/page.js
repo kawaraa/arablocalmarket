@@ -3,7 +3,8 @@ import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";
 import StarRating from "../../(component)/(styled)/rating";
-const q = "?fields=owner,deliver,deliveryCost,currency,about&populate=openingHours,address,ratings";
+const q =
+  "?fields=owner,subscriptionStatus,deliver,deliveryCost,currency,about&populate=openingHours,address,ratings";
 
 export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();

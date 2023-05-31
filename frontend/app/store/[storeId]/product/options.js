@@ -1,9 +1,9 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import VariantOptions from "../../../../(component)/variant-options";
-import { NumberInputWithControl } from "../../../../(component)/(styled)/inputs";
-import { AppSessionContext } from "../../../../app-session-context";
-import shdCnt from "../../../../(layout)/json/shared-content.json";
+import VariantOptions from "../../../(component)/variant-options";
+import { NumberInputWithControl } from "../../../(component)/(styled)/inputs";
+import { AppSessionContext } from "../../../app-session-context";
+import shdCnt from "../../../(layout)/json/shared-content.json";
 
 export default function Options({ store, id, variants, name, image, discount }) {
   const { lang, addMessage } = useContext(AppSessionContext);

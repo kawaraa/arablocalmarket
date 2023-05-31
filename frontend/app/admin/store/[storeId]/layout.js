@@ -11,7 +11,7 @@ import { LinkButton } from "../../../(component)/(styled)/button";
 import { request } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 import Dropdown from "../../../(component)/(styled)/dropdown";
-const q = "?fields=name,open&populate=cover";
+const q = "?owner,fields=subscriptionStatus,name,open&populate=cover";
 
 export default function StoreById({ children, params: { storeId } }) {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function StoreById({ children, params: { storeId } }) {
         data.open = target.checked;
         setStore({ ...store, open: target.checked });
       }
-      await request("store", "PUT", { query: "/" + storeId, body: { data } });
+      await request("store", "PUT", { query: `/${storeId}`, body: { data } });
 
       setTimeout(() => target?.blur(), 200);
     } catch (error) {
@@ -43,7 +43,7 @@ export default function StoreById({ children, params: { storeId } }) {
     try {
       formData.append("files.cover", file, file.name);
       formData.append("data", JSON.stringify({}));
-      await request("store", "PUT", { query: "/" + storeId, body: formData });
+      await request("store", "PUT", { query: `/${storeId}`, body: formData });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });

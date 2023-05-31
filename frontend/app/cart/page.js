@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import { request } from "../(service)/api-provider";
 import Tabs from "../(component)/(styled)/tabs";
-import StoreItems from "./(component)/store-items";
+import StoreItems from "./store-items";
 import EmptyState from "../(component)/(styled)/empty-state";
 import shdCnt from "../(layout)/json/shared-content.json";
 

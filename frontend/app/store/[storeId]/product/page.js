@@ -4,8 +4,8 @@ import shdCnt from "../../../(layout)/json/shared-content.json";
 import categories from "../../../(layout)/json/categories.json";
 import ProductSearch from "../../../(component)/product-search";
 import ProductCard from "../../../(component)/product-card";
-import PaginationButtons from "./(component)/pagination-buttons";
-const q = "?fields=currency";
+import PaginationButtons from "./pagination-buttons";
+const q = "?fields=subscriptionStatus,currency";
 
 export default async function ProductsByStore({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
@@ -61,7 +61,7 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
 }
 
 export async function generateMetadata({ params, searchParams }) {
-  const q = "?fields=owner,name,open,about,meta&populate=cover,ratings";
+  const q = "?fields=owner,subscriptionStatus,name,open,about,meta&populate=cover,ratings";
   const store = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })
     .then((res) => res?.data)
     .catch(() => null);
@@ -102,10 +102,10 @@ const getProducts = async (storeId, { category, search, page }) => {
     sq = `&filters[$or][0][name][$contains]=${s}&filters[$or][1][description][$contains]=${s}&filters[$or][2][variants][barcode][$contains]=${s}`;
   } else if (category) {
     category = categories.find((c) => (c.text.en + " " + c.text.ar).toLowerCase().includes(category))?.key;
-    if (category) sq = `&filters[category][$eq]=${category}`;
+    if (category) sq = `&filters[category][$eqi]=${category}`;
   }
 
-  const query = `?filters[storeId][$eq]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
+  const query = `?filters[storeId][$eqi]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
 
   return serverRequest("product", "GET", { query });
 };

@@ -26,7 +26,7 @@ export default function Orders(props) {
 
   const fetchOrders = async () => {
     try {
-      const query = `?filters[customer][user][$eq]=${user.id}&populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
+      const query = `?filters[customer][user][$eqi]=${user.id}&populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("order", "GET", { query });
       setTotal(meta.pagination.total);
       if (pageRef.current > meta.pagination.pageCount) return [];

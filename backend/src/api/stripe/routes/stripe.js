@@ -63,5 +63,14 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "POST",
+      path: "/stripe/webhook",
+      handler: "stripe.webhook",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

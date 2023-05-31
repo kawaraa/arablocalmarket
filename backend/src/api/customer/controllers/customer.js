@@ -14,28 +14,35 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
   },
 
   async findOne(ctx) {
-    if (!ctx.state.user?.id) return ctx.unauthorized();
+    const user = ctx.state.user;
+    if (!user?.id) return ctx.unauthorized();
 
-    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(ctx.state.user.id);
-    // Todo: if there is no Customer, create one
-
-    if (!ctx.params.id) return ctx.unauthorized();
+    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(user.id);
+    if (!ctx.params.id) {
+      ctx.params.id = await strapi
+        .service("api::customer.customer")
+        .create({ data: { user: user.id, name: user.firstName + " " + user.lastName } });
+    }
 
     let { data, meta } = await super.findOne(ctx);
-    if (!data || !data[0]) return { data, meta };
+    if (!data) return { data, meta };
 
     data.attributes.workStores?.data?.forEach((s) => {
-      s.attributes = strapi
-        .service("api::store.store")
-        .removePrivateFields(ctx.state?.user?.id, s.attributes);
+      s.attributes = strapi.service("api::store.store").removePrivateFields(user.id, s.attributes);
     });
+
+    if (data.attributes.favoriteStores?.data[0]) {
+      data.attributes.favoriteStores.data = data.attributes.favoriteStores.data.filter((s) =>
+        strapi.service("api::store.store").isPublic(s, user.id)
+      );
+    }
 
     return { data, meta };
   },
 
   async find(ctx) {
-    let storeId = ctx.query.filters?.orders?.store?.id?.$eq;
-    if (!storeId) storeId = ctx.query.filters?.workStores?.id?.$eq;
+    let storeId = ctx.query.filters?.orders?.store?.id?.$eqi;
+    if (!storeId) storeId = ctx.query.filters?.workStores?.id?.$eqi;
     if (!storeId) return ctx.unauthorized();
 
     const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);

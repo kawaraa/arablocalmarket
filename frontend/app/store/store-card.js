@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getCssDelay } from "../../(service)/style-methods";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
+import { getCssDelay } from "../(service)/style-methods";
+import SvgIcon from "../(component)/(styled)/svg-icon";
 import { StoreCustomerInfo, StoreAdminInfo } from "./store-card-info";
-import shdCnt from "../../(layout)/json/shared-content.json";
+import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open, cls, ...s }) {
   return (

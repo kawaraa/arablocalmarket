@@ -1,10 +1,10 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AppSessionContext } from "../../../../app-session-context";
-import { request } from "../../../../(service)/api-provider";
-import shdCnt from "../../../../(layout)/json/shared-content.json";
-import { Button, IconButton } from "../../../../(component)/(styled)/button";
+import { AppSessionContext } from "../../../app-session-context";
+import { request } from "../../../(service)/api-provider";
+import shdCnt from "../../../(layout)/json/shared-content.json";
+import { Button, IconButton } from "../../../(component)/(styled)/button";
 
 export default function ActionButtons({ id }) {
   const router = useRouter();

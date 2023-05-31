@@ -1,13 +1,13 @@
 "use client";
 import Script from "next/script";
 import { useContext, useEffect, useState } from "react";
-import { request } from "../../(service)/api-provider";
-import Modal from "../../(component)/(styled)/modal";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
-import { AppSessionContext } from "../../app-session-context";
-import { ShareButton } from "../../(component)/share-button";
-import shdCnt from "../../(layout)/json/shared-content.json";
-import RatingInputPopup from "../[storeId]/product/(component)/rating-input-popup";
+import { request } from "../(service)/api-provider";
+import Modal from "../(component)/(styled)/modal";
+import SvgIcon from "../(component)/(styled)/svg-icon";
+import { AppSessionContext } from "../app-session-context";
+import { ShareButton } from "../(component)/share-button";
+import shdCnt from "../(layout)/json/shared-content.json";
+import RatingInputPopup from "./[storeId]/product/rating-input-popup";
 const liCls =
   "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
 

@@ -2,10 +2,10 @@ import { headers, cookies } from "next/headers";
 import { Distance } from "k-utilities";
 import EmptyState from "../(component)/(styled)/empty-state";
 import { serverRequest } from "../(service)/api-provider";
-import StoreCard from "./(component)/store-card";
-import StoreSearch from "./(component)/store-search";
-import PaginationButtons from "./[storeId]/product/(component)/pagination-buttons";
-import CoordinatesCriteria from "./(component)/coordinates-criteria";
+import StoreCard from "./store-card";
+import StoreSearch from "./store-search";
+import PaginationButtons from "./[storeId]/product/pagination-buttons";
+import CoordinatesCriteria from "./coordinates-criteria";
 
 export default async function StoresNearby({ searchParams }) {
   const cookieStore = cookies();

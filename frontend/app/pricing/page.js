@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import PlanCard from "../(component)/plan-card";
 import plans from "../(layout)/plans";
+import CheckReferral from "./check-referral";
 
 export default async function pricing({ searchParams }) {
   const cookieStore = cookies();
@@ -24,10 +25,12 @@ export default async function pricing({ searchParams }) {
           <PlanCard lang={lang} plan={plan} key={i} />
         ))}
       </div>
+      <CheckReferral referralId={searchParams?.referral} />
     </section>
   );
 }
 
+// Todo: This gives an error / warning.
 // export async function generateMetadata({ params, searchParams }) {
 //   const cookieStore = cookies();
 //   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";

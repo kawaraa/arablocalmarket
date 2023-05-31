@@ -19,7 +19,7 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 import Modal from "../../(component)/(styled)/modal";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const q =
-  "?fields=owner,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
+  "?fields=owner,subscriptionStatus,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
 const openingHour = { open: "AM-07.00", close: "PM-07.00" };
 
 export default function NewStore({ params, searchParams: { id, subscription } }) {
@@ -106,10 +106,10 @@ export default function NewStore({ params, searchParams: { id, subscription } })
         id = (await request("store", "POST", d)).data.id;
       } else {
         delete data.name;
-        id = (await request("store", "PUT", { query: "/" + store.id, body: { data } })).data.id;
+        await request("store", "PUT", { query: "/" + store.id, body: { data } });
       }
 
-      window.location.replace(`/admin/store/${id}/product`);
+      window.location.replace(`/admin/store/${store.id}/product`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }

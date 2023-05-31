@@ -2,14 +2,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
-import Profile from "./(component)/profile";
-import Account from "./(component)/account";
+import Profile from "./profile";
+import Account from "./account";
 import shdCnt from "../(layout)/json/shared-content.json";
 import { request } from "../(service)/api-provider";
 import { Button } from "../(component)/(styled)/button";
 import Modal from "../(component)/(styled)/modal";
-import Billing from "./(component)/billing";
-import Payout from "./(component)/payout";
+import Billing from "./billing";
+import Payout from "./payout";
 
 export default function Settings(props) {
   const router = useRouter();

@@ -53,10 +53,10 @@ export async function fetchUser() {
   const user = await request("getUser");
   if (!user || !user.id) return null;
 
-  const q1 = `?filters[owner][$eq]=${user.id}&fields=owner,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
+  const q1 = `?filters[owner][$eqi]=${user.id}&fields=owner,subscriptionStatus,name,open,currency&populate=cover,orders,workers,ratings,favorites`;
   user.myStores = (await request("store", "GET", { query: q1 })).data;
 
-  const q = `?fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores][populate]=owner,cover,ratings&populate[favoriteProducts][populate]=image,variants`;
+  const q = `?owner,fields=id&populate[workStores][populate]=owner,cover,orders,workers,ratings,favorites&populate[cart]=*&populate[favoriteStores][populate]=owner,cover,ratings&populate[favoriteProducts][populate]=image,variants`;
   const { id, attributes } = (await request("customer", "GET", { query: `/1${q}` })).data;
   user.customerId = id;
   user.workStores = attributes.workStores.data.map(removeAttributes);
@@ -73,7 +73,9 @@ const prepareCart = async (cart) => {
   if (!cart | !cart[0]) return [];
 
   const ids = cart.map((it) => "filters[id][$in]=" + it.storeId).join("&");
-  const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
+  const stores = (
+    await request("store", "GET", { query: `?${ids}&fields=subscriptionStatus,name,currency,meta` })
+  ).data;
 
   const pIds = cart.map((it) => "filters[id][$in]=" + it.productNumber).join("&");
   const query = `?${pIds}&fields=name&populate[image]=*&populate[variants][populate][options]=*`;
@@ -110,7 +112,9 @@ const prepareFavoriteProducts = async (favoriteProducts) => {
   if (!favoriteProducts || !favoriteProducts[0]) return [];
 
   const ids = favoriteProducts.map((p) => "filters[id][$in]=" + p.attributes.storeId).join("&");
-  const stores = (await request("store", "GET", { query: `?${ids}&fields=name,currency,meta` })).data;
+  const stores = (
+    await request("store", "GET", { query: `?${ids}&fields=subscriptionStatus,name,currency,meta` })
+  ).data;
 
   stores.forEach((s) => {
     s.currency = s.currency.split("-")[0];

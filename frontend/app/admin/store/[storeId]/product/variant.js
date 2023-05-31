@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, IconButton } from "../../../../../(component)/(styled)/button";
-import { InputField, NumberInputWithControl, Select } from "../../../../../(component)/(styled)/inputs";
-import { PriceInputField, WeightInputField } from "../../../../../(component)/custom-inputs";
-import shdCnt from "../../../../../(layout)/json/shared-content.json";
-import BarcodeScannerPopup from "../../../../../(component)/(styled)/barcode-scanner-popup";
+import { Button, IconButton } from "../../../../(component)/(styled)/button";
+import { InputField, NumberInputWithControl, Select } from "../../../../(component)/(styled)/inputs";
+import { PriceInputField, WeightInputField } from "../../../../(component)/custom-inputs";
+import shdCnt from "../../../../(layout)/json/shared-content.json";
+import BarcodeScannerPopup from "../../../../(component)/(styled)/barcode-scanner-popup";
 
 export default function Variant({ lang, number, onRemove, onUpdate, setMessage, ...v }) {
   const [options, setOptions] = useState(v.options || [{ name: "WEIGHT" }]);

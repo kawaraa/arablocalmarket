@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconButton } from "../../../../(component)/(styled)/button";
+import { IconButton } from "../../../(component)/(styled)/button";
 import { useRef } from "react";
 
 export default function PaginationButtons({ lang, query, pagination }) {

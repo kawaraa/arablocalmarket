@@ -1,5 +1,5 @@
-import SvgIcon from "../../(component)/(styled)/svg-icon";
-import StarRating from "../../(component)/(styled)/rating";
+import SvgIcon from "../(component)/(styled)/svg-icon";
+import StarRating from "../(component)/(styled)/rating";
 
 export const StoreCustomerInfo = ({ lang, about, ratings, distance }) => {
   // let dst = +distance;

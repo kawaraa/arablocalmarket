@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { AppSessionContext } from "../../../../app-session-context";
+import { AppSessionContext } from "../../../app-session-context";
 import Image from "next/image";
 
 export default function Images({ productName, images }) {

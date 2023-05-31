@@ -1,12 +1,12 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
-import { AppSessionContext } from "../../app-session-context";
-import Modal from "../../(component)/(styled)/modal";
-import LeafletMap from "../../(component)/leaflet-map";
-import SearchBox from "../../(component)/(styled)/search-box";
-import SvgIcon from "../../(component)/(styled)/svg-icon";
-import shdCnt from "../../(layout)/json/shared-content.json";
+import { AppSessionContext } from "../app-session-context";
+import Modal from "../(component)/(styled)/modal";
+import LeafletMap from "../(component)/leaflet-map";
+import SearchBox from "../(component)/(styled)/search-box";
+import SvgIcon from "../(component)/(styled)/svg-icon";
+import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function StoreSearch({ text }) {
   const router = useRouter();

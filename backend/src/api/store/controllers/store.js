@@ -4,6 +4,7 @@ const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async create(ctx) {
+    const referralId = ctx.cookies.get("referral");
     const priceId = ctx.query.subscription;
     const options = { select: ["id"], where: { owner: ctx.state.user.id } };
     const stores = await strapi.query("api::store.store").findMany(options);
@@ -23,7 +24,9 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
     const res = await super.create(ctx);
 
     const c = await strapi.service("api::stripe.stripe").createCustomer({ name, email, address });
-    const { id, status } = await strapi.service("api::stripe.stripe").startTrial(c.id, priceId);
+    const { id, status } = await strapi
+      .service("api::stripe.stripe")
+      .startTrial(c.id, priceId, res.data.id, referralId || "");
 
     const userRes = await strapi
       .query("plugin::users-permissions.user")
@@ -39,8 +42,10 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
 
   async findOne(ctx) {
     const result = await super.findOne(ctx);
-    if (!result || !result.data) return ctx.notFound();
     const user = ctx.state.user?.id;
+    if (!result || !result.data || !strapi.service("api::store.store").isPublic(result.data, user)) {
+      return ctx.notFound();
+    }
 
     result.data.attributes = strapi
       .service("api::store.store")
@@ -59,10 +64,14 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   async find(ctx) {
     let { data, meta } = await super.find(ctx);
     if (!data || !data[0]) return { data, meta };
-    data = data.map(({ id, attributes }) => {
-      attributes.id = id;
-      return strapi.service("api::store.store").removePrivateFields(ctx.state.user?.id, attributes);
-    });
+    const user = ctx.state.user?.id;
+
+    data = data
+      .filter((s) => strapi.service("api::store.store").isPublic(s, user))
+      .map(({ id, attributes }) => {
+        attributes.id = id;
+        return strapi.service("api::store.store").removePrivateFields(user, attributes);
+      });
     return { data, meta };
   },
 
@@ -83,7 +92,8 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
       delete ctx.request.body.data.publishedAt;
       delete ctx.request.body.data.subscriptionStatus;
     }
-    return super.update(ctx);
+    const a = await super.update(ctx);
+    return { success: true };
   },
 
   async updateStatus(ctx) {
@@ -94,11 +104,12 @@ module.exports = createCoreController("api::store.store", ({ strapi }) => ({
   },
 
   async delete(ctx) {
-    // Todo: either do not let the user delete a store with active or cancel the plan first.
     const id = ctx.params.id;
     const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
     const store = await strapi.query("api::store.store").findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
+
+    await strapi.service("api::stripe.stripe").cancelSubscription(store.subscriptionId);
     await strapi.service("api::product.product").deleteStoreProductsWithMediaFiles(id);
     if (store.cover) await strapi.plugins.upload.services.upload.remove(store.cover);
     return super.delete(ctx);

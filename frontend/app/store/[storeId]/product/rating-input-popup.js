@@ -1,11 +1,11 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { AppSessionContext } from "../../../../app-session-context";
-import { request } from "../../../../(service)/api-provider";
-import shdCnt from "../../../../(layout)/json/shared-content.json";
-import StarRating from "../../../../(component)/(styled)/rating";
-import Modal from "../../../../(component)/(styled)/modal";
+import { AppSessionContext } from "../../../app-session-context";
+import { request } from "../../../(service)/api-provider";
+import shdCnt from "../../../(layout)/json/shared-content.json";
+import StarRating from "../../../(component)/(styled)/rating";
+import Modal from "../../../(component)/(styled)/modal";
 
 export default function RatingInputPopup({ stars, ratedStars, total, data, open, onClose, starsCls }) {
   const { lang, user, addMessage } = useContext(AppSessionContext);

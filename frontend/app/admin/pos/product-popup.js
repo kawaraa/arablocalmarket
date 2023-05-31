@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import VariantOptions from "../../../(component)/variant-options";
-import { NumberInputWithControl } from "../../../(component)/(styled)/inputs";
-import Modal from "../../../(component)/(styled)/modal";
-import shdCnt from "../../../(layout)/json/shared-content.json";
+import VariantOptions from "../../(component)/variant-options";
+import { NumberInputWithControl } from "../../(component)/(styled)/inputs";
+import Modal from "../../(component)/(styled)/modal";
+import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function SelectProductPopup({ lang, open, product, onAddItem, onCancel, setMsg }) {
   const [item, setItem] = useState({ options: [], quantity: 1 });

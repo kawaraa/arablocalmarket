@@ -1,9 +1,9 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { AppSessionContext } from "../../app-session-context";
-import { request } from "../../(service)/api-provider";
-import { IconButton } from "../../(component)/(styled)/button";
-import shdCnt from "../../(layout)/json/shared-content.json";
+import { AppSessionContext } from "../app-session-context";
+import { request } from "../(service)/api-provider";
+import { IconButton } from "../(component)/(styled)/button";
+import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function Billing({ lang }) {
   const { setAppLoading, addMessage } = useContext(AppSessionContext);
@@ -40,7 +40,7 @@ export default function Billing({ lang }) {
       <h3 className="text-lg mb-2 mt-6">{content.h[lang]}</h3>
       <ul dir="ltr" className="space-y-2">
         {!paymentMethods[0] ? (
-          <p dir="auto" className="text-sm opacity-50">
+          <p dir="auto" className="text-sm opacity-60">
             {content.noPayment[lang]}
           </p>
         ) : (
@@ -92,6 +92,7 @@ const CreditCardSvg = ({ colors = ["#6366F1", "#9FA1FF", "#9FA1FF"], cls }) => (
 );
 
 const content = {
+  // Setup billing information
   h: { en: "Payment method", ar: "طريقة الدفع" },
   noPayment: { en: "You don't have any saved payment method", ar: "ليس لديك أي طريقة دفع محفوظة" },
 };

@@ -1,6 +1,6 @@
 "use client";
-import { CheckCard } from "../../(component)/(styled)/inputs";
-import Badge from "../../(component)/(styled)/badge";
+import { CheckCard } from "../(component)/(styled)/inputs";
+import Badge from "../(component)/(styled)/badge";
 
 export default function OnDeliveryPaymentMethods({ lang, cnt, payments, paymentMethod, selectPayment }) {
   const methods = payments

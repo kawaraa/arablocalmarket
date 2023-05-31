@@ -1,6 +1,6 @@
-import { CheckInput } from "../../(component)/(styled)/inputs";
-import LineItems from "../../(component)/line-items";
-import { StoreHeaderInfo } from "../../(component)/order-card";
+import { CheckInput } from "../(component)/(styled)/inputs";
+import LineItems from "../(component)/line-items";
+import { StoreHeaderInfo } from "../(component)/order-card";
 
 export default function StoreItems({ favorite, onCheck, onRemove, ...store }) {
   return (

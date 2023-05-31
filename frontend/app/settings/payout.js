@@ -6,7 +6,7 @@ export default function Payout({ lang }) {
       <h3 className="text-lg font-semibold mb-2 mt-6">{content.h[lang]}</h3>
       {/* <p>banking information</p> */}
 
-      <p dir="auto" className="text-sm opacity-50">
+      <p dir="auto" className="text-sm opacity-60">
         {content.noPayout[lang]}
       </p>
     </section>
@@ -14,6 +14,7 @@ export default function Payout({ lang }) {
 }
 
 const content = {
+  // Setup Payout bank account
   h: { en: "Payout bank account", ar: "طريقة تلقي المدفوعات" },
   noPayout: { en: "You don't have any banking information", ar: "ليس لديك أي معلومات مصرفية" },
 };

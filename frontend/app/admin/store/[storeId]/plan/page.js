@@ -66,6 +66,7 @@ export default function StorePlan({ params: { storeId } }) {
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
+    setShowWarning(false);
     setLoading(false);
   };
 
@@ -124,15 +125,14 @@ export default function StorePlan({ params: { storeId } }) {
                     cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg3">
                     {active ? content.cancel[lang] : getValue(subscription?.status)}
                   </Button>
-                  {subscription?.status == "incomplete" ||
-                    (subscription?.status == "trialing" && (
-                      <Button
-                        loading={loading}
-                        onClick={payAgain}
-                        cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg1">
-                        {content.pay[lang]}
-                      </Button>
-                    ))}
+                  {[("trialing", "incomplete")].includes(subscription?.status) && (
+                    <Button
+                      loading={loading}
+                      onClick={payAgain}
+                      cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg1">
+                      {content.pay[lang]}
+                    </Button>
+                  )}
                 </div>
               </PlanCard>
               <div className="w-5 h-10 "></div>

@@ -29,7 +29,7 @@ export default function StoreProducts({ params, searchParams }) {
         pageRef.current = 1;
         sq = `&filters[$or][0][name][$contains]=${search}&filters[$or][1][description][$contains]=${search}&filters[$or][2][variants][barcode][$contains]=${search}`;
       }
-      const query = `?filters[storeId][$eq]=${storeId.current}${sq}&populate=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
+      const query = `?filters[storeId][$eqi]=${storeId.current}${sq}&populate=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("product", "GET", { query });
       if (total < 1) setTotal(meta.pagination.total);
       if (pageRef.current > meta.pagination.pageCount) return [];

@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { Button } from "../../(component)/(styled)/button";
-import Modal from "../../(component)/(styled)/modal";
-import { NameInputField } from "../../(component)/custom-inputs";
-import AddressInputs from "../../(component)/address-inputs";
-import shdCnt from "../../(layout)/json/shared-content.json";
+import { Button } from "../(component)/(styled)/button";
+import Modal from "../(component)/(styled)/modal";
+import { NameInputField } from "../(component)/custom-inputs";
+import AddressInputs from "../(component)/address-inputs";
+import shdCnt from "../(layout)/json/shared-content.json";
 
 export default function Profile({ lang, firstName, lastName, address, handleUpdate, setMessage }) {
   const [adr, setAdr] = useState(address || {});

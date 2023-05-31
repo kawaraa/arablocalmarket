@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -95,21 +95,7 @@
     },
     "subscriptionStatus": {
       "type": "enumeration",
-      "enum": [
-        "TRIAL",
-        "ACTIVE",
-        "CANCELED",
-        "INCOMPLETE",
-        "EXPIRED",
-        "UNPAID",
-        "trialing",
-        "active",
-        "incomplete",
-        "incomplete_expired",
-        "past_due",
-        "canceled",
-        "unpaid"
-      ],
+      "enum": ["trialing", "active", "incomplete", "incomplete_expired", "past_due", "canceled", "unpaid"],
       "default": "TRIAL",
       "required": true
     },

@@ -11,7 +11,7 @@ export default function Employees({ params }) {
 
   const fetchEmployees = async (id) => {
     try {
-      const query = `?filters[workStores][id][$eq]=${id}&fields=user,name`;
+      const query = `?filters[workStores][id][$eqi]=${id}&fields=user,name`;
       const { data } = await request("customer", "GET", { query });
       setEmployees(
         data.map(({ id, attributes }) => {

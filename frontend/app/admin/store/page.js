@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import Tabs from "../../(component)/(styled)/tabs";
-import StoreCard from "../../store/(component)/store-card";
+import StoreCard from "../../store/store-card";
 import EmptyState from "../../(component)/(styled)/empty-state";
 import { LinkButton } from "../../(component)/(styled)/button";
 
