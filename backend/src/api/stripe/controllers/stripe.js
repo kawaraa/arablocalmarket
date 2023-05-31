@@ -18,7 +18,7 @@ module.exports = {
       status: sub.status, // active, inactive, trialing
       start: sub.start_date,
       created: sub.created,
-      ends: sub.ended_at, // ends on
+      ends: sub.cancel_at, // ends on
       trialPeriod: sub.plan.trial_period_days, // Trial 30 days
       trialStart: sub.trial_start,
       trialEnd: sub.trial_end, // Trialing until
@@ -40,7 +40,7 @@ module.exports = {
 
     const sub = await strapi.service("api::stripe.stripe").updateSubscription(currentSub.id, {
       cancel_at_period_end: false,
-      proration_behavior: "none",
+      proration_behavior: "always_invoice",
       items: [{ id: currentSub.items.data[0].id, price: ctx.query.priceId }],
     });
 
@@ -73,11 +73,12 @@ module.exports = {
     const { id, status, latest_invoice } = await strapi
       .service("api::stripe.stripe")
       .createSubscription(c, priceId, storeId);
+
     await strapi
       .query("api::store.store")
       .update({ where: { id: storeId }, data: { subscriptionId: id, subscriptionStatus: status } });
-    const invoice = await strapi.service("api::stripe.stripe").getInvoice(latest_invoice);
 
+    const invoice = await strapi.service("api::stripe.stripe").getInvoice(latest_invoice);
     return { paymentUrl: invoice.hosted_invoice_url };
   },
   async checkout(ctx) {

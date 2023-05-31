@@ -97,4 +97,16 @@ module.exports = () => ({
   //     cancel_url: `/${redirect}/failed?storeId=${storeId}`,
   //   });
   // },
+  // async createPaymentSetupCheckout(customerId, subscriptionId, storeId) {
+  //   const session = await stripe.checkout.sessions.create({
+  //     // payment_method_types: ["card"],
+  //     mode: "setup",
+  //     customer: customerId,
+  //     setup_intent_data: { metadata: { customer_id: customerId, subscription_id: subscriptionId } },
+  //     success_url: `/${redirect}/success?storeId=${storeId}?session_id={CHECKOUT_SESSION_ID}`,
+  //     cancel_url: `/${redirect}/failed?storeId=${storeId}`,
+  //   });
+  //   console.log(session);
+  //   return session;
+  // },
 });

@@ -92,4 +92,8 @@ const errors = {
     en: "The number of the products is higher then the plan limit, please delete some products and then try again",
     ar: "عدد المنتجات أعلى من حد الاشتراك، يرجى حذف بعض المنتجات ثم المحاولة مرة أخرى",
   },
+  "no attached payment": {
+    en: "You don't have a payment method yet, please add a payment method first",
+    ar: "ليس لديك طريقة دفع حتى الآن، يُرجى إضافة طريقة دفع أولاً",
+  },
 };

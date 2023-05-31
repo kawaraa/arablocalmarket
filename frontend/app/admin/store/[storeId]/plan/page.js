@@ -8,9 +8,11 @@ import plans from "../../../../(layout)/plans";
 import PlanCard from "../../../../(component)/plan-card";
 import { Button } from "../../../../(component)/(styled)/button";
 import Modal from "../../../../(component)/(styled)/modal";
+import { useRouter } from "next/navigation";
 const day = 1000 * 60 * 60 * 24;
 
 export default function StorePlan({ params: { storeId } }) {
+  const router = useRouter();
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
   const [subscription, setSubscription] = useState({ loading: true });
@@ -34,7 +36,6 @@ export default function StorePlan({ params: { storeId } }) {
     try {
       if (ended) {
         const session = await request("stripe", "POST", { query: "/create", body: { storeId, priceId } });
-        console.log("session: >>> ", session);
         window.location.href = session.paymentUrl;
       } else {
         setSubscription(
@@ -62,8 +63,8 @@ export default function StorePlan({ params: { storeId } }) {
     setLoading(true);
     try {
       await request("stripe", "DELETE", { query: `/cancel?storeId=${storeId}` });
-      setSubscription({ ...subscription, status: "canceled" });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+      router.refresh();
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
@@ -125,10 +126,10 @@ export default function StorePlan({ params: { storeId } }) {
                   )}
                   <Button
                     loading={loading}
-                    disabled={!active}
+                    disabled={!!subscription?.ends}
                     onClick={() => setShowWarning(true)}
                     cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg3">
-                    {active ? content.cancel[lang] : getValue(subscription?.status)}
+                    {!subscription?.ends ? content.cancel[lang] : content.canceled[lang]}
                   </Button>
                   {[("trialing", "incomplete")].includes(subscription?.status) && (
                     <Button
@@ -232,6 +233,7 @@ const content = {
   h: { en: "Plan details", ar: "تفاصيل اشتراك" },
   no: { en: "Not specified", ar: "غير محدد" },
   cancel: { en: "Cancel", ar: "إلغاء" },
+  canceled: { en: "Canceled", ar: "ألغيت" },
   upgrade: { en: "Upgrade", ar: "ترقية" },
   pay: { en: "Pay", ar: "دفع" },
   reactivate: { en: "Reactivate", ar: "اعادة تنشط" },
