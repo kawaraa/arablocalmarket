@@ -106,9 +106,14 @@ export default function AppSessionContextProvider({ children, language, theme })
     if (aCoordinates) updateCoordinates(aCoordinates.split(":"));
     if (aRange) updateRange(aRange);
 
-    fetchUser()
-      .then(updateUser)
-      .catch((err) => setUser(null) + setAppLoading(false));
+    if (window.localStorage.getItem("accessToken")) {
+      fetchUser()
+        .then(updateUser)
+        .catch((err) => setUser(null) + setAppLoading(false));
+    } else {
+      setUser(null);
+      setAppLoading(false);
+    }
 
     registerServiceWorker();
     // eslint-disable-next-line react-hooks/exhaustive-deps
