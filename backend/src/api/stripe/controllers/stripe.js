@@ -2,10 +2,12 @@
 
 module.exports = {
   async findOne({ state: { user }, query: { storeId } }) {
-    const { subscriptionId } = await strapi.service("api::store.store").getStripeFields(storeId);
-    const sub = await strapi.service("api::stripe.stripe").getSubscription(subscriptionId);
+    const store = await strapi.service("api::store.store").getStripeFields(storeId);
+    const sub = await strapi.service("api::stripe.stripe").getSubscription(store.subscriptionId);
     const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(user.stripeId);
-    strapi.service("api::store.store").update(storeId, { data: { subscriptionStatus: sub.status } });
+    if (store.subscriptionStatus != sub.status) {
+      strapi.service("api::store.store").update(storeId, { data: { subscriptionStatus: sub.status } });
+    }
 
     const { id, type, created, card } = data.find((p) => p.id == sub.default_payment_method) || {};
     // const pm = { id, type, created, brand: card?.brand, last4: card?.last4, country: card?.country };

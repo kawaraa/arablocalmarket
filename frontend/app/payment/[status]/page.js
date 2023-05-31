@@ -19,6 +19,7 @@ export default function PaymentSuccess({ params, searchParams }) {
 
   useEffect(() => {
     updateStorSubscriptionStatus(searchParams.storeId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

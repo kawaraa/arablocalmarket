@@ -8,6 +8,7 @@ import plans from "../../../../(layout)/plans";
 import PlanCard from "../../../../(component)/plan-card";
 import { Button } from "../../../../(component)/(styled)/button";
 import Modal from "../../../../(component)/(styled)/modal";
+const day = 1000 * 60 * 60 * 24;
 
 export default function StorePlan({ params: { storeId } }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
@@ -26,15 +27,15 @@ export default function StorePlan({ params: { storeId } }) {
     return content.values[value] ? content.values[value][lang] : value || content.no[lang];
   };
   const getDateValue = (v) => (v && new Date(+(v + "000")).toLocaleDateString("nl")) || content.no[lang];
-  const d = subscription?.currentPeriodEnd || 0;
-  const ended = (+(d + "000") - Date.now()) / 1000 / 60 / 60 / 24 <= 0;
+  const ended = (+(subscription?.ends + "000") - Date.now()) / day <= 0;
 
   const handleUpgrade = async (priceId) => {
     setAppLoading(true);
     try {
       if (ended) {
         const session = await request("stripe", "POST", { query: "/create", body: { storeId, priceId } });
-        window.location.href = session.url;
+        console.log("session: >>> ", session);
+        window.location.href = session.paymentUrl;
       } else {
         setSubscription(
           await request("stripe", "PUT", { query: `/update?storeId=${storeId}&priceId=${priceId}` })
@@ -95,7 +96,11 @@ export default function StorePlan({ params: { storeId } }) {
           <div
             dir="ltr"
             className="flex items-center justify-between mb-5 -mt-3 md:-mt-6 px-3 py-1 bg-bg3 text-sm text-t">
-            <p className="">{content.warn[lang]}</p>
+            <p className="">
+              {content.warn[lang]}{" "}
+              <strong>{new Date(+(subscription?.ends + "000") + day * 30).toLocaleDateString("nl")}</strong>
+            </p>
+            {/* new Date(Date.now()+  1000 * 60 * 60 * 24 * 30) */}
             <Link
               href="#"
               onClick={(e) => e.preventDefault() + setShowPlans(true)}
@@ -233,7 +238,10 @@ const content = {
   select: { en: "Select", ar: "اختار" },
   selected: { en: "Selected", ar: "مختار" },
   plansTitle: { en: "Select a plan", ar: "اختار اشتراكا" },
-  warn: { en: "Your store plan has ended", ar: "انتهت صلاحية اشتراك متجرك" },
+  warn: {
+    en: "Your store plan has ended, if you don not reactivate it the store will be deleted on",
+    ar: "انتهت صلاحية اشتراك متجرك، إذا لم تقم بإعادة تنشيطه فسيتم حذف المتجر في",
+  },
   keys: {
     status: { en: "Status", ar: "الحالة" },
     // start: { en: "Start", ar: "" },

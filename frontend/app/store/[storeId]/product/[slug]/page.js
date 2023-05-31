@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import ActionButtons from "../(component)/action-buttons";
-import Options from "../(component)/options";
+import ActionButtons from "../action-buttons";
+import Options from "../options";
 import { serverRequest } from "../../../../(service)/api-provider";
 import { ShareButton } from "../../../../(component)/share-button";
 import shdCnt from "../../../../(layout)/json/shared-content.json";
-import RatingInputPopup from "../(component)/rating-input-popup";
+import RatingInputPopup from "../rating-input-popup";
 const q = "?fields=subscriptionStatus,name,currency,meta";
 const q1 =
   "?fields=storeId,name,description,category,vendor&populate[image]=*&populate[variants][populate]=*&populate[ratings]=*";
