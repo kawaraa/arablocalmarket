@@ -157,8 +157,6 @@ export default function NewStore({ params, searchParams: { id, subscription } })
     if (!user && !user?.loading) router.replace("/signin");
     else if (!id && !subscription) router.replace("/pricing");
     else if (id) fetchStoreById(id);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, id, subscription]);
 
   if (!user || user?.loading || (!id && !subscription)) return null;

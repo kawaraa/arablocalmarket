@@ -85,8 +85,6 @@ export default function Options({ store, id, variants, name, image, discount }) 
 
     const variant = variants.find((v) => v.quantity > 0);
     if (variant) updateItemOptions(0, variant.options[0].value);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variants]);
 
   return (

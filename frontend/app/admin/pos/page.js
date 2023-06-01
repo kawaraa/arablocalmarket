@@ -79,7 +79,6 @@ export default function POS({ params, searchParams }) {
 
   useEffect(() => {
     if (storeId.current && (!search.trim() || search.length > 3)) handleSearch(search);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
@@ -105,7 +104,6 @@ export default function POS({ params, searchParams }) {
 
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!user || user?.loading) return null;

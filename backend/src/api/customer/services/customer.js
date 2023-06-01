@@ -1,13 +1,9 @@
-"use strict";
-
-/**
- * customer service
- */
-
+"use strict"; /** customer service */
 const { createCoreService } = require("@strapi/strapi").factories;
+const cusEty = "api::customer.customer";
 
-module.exports = createCoreService("api::customer.customer", ({ strapi }) => ({
+module.exports = createCoreService(cusEty, ({ strapi }) => ({
   async getCustomerId(user) {
-    return (await strapi.query("api::customer.customer").findOne({ where: { user }, select: ["id"] }))?.id;
+    return (await strapi.query(cusEty).findOne({ where: { user }, select: ["id"] }))?.id;
   },
 }));

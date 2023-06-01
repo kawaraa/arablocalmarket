@@ -66,7 +66,6 @@ export default function Cart({ params, searchParams }) {
     document.title = (activeTab?.text || "Shipping Cart") + " - ALM";
     setSelectedStore(null);
     if (favorite) refetchUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   useEffect(() => {
@@ -75,7 +74,6 @@ export default function Cart({ params, searchParams }) {
     setAppLoading(true);
     setFavoriteProducts(user?.favoriteProducts || []);
     setAppLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const results = favorite ? favoriteProducts || [] : cart;

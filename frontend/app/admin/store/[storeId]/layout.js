@@ -66,7 +66,6 @@ export default function StoreById({ children, params: { storeId } }) {
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
     else if (!user?.loading) fetchStore();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!user || user?.loading || !store) return null;

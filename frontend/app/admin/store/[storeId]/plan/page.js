@@ -87,7 +87,6 @@ export default function StorePlan({ params: { storeId } }) {
     document.title = content.title[lang] + " - ALM";
     fetchSubscription(storeId);
     setTimeout(() => window.scroll(0, 270), 800);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

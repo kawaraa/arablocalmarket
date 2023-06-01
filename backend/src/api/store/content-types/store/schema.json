@@ -29,7 +29,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "address": {
       "type": "component",
@@ -58,7 +60,15 @@
     },
     "currency": {
       "type": "enumeration",
-      "enum": ["$-USD", "€-EUR", "£-GBP", "$-AUD", "$-CAD", "CHF-CHF", "₺-TRY"],
+      "enum": [
+        "$-USD",
+        "€-EUR",
+        "£-GBP",
+        "$-AUD",
+        "$-CAD",
+        "CHF-CHF",
+        "₺-TRY"
+      ],
       "required": true,
       "default": "€-EUR"
     },
@@ -95,7 +105,15 @@
     },
     "subscriptionStatus": {
       "type": "enumeration",
-      "enum": ["trialing", "active", "incomplete", "incomplete_expired", "past_due", "canceled", "unpaid"],
+      "enum": [
+        "trialing",
+        "active",
+        "incomplete",
+        "incomplete_expired",
+        "past_due",
+        "canceled",
+        "unpaid"
+      ],
       "default": "TRIAL",
       "required": true
     },

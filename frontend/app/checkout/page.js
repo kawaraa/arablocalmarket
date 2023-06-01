@@ -161,7 +161,6 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
       setFirstName(user.firstName || "");
       setLastName(user.lastName || "");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!items || !items[0]) return router.replace("/");

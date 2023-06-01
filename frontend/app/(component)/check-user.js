@@ -12,7 +12,6 @@ export default function CheckUser() {
     // if (!user?.loading && user?.myStores) {
     //   setTimeout(() => router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store"), 300);
     // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   return null;
 }

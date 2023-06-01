@@ -46,6 +46,7 @@
         "PAID",
         "FAILED",
         "CANCELED",
+        "READY",
         "SENT",
         "DELIVERED",
         "RETURNED",

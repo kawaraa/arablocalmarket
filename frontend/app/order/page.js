@@ -10,7 +10,7 @@ import EmptyState from "../(component)/(styled)/empty-state";
 import Loader from "../(layout)/loader";
 import useInfiniteScroll from "../(component)/infinite-scroll-hook";
 
-export default function Orders(props) {
+export default function Orders({ searchParams }) {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
@@ -45,6 +45,17 @@ export default function Orders(props) {
 
   useEffect(() => {
     document.title = "Admin Orders - ALM";
+
+    if (searchParams.orderId) {
+      const query = `/${searchParams.orderId}?populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*`;
+      request("order", "GET", { query })
+        .catch(() => null)
+        .then(({ data }) => {
+          data.attributes.id = data.id;
+          data.attributes.currency = data.attributes.currency.split("-")[0];
+          previewOrder(data.attributes);
+        });
+    }
   }, []);
 
   const { data } = useInfiniteScroll({
@@ -55,7 +66,6 @@ export default function Orders(props) {
 
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!user || user?.loading) return null;

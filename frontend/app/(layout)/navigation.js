@@ -1,14 +1,15 @@
 "use client";
-import Link from "next/link";
+import { useContext, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import { AppSessionContext } from "../app-session-context";
+import { request } from "../(service)/api-provider";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
 import SvgIcon from "../(component)/(styled)/svg-icon";
-import { AppSessionContext } from "../app-session-context";
-import EmptyState from "../(component)/(styled)/empty-state";
 import Image from "next/image";
+import Notification from "./notification";
 
 export default function Navigation() {
   const pathName = usePathname();
@@ -21,7 +22,6 @@ export default function Navigation() {
     setShowMenu(false);
     if (pathName?.toLowerCase() === "/en") updateLang("en");
     else if (pathName?.toLowerCase() === "/ar") updateLang("ar");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
   if (pathName == "/admin/pos") return "";
@@ -141,29 +141,7 @@ export default function Navigation() {
         ) : (
           <>
             <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
-            <Dropdown
-              event="click"
-              cls="ml-2 "
-              icon="bell"
-              iconCls="w-[28px] md:w-8"
-              btnCls="!rounded-full"
-              title="View notifications">
-              {user.notifications.map((note, i) => (
-                // border-lbg border-b-[1px] last:border-none
-                <li className="overflow-hidden even:bg-[#f8fafc]" key={i}>
-                  <Link passHref legacyBehavior href={"/order/" + note.meta?.path}>
-                    <a className="block w-60 md:w-72 break-all px-4 py-2 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
-                      {content.notifications[note.type][lang]}
-                    </a>
-                  </Link>
-                </li>
-              ))}
-              {!user.notifications[0] && (
-                <li className="w-44">
-                  <EmptyState lang={lang} type="notification" />
-                </li>
-              )}
-            </Dropdown>
+            <Notification />
             <Dropdown
               event="click"
               btnContent={<Avatar initial={initials} />}
@@ -194,6 +172,27 @@ export default function Navigation() {
   );
 }
 
+function useCheckNotifications(user) {
+  const notificationRef = useRef(0);
+  const [notification, setNotifications] = useState(0);
+
+  const fetchContent = async () => {
+    try {
+      if (user) setNotifications((await request("notification", "GET", { query: "/unseen" })).unseen);
+    } catch (error) {
+      console.log(error);
+    }
+    setTimeout(fetchContent, 1000 * 30);
+  };
+
+  useEffect(() => {
+    if (notificationRef.current < 1) fetchContent();
+    notificationRef.current = notificationRef.current + 1;
+  }, []);
+
+  return notification;
+}
+
 const content = {
   themeModeIconsMap: { auto: "circleHalf", dark: "brightness", light: "moon" },
   languageOptions: [
@@ -216,25 +215,5 @@ const content = {
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
     { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },
   ],
-  notifications: {
-    NEW_ORDER: { en: "You have a new order", ar: "لديك طلب جديد" },
-    READY_ORDER: {
-      en: "Your order with the number orderNumber is ready",
-      ar: "طلبك بالرقم orderNumber جاهز",
-    },
-    SENT_ORDER: { en: "Your order with the number orderNumber is sent", ar: "تم إرسال طلبك رقم orderNumber" },
-    DELIVERED: {
-      en: "Your order with the number orderNumber is delivered",
-      ar: "تم تسليم طلبك رقم orderNumber",
-    },
-    EXPIRATION: {
-      en: "Product with the number productNumber is about to expired",
-      ar: "المنتج رقم productNumber على وشك الانتهاء",
-    },
-    JOIN_REQUEST: {
-      en: "storeOwner sent you a request to join his team",
-      ar: "storeOwner ارسل لك طلب الانضمام إلى فريقه",
-    },
-  },
   langAlt: { en: "Change Language", ar: "تغيير اللغة" },
 };

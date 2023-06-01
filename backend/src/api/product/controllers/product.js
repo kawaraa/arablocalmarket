@@ -1,10 +1,11 @@
 "use strict"; /** product controller */
-
 const { createCoreController } = require("@strapi/strapi").factories;
+const proEty = "api::product.product";
+const storeEty = "api::store.store";
 
-module.exports = createCoreController("api::product.product", ({ strapi }) => ({
+module.exports = createCoreController(proEty, ({ strapi }) => ({
   async create(ctx) {
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx);
+    const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
     if (!owner) return ctx.unauthorized();
 
     return super.create(ctx);
@@ -15,7 +16,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
 
     if (result.data.attributes.ratings?.data) {
       result.data.attributes.ratings = strapi
-        .service("api::store.store")
+        .service(storeEty)
         .calculateStars(result.data.attributes.ratings.data);
 
       // Todo: this will not work since the request comes from Vercel server which has no access Token in the header.
@@ -37,19 +38,19 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     if (data[0].attributes.ratings?.data) {
       data.forEach((p) => {
         if (!p.attributes.ratings.data[0]) return (p.attributes.ratings = []);
-        p.attributes.ratings = strapi.service("api::store.store").calculateStars(p.attributes.ratings.data);
+        p.attributes.ratings = strapi.service(storeEty).calculateStars(p.attributes.ratings.data);
       });
     }
     return { data, meta };
   },
 
   async update(ctx) {
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx);
+    const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
     if (!owner) return ctx.unauthorized();
 
     if (ctx.request.files) {
       const options = { where: { id: ctx.params.id }, populate: ["image"] };
-      const p = await strapi.db.query("api::product.product").findOne(options);
+      const p = await strapi.db.query(proEty).findOne(options);
       if (p.image) await strapi.plugins.upload.services.upload.remove(p.image);
     }
 
@@ -60,10 +61,10 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     const id = ctx.params.id;
     const storeId = +ctx.query.storeId;
 
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);
+    const owner = await strapi.service(storeEty).checkStoreOwner(ctx, storeId);
     if (!owner) return ctx.unauthorized();
 
-    const res = await strapi.service("api::product.product").deleteProductWithMediaFiles(id);
+    const res = await strapi.service(proEty).deleteProductWithMediaFiles(id);
     if (!res) return ctx.badRequest();
     return res;
   },

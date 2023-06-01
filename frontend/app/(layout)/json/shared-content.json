@@ -73,6 +73,7 @@
     "PAID": { "ar": "مدفوع", "color": 2 },
     "FAILED": { "ar": "فشل", "color": 3 },
     "CANCELED": { "ar": "تم إلغاؤه", "color": 4 },
+    "READY": { "ar": "جاهز", "color": 1 },
     "SENT": { "ar": "تم إرساله", "color": 5 },
     "DELIVERED": { "ar": "تم التوصيل", "color": 6 },
     "RETURNED": { "ar": "تم إرجاعه", "color": 7 },

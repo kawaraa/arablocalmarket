@@ -19,12 +19,10 @@ export default function PaymentSuccess({ params, searchParams }) {
 
   useEffect(() => {
     updateStorSubscriptionStatus(searchParams.storeId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (!user || user?.loading) return null;

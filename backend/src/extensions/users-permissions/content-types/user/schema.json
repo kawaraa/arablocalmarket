@@ -98,9 +98,10 @@
       "required": false
     },
     "notifications": {
-      "type": "component",
-      "repeatable": true,
-      "component": "user-information.notification"
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::notification.notification",
+      "mappedBy": "user"
     }
   }
 }

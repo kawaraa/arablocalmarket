@@ -47,7 +47,6 @@ export default function SignIn() {
 
   useEffect(() => {
     if (user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   if (user?.loading) return null;

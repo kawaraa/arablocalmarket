@@ -18,7 +18,6 @@ export default function ImagePreview({}) {
 
   useEffect(() => {
     setSrc(null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   useEffect(() => {

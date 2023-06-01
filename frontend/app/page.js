@@ -75,7 +75,7 @@ export default async function LandingPage({ params, searchParams }) {
         </h3>
         <ul className="mb-10 flex flex-wrap items-center justify-around space-x-3">
           {content.steps.map((step, i) => (
-            <li id={i + 1} className="mt-5 lazy-b">
+            <li id={i + 1} className="mt-5 lazy-b" key={i}>
               <h4 className="font-semibold" style={getCssDelay()}>
                 <span className="text-lg font-semibold">{i + 1} </span>
                 {step[lang]}

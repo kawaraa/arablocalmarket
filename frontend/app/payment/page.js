@@ -12,7 +12,6 @@ export default function Payment({ searchParams }) {
   console.log("Payment", searchParams.storeId);
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Todo: if the user is not signed in, redirect to sign in

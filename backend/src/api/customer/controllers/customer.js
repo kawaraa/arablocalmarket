@@ -1,8 +1,9 @@
 "use strict"; /** customer controller */
-
 const { createCoreController } = require("@strapi/strapi").factories;
+const cusEty = "api::customer.customer";
+const storeEty = "api::store.store";
 
-module.exports = createCoreController("api::customer.customer", ({ strapi }) => ({
+module.exports = createCoreController(cusEty, ({ strapi }) => ({
   async create(ctx) {
     const id = ctx.request.body.data.customer?.id;
     ctx.request.body.data.user = ctx.state.user.id + "";
@@ -10,17 +11,17 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
     if (!id) return super.create(ctx);
 
     delete ctx.request.body.data.customer;
-    return strapi.service("api::customer.customer").update(id, ctx.request.body);
+    return strapi.service(cusEty).update(id, ctx.request.body);
   },
 
   async findOne(ctx) {
     const user = ctx.state.user;
     if (!user?.id) return ctx.unauthorized();
 
-    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(user.id);
+    ctx.params.id = await strapi.service(cusEty).getCustomerId(user.id);
     if (!ctx.params.id) {
       ctx.params.id = await strapi
-        .service("api::customer.customer")
+        .service(cusEty)
         .create({ data: { user: user.id, name: user.firstName + " " + user.lastName } });
     }
 
@@ -28,12 +29,12 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
     if (!data) return { data, meta };
 
     data.attributes.workStores?.data?.forEach((s) => {
-      s.attributes = strapi.service("api::store.store").removePrivateFields(user.id, s.attributes);
+      s.attributes = strapi.service(storeEty).removePrivateFields(user.id, s.attributes);
     });
 
     if (data.attributes.favoriteStores?.data[0]) {
       data.attributes.favoriteStores.data = data.attributes.favoriteStores.data.filter((s) =>
-        strapi.service("api::store.store").isPublic(s, user.id)
+        strapi.service(storeEty).isPublic(s, user.id)
       );
     }
 
@@ -45,14 +46,14 @@ module.exports = createCoreController("api::customer.customer", ({ strapi }) => 
     if (!storeId) storeId = ctx.query.filters?.workStores?.id?.$eqi;
     if (!storeId) return ctx.unauthorized();
 
-    const owner = await strapi.service("api::store.store").checkStoreOwner(ctx, storeId);
+    const owner = await strapi.service(storeEty).checkStoreOwner(ctx, storeId);
     if (!owner) return ctx.unauthorized();
 
     return super.find(ctx);
   },
 
   async update(ctx) {
-    ctx.params.id = await strapi.service("api::customer.customer").getCustomerId(ctx.state.user.id);
+    ctx.params.id = await strapi.service(cusEty).getCustomerId(ctx.state.user.id);
 
     if (!ctx.params.id) return ctx.unauthorized();
     delete ctx.request.body.data.user;

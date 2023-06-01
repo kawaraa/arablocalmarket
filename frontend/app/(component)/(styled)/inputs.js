@@ -309,7 +309,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
   };
 
   return (
-    <div dir="auto" className={`inline-flex bg-cbg ${cls}`}>
+    <div dir="auto" className={`inline-flex ${cls}`}>
       {typeof label != "string" ? (
         label
       ) : (
@@ -320,7 +320,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           <span className="!h-2 !w-2"></span>
         </>
       )}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center bg-cbg">
         <Button icon="minus" onClick={() => ch("down")} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
         <input
           ref={inputRef}

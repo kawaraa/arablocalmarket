@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef, useState } from "react";
 import SvgIcon from "./svg-icon";
 import Transition from "../../(layout)/transitions";
@@ -21,8 +20,8 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
   }, [pathName]);
 
   useEffect(() => {
-    const clickHandler = (e) => !wrapper.current?.contains(e.target) && setActive(false);
     if (event === "click") {
+      const clickHandler = (e) => !wrapper.current?.contains(e.target) && setActive(false);
       window.document.addEventListener("click", clickHandler);
       return () => window.document.removeEventListener("click", clickHandler);
     }
@@ -40,16 +39,16 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
         aria-expanded={active}
         aria-haspopup="menu">
         {btnContent}
-        <span className={`${iconCls}`}>{typeof icon === "string" ? <SvgIcon name={icon} /> : icon}</span>
+        <span className={iconCls}>{typeof icon === "string" ? <SvgIcon name={icon} /> : icon}</span>
       </button>
 
       <Transition
         Tag="ul"
         open={active}
-        onClick={() => setActive(false)}
+        // onClick={() => setActive(false)}
         base={`absolute right-0 overflow-hidden text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg`}
         enter={`opacity-100 scale-100 ${mt} mr-0 translate-x-0 translate-y-0`}
-        exit={`border-none opacity-0 scale-90 translate-x-2 translate-y-2`}
+        exit={`border-none opacity-0 scale-90 translate-x-4 translate-y-2`}
         time="200">
         {children}
       </Transition>

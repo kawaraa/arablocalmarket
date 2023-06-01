@@ -31,7 +31,6 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
 
   useEffect(() => {
     onUpdate({ options });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options]);
 
   return (

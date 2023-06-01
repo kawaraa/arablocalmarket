@@ -24,7 +24,6 @@ export default function Tabs({ children, tabs, title, onTabChange, cls }) {
         if (isActive(children[0])) setBar([children[0].offsetLeft, children[0].offsetWidth]);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p, current]);
 
   return (

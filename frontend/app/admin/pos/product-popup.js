@@ -53,7 +53,6 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
       Object.keys(options).forEach((name) => (options[name] = Array.from(options[name])));
       setOptions(options);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product, item.options, open]);
 
   useEffect(() => {
@@ -64,7 +63,6 @@ export default function SelectProductPopup({ lang, open, product, onAddItem, onC
       copy.options[0] = variant.options[0].value;
       setItem(copy);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   return (

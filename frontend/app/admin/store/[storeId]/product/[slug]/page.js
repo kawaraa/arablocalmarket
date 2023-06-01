@@ -105,7 +105,6 @@ export default function ProductById({ params }) {
     if (params.slug.toLowerCase() != "new") fetchProduct(params.slug);
     document.title = (product?.name || content.title[lang]) + " - ALM";
     window.scroll(0, 230);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.slug]);
 
   if (initialLoading) return <Loader size="100" screen />;

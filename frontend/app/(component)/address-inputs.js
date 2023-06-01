@@ -42,7 +42,6 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
     if (adr.line2) setLine2(adr.line2);
     if (adr.currentLat && !lat) setLat(adr.currentLat);
     if (adr.currentLng && !lng) setLng(adr.currentLng);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adr.country]);
 
   const renderCountries = () => {

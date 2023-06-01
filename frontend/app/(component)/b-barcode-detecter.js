@@ -81,7 +81,6 @@ export default function BrowserBarcodeDetecter({ lang, onDetect, onError, onClos
   useEffect(() => {
     initializeScanner();
     return stopStreams;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

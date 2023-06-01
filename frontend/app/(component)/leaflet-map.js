@@ -99,7 +99,6 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
         delete window.L.newMap;
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

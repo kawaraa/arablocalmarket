@@ -8,7 +8,7 @@ import shdCnt from "../../../(layout)/json/shared-content.json";
 import useInfiniteScroll from "../../../(component)/infinite-scroll-hook";
 import Loader from "../../../(layout)/loader";
 
-export default function StoreOrders({}) {
+export default function StoreOrders({ searchParams }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
   const [clickedOrder, setClickedOrder] = useState(null);
@@ -79,6 +79,16 @@ export default function StoreOrders({}) {
 
   useEffect(() => {
     document.title = "Admin Store orders - ALM"; // Todo: translate
+    if (searchParams.orderId) {
+      const query = `/${searchParams.orderId}?populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*`;
+      request("order", "GET", { query })
+        .catch(() => null)
+        .then(({ data }) => {
+          data.attributes.id = data.id;
+          data.attributes.currency = data.attributes.currency.split("-")[0];
+          previewOrder(data.attributes);
+        });
+    }
   }, []);
 
   const { data, removeItem } = useInfiniteScroll({

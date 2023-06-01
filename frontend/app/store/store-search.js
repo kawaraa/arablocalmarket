@@ -28,12 +28,10 @@ export default function StoreSearch({ text }) {
 
   useEffect(() => {
     if (!search.trim() || search.length > 3) handleSearch(search);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
 
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

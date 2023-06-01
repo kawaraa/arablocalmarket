@@ -57,15 +57,12 @@ export default function AppSessionContextProvider({ children, language, theme })
   const updateUser = (user) => {
     setAppLoading(true);
     const localCart = JSON.parse(window.localStorage.getItem("cart")) || [];
-    if (!user) {
-      window.localStorage.removeItem("user");
-      setCart(localCart);
-    } else {
+    if (!user) setCart(localCart);
+    else {
       const cart = mergeCarts(user.cart, localCart);
       setCart(cart);
       window.localStorage.removeItem("cart");
       delete user.cart;
-      window.localStorage.setItem("user", JSON.stringify(user));
       syncUserCart(cart).catch(() => null);
     }
     setUser(user);
@@ -116,7 +113,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     }
 
     registerServiceWorker();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const state = {
@@ -161,7 +157,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 // const [editingField, setEditingField] = useState("");
 
 // const notifications = [
-//   { type: "NEW_ORDER", seen: false, meta: { path: "1" } },
+//   { type: "ORDER_CREATED", seen: false, meta: { path: "1" } },
 //   { type: "DELIVERED", seen: false, meta: { path: "1" } },
 // ];
 // const ur = { firstName: "Mr", lastName: "Tester", admin: true, notifications };
