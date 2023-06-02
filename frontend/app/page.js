@@ -98,6 +98,12 @@ export default async function LandingPage({ params, searchParams }) {
       {/* 
         <p>Todo: Here should show what the app can do for you, the App features and how to use it.</p>
         <p>Some images, GIFTs and videos </p> */}
+
+      {/* <section>
+        <h3 h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm">
+          Become Representative and start making money with us
+        </h3>
+      </section> */}
       <Footer lang={lang} />
     </>
   );

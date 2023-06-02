@@ -53,7 +53,8 @@ export default function Notification() {
   return (
     <Dropdown
       event="click"
-      cls="ml-2 "
+      cls="ml-2"
+      title={content.dropdown[lang]}
       icon={
         <div className="flex">
           <span className="w-8">
@@ -61,8 +62,7 @@ export default function Notification() {
           </span>
           <span className="text-sm font-medium text-red -mt-1">{unseen}</span>
         </div>
-      }
-      title={content.dropdown[lang]}>
+      }>
       {!notifications[0] ? (
         <li className="w-44">
           <EmptyState lang={lang} type="notification" />

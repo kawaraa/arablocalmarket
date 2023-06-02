@@ -6,7 +6,7 @@ const stripeEty = "api::stripe.stripe";
 module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async create(ctx) {
     const user = ctx.state.user;
-    const referralId = ctx.cookies.get("referral") || "";
+    const referralId = ctx.cookies.get("referral") || ctx.query.referral || "";
     const priceId = ctx.query.subscription;
     const options = { select: ["id"], where: { owner: user.id } };
     const stores = await strapi.query(storeEty).findMany(options);
@@ -26,16 +26,31 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     const res = await super.create(ctx);
 
     const c = user.stripeId || (await strapi.service(stripeEty).createCustomer({ name, email, address })).id;
-    const { id, status } = await strapi.service(stripeEty).startTrial(c, priceId, res.data.id, referralId);
+    const { id, status, items } = await strapi
+      .service(stripeEty)
+      .startTrial(c, priceId, res.data.id, referralId);
 
-    const userRes = await strapi
+    const userRes = strapi
       .query("plugin::users-permissions.user")
       .update({ where: { id: user.id }, data: { stripeId: c } });
     const storeRes = strapi
       .query(storeEty)
       .update({ where: { id: res.data.id }, data: { subscriptionId: id, subscriptionStatus: status } });
 
-    await Promise.all([userRes, storeRes]);
+    const affiliateRes = null;
+    if (referralId) {
+      affiliateRes = strapi.service("api::affiliate.affiliate").create({
+        data: {
+          user: +referralId,
+          referredItem: res.data.id,
+          stripeItem: id,
+          price: items.data[0].price.unit_amount / 100,
+          status: "PENDING",
+        },
+      });
+    }
+
+    await Promise.all([userRes, storeRes, affiliateRes]);
 
     return res;
   },

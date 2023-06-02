@@ -6,7 +6,7 @@ export default function Loader({ size = "10", screen, wrapperCls = "", cls = "" 
   return (
     <div className={`flex justify-center items-center ml-1 ${c}`} role="img" aria-label="loading">
       <div
-        className={`border-t-[transparent] border-d-c rounded-full animate-spin ${cls}`}
+        className={`border-t-[transparent] border-bf rounded-full animate-spin ${cls}`}
         style={{ width: `${size}px`, height: `${size}px`, borderWidth: `${borderSize}px` }}></div>
     </div>
   );

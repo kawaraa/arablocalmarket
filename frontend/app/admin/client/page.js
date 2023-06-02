@@ -1,52 +1,144 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
-import Tabs from "../../(component)/(styled)/tabs";
 import Link from "next/link";
+import { request } from "../../(service)/api-provider";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
+import { copyText } from "../../(service)/utilities";
+import shdCnt from "../../(layout)/json/shared-content.json";
+import Table, { trClass, tdClass } from "../../(component)/table";
+import { Button } from "../../(component)/(styled)/button";
 
 export default function Client({ params, searchParams }) {
   const router = useRouter();
-  const { lang, user } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
+  const [details, setDetails] = useState({ totalEarnings: 0, paid: 0, pending: 0, payable: 0 });
+  const [affiliates, setAffiliates] = useState([]);
+  const [loadMore, setLoadMore] = useState(false);
 
-  console.log("Client: >>>");
+  const showOne = () => addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+
+  const getAffiliates = async () => {
+    try {
+      const { data, meta } = await request("affiliate", "GET");
+      setAffiliates(affiliates.concat(data));
+      setLoadMore(!data[0] || data.length < meta.pagination.total);
+      console.log(meta);
+    } catch (error) {
+      //
+    }
+  };
+
+  const getDetails = async () => {
+    try {
+      // const { data, meta } = await request("affiliate", "GET");
+      // setAffiliates(affiliates.concat(data));
+      // setLoadMore(!data[0] || data.length < meta.pagination.total);
+      // console.log(meta);
+    } catch (error) {
+      //
+    }
+  };
 
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
+    else if (user && !user?.loading) {
+      getDetails();
+      getAffiliates();
+    }
   }, [user]);
 
   if (!user || user.loading) return null;
+
+  const referralLink = `${window.origin}/pricing?referral=${user.id}`;
   return (
-    <div>
-      <h1>{content.h1[lang]}</h1>
-      <p>Here you will see all the clients have joined ArabLocalMarket through your referral link</p>
-      <p>Client referral Earning is 25% </p>
-      <p>Representative page Become Representative</p>
-      <div>
-        <strong>Referral / Affiliate link: </strong>
-        <span>
-          {window.origin}/{user.id}
-        </span>
+    <div className="mt-6">
+      <h1 className="text-2xl font-semibold">{content.h1[lang]}</h1>
+      <p className="text-sm">{content.h1P[lang]}</p>
+
+      <div className="flex flex-col sm:flex-row items-center my-5 card p-3 rounded-md">
+        <strong>{content.referral[lang]}:</strong>
+        <span className="w-2 h-2"></span>
+        <button
+          onClick={() => copyText(referralLink, showOne)}
+          className="flex items-center p-1 text-sm font-semibold text-pc2 bg-lbg dark:bg-dcbg rounded-md">
+          <span className="w-3"></span>
+          {referralLink}
+          <span className="w-5 mx-2">
+            <SvgIcon name="copy" />
+          </span>
+        </button>
       </div>
-      <p>Total earnings, Paid, Pending, Payable</p>
-      <div>Table with the following header: Name, Plan, Earning</div>
-      €30 / €7.5
-      <p>Monthly earnings / Monthly income</p>
-      {/* <Tabs
-        tabs={content.tabs.map(({ key, path, text }) => ({ key, path, text: text[lang] }))}
-        onTabChange={setActiveTab}
-        cls="z-1 sticky top-14 md:top-16 bg-bg dark:bg-dbg"
-      /> */}
+
+      {details?.payable > 0 && (
+        <div className={lang == "en" ? "text-right" : "text-left"}>
+          <Button cls="!py-1 !px-2 !text-sm">{content.payout[lang]}</Button>
+        </div>
+      )}
+      <Table lang={lang} header={content.detailsHeader.map((h) => h[lang])} cls="mb-10" hCls="!py-1">
+        <tr className={trClass + " text-xl font-semibold"}>
+          <td className={tdClass + " text-black"}>€{details.totalEarnings || 1000}</td>
+          <td className={tdClass + " text-blue"}>€{details.paid || 500}</td>
+          <td className={tdClass + " text-orange"}>€{details.pending || 200}</td>
+          <td className={tdClass + " text-green"}>€{details.payable || 300}</td>
+        </tr>
+      </Table>
+
+      <Table lang={lang} header={content.tableHeader.map((h) => h[lang])}>
+        {affiliates.map((aff, i) => (
+          <tr className={trClass} key={i}>
+            <td className={tdClass}>
+              <Link href={`/store/${aff.store.id}`} className="text-pc2">
+                {aff.store.name}
+              </Link>
+            </td>
+            <td className={tdClass}>{new Date(aff.createdAt).toLocaleDateString("nl")}</td>
+            <td className={tdClass}>€{aff.price}</td>
+            <td className={tdClass}>€{(aff.price / 100) * 25}</td>
+          </tr>
+        ))}
+
+        <tr className={trClass + " font-semibold"}>
+          <td className={tdClass + (lang == "en" ? " text-right" : " text-left")} colSpan={3}>
+            {content.total[lang]}
+          </td>
+          <td className={tdClass}>€{(affiliates.reduce((total, aff) => total + aff.price, 0) / 100) * 25}</td>
+        </tr>
+      </Table>
+
+      {loadMore && (
+        <div className="text-center mt-5">
+          <Button onClick={getAffiliates} cls="!py-1 !px-2 !text-sm">
+            {content.loadBtn[lang]}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
 
 const content = {
-  h1: { en: "Clients", ar: "العملاء" },
-  // tabs: [
-  //   { key: "my", path: "/admin/store?tab=my", text: { en: "My stores", ar: "متاجري" } },
-  //   { key: "work", path: "/admin/store?tab=work", text: { en: "Work stores", ar: "مخازن العمل" } },
-  //   { key: "favorite", path: "/admin/store?tab=favorite", text: { en: "favorite", ar: "المفضلة" } },
-  // ],
+  h1: { en: "Referred clients", ar: "العملاء المحالين" },
+  h1P: {
+    en: "Here you will find all that clients have joined ArabLocalMarket through your referral link",
+    ar: "ستجد هنا جميع العملاء الذين انضموا إلى ArabLocalMarket من خلال رابط الإحالة الخاص بك",
+  },
+  referral: { en: "Your Referral / Affiliate link", ar: "رابط الإحالة الخاص بك" },
+  payout: { en: "Request payout", ar: "طلب الدفع" },
+  detailsHeader: [
+    { en: "Total earnings", ar: "مجموع الأرباح" },
+    { en: "Paid", ar: "المدفوع" },
+    { en: "Pending", ar: "معلق" },
+    { en: "Payable", ar: "قابل لدفع" },
+  ],
+  tableHeader: [
+    { en: "Store", ar: "المتجر" },
+    { en: "Since", ar: "منذ" },
+    { en: "Subscription", ar: "الاشتراك" },
+    { en: "Profit", ar: "أرباح" },
+  ],
+  total: { en: "Total monthly profit", ar: "إجمالي الأرباح الشهرية" },
+  loadBtn: { en: "Load more", ar: "تحميل المزيد" },
 };

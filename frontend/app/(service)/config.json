@@ -14,5 +14,6 @@
   "product": "/api/products",
   "order": "/api/orders",
   "rating": "/api/ratings",
-  "stripe": "/api/stripe"
+  "stripe": "/api/stripe",
+  "affiliate": "/api/affiliates"
 }

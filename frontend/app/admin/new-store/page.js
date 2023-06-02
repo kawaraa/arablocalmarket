@@ -17,6 +17,7 @@ import Collapse from "../../(component)/collapse";
 import ImageUpload from "../../(component)/(styled)/upload-image";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import Modal from "../../(component)/(styled)/modal";
+import { Cookies } from "../../(service)/utilities";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const q =
   "?fields=owner,subscriptionStatus,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
@@ -100,7 +101,10 @@ export default function NewStore({ params, searchParams: { id, subscription } })
 
       let id = null;
       if (!store) {
-        const d = { body: new FormData(), query: `?subscription=${subscription}` };
+        const d = {
+          body: new FormData(),
+          query: `?subscription=${subscription}&referral=${Cookies.get("referralId")}`,
+        };
         d.body.append("files.cover", file, file.name);
         d.body.append("data", JSON.stringify(data));
         id = (await request("store", "POST", d)).data.id;

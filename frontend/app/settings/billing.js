@@ -37,7 +37,7 @@ export default function Billing({ lang }) {
 
   return (
     <section id="billing">
-      <h3 className="text-lg mb-2 mt-6">{content.h[lang]}</h3>
+      <h3 className="mb-2 mt-6 text-lg font-semibold">{content.h[lang]}</h3>
       <ul dir="ltr" className="space-y-2">
         {!paymentMethods[0] ? (
           <p dir="auto" className="text-sm opacity-60">

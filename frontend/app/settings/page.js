@@ -56,7 +56,7 @@ export default function Settings(props) {
   return (
     <>
       <article className="mt-4 max-w-md mx-auto">
-        <h1 className="text-2xl mb-6">{content.h1[lang]}</h1>
+        <h1 className="text-2xl font-semibold mb-6">{content.h1[lang]}</h1>
         <Profile lang={lang} {...user} handleUpdate={handleUpdate} setMessage={addMessage} />
         <Account lang={lang} {...user} handleUpdate={handleUpdate} />
         <Billing lang={lang} />

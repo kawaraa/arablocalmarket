@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "affiliates",
+  "info": {
+    "singularName": "affiliate",
+    "pluralName": "affiliates",
+    "displayName": "affiliate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "affiliates"
+    },
+    "referredItem": {
+      "type": "integer",
+      "required": false
+    },
+    "stripeItem": {
+      "type": "string",
+      "required": false,
+      "unique": false
+    },
+    "price": {
+      "type": "decimal",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "PENDING",
+        "PAYABLE",
+        "PAID"
+      ],
+      "default": "PENDING",
+      "required": true
+    }
+  }
+}
