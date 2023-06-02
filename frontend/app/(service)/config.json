@@ -5,7 +5,7 @@
   "EmailConfiguration": "/api/auth/send-email-confirmation",
   "forgotPassword": "/api/auth/forgot-password",
   "resetPassword": "/api/auth/reset-password",
-  "getUser": "/api/users/me?populate=*",
+  "getUser": "/api/users/me?populate[address]=*&populate[warnings]=*&populate[notifications][sort]=createdAt:desc",
   "updateUser": "/api/users/",
   "updatePassword": "/api/auth/change-password",
   "customer": "/api/customers",

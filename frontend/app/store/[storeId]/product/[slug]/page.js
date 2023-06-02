@@ -19,7 +19,7 @@ export default async function ProductBySlug({ params, searchParams }) {
   const storeReq = serverRequest("store", "GET", { query: `/${params.storeId}${q}` });
   // Todo: make product query by ID, name, barcode E.g. UPC/IAN/EAN and description using (slug)
   const productReq = serverRequest("product", "GET", { query: `/${params.slug}${q1}`, token: accessToken });
-  const data = await Promise.all([storeReq, productReq]).catch(() => null);
+  const data = await Promise.all([storeReq, productReq]).catch(console.error);
   if (!data || !data[0]) return notFound();
 
   const [storeRes, productRes] = data;
@@ -81,7 +81,11 @@ export default async function ProductBySlug({ params, searchParams }) {
         {product.description}
       </p>
 
-      <RatingInputPopup stars={product.ratings.stars} data={{ product: product.id }} />
+      <RatingInputPopup
+        stars={product.ratings.stars}
+        ratedStars={product.ratings.userStars}
+        data={{ product: product.id }}
+      />
 
       <div className="flex justify-around items-center fixed bottom-0 right-0 left-0 h-12 bg-lbg dark:bg-dbg">
         <p className="min-w-12 text-red text-xl">

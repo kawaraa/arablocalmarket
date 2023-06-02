@@ -46,7 +46,7 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
         Tag="ul"
         open={active}
         // onClick={() => setActive(false)}
-        base={`absolute right-0 overflow-hidden text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg`}
+        base={`absolute right-0 max-h-[85vh] overflow-scroll text-left bg-bg dark:bg-dbg border border-d-c rounded shadow-lg`}
         enter={`opacity-100 scale-100 ${mt} mr-0 translate-x-0 translate-y-0`}
         exit={`border-none opacity-0 scale-90 translate-x-4 translate-y-2`}
         time="200">

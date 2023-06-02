@@ -51,13 +51,13 @@ module.exports = () => ({
     return stripe.subscriptions.create({
       customer: customerId,
       items: [{ price: priceId }],
-      trial_period_days: "30",
+      trial_period_days: 30,
       trial_settings: { end_behavior: { missing_payment_method: "cancel" } },
       cancel_at_period_end: false,
       proration_behavior: "none",
       payment_settings: { save_default_payment_method: "on_subscription" },
-      collection_method: "send_invoice",
-      days_until_due: "1",
+      // collection_method: "send_invoice",
+      // days_until_due: "1",
       metadata: { storeId, referralId },
     });
   },

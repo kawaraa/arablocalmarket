@@ -98,21 +98,19 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             key={i}
-            className="font-medium duration-200 hover:bg-dcbg hover:text-dt dark:hover:bg-cbg md:hover:bg-[transparent] md:hover:text-lt text-sm">
+            className="font-medium hover:bg-dbg hover:text-dt md:hover:bg-[transparent] md:hover:!text-bg9 text-sm duration-200">
             <Link passHref legacyBehavior href={link.path}>
-              <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
-                {link.text[lang]}
-              </a>
+              <a className="block p-3 text-lg md:underline underline-offset-8">{link.text[lang]}</a>
             </Link>
           </li>
         ))}
 
-        {user?.id && "user has a store" && (
+        {user?.id && (
           <li
             onClick={() => setShowMenu(!showMenu)}
-            className="duration-200 hover:bg-dbg hover:text-dt dark:hover:text-dbg md:hover:bg-[transparent] md:hover:text-lt text-sm font-medium">
+            className="font-medium hover:bg-dbg hover:text-dt md:hover:bg-[transparent] md:hover:!text-bg9 text-sm duration-200">
             <Link passHref legacyBehavior href={content.navLinks[1].path}>
-              <a className="block p-3 text-lg md:underline underline-offset-8 md:hover:text-bg9">
+              <a className="block p-3 text-lg md:underline underline-offset-8">
                 {content.navLinks[1].text[lang]}
               </a>
             </Link>

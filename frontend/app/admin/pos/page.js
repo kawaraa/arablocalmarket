@@ -106,11 +106,11 @@ export default function POS({ params, searchParams }) {
     if (!user && !user?.loading) router.replace("/signin");
   }, [user]);
 
-  if (!user || user?.loading) return null;
+  if (!user || user?.loading || !store) return null;
   return (
     <>
       <article>
-        <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-db">
+        <div className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-dbg">
           <SearchBox
             label={content.search[lang]}
             value={search}

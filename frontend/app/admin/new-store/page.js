@@ -107,9 +107,10 @@ export default function NewStore({ params, searchParams: { id, subscription } })
       } else {
         delete data.name;
         await request("store", "PUT", { query: "/" + store.id, body: { data } });
+        id = store.id;
       }
 
-      window.location.replace(`/admin/store/${store.id}/product`);
+      window.location.replace(`/admin/store/${id}/product`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }

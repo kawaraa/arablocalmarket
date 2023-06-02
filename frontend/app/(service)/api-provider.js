@@ -48,7 +48,6 @@ export async function request(url, method = "GET", data, type = "application/jso
   if (response?.ok) return response.json();
   throw new Error(validateError(response?.message || (await response?.text())));
 }
-
 export async function fetchUser() {
   const user = await request("getUser");
   if (!user || !user.id) return null;

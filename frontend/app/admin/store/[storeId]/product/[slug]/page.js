@@ -18,7 +18,7 @@ export default function ProductById({ params }) {
   const [initialLoading, setInitialLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [file, setFile] = useState(null);
-  const [variants, setVariants] = useState([{ quantity: 0 }]);
+  const [variants, setVariants] = useState([{ quantity: 0, comparePrice: 0, barcode: "" }]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const handleUpdateVariant = (index, data) => {
@@ -187,7 +187,11 @@ export default function ProductById({ params }) {
 
           {variants.length < 20 && (
             <div className="text-center">
-              <Button icon="plus" onClick={() => setVariants([...variants, { quantity: 0 }])} iconCls="w-7">
+              <Button
+                icon="plus"
+                onClick={() => setVariants([...variants, { quantity: 0 }])}
+                cls="!py-1 !px-2.5 !rounded-full"
+                iconCls="w-7">
                 {content.addV[lang]}
               </Button>
             </div>

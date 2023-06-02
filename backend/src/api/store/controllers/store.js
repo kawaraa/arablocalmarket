@@ -5,18 +5,19 @@ const stripeEty = "api::stripe.stripe";
 
 module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async create(ctx) {
-    const referralId = ctx.cookies.get("referral");
+    const user = ctx.state.user;
+    const referralId = ctx.cookies.get("referral") || "";
     const priceId = ctx.query.subscription;
-    const options = { select: ["id"], where: { owner: ctx.state.user.id } };
+    const options = { select: ["id"], where: { owner: user.id } };
     const stores = await strapi.query(storeEty).findMany(options);
     if (stores.length > 2) return ctx.notAcceptable("stores limit");
 
     const newStore = JSON.parse(ctx.request.body.data);
-    newStore.owner = +ctx.state.user.id;
-    newStore.meta = { phone: ctx.state.user.phone };
+    newStore.owner = +user.id;
+    newStore.meta = { phone: user.phone };
 
     const { line1, line2, city, postalCode, country } = newStore.address;
-    const { email, firstName, lastName } = ctx.state.user;
+    const { email, firstName, lastName } = user;
     const name = firstName + " " + lastName;
     const address = { line1, line2, postal_code: postalCode, city, country };
 
@@ -24,14 +25,12 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
 
     const res = await super.create(ctx);
 
-    const c = await strapi.service(stripeEty).createCustomer({ name, email, address });
-    const { id, status } = await strapi
-      .service(stripeEty)
-      .startTrial(c.id, priceId, res.data.id, referralId || "");
+    const c = user.stripeId || (await strapi.service(stripeEty).createCustomer({ name, email, address })).id;
+    const { id, status } = await strapi.service(stripeEty).startTrial(c, priceId, res.data.id, referralId);
 
     const userRes = await strapi
       .query("plugin::users-permissions.user")
-      .update({ where: { id: userId }, data: { stripeId: c.id } });
+      .update({ where: { id: user.id }, data: { stripeId: c } });
     const storeRes = strapi
       .query(storeEty)
       .update({ where: { id: res.data.id }, data: { subscriptionId: id, subscriptionStatus: status } });
@@ -53,8 +52,8 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     if (result.data.attributes.ratings && user) {
       const rating = await strapi
         .query("api::rating.rating")
-        .findOne({ data: { where: { customer: { user: user }, store: result.data.attributes.id } } });
-      result.data.attributes.ratings.userStars = rating.stars;
+        .findOne({ where: { customer: { user: user }, store: { id: result.data.id } } });
+      if (rating?.stars) result.data.attributes.ratings.userStars = rating.stars;
     }
 
     return result;
@@ -104,11 +103,13 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
 
   async delete(ctx) {
     const id = ctx.params.id;
-    const options = { select: ["id"], where: { id, owner: ctx.state.user.id }, populate: ["cover"] };
+    const owner = ctx.state.user.id;
+    const options = { select: ["id", "subscriptionId"], where: { id, owner }, populate: ["cover"] };
     const store = await strapi.query(storeEty).findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
 
     await strapi.service(stripeEty).cancelSubscription(store.subscriptionId);
+    await strapi.service("api::order.order").deleteOrdersByStore(id);
     await strapi.service("api::product.product").deleteStoreProductsWithMediaFiles(id);
     if (store.cover) await strapi.plugins.upload.services.upload.remove(store.cover);
     return super.delete(ctx);

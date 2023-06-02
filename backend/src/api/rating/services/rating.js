@@ -1,9 +1,15 @@
-'use strict';
+"use strict"; /** rating service */
+const { createCoreService } = require("@strapi/strapi").factories;
+const rEty = "api::rating.rating";
 
-/**
- * rating service
- */
+module.exports = createCoreService("api::rating.rating", ({ strapi }) => ({
+  async deleteRatingsByUser(userId) {
+    const where = { $or: [{ customer: { user: userId } }, { store: null, product: null }] };
+    const ratings = await strapi.query(rEty).findMany({ select: ["id"], where });
+    if (!ratings[0]) return;
 
-const { createCoreService } = require('@strapi/strapi').factories;
+    await Promise.all(ratings.map(({ id }) => strapi.query(rEty).delete({ where: { id } })));
 
-module.exports = createCoreService('api::rating.rating');
+    return this.deleteRatingsByUser(userId);
+  },
+}));

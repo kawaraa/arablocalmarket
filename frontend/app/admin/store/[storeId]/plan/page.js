@@ -29,7 +29,7 @@ export default function StorePlan({ params: { storeId } }) {
     return content.values[value] ? content.values[value][lang] : value || content.no[lang];
   };
   const getDateValue = (v) => (v && new Date(+(v + "000")).toLocaleDateString("nl")) || content.no[lang];
-  const ended = (+(subscription?.ends + "000") - Date.now()) / day <= 0;
+  const ended = (+(subscription?.ends + "000") - Date.now()) / day <= 1;
 
   const handleUpgrade = async (priceId) => {
     setAppLoading(true);
@@ -89,6 +89,7 @@ export default function StorePlan({ params: { storeId } }) {
     setTimeout(() => window.scroll(0, 270), 800);
   }, []);
 
+  // console.log(subscription?.trialStart, subscription?.trialEnd);
   return (
     <>
       <div className="min-h-[45vh]">

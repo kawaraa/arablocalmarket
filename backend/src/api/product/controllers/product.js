@@ -19,12 +19,11 @@ module.exports = createCoreController(proEty, ({ strapi }) => ({
         .service(storeEty)
         .calculateStars(result.data.attributes.ratings.data);
 
-      // Todo: this will not work since the request comes from Vercel server which has no access Token in the header.
       if (ctx.state.user?.id) {
         const rating = await strapi.query("api::rating.rating").findOne({
-          data: { where: { customer: { user: ctx.state.user.id }, product: result.data.id } },
+          where: { customer: { user: ctx.state.user.id }, product: result.data.id },
         });
-        result.data.attributes.ratings.userStars = rating.stars;
+        if (rating?.stars) result.data.attributes.ratings.userStars = rating.stars;
       }
     }
 

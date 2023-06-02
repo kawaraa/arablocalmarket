@@ -99,7 +99,7 @@ export default function StoreById({ children, params: { storeId } }) {
         iconCls="w-8 md:w-8"
         btnCls="!rounded-lg"
         title="View store options">
-        <li className="overflow-hidden w-28 even:bg-[#f8fafc]">
+        <li className="overflow-hidden w-28">
           <Link
             passHref
             href={"/admin/new-store?id=" + storeId}
@@ -107,7 +107,7 @@ export default function StoreById({ children, params: { storeId } }) {
             {shdCnt.edit[lang]}
           </Link>
         </li>
-        <li className="overflow-hidden w-28 even:bg-[#f8fafc]">
+        <li className="overflow-hidden w-28">
           <Link
             passHref
             href={`/admin/store/${storeId}/plan`}

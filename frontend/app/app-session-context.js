@@ -79,16 +79,16 @@ export default function AppSessionContextProvider({ children, language, theme })
     const index = copyCart.findIndex((c) => c.id == storeId);
     if ((storeId && !barcode) || copyCart[index].items.length == 1) copyCart.splice(index, 1);
     else copyCart[index].items = copyCart[index].items.filter((i) => i.barcode != barcode);
-    updateCart(copyCart);
+    updateCart(copyCart, barcode);
   };
-  const updateCart = async (cart) => {
+  const updateCart = async (cart, barcode) => {
     try {
       if (user) await syncUserCart(cart);
       else window.localStorage.setItem("cart", JSON.stringify(cart));
       setCart(cart);
-      addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+      if (barcode) addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 5 });
+      if (barcode) addMessage({ type: "error", text: error.message, duration: 5 });
     }
   };
 

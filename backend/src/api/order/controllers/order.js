@@ -78,9 +78,10 @@ module.exports = createCoreController(orderEty, ({ strapi }) => ({
       })
     );
 
-    strapi
-      .service("api::notification.notification")
-      .notify(store.owner, "ORDER_CREATED", { path: `/admin/store/${store.id}?orderId=${order.id}` });
+    strapi.service("api::notification.notification").notify(store.owner, "ORDER_CREATED", {
+      path: `/admin/store/${store.id}?orderId=${order.id}`,
+      orderNumber: order.id,
+    });
 
     order.customer = ctx.request.body.data.customer;
     return order;
@@ -140,8 +141,8 @@ module.exports = createCoreController(orderEty, ({ strapi }) => ({
       strapi
         .service("api::notification.notification")
         .notify(o.customer.user, "ORDER_" + status, { path: `/order?orderId=${o.id}`, orderNumber: o.id });
-      return super.update(ctx);
     }
+    return super.update(ctx);
   },
 
   async delete(ctx) {

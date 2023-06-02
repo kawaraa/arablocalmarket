@@ -26,28 +26,26 @@ module.exports = (plugin) => {
     const user = ctx.state.user;
     if (!user) return (ctx.response.status = 403);
 
-    const options = { where: { user: user.id }, select: ["id"] };
-    const id = (await strapi.db.query("api::customer.customer").findOne(options)).id;
-    const { results } = await strapi.service("api::store.store").find({ where: { owner: user.id } });
+    const promises = [strapi.service("api::rating.rating").deleteRatingsByUser(user.id)];
 
-    const promises = [strapi.query("api::rating.rating").delete({ where: { customer: id } })];
+    const options = { where: { owner: user.id }, populate: "*" };
+    const { results } = await strapi.service("api::store.store").find(options);
 
     results.forEach((s) => {
-      promises.push(strapi.query("api::order.order").deleteMany({ data: { where: { store: s.id } } }));
-      promises.push(strapi.query("api::product.product").deleteMany({ where: { storeId: s.id } }));
+      promises.push(strapi.service("api::order.order").deleteOrdersByStore(s.id));
+      promises.push(strapi.service("api::product.product").deleteStoreProductsWithMediaFiles(s.id));
+      if (s.cover) promises.push(strapi.plugins.upload.services.upload.remove(s.cover));
       promises.push(strapi.service("api::stripe.stripe").cancelSubscription(s.subscriptionId));
+      promises.push(strapi.query("api::store.store").delete({ where: { id: s.id } }));
     });
-    promises.push(strapi.query("api::store.store").deleteMany({ data: { where: { owner: user.id } } }));
-    promises.push(strapi.query("api::customer.customer").delete({ where: { id } }));
+
+    promises.push(strapi.query("api::customer.customer").delete({ where: { user: user.id } }));
 
     const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(user.stripeId);
     data.forEach(({ id }) => promises.push(strapi.service("api::stripe.stripe").deletePaymentMethod(id)));
-
     promises.push(strapi.service("api::stripe.stripe").deleteCustomer(user.stripeId));
 
-    promises.push(
-      strapi.query("api::notification.notification").deleteMany({ data: { where: { user: user.id } } })
-    );
+    promises.push(strapi.service("api::notification.notification").deleteNotificationByUser(user.id));
 
     await Promise.all(promises);
     return strapi.query("plugin::users-permissions.user").delete({ where: { id: user.id } });

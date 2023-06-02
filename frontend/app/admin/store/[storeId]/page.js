@@ -8,7 +8,7 @@ import shdCnt from "../../../(layout)/json/shared-content.json";
 import useInfiniteScroll from "../../../(component)/infinite-scroll-hook";
 import Loader from "../../../(layout)/loader";
 
-export default function StoreOrders({ searchParams }) {
+export default function StoreOrders({ params, searchParams }) {
   const { lang, user, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(true);
   const [clickedOrder, setClickedOrder] = useState(null);
@@ -55,7 +55,7 @@ export default function StoreOrders({ searchParams }) {
 
   const fetchOrders = async () => {
     try {
-      const query = `?filters[store][owner][$eqi]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
+      const query = `?filters[store][id][$eqi]=${params.storeId}&filters[store][owner][$eqi]=${user.id}&populate[store][fields]=owner&populate[customer]=*&populate[lineItems]=*&populate[payment]=*&pagination[page]=${pageRef.current}&pagination[pageSize]=50&sort=createdAt:desc`;
       const { data, meta } = await request("order", "GET", { query });
 
       setTotal(meta.pagination.total);

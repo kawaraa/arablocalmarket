@@ -14,7 +14,6 @@ export default function Notification() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const { unseen, refresh } = useCheckNotifications(user);
 
   const translateNotification = (note) => {
     const str = content.notifications[note.type][lang];
@@ -37,8 +36,7 @@ export default function Notification() {
   const getNotification = async (e) => {
     setLoading(true);
     try {
-      // ?sort=createdAt:desc
-      const query = `?filters[seen][$not]=true&pagination[start]=${notifications.length}&pagination[limit]=10`;
+      const query = `?filters[seen][$not]=true&pagination[start]=${notifications.length}&pagination[limit]=10&sort=createdAt:desc`;
       const { data } = await request("notification", "GET", { query });
       if (!data[0]) setDone(true);
     } catch (error) {
@@ -51,6 +49,7 @@ export default function Notification() {
     if (user?.notifications) setNotifications(user?.notifications);
   }, [user]);
 
+  const { unseen, refresh } = useCheckNotifications({ user, getNotification });
   return (
     <Dropdown
       event="click"
@@ -94,14 +93,16 @@ export default function Notification() {
   );
 }
 
-function useCheckNotifications(user) {
-  const notificationRef = useRef(0);
+function useCheckNotifications({ user, getNotification }) {
+  const mountedRef = useRef(0);
   const [notification, setNotifications] = useState(0);
 
   const fetchContent = async () => {
     try {
       if (user && !user.loading) {
-        setNotifications((await request("notification", "GET", { query: "/unseen" })).unseen);
+        const { unseen } = await request("notification", "GET", { query: "/unseen" });
+        if (unseen > notification && getNotification) getNotification();
+        setNotifications(unseen);
       }
     } catch (error) {
       console.log(error);
@@ -110,8 +111,8 @@ function useCheckNotifications(user) {
   };
 
   useEffect(() => {
-    if (notificationRef.current < 1) fetchContent();
-    notificationRef.current = notificationRef.current + 1;
+    if (mountedRef.current < 1) fetchContent();
+    mountedRef.current = mountedRef.current + 1;
   }, []);
 
   return { unseen: notification, refresh: fetchContent };
@@ -121,7 +122,7 @@ const content = {
   dropdown: { en: "View notifications", ar: "عرض الاشعارات" },
   btn: { en: "Show more", ar: "أظهر المزيد" },
   notifications: {
-    ORDER_CREATED: { en: "You have a new order", ar: "لديك طلب جديد" },
+    ORDER_CREATED: { en: "You have a new order (orderNumber)", ar: "(orderNumber) لديك طلب جديد" },
     ORDER_READY: {
       en: "Your order with the number orderNumber is ready",
       ar: "طلبك رقم orderNumber أصبح جاهز",
