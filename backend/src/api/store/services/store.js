@@ -46,4 +46,19 @@ module.exports = createCoreService(storeEty, ({ strapi }) => ({
     const status = store.subscriptionStatus || store.attributes.subscriptionStatus;
     return owner == user || ["active", "trialing"].includes(status);
   },
+
+  async deleteStoreAndItsProducts(storeId, store) {
+    const options = { select: ["id", "subscriptionId"], where: { id: storeId }, populate: ["cover"] };
+    if (!store) store = store = await strapi.query(storeEty).findOne(options);
+
+    await Promise.all([
+      strapi.service("api::affiliate.affiliate").deleteByStore(store.id),
+      strapi.service("api::stripe.stripe").cancelSubscription(store.subscriptionId),
+      strapi.service("api::order.order").deleteOrdersByStore(store.id),
+      strapi.service("api::product.product").deleteStoreProductsWithMediaFiles(store.id),
+      !store.cover ? null : strapi.plugins.upload.services.upload.remove(store.cover),
+    ]);
+
+    await strapi.query(storeEty).delete({ where: { id: s.id } });
+  },
 }));

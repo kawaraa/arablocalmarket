@@ -2,6 +2,7 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 const storeEty = "api::store.store";
 const stripeEty = "api::stripe.stripe";
+const affEty = "api::affiliate.affiliate";
 
 module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async create(ctx) {
@@ -26,7 +27,7 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     const res = await super.create(ctx);
 
     const c = user.stripeId || (await strapi.service(stripeEty).createCustomer({ name, email, address })).id;
-    const { id, status, items } = await strapi
+    const { id, status, plan } = await strapi
       .service(stripeEty)
       .startTrial(c, priceId, res.data.id, referralId);
 
@@ -37,16 +38,10 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
       .query(storeEty)
       .update({ where: { id: res.data.id }, data: { subscriptionId: id, subscriptionStatus: status } });
 
-    const affiliateRes = null;
+    let affiliateRes = null;
     if (referralId) {
-      affiliateRes = strapi.service("api::affiliate.affiliate").create({
-        data: {
-          user: +referralId,
-          referredItem: res.data.id,
-          stripeItem: id,
-          price: items.data[0].price.unit_amount / 100,
-          status: "PENDING",
-        },
+      affiliateRes = strapi.service(affEty).create({
+        data: { user: +referralId, referredItem: res.data.id, price: 0, active: true },
       });
     }
 
@@ -109,10 +104,14 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     return { success: true };
   },
 
-  async updateStatus(ctx) {
+  // Update subscription status on payment success or fail
+  async updateSubscriptionStatus(ctx) {
     const { subscriptionId } = await strapi.service(storeEty).getStripeFields(ctx.params.id);
-    const { status } = await strapi.service(stripeEty).getSubscription(subscriptionId);
+    const { status, plan } = await strapi.service(stripeEty).getSubscription(subscriptionId);
+
+    await strapi.service(affEty).syncActivity(ctx.params.id, status, plan.amount);
     await strapi.service(storeEty).update(ctx.params.id, { data: { subscriptionStatus: status } });
+
     return { success: true };
   },
 
@@ -123,10 +122,7 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     const store = await strapi.query(storeEty).findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
 
-    await strapi.service(stripeEty).cancelSubscription(store.subscriptionId);
-    await strapi.service("api::order.order").deleteOrdersByStore(id);
-    await strapi.service("api::product.product").deleteStoreProductsWithMediaFiles(id);
-    if (store.cover) await strapi.plugins.upload.services.upload.remove(store.cover);
-    return super.delete(ctx);
+    await strapi.service("api::store.store").deleteStoreAndItsProducts(id, store);
+    return { success: true };
   },
 }));

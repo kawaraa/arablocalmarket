@@ -1,6 +1,7 @@
 "use strict"; /** A set of functions called "actions" for `stripe` */
 const storeEty = "api::store.store";
 const stripeEty = "api::stripe.stripe";
+const affEty = "api::affiliate.affiliate";
 
 module.exports = {
   async findOne({ state: { user }, query: { storeId } }) {
@@ -33,18 +34,21 @@ module.exports = {
     };
   },
   async upgradeDowngrade(ctx) {
-    const ps = await strapi.query("api::product.product").count({ where: { storeId: ctx.query.storeId } });
+    const storeId = ctx.query.storeId;
+    const ps = await strapi.query("api::product.product").count({ where: { storeId } });
     const plan = await strapi.service(stripeEty).getPlan(ctx.query.priceId);
     if (+plan.product.metadata.products < ps) return ctx.notAcceptable("Too many products");
 
-    const store = await strapi.service(storeEty).getStripeFields(ctx.query.storeId);
-    const currentSub = await strapi.service(stripeEty).getSubscription(store?.subscriptionId);
+    const store = await strapi.service(storeEty).getStripeFields(storeId);
+    const { id, items } = await strapi.service(stripeEty).getSubscription(store?.subscriptionId);
 
-    const sub = await strapi.service(stripeEty).updateSubscription(currentSub.id, {
+    const sub = await strapi.service(stripeEty).updateSubscription(id, {
       cancel_at_period_end: false,
       proration_behavior: "always_invoice",
-      items: [{ id: currentSub.items.data[0].id, price: ctx.query.priceId }],
+      items: [{ id: items.data[0].id, price: ctx.query.priceId }],
     });
+
+    await strapi.service(affEty).syncActivity(storeId, sub.status, sub.plan.amount);
 
     return {
       id: sub.plan.id,
@@ -65,6 +69,8 @@ module.exports = {
     };
   },
   async cancel(ctx) {
+    await strapi.service(affEty).syncActivity(ctx.query.storeId, "canceled", -1);
+
     const store = await strapi.service(storeEty).getStripeFields(ctx.query.storeId);
     await strapi.service(stripeEty).cancelSubscription(store.subscriptionId);
     return { success: true };
@@ -72,15 +78,18 @@ module.exports = {
   async create(ctx) {
     const c = ctx.state.user.stripeId;
     const { storeId, priceId } = ctx.request.body;
-    const { id, status, latest_invoice } = await strapi
+    const { id, status, latest_invoice, plan } = await strapi
       .service(stripeEty)
       .createSubscription(c, priceId, storeId);
+
+    await strapi.service(affEty).syncActivity(storeId, status, plan.amount);
 
     await strapi
       .query(storeEty)
       .update({ where: { id: storeId }, data: { subscriptionId: id, subscriptionStatus: status } });
 
     const invoice = await strapi.service(stripeEty).getInvoice(latest_invoice);
+
     return { paymentUrl: invoice.hosted_invoice_url };
   },
   async checkout(ctx) {
@@ -90,6 +99,7 @@ module.exports = {
     return { paymentUrl: invoice.hosted_invoice_url };
   },
   async paymentMethods(ctx) {
+    if (!ctx.state.user.stripeId) return [];
     const { data } = await strapi.service(stripeEty).getPaymentMethods(ctx.state.user.stripeId);
     return data.map(({ id, type, created, card }) => ({
       id,
@@ -106,10 +116,13 @@ module.exports = {
     return { success: true };
   },
   async webhook(ctx) {
-    await strapi.query(storeEty).update({
+    const subscriptionStatus = ctx.request.body.data.object.status;
+    const { id } = await strapi.query(storeEty).update({
       where: { subscriptionId: ctx.request.body.data.object.id },
-      data: { subscriptionStatus: ctx.request.body.data.object.status },
+      data: { subscriptionStatus },
     });
+
+    await strapi.service(affEty).syncActivity(id, subscriptionStatus, plan.amount);
 
     return { success: true };
   },

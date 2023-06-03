@@ -10,6 +10,8 @@
   "updatePassword": "/api/auth/change-password",
   "customer": "/api/customers",
   "notification": "/api/notifications",
+  "bank": "/api/banks",
+  "invoice": "/api/invoices",
   "store": "/api/stores",
   "product": "/api/products",
   "order": "/api/orders",

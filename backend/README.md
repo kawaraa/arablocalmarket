@@ -52,12 +52,14 @@ Customer alow: create, update, find, findOne
 Order alow: create, update, find, findOne
 Product alow: create, update, delete, find, findOne
 Rating alow: create, update, delete, find, findOne
-Store alow: create, update, updateStatus, delete, find, findOne
+Store alow: create, update, updateSubscriptionStatus, delete, find, findOne
 Upload alow: upload, findOne
 Notification alow: unseen, find, update, delete
 User permission alow: changePassword, me, update, destroy
+Bank alow: create, delete
 Stripe allow: create, findOne, upgradeDowngrade, checkout, cancel, paymentMethods, deletePaymentMethod, webhook
-Affiliate alow: find, findOne
+Affiliate alow: find
+Invoice alow: findOne
 ```
 
 ### `start`

@@ -3,7 +3,7 @@ module.exports = {
     {
       method: "PATCH",
       path: "/stores/:id",
-      handler: "store.updateStatus",
+      handler: "store.updateSubscriptionStatus",
     },
   ],
 };

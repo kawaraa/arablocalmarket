@@ -258,8 +258,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
             lang={lang}
             tag="form"
             title={shdCnt.newAdr[lang]}
-            // title="Shipping Information"
-            okBtn="Create"
+            okBtn={shdCnt.create[lang]}
             onCancel={() => setAddressForm(false)}
             onSubmit={handleCreateAddress}
             onApprove={() => {}}

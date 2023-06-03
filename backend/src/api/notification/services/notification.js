@@ -11,7 +11,6 @@ module.exports = createCoreService(noteEty, ({ strapi }) => ({
     if (!notes[0]) return;
 
     await Promise.all(notes.map(({ id }) => strapi.query(noteEty).delete({ where: { id } })));
-
     return this.deleteNotificationByUser(userId);
   },
 }));

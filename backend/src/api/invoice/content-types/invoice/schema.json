@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "invoices",
+  "info": {
+    "singularName": "invoice",
+    "pluralName": "invoices",
+    "displayName": "invoice",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "invoices"
+    },
+    "affiliates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::affiliate.affiliate",
+      "mappedBy": "invoice"
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "bank": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::bank.bank",
+      "private": true,
+      "inversedBy": "invoices"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["PENDING", "PAYABLE", "PAID"],
+      "required": true,
+      "default": "PENDING"
+    }
+  }
+}

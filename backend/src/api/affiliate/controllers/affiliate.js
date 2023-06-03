@@ -17,7 +17,4 @@ module.exports = createCoreController("api::affiliate.affiliate", ({ strapi }) =
     });
     return result;
   },
-  async findOne(ctx) {
-    //
-  },
 }));

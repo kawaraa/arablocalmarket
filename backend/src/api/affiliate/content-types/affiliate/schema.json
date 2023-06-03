@@ -22,24 +22,26 @@
       "type": "integer",
       "required": false
     },
-    "stripeItem": {
-      "type": "string",
-      "required": false,
-      "unique": false
-    },
     "price": {
       "type": "decimal",
       "required": true
     },
-    "status": {
-      "type": "enumeration",
-      "enum": [
-        "PENDING",
-        "PAYABLE",
-        "PAID"
-      ],
-      "default": "PENDING",
+    "percentage": {
+      "type": "integer",
+      "required": true,
+      "max": 100,
+      "min": 0,
+      "default": 25
+    },
+    "active": {
+      "type": "boolean",
       "required": true
+    },
+    "invoice": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::invoice.invoice",
+      "inversedBy": "affiliates"
     }
   }
 }

@@ -108,6 +108,16 @@
       "relation": "oneToMany",
       "target": "api::affiliate.affiliate",
       "mappedBy": "user"
+    },
+    "bankAccount": {
+      "type": "string",
+      "required": false
+    },
+    "invoices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::invoice.invoice",
+      "mappedBy": "user"
     }
   }
 }

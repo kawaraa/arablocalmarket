@@ -60,7 +60,7 @@ export default function Settings(props) {
         <Profile lang={lang} {...user} handleUpdate={handleUpdate} setMessage={addMessage} />
         <Account lang={lang} {...user} handleUpdate={handleUpdate} />
         <Billing lang={lang} />
-        <Payout lang={lang} />
+        <Payout lang={lang} bankAccount={user?.bankAccount} showMessage={addMessage} />
 
         <div className="text-center pt-10">
           <Button

@@ -33,6 +33,8 @@ module.exports = () => ({
     return stripe.paymentMethods.detach(paymentMethodId);
   },
   async deleteCustomer(stripeCustomerId) {
+    const { data } = await strapi.service("api::stripe.stripe").getPaymentMethods(stripeCustomerId);
+    await Promise.all(data.map(({ id }) => this.deletePaymentMethod(id)));
     return stripe.customers.del(stripeCustomerId);
   },
 
