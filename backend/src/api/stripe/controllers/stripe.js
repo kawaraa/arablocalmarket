@@ -70,7 +70,6 @@ module.exports = {
   },
   async cancel(ctx) {
     await strapi.service(affEty).syncActivity(ctx.query.storeId, "canceled", -1);
-
     const store = await strapi.service(storeEty).getStripeFields(ctx.query.storeId);
     await strapi.service(stripeEty).cancelSubscription(store.subscriptionId);
     return { success: true };

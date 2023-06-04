@@ -1,9 +1,4 @@
-'use strict';
+"use strict"; /** invoice service */
+const { createCoreService } = require("@strapi/strapi").factories;
 
-/**
- * invoice service
- */
-
-const { createCoreService } = require('@strapi/strapi').factories;
-
-module.exports = createCoreService('api::invoice.invoice');
+module.exports = createCoreService("api::invoice.invoice");

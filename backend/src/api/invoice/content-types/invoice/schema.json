@@ -24,6 +24,11 @@
       "target": "api::affiliate.affiliate",
       "mappedBy": "invoice"
     },
+    "stripeInvoices": {
+      "type": "string",
+      "required": true,
+      "minLength": 20
+    },
     "amount": {
       "type": "decimal",
       "required": true
@@ -37,7 +42,11 @@
     },
     "status": {
       "type": "enumeration",
-      "enum": ["PENDING", "PAYABLE", "PAID"],
+      "enum": [
+        "PENDING",
+        "PAYABLE",
+        "PAID"
+      ],
       "required": true,
       "default": "PENDING"
     }

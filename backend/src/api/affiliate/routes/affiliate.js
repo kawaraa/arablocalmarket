@@ -1,9 +1,4 @@
-'use strict';
+"use strict"; /** affiliate router */
+const { createCoreRouter } = require("@strapi/strapi").factories;
 
-/**
- * affiliate router
- */
-
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::affiliate.affiliate');
+module.exports = createCoreRouter("api::affiliate.affiliate");

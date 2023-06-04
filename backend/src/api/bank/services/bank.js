@@ -1,9 +1,4 @@
-'use strict';
+"use strict"; /** bank service */
+const { createCoreService } = require("@strapi/strapi").factories;
 
-/**
- * bank service
- */
-
-const { createCoreService } = require('@strapi/strapi').factories;
-
-module.exports = createCoreService('api::bank.bank');
+module.exports = createCoreService("api::bank.bank");
