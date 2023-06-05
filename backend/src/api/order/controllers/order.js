@@ -112,7 +112,7 @@ module.exports = createCoreController(orderEty, ({ strapi }) => ({
 
     data.forEach((d) => {
       const isOwner = ctx.state.user.id == d.attributes.store?.data?.attributes?.owner;
-      if (isOwner || ctx.state.user.id == d.attributes.customer?.user) owner = true;
+      if (isOwner || ctx.state.user.id == d.attributes.customer?.data?.attributes.user) owner = true;
       d.attributes.customer = fn(d.attributes.customer);
 
       d.attributes.store.data.attributes = strapi

@@ -51,7 +51,7 @@ export default async function LandingPage({ params, searchParams }) {
             href="#section2"
             title={content.readMore[lang]}
             aria-label={content.readMore[lang]}
-            className="block w-10 mt-8 mx-auto hover:text-dbg animate-bounce">
+            className="block w-10 mt-8 mx-auto animate-bounce">
             <SvgIcon name="arrowDownInCircle" />
           </a>
         </article>
@@ -73,7 +73,7 @@ export default async function LandingPage({ params, searchParams }) {
         <h3 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
           {content.stepsH[lang]}
         </h3>
-        <ul className="mb-10 flex flex-wrap items-center justify-around space-x-3">
+        <ul className="mb-10 flex flex-wrap items-center justify-around">
           {content.steps.map((step, i) => (
             <li id={i + 1} className="mt-5 lazy-b" key={i}>
               <h4 className="font-semibold" style={getCssDelay()}>

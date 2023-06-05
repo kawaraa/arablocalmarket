@@ -131,7 +131,7 @@ export default function Navigation() {
 
         {!user?.id ? (
           <Link passHref legacyBehavior href={signinLink.path}>
-            <a className="text-center px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
+            <a className="text-center ml-3 px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
               {signinLink.text[lang]}
             </a>
           </Link>
