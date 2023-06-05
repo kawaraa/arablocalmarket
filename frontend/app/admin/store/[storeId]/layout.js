@@ -94,12 +94,12 @@ export default function StoreById({ children, params: { storeId } }) {
 
       <Dropdown
         event="click"
-        cls="!absolute -mt-10 right-4 z-2"
+        cls="!absolute -mt-10 right-4 z-2 text-lg"
         icon="threeDots"
-        iconCls="w-8 md:w-8"
-        btnCls="!rounded-lg"
+        iconCls="w-10 md:w-10"
+        btnCls="h-6 !bg-blur !text-bg hover:!text-bg !rounded-lg"
         title="View store options">
-        <li className="overflow-hidden w-28">
+        <li className="overflow-hidden w-32">
           <Link
             passHref
             href={"/admin/new-store?id=" + storeId}
@@ -107,7 +107,7 @@ export default function StoreById({ children, params: { storeId } }) {
             {shdCnt.edit[lang]}
           </Link>
         </li>
-        <li className="overflow-hidden w-28">
+        <li className="overflow-hidden w-32">
           <Link
             passHref
             href={`/admin/store/${storeId}/plan`}

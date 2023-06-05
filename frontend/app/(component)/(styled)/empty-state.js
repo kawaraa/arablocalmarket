@@ -12,7 +12,7 @@ export default function EmptyState({ lang, type }) {
           </g>
         </g>
       </svg>
-      <p className="text-sm text-blur">{content[type][lang]}</p>
+      <p className="text-sm mt-5">{content[type][lang]}</p>
     </div>
   );
 }

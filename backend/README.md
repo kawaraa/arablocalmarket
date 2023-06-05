@@ -41,7 +41,8 @@ Order alow: create
 Product alow: find, findOne
 Rating alow: find, findOne
 Store alow: find, findOne
-Upload alow: upload, findOne
+Upload alow: findOne
+Stripe alow: webhook
 User alow: callback, connect, emailConfirmation, forgotPassword, register, resetPassword, sendEmailConfirmation
 ```
 

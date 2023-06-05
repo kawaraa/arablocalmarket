@@ -2,6 +2,7 @@
 const storeEty = "api::store.store";
 const stripeEty = "api::stripe.stripe";
 const affEty = "api::affiliate.affiliate";
+const day = 1000 * 60 * 60 * 24;
 
 module.exports = {
   async findOne({ state: { user }, query: { storeId } }) {
@@ -15,6 +16,9 @@ module.exports = {
     const { id, type, created, card } = data.find((p) => p.id == sub.default_payment_method) || {};
     // const pm = { id, type, created, brand: card?.brand, last4: card?.last4, country: card?.country };
 
+    let trialPeriod = sub.plan.trial_period_days || 0;
+    if (!trialPeriod) trialPeriod = (+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day;
+
     return {
       id: sub.plan.id, // priceId
       amount: sub.plan.amount,
@@ -22,7 +26,7 @@ module.exports = {
       start: sub.start_date,
       created: sub.created,
       ends: sub.cancel_at, // ends on
-      trialPeriod: sub.plan.trial_period_days, // Trial 30 days
+      trialPeriod, // Trial 30 days
       trialStart: sub.trial_start,
       trialEnd: sub.trial_end, // Trialing until
       currentPeriodStart: sub.current_period_start,
@@ -50,6 +54,9 @@ module.exports = {
 
     await strapi.service(affEty).syncActivity(storeId, sub.status, sub.plan.amount);
 
+    let trialPeriod = sub.plan.trial_period_days || 0;
+    if (!trialPeriod) trialPeriod = (+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day;
+
     return {
       id: sub.plan.id,
       amount: sub.plan.amount,
@@ -57,7 +64,7 @@ module.exports = {
       start: sub.start_date,
       created: sub.created,
       ends: sub.ended_at,
-      trialPeriod: sub.plan.trial_period_days,
+      trialPeriod,
       trialStart: sub.trial_start,
       trialEnd: sub.trial_end,
       currentPeriodStart: sub.current_period_start,

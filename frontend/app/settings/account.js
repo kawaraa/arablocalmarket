@@ -16,6 +16,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
     const data = {};
     new FormData(e.target).forEach((value, key) => (data[key] = value));
     await handleUpdate(data);
+    setPasswordForm(false);
     setLoading(false);
   };
 

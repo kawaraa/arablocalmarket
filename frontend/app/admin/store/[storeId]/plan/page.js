@@ -89,7 +89,6 @@ export default function StorePlan({ params: { storeId } }) {
     setTimeout(() => window.scroll(0, 270), 800);
   }, []);
 
-  // console.log(subscription?.trialStart, subscription?.trialEnd);
   return (
     <>
       <div className="min-h-[45vh]">
@@ -110,6 +109,7 @@ export default function StorePlan({ params: { storeId } }) {
             </Link>
           </div>
         )}
+
         <h3 className="text-center text-2xl mb-8">{content.h[lang]}</h3>
         <div dir="ltr" className="md:flex max-w-3xl mx-auto">
           {plan && (

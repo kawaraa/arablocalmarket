@@ -14,7 +14,7 @@ module.exports = createCoreController(ety, ({ strapi }) => ({
     return super.find(ctx);
   },
   async update({ params, state: { user }, request: { body } }) {
-    await strapi.query(ety).update({ where: { id: +params.id, user: user.id }, data: body });
+    await strapi.query(ety).update({ where: { id: +params.id, user: user.id }, data: { seen: body.seen } });
     return { success: true };
   },
   async delete({ params, state: { user } }) {

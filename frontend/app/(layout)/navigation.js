@@ -1,9 +1,8 @@
 "use client";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
-import { request } from "../(service)/api-provider";
 import OptionXIcon from "../(component)/option-x-icon";
 import Dropdown from "../(component)/(styled)/dropdown";
 import Avatar from "../(component)/(styled)/avatar";
@@ -146,15 +145,8 @@ export default function Navigation() {
               cls="ml-4"
               btnCls="!rounded-full shadow-md"
               title="View user menu">
-              {/* <LinkButton
-                    href={}
-                    text={}
-                    // onClick={() => setLoading(true)}
-                    cls="absolute top-7 right-2 shadow-none"
-                    iconCls="w-full"
-                  /> */}
               {content.userLinks.map((link, i) => (
-                <li className="" key={i}>
+                <li className="text-lg" key={i}>
                   <Link passHref legacyBehavior href={link.path}>
                     <a className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                       {link.text[lang]}
@@ -168,27 +160,6 @@ export default function Navigation() {
       </div>
     </nav>
   );
-}
-
-function useCheckNotifications(user) {
-  const notificationRef = useRef(0);
-  const [notification, setNotifications] = useState(0);
-
-  const fetchContent = async () => {
-    try {
-      if (user) setNotifications((await request("notification", "GET", { query: "/unseen" })).unseen);
-    } catch (error) {
-      console.log(error);
-    }
-    setTimeout(fetchContent, 1000 * 30);
-  };
-
-  useEffect(() => {
-    if (notificationRef.current < 1) fetchContent();
-    notificationRef.current = notificationRef.current + 1;
-  }, []);
-
-  return notification;
 }
 
 const content = {

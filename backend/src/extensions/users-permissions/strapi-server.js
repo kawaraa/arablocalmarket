@@ -1,7 +1,7 @@
 const mutableFields = ["firstName", "lastName", "username", "phone", "address"];
 
 module.exports = (plugin) => {
-  //   /*******************************  CUSTOM CONTROLERS  ********************************/
+  /******************* CUSTOM CONTROLERS  ********************/
   plugin.controllers.user.update = async (ctx) => {
     const userId = ctx.state.user?.id;
     if (!userId) return (ctx.response.status = 403); // try ctx.forbidden();
@@ -33,6 +33,7 @@ module.exports = (plugin) => {
       promises.push(strapi.service("api::store.store").deleteStoreAndItsProducts(s.id, store));
     });
 
+    // Todo: Delete invoices that belongs to the user
     promises.push(strapi.query("api::customer.customer").delete({ where: { user: user.id } }));
     promises.push(strapi.service("api::stripe.stripe").deleteCustomer(user.stripeId));
     promises.push(strapi.service("api::notification.notification").deleteNotificationByUser(user.id));
