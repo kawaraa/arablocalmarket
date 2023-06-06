@@ -87,7 +87,7 @@ export default async function ProductBySlug({ params, searchParams }) {
         data={{ product: product.id }}
       />
 
-      <div className="flex justify-around items-center fixed bottom-0 right-0 left-0 h-12 bg-lbg dark:bg-dbg">
+      <div className="flex justify-around items-center fixed bottom-0 right-0 left-0 h-12 bg-lbg dark:bg-dcbg">
         <p className="min-w-12 text-red text-xl">
           {store.currency.split("-")[0]}
           <span id="product-price" className="">

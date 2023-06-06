@@ -320,7 +320,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           <span className="!h-2 !w-2"></span>
         </>
       )}
-      <div className="flex justify-center items-center bg-cbg">
+      <div className="flex justify-center items-center bg-cbg rounded-full">
         <Button icon="minus" onClick={() => ch("down")} cls="w-7 h-7 !p-0 !rounded-full" iconCls="w-full" />
         <input
           ref={inputRef}
@@ -330,7 +330,7 @@ export function NumberInputWithControl({ label, onChange, cls, inCls, ...p }) {
           title={p.title || p.name}
           aria-label={p.title || p.name}
           autoComplete="on"
-          className={`appearance-none text-center leading-9 font-semibold md:-mr-3 bg-[transparent] text-lg ${
+          className={`appearance-none text-center leading-8 font-semibold md:-mr-3 bg-[transparent] text-lg ${
             inCls || "w-12"
           }`}
           {...p}
