@@ -1,6 +1,6 @@
 export default function EmptyState({ lang, type }) {
   return (
-    <div className="w-full py-2 text-center">
+    <div className="w-full py-2 mt-[15vh] text-center">
       <svg className="block w-[20%] mx-auto" viewBox="0 0 64 41" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(0 1)" fill="none" fillRule="evenodd">
           <ellipse fill="#f5f5f5" cx="32" cy="33" rx="32" ry="7"></ellipse>
