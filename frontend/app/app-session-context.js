@@ -27,6 +27,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = (lang) => {
+    alert(lang);
     Cookies.set("lang", lang);
     window.localStorage.setItem("lang", lang);
     document.documentElement.setAttribute("lang", lang);

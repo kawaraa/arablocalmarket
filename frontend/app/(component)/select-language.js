@@ -17,7 +17,7 @@ export default function SelectLanguage({ language }) {
   };
 
   useEffect(() => {
-    console.log(language, lang);
+    setTimeout(() => alert(lang), 5000);
     if (!lang) setTimeout(() => setOpen(true), 300);
     else if (lang && lang != language) router.refresh();
     // else if (lang && lang != language) window.location.reload();
