@@ -1,8 +1,6 @@
 import AppSessionContextProvider from "./app-session-context";
 import { cookies } from "next/headers";
 import Navigation from "./(layout)/navigation";
-import SelectLanguage from "./(component)/select-language";
-import ScrollToTopBtn from "./(component)/scroll-to-top-btn";
 import "./global.css";
 
 // revalidate all the underneath routes and layouts
@@ -26,10 +24,7 @@ export default function RootLayout({ children, searchParams }) {
           <main
             className="min-h-screen pt-14 pb-24 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:min-h-fit"
             dir="auto">
-            {lang}
             {children}
-            <SelectLanguage language={lang} />
-            <ScrollToTopBtn />
           </main>
         </AppSessionContextProvider>
 

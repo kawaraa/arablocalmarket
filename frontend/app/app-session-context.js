@@ -1,9 +1,11 @@
 "use client";
 import React, { createContext, useState, useEffect } from "react";
-import Messages from "./(component)/(styled)/messages";
 import { fetchUser, registerServiceWorker, mergeCarts, syncUserCart } from "./(service)/api-provider";
 import { Cookies } from "./(service)/utilities";
+import ScrollToTopBtn from "./(component)/scroll-to-top-btn";
 import ImagePreview from "./(component)/(styled)/image-preview";
+import Messages from "./(component)/(styled)/messages";
+import SelectLanguage from "./(component)/select-language";
 import shdCnt from "./(layout)/json/shared-content.json";
 // import { Validator } from "k-utilities";
 const currency = process.env.NEXT_PUBLIC_CURRENCY || "€";
@@ -27,7 +29,6 @@ export default function AppSessionContextProvider({ children, language, theme })
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = (lang) => {
-    alert(lang);
     Cookies.set("lang", lang);
     window.localStorage.setItem("lang", lang);
     document.documentElement.setAttribute("lang", lang);
@@ -94,13 +95,11 @@ export default function AppSessionContextProvider({ children, language, theme })
   };
 
   useEffect(() => {
-    const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     const aThemeMode = Cookies.get("themeMode") || window.localStorage.getItem("themeMode");
     const aCoordinates = Cookies.get("coordinates") || window.localStorage.getItem("coordinates");
     const aRange = Cookies.get("range") || window.localStorage.getItem("range");
 
     updateThemeMode(aThemeMode || "auto");
-    if (aLang) updateLang(aLang);
     if (aCoordinates) updateCoordinates(aCoordinates.split(":"));
     if (aRange) updateRange(aRange);
 
@@ -139,8 +138,10 @@ export default function AppSessionContextProvider({ children, language, theme })
   return (
     <AppSessionContext.Provider value={state}>
       {children}
+      <ScrollToTopBtn />
       <ImagePreview />
       <Messages messages={messages} setMessages={setMessages} />
+      <SelectLanguage serverLang={language} />
     </AppSessionContext.Provider>
   );
 }

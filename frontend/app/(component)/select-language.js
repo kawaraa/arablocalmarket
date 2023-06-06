@@ -6,7 +6,7 @@ import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
-export default function SelectLanguage({ language }) {
+export default function SelectLanguage({ serverLang }) {
   const router = useRouter();
   const { lang, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
@@ -17,15 +17,14 @@ export default function SelectLanguage({ language }) {
   };
 
   useEffect(() => {
-    setTimeout(() => alert(lang), 5000);
-    if (!lang) setTimeout(() => setOpen(true), 300);
-    else if (lang && lang != language) router.refresh();
-    // else if (lang && lang != language) window.location.reload();
-  }, [lang, language]);
+    const clientLang = Cookies.get("lang") || window.localStorage.getItem("lang");
+    if (!clientLang) setTimeout(() => setOpen(true), 300);
+    else if (clientLang && clientLang != serverLang) router.refresh();
+  }, [lang, serverLang]);
+
   return (
     <Modal lang={lang} open={open} center title={content.h[lang]}>
       <div className="flex justify-center items-center">
-        {language}-{lang}-{Cookies.get("lang")}
         <CheckCard
           type="radio"
           name="language"
