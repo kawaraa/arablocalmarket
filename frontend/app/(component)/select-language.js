@@ -15,14 +15,14 @@ export default function SelectLanguage({ language }) {
   };
 
   useEffect(() => {
-    const aLang = Cookies.get("lang") || window.localStorage.getItem("lang");
-    if (!aLang) setTimeout(() => setOpen(true), 400);
-    else if (lang && aLang && language != aLang) window.location.reload();
+    console.log(language, lang);
+    if (!lang) setTimeout(() => setOpen(true), 300);
+    // else if (lang && lang != language) window.location.reload();
   }, [lang, language]);
-
   return (
     <Modal lang={lang} open={open} center title={content.h[lang]}>
       <div className="flex justify-center items-center">
+        {language}-{lang}-{Cookies.get("lang")}
         <CheckCard
           type="radio"
           name="language"

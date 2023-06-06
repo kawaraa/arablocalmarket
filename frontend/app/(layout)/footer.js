@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer({ lang = "en" }) {
   return (
     <footer className="mx-auto w-full max-w-container pt-8 px-4 sm:px-6 lg:px-8">
-      <h6 className="rounded-full mx-auto text-lg text-center [bg-p-c]">Arab Local Market</h6>
+      <h6 className="rounded-full mx-auto text-lg text-center">{content.h6[lang]}</h6>
       <p className="mt-5 text-center text-sm leading-6 text-slate-500">
         © 2023 ArabLocalMarket Inc. {content.rights[lang]}
       </p>
@@ -32,6 +32,7 @@ export default function Footer({ lang = "en" }) {
 }
 
 const content = {
+  h6: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
   rights: { en: "All rights reserved", ar: "كل الحقوق محفوظة" },
   linksGroup: [
     {
