@@ -5,7 +5,7 @@ export default function PrivacyPolicy(props) {
 
   return (
     <div className="relative overflow-hidden pt-[5.75rem]">
-      <div className="absolute top-0 h-[325px] w-full bg-gradient-to-b from-p-c to-l-bg"></div>
+      <div className="absolute top-0 h-[325px] w-full bg-gradient-to-b from-pc to-l-bg"></div>
       <div className="px-4 sm:px-6 lg:px-8 relative mx-auto max-w-[37.5rem] pt-20 text-center pb-24">
         <h1 className="text-4xl font-extrabold text-l-tc sm:text-5xl">Privacy policy</h1>
         <p className="mt-4 text-base leading-7 text-slate-600">Last updated on November 2, 2023</p>

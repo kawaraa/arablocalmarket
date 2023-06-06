@@ -52,7 +52,7 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async findOne(ctx) {
     const result = await super.findOne(ctx);
     const user = ctx.state.user?.id;
-    if (!result || !result.data || !strapi.service(storeEty).isPublic(result.data, user)) {
+    if (!result?.data || !strapi.service(storeEty).isPublic(result.data, user)) {
       return ctx.notFound();
     }
 

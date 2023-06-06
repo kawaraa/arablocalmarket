@@ -13,6 +13,7 @@ module.exports = createCoreController(proEty, ({ strapi }) => ({
 
   async findOne(ctx) {
     const result = await super.findOne(ctx);
+    if (!result?.data) return ctx.notFound();
 
     if (result.data.attributes.ratings?.data) {
       result.data.attributes.ratings = strapi
