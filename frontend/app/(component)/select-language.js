@@ -8,7 +8,7 @@ import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage({ serverLang }) {
   // const router = useRouter();
-  const { lang, updateLang } = useContext(AppSessionContext);
+  const { lang, user, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
 
   const changeLanguage = (lang) => {
@@ -19,11 +19,12 @@ export default function SelectLanguage({ serverLang }) {
   useEffect(() => {
     const clientLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     if (!clientLang) setTimeout(() => setOpen(true), 300);
-    else if (clientLang && clientLang != serverLang) {
+    else if (clientLang && clientLang != serverLang && !user?.loading) {
       Cookies.set("lang", clientLang);
-      setTimeout(() => window.location.reload(), 500);
+      window.location.reload();
+      // setTimeout(() => window.location.reload(), 500);
     }
-  }, [lang, serverLang]);
+  }, [lang, serverLang, user]);
 
   return (
     <Modal lang={lang} open={open} center title={content.h[lang]}>
