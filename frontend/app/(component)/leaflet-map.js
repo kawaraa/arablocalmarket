@@ -102,7 +102,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
   }, []);
 
   return (
-    <div className="relative pt-2">
+    <div dir="auto" className="relative pt-2">
       <Script src="/map/leaflet.js" defer onReady={() => initializeMap(window.L)}></Script>
       {/* <Script
         src="https://unpkg.com/leaflet/dist/leaflet.js" defer

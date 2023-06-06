@@ -12,7 +12,7 @@ module.exports = (plugin) => {
       return ctx.badRequest("The following fields are immutable, " + immutableFields.join(", "));
     }
 
-    const res = await strapi.query("plugin::users-permissions.user").update({ where: { id: userId }, data });
+    const res = await strapi.entityService.update("plugin::users-permissions.user", userId, { data });
 
     if (data.firstName || data.lastName) {
       const cData = { name: res.firstName + " " + res.lastName };
@@ -28,12 +28,16 @@ module.exports = (plugin) => {
 
     const promises = [strapi.service("api::rating.rating").deleteRatingsByUser(user.id)];
 
-    const options = { where: { owner: user.id }, populate: "*" };
+    const options = {
+      select: ["id", "subscriptionId", "subscriptionStatus"],
+      where: { owner: user.id },
+      populate: ["cover"],
+    };
     (await strapi.service("api::store.store").find(options)).results.forEach((s) => {
-      promises.push(strapi.service("api::store.store").deleteStoreAndItsProducts(s.id, store));
+      promises.push(strapi.service("api::store.store").deleteStoreAndItsProducts(s.id, s));
     });
 
-    // Todo: Delete invoices that belongs to the user
+    // Todo: Delete invoices and bank info that belongs to the user
     promises.push(strapi.query("api::customer.customer").delete({ where: { user: user.id } }));
     promises.push(strapi.service("api::stripe.stripe").deleteCustomer(user.stripeId));
     promises.push(strapi.service("api::notification.notification").deleteNotificationByUser(user.id));

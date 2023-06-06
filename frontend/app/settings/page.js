@@ -10,6 +10,7 @@ import { Button } from "../(component)/(styled)/button";
 import Modal from "../(component)/(styled)/modal";
 import Billing from "./billing";
 import Payout from "./payout";
+import { Cookies } from "../(service)/utilities";
 
 export default function Settings(props) {
   const router = useRouter();
@@ -20,10 +21,8 @@ export default function Settings(props) {
   const handleUpdate = async (data) => {
     try {
       if (!data.address && !data.password) setAppLoading(true);
-
       if (data.password) await request("updatePassword", "POST", data);
       else await request("updateUser", "PUT", { query: user.id, body: data });
-
       if (!data.address && !data.password) setAppLoading(false);
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
     } catch (error) {
@@ -37,6 +36,7 @@ export default function Settings(props) {
       setLoading(true);
       await request("updateUser", "DELETE", { query: user.id });
       window.localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
       setLoading(false);
       setConfirmDeletion(false);
       setTimeout(() => updateUser(null), 300);

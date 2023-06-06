@@ -36,7 +36,7 @@ export default function RatingInputPopup({ stars, ratedStars, total, data, open,
         <div
           onClick={data ? () => setShowRatingInput(true) : null}
           className={`text-center mt-7 ${data ? "cursor-pointer" : ""}`}>
-          <StarRating stars={theStars} cls={starsCls || "text-blur text-3xl"} />
+          <StarRating stars={theStars} cls={starsCls || "text-3xl"} />
           {total > 0 && <sub className="absolute -right-1 bottom-0 !text-xs text-bg">{total}</sub>}
         </div>
       )}
@@ -45,12 +45,12 @@ export default function RatingInputPopup({ stars, ratedStars, total, data, open,
         lang={lang}
         open={showRatingInput}
         title={content.rateH[lang]}
-        onCancel={() => setShowRatingInput(false)}
+        onCancel={() => (!onClose ? setShowRatingInput(false) : onClose(false) + setShowRatingInput(false))}
         onApprove={handleRating}
         okBtn={shdCnt.save[lang]}
         center>
         <div className="text-center my-3">
-          <StarRating stars={inputStars} onRate={setInputStars} cls="text-blur text-3xl" />
+          <StarRating stars={inputStars} onRate={setInputStars} cls="text-3xl" />
         </div>
       </Modal>
     </>

@@ -40,8 +40,8 @@ export default function StoreSearch({ text }) {
         <button
           type="button"
           onClick={() => setShowFilter(true)}
-          title="Show search filter"
-          aria-label="Search filter"
+          title={(content.btn = [lang])}
+          aria-label={(content.btn = [lang])}
           aria-expanded="true"
           aria-haspopup="dialog"
           className="w-8 p-1 hover:text-pc transition">
@@ -89,10 +89,7 @@ export default function StoreSearch({ text }) {
             onError={(text) => addMessage({ type: "error", text, duration: 5 })}
           />
 
-          <label
-            htmlFor="default-range"
-            dir="auto"
-            className="block mt-5 mb-1 text-sm text-t font-medium dark:text-dt">
+          <label htmlFor="default-range" className="block mt-5 mb-1 text-sm text-t font-medium dark:text-dt">
             {content.range[lang][0]}: {range} {content.range[lang][1]}
           </label>
           <input
@@ -116,4 +113,5 @@ const content = {
   searchLabel: { en: "Search for a store", ar: "ابحث عن متجر" },
   modalTitle: { en: "Select a location", ar: "اختر موقعا" },
   range: { en: ["Location range", "KM"], ar: ["نطاق الموقع", "كم"] },
+  btn: { en: "Show search filter", ar: "إظهار فلتر البحث." },
 };

@@ -9,7 +9,7 @@ import { ShareButton } from "../(component)/share-button";
 import shdCnt from "../(layout)/json/shared-content.json";
 import RatingInputPopup from "./[storeId]/product/rating-input-popup";
 const liCls =
-  "relative w-9 h-9 md:w-10 md:h-10 mx-1 p-1.5 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
+  "relative w-9 h-9 md:w-10 md:h-10 mx-1 flex justify-center items-center bg-blur rounded-full hover:text-pc duration-200";
 
 export default function StoreLinks({ lang, storeId, name = "", about = "", phone, ratings, scroll }) {
   const { user, addMessage } = useContext(AppSessionContext);
@@ -50,7 +50,7 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
         {phone && (
           <>
             <li className={liCls}>
-              <a className="block w-6" href={`tel:${phone}`}>
+              <a className="block p-1.5" href={`tel:${phone}`}>
                 <SvgIcon name="phone" />
               </a>
             </li>
@@ -61,7 +61,8 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
                 target="_blank"
                 rel="noopener noreferrer"
                 title="WhatsApp"
-                aria-label="WhatsApp">
+                aria-label="WhatsApp"
+                className="p-1.5">
                 <SvgIcon name="whatsapp" />
               </a>
             </li>
@@ -72,7 +73,8 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
             href="#"
             onClick={(e) => e.preventDefault() + setShowQR(true)}
             title="Show QR Code"
-            aria-label="Show QR Code">
+            aria-label="Show QR Code"
+            className="p-1.5">
             <SvgIcon name="qr" />
           </a>
         </li>
@@ -82,11 +84,11 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
             onClick={addToFavorite}
             title="Add to favorite"
             aria-label="Add to favorite"
-            className={"p-[2px] " + (favoriteStores.includes(storeId) ? "fill-bg" : "fill-none")}>
+            className={"p-1.5 " + (favoriteStores.includes(storeId) ? "fill-bg" : "fill-none")}>
             <SvgIcon name="favorite" />
           </a>
         </li>
-        <li className={liCls}>
+        <li className={liCls + " p-1.5"}>
           <ShareButton title={name} text={about} />
         </li>
         <li className={liCls + (ratings.userStars > 0 ? " text-pc" : "")}>
@@ -94,7 +96,8 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
             href="#"
             title={shdCnt.rateH[lang]}
             aria-label={shdCnt.rateH[lang]}
-            onClick={(e) => e.preventDefault() + setShowRatingInput(true)}>
+            onClick={(e) => e.preventDefault() + setShowRatingInput(true)}
+            className="p-1.5">
             &#9733;
           </a>
         </li>

@@ -13,10 +13,11 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
 
   const updateAddress = async (e) => {
     e.preventDefault();
-    const address = {};
+    const data = {};
     setAddressLoading(true);
-    new FormData(e.target).forEach((value, key) => key != "search" && (address[key] = value));
-    await handleUpdate({ address });
+    new FormData(e.target).forEach((value, key) => (data[key] = value));
+    const { lat, lng, search, ...address } = data;
+    await handleUpdate({ address: { ...address, currentLat: +lat, currentLng: +lng } });
     setAdr(address);
     setAddressLoading(false);
     setAddressForm(false);

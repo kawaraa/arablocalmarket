@@ -17,11 +17,11 @@ module.exports = {
     // const pm = { id, type, created, brand: card?.brand, last4: card?.last4, country: card?.country };
 
     let trialPeriod = sub.plan.trial_period_days || 0;
-    if (!trialPeriod) trialPeriod = (+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day;
+    if (!trialPeriod) trialPeriod = Math.round((+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day);
 
     return {
       id: sub.plan.id, // priceId
-      amount: sub.plan.amount,
+      amount: sub.plan.amount / 100,
       status: sub.status, // active, inactive, trialing
       start: sub.start_date,
       created: sub.created,
@@ -55,11 +55,11 @@ module.exports = {
     await strapi.service(affEty).syncActivity(storeId, sub.status, sub.plan.amount);
 
     let trialPeriod = sub.plan.trial_period_days || 0;
-    if (!trialPeriod) trialPeriod = (+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day;
+    if (!trialPeriod) trialPeriod = Math.round((+(sub.trial_end + "000") - +(sub.trial_start + "000")) / day);
 
     return {
       id: sub.plan.id,
-      amount: sub.plan.amount,
+      amount: sub.plan.amount / 100,
       status: sub.status,
       start: sub.start_date,
       created: sub.created,
@@ -79,6 +79,12 @@ module.exports = {
     await strapi.service(affEty).syncActivity(ctx.query.storeId, "canceled", -1);
     const store = await strapi.service(storeEty).getStripeFields(ctx.query.storeId);
     await strapi.service(stripeEty).cancelSubscription(store.subscriptionId);
+    return { success: true };
+  },
+  async reactivate(ctx) {
+    const store = await strapi.service(storeEty).getStripeFields(ctx.query.storeId);
+    const sub = await strapi.service(stripeEty).reactivateSubscription(store.subscriptionId);
+    await strapi.service(affEty).syncActivity(ctx.query.storeId, sub.status, sub.plan.amount);
     return { success: true };
   },
   async create(ctx) {

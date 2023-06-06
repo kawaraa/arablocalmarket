@@ -3,8 +3,8 @@ import Transition from "../../(layout)/transitions";
 import { Button, IconButton } from "./button";
 import SvgIcon from "./svg-icon";
 
-export default function Modal(props) {
-  const { lang = "en", tag, title, okBtn, open, loading, onCancel, onApprove, icon, center, ...p } = props;
+export default function Modal({ lang = "en", tag, title, okBtn, open, loading, ...props }) {
+  const { onCancel, onApprove, icon, center, children, ...p } = props;
   const cls = open ? "!h-full p-4 opacity-100" : "";
   const c = center ? "top-1/2 -translate-y-1/2" : "bottom-10 md:bottom-1/2 md:translate-y-1/2";
 
@@ -21,7 +21,7 @@ export default function Modal(props) {
         exit="opacity-0 translate-y-4 md:scale-75"
         time="300"
         open={open}
-        aria-label={`${title} modal window`}
+        aria-label={`${title} ${content.label[lang]}`}
         role="dialog"
         aria-modal="true"
         {...p}>
@@ -47,13 +47,13 @@ export default function Modal(props) {
           <div dir="auto" className="flex-auto">
             <h2 className="mb-1 text-lg text-center print:text-3xl font-semibold">{title}</h2>
             <div className="max-h-[65vh] overflow-scroll no-srl-bar print:max-h-none print:overflow-auto">
-              {p.children}
+              {children}
             </div>
           </div>
         </div>
 
         {onApprove && (
-          <div dir="ltr" className="flex justify-end">
+          <div className="text-right">
             <Button
               type={tag == "form" ? "submit" : ""}
               onClick={onApprove}
@@ -70,4 +70,5 @@ export default function Modal(props) {
 
 const content = {
   cancel: { en: "Cancel and close the modal window", ar: "إلغاء وإغلاق النافذة" },
+  label: { en: "modal window", ar: "نافذة مشروطة" },
 };

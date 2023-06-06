@@ -7,7 +7,7 @@ const affEty = "api::affiliate.affiliate";
 module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async create(ctx) {
     const user = ctx.state.user;
-    const referralId = ctx.cookies.get("referral") || ctx.query.referral || "";
+    const referralId = ctx.cookies.get("referral") || ctx.query.referral || null;
     const priceId = ctx.query.subscription;
     const options = { select: ["id"], where: { owner: user.id } };
     const stores = await strapi.query(storeEty).findMany(options);
@@ -31,22 +31,21 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
       .service(stripeEty)
       .startTrial(c, priceId, res.data.id, referralId);
 
-    const userRes = strapi
-      .query("plugin::users-permissions.user")
-      .update({ where: { id: user.id }, data: { stripeId: c } });
-    const storeRes = strapi
-      .query(storeEty)
-      .update({ where: { id: res.data.id }, data: { subscriptionId: id, subscriptionStatus: status } });
+    const userRes = strapi.entityService.update("plugin::users-permissions.user", user.id, {
+      data: { stripeId: c },
+    });
 
-    let affiliateRes = null;
+    const storeRes = strapi
+      .service(storeEty)
+      .update(res.data.id, { data: { subscriptionId: id, subscriptionStatus: status } });
+
+    await Promise.all([userRes, storeRes]);
+
     if (referralId) {
-      affiliateRes = strapi.service(affEty).create({
+      await strapi.service(affEty).create({
         data: { user: +referralId, referredItem: res.data.id, price: 0, active: true },
       });
     }
-
-    await Promise.all([userRes, storeRes, affiliateRes]);
-
     return res;
   },
 
@@ -118,10 +117,13 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
   async delete(ctx) {
     const id = ctx.params.id;
     const owner = ctx.state.user.id;
-    const options = { select: ["id", "subscriptionId"], where: { id, owner }, populate: ["cover"] };
+    const options = {
+      select: ["id", "subscriptionId", "subscriptionStatus"],
+      where: { id, owner },
+      populate: ["cover"],
+    };
     const store = await strapi.query(storeEty).findOne(options);
     if (!store || !store.id) return ctx.unauthorized();
-
     await strapi.service("api::store.store").deleteStoreAndItsProducts(id, store);
     return { success: true };
   },

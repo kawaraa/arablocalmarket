@@ -58,7 +58,7 @@ Upload alow: upload, findOne
 Notification alow: unseen, find, update, delete
 User permission alow: changePassword, me, update, destroy
 Bank alow: create, delete
-Stripe allow: create, findOne, upgradeDowngrade, checkout, cancel, paymentMethods, deletePaymentMethod, webhook
+Stripe allow: create, findOne, upgradeDowngrade, checkout, cancel, reactivate, paymentMethods, deletePaymentMethod, webhook
 Affiliate alow: find
 Invoice alow: findOne
 ```

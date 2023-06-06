@@ -74,11 +74,12 @@ export default function StoreById({ children, params: { storeId } }) {
       <ImageUpload
         id="store-cover"
         imageUrl={image}
+        fullHeight={false}
         onFile={handleCoverChange}
-        alt="Store cover image"
-        title="Edit store cover">
+        alt={store.name || content.coverAlt[lang]}
+        title={content.coverEdit[lang]}>
         <Link passHref legacyBehavior href={`/admin/pos?storeId=${storeId}`}>
-          <a title="Point of sale - Store mode" className="absolute top-5 right-5 w-8">
+          <a title={content.pos[lang]} className="absolute top-5 right-5 w-8">
             <SvgIcon name="logo" />
           </a>
         </Link>
@@ -149,6 +150,9 @@ export default function StoreById({ children, params: { storeId } }) {
 }
 
 const content = {
+  coverAlt: { en: "Store cover image", ar: "صورة غلاف المخزن" },
+  coverEdit: { en: "Edit store cover", ar: "تحرير غلاف المتجر" },
+  pos: { en: "Point of sale mode", ar: "وضع نقطة البيع" },
   plan: { en: "Plan", ar: "الاشتراك" },
   tabs: [
     { key: "1", path: "/admin/store/storeId", text: { en: "Orders", ar: "الطلبات" } },

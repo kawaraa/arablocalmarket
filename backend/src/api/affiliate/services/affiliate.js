@@ -13,6 +13,6 @@ module.exports = createCoreService(affEty, ({ strapi }) => ({
   },
 
   deleteByStore(storeId) {
-    return strapi.query(affEty).delete({ where: { referredId: storeId } });
+    return strapi.query(affEty).delete({ where: { referredItem: storeId } });
   },
 }));

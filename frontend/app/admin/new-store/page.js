@@ -103,7 +103,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
       if (!store) {
         const d = {
           body: new FormData(),
-          query: `?subscription=${subscription}&referral=${Cookies.get("referralId")}`,
+          query: `?subscription=${subscription}&referral=${Cookies.get("referralId") || ""}`,
         };
         d.body.append("files.cover", file, file.name);
         d.body.append("data", JSON.stringify(data));
@@ -127,7 +127,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
     try {
       await request("store", "DELETE", { query: `/${id}` });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      window.location.replace(`/admin/store`);
+      window.location.replace(`/admin/store?tab=my`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }

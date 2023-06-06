@@ -37,9 +37,18 @@ module.exports = {
       },
     },
     {
-      method: "DELETE",
+      method: "PUT",
       path: "/stripe/cancel",
       handler: "stripe.cancel",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: "DELETE",
+      path: "/stripe/cancel",
+      handler: "stripe.reactivate",
       config: {
         policies: [],
         middlewares: [],

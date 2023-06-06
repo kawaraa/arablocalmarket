@@ -1,7 +1,7 @@
 "use client";
 export default function StarRating({ stars = 0, onRate, cls }) {
   return (
-    <span className={`relative inline-block ${cls || "text-sm"}`}>
+    <span dir="auto" className={`relative inline-block text-blur dark:text-t ${cls || "text-sm"}`}>
       &#9733;&#9733;&#9733;&#9733;&#9733;
       <span
         style={{ width: `${(stars / 5) * 100}%` }}

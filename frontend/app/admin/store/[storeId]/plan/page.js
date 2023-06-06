@@ -19,9 +19,7 @@ export default function StorePlan({ params: { storeId } }) {
   const [showPlans, setShowPlans] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
-  const index = plans.findIndex((p) => p.subscription == subscription?.id);
-  const plan = plans[index];
-  const upgradeable = index + 1 < plans.length;
+  const plan = plans.find((p) => p.subscription == subscription?.id);
   const active = ["trialing", "active"].includes(subscription?.status);
   const cls = "flex justify-between mb-3 pb-1 border-b-[1px] border-b-bc";
 
@@ -59,10 +57,16 @@ export default function StorePlan({ params: { storeId } }) {
     }
     setAppLoading(false);
   };
-  const handleCancel = async () => {
+  const handleCancelation = async (cancel) => {
     setLoading(true);
+    let ends = subscription.currentPeriodEnd;
     try {
-      await request("stripe", "DELETE", { query: `/cancel?storeId=${storeId}` });
+      if (cancel) await request("stripe", "PUT", { query: `/cancel?storeId=${storeId}` });
+      else {
+        ends = null;
+        await request("stripe", "DELETE", { query: `/cancel?storeId=${storeId}` });
+      }
+      setSubscription({ ...subscription, ends });
       addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
       router.refresh();
     } catch (err) {
@@ -116,26 +120,25 @@ export default function StorePlan({ params: { storeId } }) {
             <>
               <PlanCard lang={lang} plan={plan}>
                 <div className="flex justify-around">
-                  {active && upgradeable && (
+                  {active && (
                     <Button
                       loading={loading}
                       onClick={() => setShowPlans(true)}
-                      cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
+                      cls="min-w-[100px] mb-5 !rounded-full">
                       {content.upgrade[lang]}
                     </Button>
                   )}
                   <Button
                     loading={loading}
-                    disabled={!!subscription?.ends}
-                    onClick={() => setShowWarning(true)}
-                    cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg3">
-                    {!subscription?.ends ? content.cancel[lang] : content.canceled[lang]}
+                    onClick={() => (subscription?.ends ? handleCancelation() : setShowWarning(true))}
+                    cls={`min-w-[100px] mb-5 !rounded-full ${subscription.ends ? "!bg-bg3" : "!bg-bg7"}`}>
+                    {subscription?.ends ? content.canceled[lang] : content.cancel[lang]}
                   </Button>
-                  {[("trialing", "incomplete")].includes(subscription?.status) && (
+                  {["unpaid", "past_due", "incomplete"].includes(subscription?.status) && (
                     <Button
                       loading={loading}
                       onClick={payAgain}
-                      cls="min-w-[100px] md:mx-5 mb-5 !rounded-full !bg-bg1">
+                      cls="min-w-[100px] mb-5 !rounded-full !bg-bg1">
                       {content.pay[lang]}
                     </Button>
                   )}
@@ -211,15 +214,16 @@ export default function StorePlan({ params: { storeId } }) {
         title={content.confirmTitle[lang]}
         onCancel={() => setShowWarning(false)}
         okBtn={shdCnt.yes[lang]}
-        onApprove={handleCancel}
+        onApprove={handleCancelation}
         loading={loading}>
         <p dir="auto" className="mt-5">
           <strong>{content.confirmP[lang][0]} </strong>
-          {content.confirmP[lang][1]} <strong>{getDateValue(subscription?.currentPeriodEnd)}</strong>
-        </p>
-        <p dir="auto" className="mb-5">
-          {content.confirmP[lang][2]} <strong>{getDateValue(subscription?.currentPeriodEnd)}</strong>,{" "}
-          {content.confirmP[lang][3]}
+          {content.confirmP[lang][1]} <strong>{getDateValue(subscription?.currentPeriodEnd)}</strong>{" "}
+          {content.confirmP[lang][2]}{" "}
+          <strong>
+            {new Date(+(subscription?.currentPeriodEnd + "000") + day * 30).toLocaleDateString("nl")}
+          </strong>
+          , {content.confirmP[lang][3]}
         </p>
         <p dir="auto" className="my-5">
           {content.confirmP[lang][4]}
@@ -277,16 +281,14 @@ const content = {
   confirmP: {
     en: [
       "Please note:",
-      "If you cancel the store plan you will not be able to reactivate it until",
-      "The store will stay active till",
-      "then will become inactive, and thereafter you can activate it again",
+      "If you cancel the store plan, the store will stay active till",
+      "then will become inactive, and thereafter will be deleted on",
       "Are you sure you want to cancel it?",
     ],
     ar: [
       "يرجى الملاحظة:",
-      "إذا قمت بإلغاء اشتراك المتجر فلن تتمكن من إعادة تفعيله إلا بعد",
-      "سيبقى المتجر نشطًا حتى",
-      "ثم سيصبح غير نشط، وبعد ذلك يمكنك تفعيل مرة أخرى",
+      "إذا قمت بإلغاء اشتراك المتجر سيبقى المتجر نشطًا حتى",
+      "ثم سيصبح غير نشط، وبعد ذلك سيتم حذفه في",
       "هل أنت متأكد أنك تريد ألغها؟",
     ],
   },

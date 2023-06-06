@@ -50,7 +50,7 @@ module.exports = () => ({
   // },
 
   startTrial(customerId, priceId, storeId, referralId) {
-    return stripe.subscriptions.create({
+    const data = {
       customer: customerId,
       items: [{ price: priceId }],
       trial_period_days: 30,
@@ -60,8 +60,10 @@ module.exports = () => ({
       payment_settings: { save_default_payment_method: "on_subscription" },
       // collection_method: "send_invoice",
       // days_until_due: "1",
-      metadata: { storeId, referralId },
-    });
+      metadata: { storeId },
+    };
+    if (referralId) data.metadata.referralId = referralId;
+    return stripe.subscriptions.create(data);
   },
   createSubscription(customerId, priceId, storeId) {
     return stripe.subscriptions.create({
@@ -82,6 +84,9 @@ module.exports = () => ({
   },
   cancelSubscription(subId) {
     return stripe.subscriptions.update(subId, { cancel_at_period_end: true });
+  },
+  reactivateSubscription(subId) {
+    return stripe.subscriptions.update(subId, { cancel_at_period_end: false });
   },
   getSubscription(subscriptionId) {
     return stripe.subscriptions.retrieve(subscriptionId);

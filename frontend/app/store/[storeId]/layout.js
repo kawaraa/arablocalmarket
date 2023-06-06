@@ -34,7 +34,7 @@ export default async function StoreLayout({ children, params: { storeId }, searc
               width="1000"
               height="1000"
               alt={store.attributes.name}
-              className="preview block w-full"
+              className="preview w-full"
             />
 
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
