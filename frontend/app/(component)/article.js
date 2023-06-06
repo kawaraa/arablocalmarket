@@ -8,8 +8,8 @@ export default function Article({ lang, article }) {
       {article.t && <p>{article.t[lang]}</p>}
       <h2 className={h2Cls}>{article.h[lang]}</h2>
 
-      {ps.map((p) => (
-        <p>{p}.</p>
+      {ps.map((p, i) => (
+        <p key={i}>{p}.</p>
       ))}
     </article>
   );

@@ -18,8 +18,8 @@ export default function PrivacyPolicy({ searchParams }) {
           {content.declare[lang][1]}.
         </p>
 
-        {content.articles.map((a) => (
-          <Article lang={lang} article={a} />
+        {content.articles.map((a, i) => (
+          <Article lang={lang} article={a} key={i} />
         ))}
       </section>
 

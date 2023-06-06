@@ -14,8 +14,8 @@ export default function About({ searchParams }) {
         <h1 className="text-lg font-bold mt-8 mb-3">{content.h1[lang]}</h1>
         <p>{content.h1P[lang]}.</p>
 
-        {content.articles.map((a) => (
-          <Article lang={lang} article={a} />
+        {content.articles.map((a, i) => (
+          <Article lang={lang} article={a} key={i} />
         ))}
       </section>
       <Footer lang={lang} />
