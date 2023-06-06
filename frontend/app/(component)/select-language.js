@@ -1,11 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage({ language }) {
+  const router = useRouter();
   const { lang, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
 
@@ -17,6 +19,7 @@ export default function SelectLanguage({ language }) {
   useEffect(() => {
     console.log(language, lang);
     if (!lang) setTimeout(() => setOpen(true), 300);
+    else if (lang && lang != language) router.refresh();
     // else if (lang && lang != language) window.location.reload();
   }, [lang, language]);
   return (

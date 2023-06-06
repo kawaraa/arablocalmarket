@@ -15,7 +15,6 @@ export default function RootLayout({ children, searchParams }) {
 
   return (
     <html translate="no" lang={lang} className={`scroll-smooth   group ${themeMode}`}>
-      <head></head>
       <body
         className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"
@@ -27,6 +26,7 @@ export default function RootLayout({ children, searchParams }) {
           <main
             className="min-h-screen pt-14 pb-24 md:pt-16 px-1 sm:px-2 md:px-4 lg:px-6 xl:px-8 print:min-h-fit"
             dir="auto">
+            {lang}
             {children}
             <SelectLanguage language={lang} />
             <ScrollToTopBtn />
