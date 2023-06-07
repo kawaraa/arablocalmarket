@@ -15,7 +15,7 @@ export default function SelectLanguage({ serverLang }) {
   const changeLanguage = (lang) => {
     updateLang(lang);
     setOpen(false);
-    router.refresh();
+    window.location.reload();
   };
 
   useEffect(() => {
