@@ -13,12 +13,9 @@ export default function SelectLanguage({ serverLang }) {
   const [data, setData] = useState("");
 
   const changeLanguage = (lang) => {
-    setAppLoading(true);
     updateLang(lang);
     setOpen(false);
-    fetch(window.location.origin, { method: "GET" })
-      .then((res) => window.location.reload())
-      .catch(console.log);
+    router.refresh();
   };
 
   useEffect(() => {
