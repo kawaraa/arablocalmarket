@@ -30,7 +30,6 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const updateLang = (lang) => {
     Cookies.set("lang", lang);
-    window.localStorage.setItem("lang", lang);
     document.documentElement.setAttribute("lang", lang);
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
