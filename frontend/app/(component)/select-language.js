@@ -17,10 +17,7 @@ export default function SelectLanguage({ serverLang }) {
   useEffect(() => {
     const clientLang = Cookies.get("lang") || window.localStorage.getItem("lang");
     if (!clientLang) setTimeout(() => setOpen(true), 300);
-    else if (clientLang && clientLang != serverLang && !user?.loading) {
-      Cookies.set("lang", clientLang);
-      window.location.reload();
-    }
+    else if (clientLang && clientLang != serverLang && !user?.loading) router.refresh(); // window.location.reload();
   }, [lang, serverLang, user]);
 
   return (
