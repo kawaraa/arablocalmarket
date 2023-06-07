@@ -14,13 +14,14 @@ export default function SelectLanguage({ serverLang }) {
   const changeLanguage = (lang) => {
     updateLang(lang);
     setOpen(false);
+    setTimeout(() => router.refresh(), 500);
   };
 
   useEffect(() => {
     const clientLang = Cookies.get("lang");
     if (!clientLang || clientLang != serverLang) setTimeout(() => setOpen(true), 300);
     // else if (clientLang && clientLang != serverLang && !user?.loading)  {}
-    else if (clientLang == lang) router.refresh();
+    // else if (clientLang == lang) router.refresh();
 
     // setAppLoading(true);
     // Cookies.set("lang", lang);
