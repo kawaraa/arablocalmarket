@@ -10,26 +10,20 @@ export default function SelectLanguage({ serverLang }) {
   const router = useRouter();
   const { lang, setAppLoading, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
+  const [data, setData] = useState("");
 
   const changeLanguage = (lang) => {
-    // setAppLoading(true);
+    setAppLoading(true);
     updateLang(lang);
-    // setOpen(false);
-    setTimeout(() => router.refresh(), 500);
-    // setTimeout(() => Cookies.set("lang", lang) + window.location.reload(), 500);
+    setOpen(false);
+    fetch(window.location.origin, { method: "GET" })
+      .then((res) => window.location.reload())
+      .catch(console.log);
   };
 
   useEffect(() => {
     const clientLang = Cookies.get("lang");
     if (!clientLang || clientLang != serverLang) setTimeout(() => setOpen(true), 300);
-    // else if (clientLang && clientLang != serverLang && !user?.loading)  {}
-    // else if (clientLang == lang) router.refresh();
-
-    // setAppLoading(true);
-    // Cookies.set("lang", lang);
-    // router.refresh();
-    // setTimeout(() => window.location.reload(), 500);
-    // window.location.reload();
   }, [lang, serverLang]);
 
   return (

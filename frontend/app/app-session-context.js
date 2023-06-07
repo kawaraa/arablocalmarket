@@ -29,14 +29,14 @@ export default function AppSessionContextProvider({ children, language, theme })
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = (lang) => {
-    Cookies.set("lang", lang);
+    if (Cookies.get("lang") != lang) Cookies.set("lang", lang);
     document.documentElement.setAttribute("lang", lang);
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
     setLang(lang);
   };
   const updateThemeMode = (mode) => {
-    Cookies.set("themeMode", mode);
+    if (Cookies.get("themeMode") != mode) Cookies.set("themeMode", mode);
     window.localStorage.setItem("themeMode", mode);
     setThemeMode(mode);
     document.documentElement.classList.remove("dark", "light", "auto");
