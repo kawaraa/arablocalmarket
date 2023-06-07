@@ -1,8 +1,11 @@
 export class Cookies {
   static set(name, value, expireDays = 180, date = new Date()) {
     date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);
-    document.cookie = `${name}=${value};"expires"=${date.toUTCString()};path=/;`;
+    document.cookie = `${name}=${value};"expires"=${date.toUTCString()};path=/;domain=${
+      window.location.host
+    };samesite=lax;`;
   }
+
   static get(name) {
     return Cookies.getAll()[name] || null;
   }

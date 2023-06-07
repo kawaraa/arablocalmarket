@@ -6,13 +6,14 @@ import "./global.css";
 // revalidate all the underneath routes and layouts
 // export const revalidate = 60;
 
-export default function RootLayout({ children, searchParams }) {
+export default function RootLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || searchParams?.lang || cookieStore.get("lang")?.value)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
-    <html translate="no" lang={lang} className={`scroll-smooth   group ${themeMode}`}>
+    <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <body
         className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"
