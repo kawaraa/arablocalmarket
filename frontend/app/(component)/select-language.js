@@ -1,11 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage({ serverLang }) {
+  const router = useRouter();
   const { lang, user, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
 
