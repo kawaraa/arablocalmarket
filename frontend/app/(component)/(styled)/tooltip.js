@@ -3,7 +3,7 @@ import { useState } from "react";
 import Transition from "../../(layout)/transitions";
 import SvgIcon from "./svg-icon";
 
-export default function Tooltip({ children, description = "", size, position }) {
+export default function Tooltip({ children, description = "", size, position, cls = "" }) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const positionOuterClasses = (position) => {
@@ -14,6 +14,10 @@ export default function Tooltip({ children, description = "", size, position }) 
         return "right-full top-1/2 -translate-y-1/2";
       case "bottom":
         return "top-full left-1/2 -translate-x-1/2";
+      case "top-left":
+        return "bottom-full right-0";
+      case "top-right":
+        return "bottom-full left-0";
       default:
         return "bottom-full left-1/2 -translate-x-1/2";
     }
@@ -47,7 +51,7 @@ export default function Tooltip({ children, description = "", size, position }) 
 
   return (
     <div
-      className="relative inline-flex"
+      className={"relative inline-flex " + cls}
       onClick={() => setTooltipOpen(!tooltipOpen)}
       onMouseEnter={() => setTooltipOpen(true)}
       onMouseLeave={() => setTooltipOpen(false)}>
@@ -63,7 +67,7 @@ export default function Tooltip({ children, description = "", size, position }) 
       <Transition
         Tag="span"
         open={tooltipOpen}
-        base={`z-2 block absolute rounded-md transition bg-bg dark:bg-dbg border border-bc shadow-lg 
+        base={`z-2 block absolute rounded-md transition bg-bg dark:bg-dbg border border-bc dark:border-t shadow-lg 
           ${positionOuterClasses(position)} 
           ${sizeClasses(size)}`}
         enter={`opacity-100 ${positionInnerClasses(position)}`}

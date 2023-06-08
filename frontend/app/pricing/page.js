@@ -30,19 +30,22 @@ export default async function pricing({ searchParams }) {
   );
 }
 
-// Todo: This gives an error / warning.
-// export async function generateMetadata({ params, searchParams }) {
-//   const cookieStore = cookies();
-//   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
-//   return {
-//     title: content.title[lang] + " - ALM",
-//     // description: content.desc[lang],
-//   };
-// }
+export async function generateMetadata({ params, searchParams }) {
+  const cookieStore = cookies();
+  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  return {
+    title: content.title[lang] + " - ALM",
+    description: content.desc[lang],
+  };
+}
 
 const content = {
-  title: { en: "Pricing", ar: "الأسعار" },
+  title: { en: "Pricing - Subscriptions", ar: "صفحة أسعار الاشتراكات" },
   h1: { en: "Start for free and enjoy the trial month.", ar: "ابدأ مجانًا واستمتع بالشهر التجريبي" },
+  desc: {
+    en: "Arab Local Market store plans and subscriptions prices",
+    ar: "أسعار خطط واشتراكات متجر السوق المحلي العربي",
+  },
   h1P: {
     en: [
       "With the trial month no credit card required.",

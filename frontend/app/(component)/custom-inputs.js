@@ -4,6 +4,7 @@ import categories from "../(layout)/json/categories.json";
 import shdCnt from "../(layout)/json/shared-content.json";
 import { IconButton } from "./(styled)/button";
 import { CheckCard, InputField, InputWithSelect, Select } from "./(styled)/inputs";
+import Tooltip from "./(styled)/tooltip";
 
 export function NameInputField({ lang, first, ...p }) {
   const t = first ? content.firstName[lang] : content.lastName[lang];
@@ -66,8 +67,6 @@ export function PswInputField({ lang, newPsw, confirm, cls, ...p }) {
     t = content.confirmPassword[lang];
   }
 
-  // Todo: add a tooltip that describe the password format
-  // Use this onInvalid={console.log} Or tailwind peer: invalid
   return (
     <InputField
       type={visible ? "text" : "password"}
@@ -75,12 +74,14 @@ export function PswInputField({ lang, newPsw, confirm, cls, ...p }) {
       min="9"
       max="50"
       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-      // onInvalid={console.log}
       placeholder={t}
       title={t}
       cls={"items-center " + cls}
       {...newProps}
       {...p}>
+      <Tooltip position="top-left" cls="!absolute right-10 z-1">
+        <div className="w-40 text-sm leading-6 text-orange">{content.passwordTooltip[lang]}</div>
+      </Tooltip>
       <IconButton icon="eye" onClick={() => setVisible(!visible)} className="w-5 absolute right-2 z-1" />
     </InputField>
   );
@@ -211,6 +212,10 @@ const content = {
   password: { en: "Password", ar: "كلمة المرور" },
   newPassword: { en: "New Password", ar: "كلمة المرور الجديدة" },
   confirmPassword: { en: "Confirm Password", ar: "تأكيد كلمة المرور" },
+  passwordTooltip: {
+    en: "The password must contain at least five numbers, one special character E.g. !@#$%^&*, one small letter and one capital letter",
+    ar: "يجب أن تحتوي كلمة المرور على الأقل على خمسة أرقام وحرف خاص على سبيل المثال. ! @ # $٪ ^ & *، وحرف  صغير وحرف كبير",
+  },
   price: { en: "Price", ar: "السعر" },
   comparePrice: { en: "Compare price", ar: "السعر المقارن" },
   weight: {

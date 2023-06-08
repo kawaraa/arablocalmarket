@@ -52,9 +52,6 @@ export function InputField({ children, label, editable, cls, inCls, onChange, on
             onBlur={handleBlur}
             onClick={(e) => e.preventDefault()}
           />
-          {/* <p className="absolute -top-5 pl-2 bg-lbg black h-0 peer-invalid:h-auto text-red text-sm">
-          Please provide a valid email address.
-        </p> */}
         </span>
 
         {editable && (

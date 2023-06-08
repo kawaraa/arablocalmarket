@@ -18,20 +18,8 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
   const currency = store?.data?.attributes.currency.split("-");
   const products = data || [];
 
-  // Todo: make this dynamic
-  // const jsonLd = {
-  //   "@context": "https://schema.org",
-  //   "@type": "Product",
-  //   name: product.name,
-  //   image: product.image,
-  //   description: product.description,
-  // };
-
   return (
     <>
-      {/* Todo: make this dynamic */}
-      {/* <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> */}
-
       {/* searchParams.search || searchParams.category */}
       <ProductSearch text={searchParams.search} scroll="180" />
 
@@ -43,15 +31,30 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
 
       <ul dir="ltr" className="flex flex-wrap min-h-[30vh]">
         {products.map((p, i) => (
-          <ProductCard
-            lang={lang}
-            currency={currency[0]}
-            product={p.attributes}
-            id={p.id}
-            link={`/store/${store?.data?.id}/product/${p.id}`}
-            key={i}
-            priority={i < 10}
-          />
+          <>
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "Product",
+                  name: p.attributes.name,
+                  image: p.attributes.image.data?.attributes.formats.thumbnail.url,
+                  description: p.attributes.description,
+                }),
+              }}
+            />
+
+            <ProductCard
+              lang={lang}
+              currency={currency[0]}
+              product={p.attributes}
+              id={p.id}
+              link={`/store/${store?.data?.id}/product/${p.id}`}
+              key={i}
+              priority={i < 10}
+            />
+          </>
         ))}
       </ul>
 

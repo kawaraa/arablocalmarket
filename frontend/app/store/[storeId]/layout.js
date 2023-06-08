@@ -37,7 +37,6 @@ export default async function StoreLayout({ children, params: { storeId }, searc
               className="preview w-full"
             />
 
-
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
               <span
                 className={`inline-block w-6 h-6 bg-${

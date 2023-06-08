@@ -17,9 +17,9 @@ export default function Payment({ searchParams }) {
   // Todo: if the user is not signed in, redirect to sign in
   return (
     <section>
-      Todo: if the user has not set up a credit card show a form where he can add the payment details
+      {/* Todo: if the user has not set up a credit card show a form where he can add the payment details */}
       <h1 className="text-3xl">{content.h1[lang]}</h1>
-      Todo: else Show an icon that indicate his credit card will be used to pay the monthly fee.
+      {/* Todo: else Show an icon that indicate his credit card will be used to pay the monthly fee. */}
       <ul>
         {content.h1List[lang].map((text, i) => (
           <li key={i}>{text}</li>

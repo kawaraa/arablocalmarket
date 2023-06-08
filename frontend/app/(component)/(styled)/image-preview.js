@@ -6,7 +6,6 @@ import { IconButton } from "./button";
 import Image from "next/image";
 
 export default function ImagePreview({}) {
-  // Todo: Add title to image and close button
   const pathname = usePathname();
   const { lang } = useContext(AppSessionContext);
   const [src, setSrc] = useState(null);

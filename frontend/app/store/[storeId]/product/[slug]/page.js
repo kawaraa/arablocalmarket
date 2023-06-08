@@ -30,19 +30,21 @@ export default async function ProductBySlug({ params, searchParams }) {
   productRes.data.attributes.id = productRes.data.id;
   const product = productRes.data.attributes;
 
-  // Todo: make this dynamic
-  // const jsonLd = {
-  //   "@context": "https://schema.org",
-  //   "@type": "Product",
-  //   name: product.name,
-  //   image: product.image,
-  //   description: product.description,
-  // };
-
   return (
     <>
-      {/* Todo: make this dynamic */}
-      {/* <script type="application/ld+json">{JSON.stringify(jsonLd)}</script> */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            image: product.image.data?.attributes?.url,
+            description: product.description,
+          }),
+        }}
+      />
+
       <div className="relative flex justify-center items-center h-32 ">
         <Image
           src={product.image.data?.attributes?.url}

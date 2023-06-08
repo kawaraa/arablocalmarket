@@ -33,8 +33,6 @@ export default function SignIn() {
       window.localStorage.removeItem("customer");
 
       updateUser(await fetchUser());
-
-      // Todo: merge the carts stored in the browser with user carts
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 30 });
       window.localStorage.removeItem("accessToken");
