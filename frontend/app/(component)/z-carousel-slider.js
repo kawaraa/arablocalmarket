@@ -14,7 +14,8 @@ export default function CarouselSlider({ a }) {
           <Image
             src="/docs/images/carousel/carousel-1.svg"
             alt="..."
-            fill={true}
+            width="500"
+            height="500"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
@@ -23,7 +24,8 @@ export default function CarouselSlider({ a }) {
           <Image
             src="/docs/images/carousel/carousel-2.svg"
             alt="..."
-            fill={true}
+            width="500"
+            height="500"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
@@ -32,7 +34,8 @@ export default function CarouselSlider({ a }) {
           <Image
             src="/docs/images/carousel/carousel-3.svg"
             alt="..."
-            fill={true}
+            width="500"
+            height="500"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
@@ -41,7 +44,8 @@ export default function CarouselSlider({ a }) {
           <Image
             src="/docs/images/carousel/carousel-4.svg"
             alt="..."
-            fill={true}
+            width="500"
+            height="500"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>
@@ -50,7 +54,8 @@ export default function CarouselSlider({ a }) {
           <Image
             src="/docs/images/carousel/carousel-5.svg"
             alt="..."
-            fill={true}
+            width="500"
+            height="500"
             className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
           />
         </div>

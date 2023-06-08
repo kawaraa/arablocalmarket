@@ -12,7 +12,7 @@ export default function Footer({ lang = "en" }) {
       <div className="flex mt-10 justify-around">
         {content.linksGroup.map((g, i) => (
           <div className="" key={i}>
-            <h3 className="text-base font-bold">{g.h[lang]}</h3>
+            <h6 className="text-base font-bold">{g.h[lang]}</h6>
             <ul className="mt-1 text-sm">
               {g.links.map((link, i) => (
                 <li key={i}>

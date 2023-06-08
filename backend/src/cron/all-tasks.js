@@ -14,7 +14,7 @@ module.exports = {
 
     createDatabaseBackup();
     createInvoices(strapi);
-    // deleteStores(strapi);
+    // deleteExpiredStores(strapi);
   },
 };
 
@@ -100,7 +100,7 @@ async function createInvoices(strapi) {
   }
 }
 
-async function deleteStores(strapi) {
+async function deleteExpiredStores(strapi) {
   try {
     const options = {
       select: ["id", "subscriptionId"],

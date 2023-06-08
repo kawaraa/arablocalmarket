@@ -21,13 +21,10 @@ export default async function LandingPage({ params, searchParams }) {
           {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
 
           <h1 className="mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
-            {content.h1.text[lang]} <span className="sr-only">{content.h1.hidden[lang]}</span>
+            {content.h1[lang]}. <span className="sr-only">{content.h1Hidden[lang]}</span>
           </h1>
 
-          <p className="mb-10 px-3 opacity-0">
-            Look for a nearby store or supermarket, Select and add the products you need to the cart, Select
-            the payment method you like, checkout and let the store deliver you order to you.
-          </p>
+          <p className="mb-10 px-3 opacity-0">{content.h1PHidden[lang]}</p>
         </div>
 
         <article dir="auto" className="relative text-center top-0 px-4 w-full">
@@ -110,16 +107,18 @@ export default async function LandingPage({ params, searchParams }) {
 }
 
 const content = {
-  h1: {
-    text: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
-    hidden: {
-      en: "Arabic Stores Supermarkets near you Halal food around the world Create your store and start selling Halal food products online locally.",
-      ar: ".المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا",
-    },
+  h1: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
+  h1Hidden: {
+    en: "Arabic Stores Supermarkets near you Halal food around the world Create your store and start selling Halal food products online locally",
+    ar: "المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا",
   },
   h1P: {
-    en: "Welcome to the first Arabic Local Stores platform where you can look for Arabic stores or supermarkets nearby.",
-    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
+    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores or supermarkets nearby. Discover Hundreds of Unique Stores in One Place, a nice, easy and free Smartphone app for groceries markets and restaurants delivery at home",
+    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني لأسواق والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+  },
+  h1PHidden: {
+    en: "Look for a nearby store or supermarket, Select and add the products you need to the cart, Select the payment method you like, checkout and let the store deliver you order to you",
+    ar: "ابحث عن متجر أو سوبر ماركت قريب ، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق ، وحدد طريقة الدفع التي تريدها ، وقم بتسجيل الخروج ، ودع المتجر يقوم بتسليم طلبك إليك",
   },
   h2: {
     en: "Find an Arabic Store and Supermarket near you.",

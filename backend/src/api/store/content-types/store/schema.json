@@ -140,6 +140,18 @@
       "relation": "manyToMany",
       "target": "api::customer.customer",
       "mappedBy": "favoriteStores"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "MARKET",
+        "BAKERY",
+        "GROCERY",
+        "RESTAURANT",
+        "OTHER"
+      ],
+      "required": true,
+      "default": "MARKET"
     }
   }
 }
