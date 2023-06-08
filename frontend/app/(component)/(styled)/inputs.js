@@ -111,6 +111,7 @@ export function InputWithSelect({ label, options, value, onChange, cls, ...p }) 
 }
 
 export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
+  const [changed, setChanged] = useState(false);
   const colors = ["border-red", "border-pc", "border-pc1", "border-bg3", "border-bg8"];
   const btnRef = useRef(null);
   const checkSize = Math.round(+size / 3);
@@ -122,6 +123,7 @@ export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
     <label htmlFor={cls} className={`inline-flex justify-center items-center ${cls}`}>
       <div style={s(size, size)} className={`relative flex justify-center items-center`}>
         <input
+          onClick={() => p.type != "radio" && setChanged(!changed)}
           ref={btnRef}
           id={cls}
           title={p.title || p.name}
@@ -134,7 +136,7 @@ export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
             ...s(checkSize, checkSize),
             borderWidth: btnRef.current?.checked ? `${checkBorder}px` : 0,
           }}
-          className={`box-content border-0 ${colors[color]} ${radius} duration-150`}></span>
+          className={`box-content ${colors[color]} ${radius} duration-150`}></span>
       </div>
       {children && <span className="mx-1">{children}</span>}
     </label>

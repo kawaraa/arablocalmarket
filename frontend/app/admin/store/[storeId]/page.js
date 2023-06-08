@@ -78,7 +78,7 @@ export default function StoreOrders({ params, searchParams }) {
   };
 
   useEffect(() => {
-    document.title = "Admin Store orders - ALM"; // Todo: translate
+    document.title = content.title[lang] + " - ALM";
     if (searchParams.orderId) {
       const query = `/${searchParams.orderId}?populate[lineItems]=*&populate[store][fields]=owner,name,meta&populate[payment]=*`;
       request("order", "GET", { query })
@@ -124,4 +124,4 @@ export default function StoreOrders({ params, searchParams }) {
   );
 }
 
-const content = {};
+const content = { title: { en: "Admin Store orders", ar: "طلبات مسؤل ومشرف المتجر" } };

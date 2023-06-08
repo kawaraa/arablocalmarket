@@ -16,7 +16,7 @@ export default async function LandingPage({ params, searchParams }) {
       <CheckUser />
       <section className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
-          className="relative sm:mb-10 flex-auto mt-10 md:pt-6 mx-auto rounded-xl bg-[url(/img/landing-page.png)] bg-contain bg-no-repeat bg-center lazy-b"
+          className="relative mb-5 sm:mb-8 flex-auto mt-10 md:pt-6 mx-auto rounded-xl bg-[url(/img/landing-page.png)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
           {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
 
@@ -24,10 +24,10 @@ export default async function LandingPage({ params, searchParams }) {
             {content.h1[lang]}. <span className="sr-only">{content.h1Hidden[lang]}</span>
           </h1>
 
-          <p className="mb-10 px-3 opacity-0">{content.h1PHidden[lang]}</p>
+          <p className="px-3 opacity-0">{content.h1PHidden[lang]}</p>
         </div>
 
-        <article dir="auto" className="relative text-center top-0 px-4 w-full">
+        <article dir="auto" className="relative text-center px-4 w-full">
           <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
             {content.h1P[lang]}
           </p>

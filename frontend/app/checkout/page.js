@@ -63,7 +63,6 @@ export default function Checkout({}) {
       const { country, province, city } = store.address;
       const data = { country, province, city };
       new FormData(e.target).forEach((value, key) => (data[key] = value));
-      // Todo: Save the address if the user is signed in
       setAddress(data);
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
@@ -332,6 +331,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
                 cnt={content}
                 payments={store.payments}
                 selected={paymentMethod}
+                showMsg={addMessage}
               />
             </>
           )}

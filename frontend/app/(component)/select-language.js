@@ -8,19 +8,20 @@ import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage({ serverLang }) {
   const router = useRouter();
-  const { lang, setAppLoading, updateLang } = useContext(AppSessionContext);
+  const { lang, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState("");
 
   const changeLanguage = (lang) => {
     updateLang(lang);
     setOpen(false);
-    window.location.reload();
+    router.refresh();
+    // setTimeout(() => window.location.reload(), 500);
   };
 
   useEffect(() => {
     const clientLang = Cookies.get("lang");
-    if (!clientLang || clientLang != serverLang) setTimeout(() => setOpen(true), 300);
+    if (!clientLang) setTimeout(() => setOpen(true), 500);
+    // if (!clientLang || clientLang != serverLang) setTimeout(() => setOpen(true), 500);
   }, [lang, serverLang]);
 
   return (

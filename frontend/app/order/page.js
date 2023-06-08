@@ -77,7 +77,9 @@ export default function Orders({ searchParams }) {
       </h1>
 
       {!data[0] ? (
-        <EmptyState lang={lang} type="no" />
+        <div className="h-[60vh] flex items-center">
+          <EmptyState lang={lang} type="no" />
+        </div>
       ) : (
         <ul>
           {data.map((o, i) => (

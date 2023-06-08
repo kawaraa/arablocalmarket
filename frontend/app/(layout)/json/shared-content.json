@@ -83,7 +83,7 @@
     "title": { "en": "Bank account info", "ar": "معلومات الحساب المصرفي" },
     "holder": { "en": "Account holder", "ar": "صاحب الحساب" },
     "number": { "en": "Account Number / IBAN", "ar": "رقم حساب" },
-    "bic": { "en": "BIC / Swift", "ar": "رمز BIC / Swift" }
+    "bic": { "en": "BIC / SWIFT Code", "ar": "رمز BIC / Swift" }
   },
   "pswErr": { "en": "Passwords are not matched", "ar": "كلمات المرور غير متطابقة" },
   "noItemErr": { "en": "Please select an item first", "ar": "الرجاء تحديد عنصر أولا" },

@@ -62,7 +62,7 @@ export default function Settings(props) {
         <Billing lang={lang} />
         <Payout lang={lang} bankAccount={user?.bankAccount} showMessage={addMessage} />
 
-        <div className="text-center pt-10">
+        <div className="text-center pt-16">
           <Button
             icon="bin"
             onClick={() => setConfirmDeletion(true)}

@@ -5,6 +5,7 @@ import { Button, IconButton } from "../(component)/(styled)/button";
 import Modal from "../(component)/(styled)/modal";
 import { InputField } from "../(component)/(styled)/inputs";
 import shdCnt from "../(layout)/json/shared-content.json";
+import Tooltip from "../(component)/(styled)/tooltip";
 
 export default function Payout({ lang, bankAccount, showMessage }) {
   const [showForm, setShowForm] = useState(false);
@@ -107,7 +108,14 @@ export default function Payout({ lang, bankAccount, showMessage }) {
           <InputField
             type="text"
             name="bic"
-            label={shdCnt.bankInfo.bic[lang]}
+            label={
+              <>
+                <Tooltip position="top-left">
+                  <div className="w-52 text-sm !whitespace-break-spaces">{content.bicTooltip[lang]}</div>
+                </Tooltip>
+                {shdCnt.bankInfo.bic[lang]}
+              </>
+            }
             // title="Bank Identifier Number" // Todo: Add a tooltip
             placeholder={shdCnt.ex[lang] + " BOHIUS77"}
             required
@@ -122,6 +130,10 @@ export default function Payout({ lang, bankAccount, showMessage }) {
 
 const content = {
   // Setup Payout bank account
+  bicTooltip: {
+    en: "A Bank Identifier Code (BIC) and sometimes called (SWIFT code) is a standard format used to help identify banks worldwide, it's an 8 - 11 character code that identifies your country, city, bank, and branch, if you don't know it, you can ask your bank",
+    ar: "رمز معرف البنك (BIC) وأحيانًا يسمى (رمز SWIFT) هو تنسيق قياسي يستخدم للمساعدة في تحديد البنوك في جميع أنحاء العالم، وهو رمز من 8 إلى 11 حرفًا يحدد بلدك ومدينتك وبنكك وفرعك. رمز بنكي، إذا كنت لا تعرف ذلك ، يمكنك أن تسأل البنك الذي تتعامل معه",
+  },
   h: { en: "Payout bank account", ar: "طريقة تلقي المدفوعات" },
   noPayout: { en: "You don't have any banking information", ar: "ليس لديك أي معلومات مصرفية" },
   adBtn: { en: "Add a bank", ar: "أضف البنك" },

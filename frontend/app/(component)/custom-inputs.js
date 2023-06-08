@@ -125,7 +125,7 @@ export function CurrencySelect({ lang, label, ...p }) {
       name="currency"
       title={content.currencies.text[lang]}
       cls="flex items-center"
-      inCls="mx-1 !p-[2px] rounded-full"
+      inCls="mx-2 !p-[2px] rounded-full"
       {...p}
       label={!label ? null : content.currencies.text[lang]}>
       {content.currencies.values.map((currency, i) => (

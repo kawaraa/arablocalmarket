@@ -5,8 +5,10 @@ import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
 import { request } from "../../(service)/api-provider";
 import {
+  CheckInput,
   InputField,
   NumberInputWithControl,
+  Select,
   Textarea,
   ToggleSwitch,
 } from "../../(component)/(styled)/inputs";
@@ -72,13 +74,14 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           payments.push({
             type: "ONLINE",
             method: "BANK",
-            meta: { accountHolder: f.accountHolder.value, iban: f.iban.value, bic: f.bic.value },
+            meta: { accountHolder: f.accountHolder.value, iban: f.iban.value, private: f.private.checked },
           });
         }
       }
       const data = {
         name: f.name.value,
         about: f.about.value,
+        type: f.type.value,
         currency: f.currency.value,
         deliver: f.deliver.checked,
         cocNumber: f.cocNumber.value,
@@ -169,7 +172,6 @@ export default function NewStore({ params, searchParams: { id, subscription } })
     <>
       <form onSubmit={handleSubmit} className="mb-12 mx-auto md:w-[70%] lg:w-[650px]">
         <h1 className="text-xl text-center my-5">{id ? content.updateH1[lang] : shdCnt.createStore[lang]}</h1>
-
         {/* cover */}
         {!id && (
           <ImageUpload
@@ -181,16 +183,26 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             title={content.imgTitle[lang]}
           />
         )}
-
         {!id && (
           <InputField type="text" name="name" required min="4" max="30" full cls="mb-2 flex-col">
             <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
           </InputField>
         )}
-
         <Textarea name="about" defaultValue={store?.about} title={content.about.placeholder[lang]} cls="1">
           <span className="block mb-1 font-semibold rq">{content.about[lang]}</span>
         </Textarea>
+
+        <Select
+          name="type"
+          label={content.storeType.label[lang]}
+          cls="my-6 flex items-center"
+          inCls="mx-2 !p-[2px] rounded-full">
+          {content.storeType.values.map((v, i) => (
+            <option value={v.en} key={i}>
+              {v[lang]}
+            </option>
+          ))}
+        </Select>
 
         <div className="my-6 md:flex md:justify-between">
           <div className="flex justify-between">
@@ -212,19 +224,15 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             />
           )}
         </div>
-
         <h6 className="mb-2  font-semibold rq">{content.address[lang]}</h6>
         <AddressInputs lang={lang} {...(store?.address || {})} map onError={handleError} />
-
         <h6 className="font-semibold mt-7 rq">{content.workdays[lang]}</h6>
         <DaysCheckButtons lang={lang} checkedDays={days} onCheck={addDay} />
-
         <div className="my-5">
           {days.map((d, i) => (
             <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
           ))}
         </div>
-
         <h6 className="font-semibold mt-7 rq">{content.payments[lang]}</h6>
         <Collapse
           onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
@@ -259,7 +267,6 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             </ToggleSwitch>
           </div>
         </Collapse>
-
         <Collapse
           onCheck={(e) => setOnlinePayment(onlinePayment ? null : { card: e.target.checked })}
           checked={!!onlinePayment?.card || !!onlinePayment?.bank}
@@ -301,20 +308,11 @@ export default function NewStore({ params, searchParams: { id, subscription } })
               full
               cls="flex-col my-1"
             />
-            <InputField
-              type="text"
-              name="bic"
-              defaultValue={onlinePayment?.bank?.bic}
-              label={shdCnt.bankInfo.bic[lang]}
-              // title="Bank Identifier Number" // Todo: Add a tooltip
-              placeholder={shdCnt.ex[lang] + " BOHIUS77"}
-              required
-              full
-              cls="flex-col my-1"
-            />
+            <CheckInput type="checkbox" name="private" cls="my-3">
+              {content.privateBank[lang]}
+            </CheckInput>
           </Collapse>
         </Collapse>
-
         <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
         <InputField
           type="text"
@@ -333,7 +331,6 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           placeholder={" US52359525 " + shdCnt.ex[lang]}
           full
         />
-
         <div className="flex my-5">
           <Button type="submit" cls="py-2 px-5 text-lg">
             {id ? shdCnt.save[lang] : shdCnt.create[lang]}
@@ -384,6 +381,16 @@ const content = {
       ar: "اكتب شيئًا عن متجرك ، على سبيل المثال. مرحبًا بكم في سوبر ماركتنا ...",
     },
   },
+  storeType: {
+    label: { en: "Store type", ar: "نوع المتجر" },
+    values: [
+      { en: "market", ar: "محل بقالة" },
+      { en: "bakery", ar: "مخبز" },
+      { en: "grocery", ar: "محل خضروات" },
+      { en: "restaurant", ar: "مطعم" },
+      { en: "other", ar: "آخر" },
+    ],
+  },
   delivery: { en: "Delivery", ar: "توصيل" },
   deliveryCost: { en: "Delivery cost", ar: "تكلفة التوصيل" },
   address: { en: "Store Address", ar: "عنوان المتجر" },
@@ -394,6 +401,10 @@ const content = {
   cash: { en: "Accept cash payment", ar: "قبول الدفع النقدي" },
   card: { en: "Accept credit card payment", ar: "قبول الدفع ببطاقة الائتمان" },
   bank: { en: "Accept bank transfer payment", ar: "قبول الدفع عن طريق التحويل المصرفي" },
+  privateBank: {
+    en: "Only signed in users can see it",
+    ar: "فقط المستخدمين الذين قاموا بتسجيل الدخول يمكن رؤيته",
+  },
   businessInfo: { en: "Business info", ar: "معلومات العمل التجارة" },
   cocNumber: { en: "COC Number", ar: "رقم السجل التجاري" },
   vatNumber: { en: "Tax ID / VAT Number", ar: "الرقم الضريبي" },
