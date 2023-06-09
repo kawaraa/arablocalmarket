@@ -6,7 +6,7 @@ import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
-export default function SelectLanguage({ serverLang }) {
+export default function SelectLanguage() {
   const router = useRouter();
   const { lang, updateLang } = useContext(AppSessionContext);
   const [open, setOpen] = useState(false);
@@ -15,14 +15,12 @@ export default function SelectLanguage({ serverLang }) {
     updateLang(lang);
     setOpen(false);
     router.refresh();
-    // setTimeout(() => window.location.reload(), 500);
   };
 
   useEffect(() => {
     const clientLang = Cookies.get("lang");
     if (!clientLang) setTimeout(() => setOpen(true), 500);
-    // if (!clientLang || clientLang != serverLang) setTimeout(() => setOpen(true), 500);
-  }, [lang, serverLang]);
+  }, []);
 
   return (
     <Modal lang={lang} open={open} center title={content.h[lang]}>

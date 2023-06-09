@@ -45,7 +45,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       });
 
       const checkResult = (result) => {
-        if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
+        // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
+        if (!result?.codeResult?.code) check(); // drawing at 30fps Or just use 50s
         else {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
@@ -54,6 +55,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
       const check = () => {
         if (!video?.srcObject) return;
+        if (video.paused) video.play();
+
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);

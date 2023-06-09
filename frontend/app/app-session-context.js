@@ -140,7 +140,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       <ScrollToTopBtn />
       <ImagePreview />
       <Messages messages={messages} setMessages={setMessages} />
-      <SelectLanguage serverLang={language} />
+      <SelectLanguage />
     </AppSessionContext.Provider>
   );
 }
