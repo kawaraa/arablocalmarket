@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import { IconButton } from "./(styled)/button";
 
@@ -8,6 +8,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
+
+  const [count, setCount] = useState(0);
 
   const initializeScanner = async () => {
     const ctx = canvasRef.current.getContext("2d");
@@ -52,11 +54,12 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
           stopStreams();
         }
       };
-
+      let c = 0;
       const check = () => {
         if (!video?.srcObject) return;
         if (video.paused) video.play();
-
+        c += 1;
+        setCount(c);
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
@@ -93,7 +96,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (1)
+      (2) - ({count})
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
