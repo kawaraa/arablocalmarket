@@ -12,7 +12,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   const initializeScanner = async () => {
     const ctx = canvasRef.current.getContext("2d");
     const video = videoRef.current;
-    video.autoplay = true;
+    // video.autoplay = true;
 
     try {
       const constraints = {
@@ -33,20 +33,20 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       canvasRef.current.width = width;
       canvasRef.current.height = height;
 
-      video.addEventListener("play", () => {
-        // Flip the video only on mobile / touch devices.
-        // if (constraints.video !== true) {
-        //   ctx.translate(video.videoWidth, 0);
-        //   ctx.scale(-1, 1);
-        // }
-        const x = (video.videoWidth - width) / 2;
-        const y = (video.videoHeight - height) / 2;
-        ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-      });
+      // video.addEventListener("play", () => {
+      //   // Flip the video only on mobile / touch devices.
+      //   // if (constraints.video !== true) {
+      //   //   ctx.translate(video.videoWidth, 0);
+      //   //   ctx.scale(-1, 1);
+      //   // }
+      //   const x = (video.videoWidth - width) / 2;
+      //   const y = (video.videoHeight - height) / 2;
+      //   ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+      // });
 
       const checkResult = (result) => {
         // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
-        if (!result?.codeResult?.code) check(); // drawing at 30fps Or just use 50s
+        if (!result?.codeResult?.code) check();
         else {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
@@ -60,11 +60,10 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-        // canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL("image/jpeg", 1.0),
+            src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
             locate: false,
             multiple: false,
           },
@@ -72,8 +71,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         );
       };
 
+      // if (video.paused) video.play();
       check();
-      video.play();
     } catch (error) {
       // console.error(`${error.name}: ${error.message}`);
       stopStreams();
@@ -93,23 +92,28 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   useEffect(() => stopStreams, []);
 
   return (
-    <div
-      dir="ltr"
-      className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${cls || ""}`}>
-      <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
+    <>
+      (1)
+      <div
+        dir="ltr"
+        className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
+          cls || ""
+        }`}>
+        <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
-      {onClose && (
-        <IconButton
-          icon="crossMark"
-          onClick={() => onClose(stopStreams())}
-          title="Cancel and close the modal window"
-          cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
-        />
-      )}
-      <div className="relative">
-        <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
+        {onClose && (
+          <IconButton
+            icon="crossMark"
+            onClick={() => onClose(stopStreams())}
+            title="Cancel and close the modal window"
+            cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
+          />
+        )}
+        <div className="relative">
+          <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 const content = { permissionErr: { en: "Could not access camera.", ar: "تعذر الوصول إلى الكاميرا" } };
