@@ -9,8 +9,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   const width = 500;
   const height = 250;
 
-  const [data, setData] = useState("");
-
   const initializeScanner = async () => {
     const ctx = canvasRef.current.getContext("2d");
     const video = videoRef.current;
@@ -104,7 +102,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (3) - ({data})
+      (4)
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
