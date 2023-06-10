@@ -35,28 +35,30 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       canvasRef.current.width = width;
       canvasRef.current.height = height;
 
-      // video.addEventListener("play", () => {
-      //   // Flip the video only on mobile / touch devices.
-      //   // if (constraints.video !== true) {
-      //   //   ctx.translate(video.videoWidth, 0);
-      //   //   ctx.scale(-1, 1);
-      //   // }
-      //   const x = (video.videoWidth - width) / 2;
-      //   const y = (video.videoHeight - height) / 2;
-      //   ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-      // });
+      video.addEventListener("play", () => {
+        // Flip the video only on mobile / touch devices.
+        // if (constraints.video !== true) {
+        //   ctx.translate(video.videoWidth, 0);
+        //   ctx.scale(-1, 1);
+        // }
+
+        // const x = (video.videoWidth - width) / 2;
+        // const y = (video.videoHeight - height) / 2;
+        // ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+        check();
+      });
 
       const checkResult = (result) => {
         // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
-        // if (!result?.codeResult?.code) check();
-        // else {
-        //   onDetect((result.codeResult.code + "").trim());
-        //   stopStreams();
-        // }
-        if (result?.codeResult?.code) {
+        if (!result?.codeResult?.code) check();
+        else {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
         }
+        // if (result?.codeResult?.code) {
+        //   onDetect((result.codeResult.code + "").trim());
+        //   stopStreams();
+        // }
       };
 
       const check = () => {
@@ -77,12 +79,11 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
           checkResult
         );
 
-        setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
+        // setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
       };
 
       // if (video?.paused) video.play();
       setTimeout(() => video?.paused && video.play(), 500);
-      check();
     } catch (error) {
       // console.error(`${error.name}: ${error.message}`);
       stopStreams();
