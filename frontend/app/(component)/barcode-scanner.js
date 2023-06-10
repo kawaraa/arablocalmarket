@@ -4,12 +4,12 @@ import Script from "next/script";
 import { IconButton } from "./(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
-  const videoRef = useRef(document.createElement("video"));
+  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
 
-  const [count, setCount] = useState(0);
+  const [data, setData] = useState("");
 
   const initializeScanner = async () => {
     const ctx = canvasRef.current.getContext("2d");
@@ -54,19 +54,20 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
           stopStreams();
         }
       };
-      let c = 0;
+
       const check = () => {
         if (!video?.srcObject) return;
-        if (video.paused) video.play();
-        c += 1;
-        setCount(c);
+        if (video?.paused) video.play();
+
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
+        setData(video.videoWidth + ` - ` + video.videoHeight);
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
+            src: canvasRef.current.toDataURL(),
+            // src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
             locate: false,
             multiple: false,
           },
@@ -96,7 +97,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (2) - ({count})
+      (2) - ({data})
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
@@ -112,6 +113,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
             cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
           />
         )}
+        <video ref={videoRef} autoPlay={false} style={{ display: "none" }}></video>
         <div className="relative">
           <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
         </div>
