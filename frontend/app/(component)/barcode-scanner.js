@@ -4,7 +4,7 @@ import Script from "next/script";
 import { IconButton } from "./(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
-  const videoRef = useRef(null);
+  const videoRef = useRef(document.createElement("video"));
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
@@ -14,9 +14,9 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   const initializeScanner = async () => {
     const ctx = canvasRef.current.getContext("2d");
     const video = videoRef.current;
-    // video.autoplay = true;
 
     try {
+      video.autoplay = true;
       const constraints = {
         audio: false,
         video: { facingMode: { exact: "environment" } }, // width: 1920, height: 1080,width: { min: 1280 },
@@ -48,34 +48,40 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
       const checkResult = (result) => {
         // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
-        if (!result?.codeResult?.code) check();
-        else {
+        // if (!result?.codeResult?.code) check();
+        // else {
+        //   onDetect((result.codeResult.code + "").trim());
+        //   stopStreams();
+        // }
+        if (result?.codeResult?.code) {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
         }
       };
 
       const check = () => {
-        if (!video?.srcObject) return;
-        if (video?.paused) video.play();
+        console.log("A");
 
+        if (!video?.srcObject) return;
+        console.log("AAA");
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
-        setData(video.videoWidth + ` - ` + video.videoHeight);
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL(),
-            // src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
+            src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
             locate: false,
             multiple: false,
           },
           checkResult
         );
+
+        setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
       };
 
-      // if (video.paused) video.play();
+      // if (video?.paused) video.play();
+      setTimeout(() => video?.paused && video.play(), 500);
       check();
     } catch (error) {
       // console.error(`${error.name}: ${error.message}`);
@@ -97,7 +103,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (2) - ({data})
+      (3) - ({data})
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
@@ -113,7 +119,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
             cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
           />
         )}
-        <video ref={videoRef} autoPlay={false} style={{ display: "none" }}></video>
         <div className="relative">
           <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
         </div>
