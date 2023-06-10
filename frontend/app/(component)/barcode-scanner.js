@@ -43,13 +43,21 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         // const x = (video.videoWidth - width) / 2;
         // const y = (video.videoHeight - height) / 2;
         // ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-        check();
+
+        // const urlObj = URL.createObjectURL(null);
+        // currentTime;
+
+        requestAnimationFrame(check);
+        // check();
       });
 
       const checkResult = (result) => {
         // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
-        if (!result?.codeResult?.code) check();
-        else {
+        if (!result?.codeResult?.code) {
+          // if (video?.paused) video.play();
+          // check();
+          requestAnimationFrame(check);
+        } else {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
         }
@@ -66,7 +74,10 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         console.log("AAA");
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
+
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+        // video.pause();
+
         Quagga.decodeSingle(
           {
             decoder: { readers },
@@ -91,6 +102,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
   };
 
   const stopStreams = () => {
+    // console.log("stopStreams");
     if (videoRef.current?.srcObject) {
       const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
@@ -102,7 +114,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (4)
+      (6)
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
