@@ -60,7 +60,7 @@ export default function Notification() {
           <span className="w-8">
             <SvgIcon name="bell" />
           </span>
-          <span className="text-sm font-medium text-red -mt-1">{unseen}</span>
+          <span className="text-sm font-medium text-red">{unseen}</span>
         </div>
       }>
       {!notifications[0] ? (

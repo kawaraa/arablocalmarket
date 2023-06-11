@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Script from "next/script";
-import { IconButton } from "./(styled)/button";
+import { IconButton } from "../(component)/(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
   const videoRef = useRef(document.createElement("video"));
@@ -33,78 +33,45 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       canvasRef.current.width = width;
       canvasRef.current.height = height;
 
-      video.addEventListener("canplay", (event) => {
-        console.log("Can play");
-        video.play();
-      });
-
-      // loadedmetadata, loadeddata
-      video.addEventListener("loadeddata", (event) => {
-        // console.log("SSSS ");
-        check();
-      });
-
-      video.addEventListener("play", () => {
-        // check();
-        // Flip the video only on mobile / touch devices.
-        // if (constraints.video !== true) {
-        //   ctx.translate(video.videoWidth, 0);
-        //   ctx.scale(-1, 1);
-        // }
-        // const x = (video.videoWidth - width) / 2;
-        // const y = (video.videoHeight - height) / 2;
-        // ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-        // const urlObj = URL.createObjectURL(null);
-        // currentTime;
-      });
+      video.addEventListener("canplay", (event) => video.play());
+      video.addEventListener("loadeddata", (event) => check());
 
       const checkResult = (result) => {
-        // if (!result?.codeResult?.code) setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
-        if (!result?.codeResult?.code) {
-          // if (video?.paused) video.play();
-          check();
-        } else {
+        if (!result?.codeResult?.code) check();
+        else {
           onDetect((result.codeResult.code + "").trim());
           stopStreams();
         }
-        // if (result?.codeResult?.code) {
-        //   onDetect((result.codeResult.code + "").trim());
-        //   stopStreams();
-        // }
       };
 
       const check = async () => {
-        console.log("A");
-
         if (!video?.srcObject) return;
-        console.log("AAA");
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
 
-        ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
+        ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+        // ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
+
+        const src = canvasRef.current.toDataURL("image/jpeg", 1.0);
+        onError(src.slice(-10));
 
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src: canvasRef.current.toDataURL("image/jpeg", 1.0), // full-quality with compressing version
+            src,
             locate: false,
             multiple: false,
           },
           checkResult
         );
-
-        // setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s
       };
     } catch (error) {
-      // console.error(`${error.name}: ${error.message}`);
       stopStreams();
-      if (error.message == "Permission denied") onError(content.permissionErr[lang]);
-      else onError(error.message);
+      onError(`${error.name}: ${error.message}`);
     }
   };
 
   const stopStreams = () => {
-    // console.log("stopStreams");
     if (videoRef.current?.srcObject) {
       const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
