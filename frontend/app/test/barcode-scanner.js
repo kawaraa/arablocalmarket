@@ -4,7 +4,7 @@ import Script from "next/script";
 import { Button, IconButton } from "../(component)/(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
-  const videoRef = useRef(document.createElement("video"));
+  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
@@ -45,7 +45,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       };
 
       const check = async () => {
-        if (!video?.srcObject) return;
+        if (!video?.srcObject || !canvasRef.current?.toDataURL) return;
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
 
@@ -75,7 +75,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
       const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
     }
-    videoRef.current.srcObject = null;
+    // videoRef.current.srcObject = null;
   };
 
   useEffect(() => stopStreams, []);
@@ -113,6 +113,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
             </div>
           )}
         </div>
+        <video ref={videoRef} className="hidden"></video>
       </div>
     </>
   );
