@@ -19,7 +19,7 @@ export default function Test() {
       </div>
 
       <Modal open={open}>
-        <BarcodeScanner lan="en" onDetect={setData} onError={setData} onClose={() => setOpen(false)} />
+        <BarcodeScanner lang="en" onDetect={setData} onError={setData} onClose={() => setOpen(false)} />
       </Modal>
     </>
   );

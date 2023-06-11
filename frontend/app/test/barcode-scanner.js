@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Script from "next/script";
-import { IconButton } from "../(component)/(styled)/button";
+import { Button, IconButton } from "../(component)/(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
-  const videoRef = useRef(null);
+  const videoRef = useRef(document.createElement("video"));
   const canvasRef = useRef(null);
   const width = 500;
   const height = 250;
@@ -50,7 +50,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         const y = (video.videoHeight - height) / 2;
 
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
-        // ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
 
         const src = canvasRef.current.toDataURL("image/jpeg", 1.0);
         onError(src.slice(-10));
@@ -83,7 +82,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      <div onClick={() => (videoRef.current?.paused ? videoRef.current?.play() : videoRef.current?.pause())}>
+      <div>
         version: (9)
         <br />
         paused: {videoRef.current?.paused?.toString()}
@@ -108,15 +107,20 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         )}
         <div className="relative">
           <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
-        </div>
-        <div>
-          <video ref={videoRef}></video>
+          {videoRef.current?.paused && (
+            <div className="absolute inset-0 w-full h-full bg-blur flex justify-center items-center">
+              <Button onClick={() => videoRef.current?.play()}>{content.startBtn[lang]}</Button>
+            </div>
+          )}
         </div>
       </div>
     </>
   );
 }
-const content = { permissionErr: { en: "Could not access camera.", ar: "تعذر الوصول إلى الكاميرا" } };
+const content = {
+  permissionErr: { en: "Could not access camera.", ar: "تعذر الوصول إلى الكاميرا" },
+  startBtn: { en: "Start", ar: "بدء" },
+};
 
 const readers = [
   "ean_reader",
