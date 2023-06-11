@@ -49,7 +49,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
 
-        ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+        ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
         // ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
 
         const src = canvasRef.current.toDataURL("image/jpeg", 1.0);
@@ -83,7 +83,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
   return (
     <>
-      (8)
+      (9)
       <div
         dir="ltr"
         className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
