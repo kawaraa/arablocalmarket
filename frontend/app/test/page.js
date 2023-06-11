@@ -10,8 +10,10 @@ export default function Test() {
   return (
     <>
       <div onClick={() => setOpen(true)} className="py-5">
-        {window.document.cookie} <br />
-        {window?.BarcodeDetector?.name}
+        {/* {window.document.cookie} */}
+        Click here
+        <br />
+        {/* {window?.BarcodeDetector?.name} */}
         <br />
         {data}
       </div>
