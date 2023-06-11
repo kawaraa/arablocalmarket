@@ -25,48 +25,67 @@ export default async function StoreLayout({ children, params: { storeId }, searc
       {!store.attributes ? (
         <EmptyState type="notFound" />
       ) : (
-        <article>
-          {/* sm:bg-gradient-to-tl from-dbg via-pc to-dbg */}
-          <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:rounded-2xl">
-            <Image
-              priority
-              src={image}
-              width="1000"
-              height="1000"
-              alt={store.attributes.name}
-              className="preview w-full"
-            />
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Product",
+                name: store.attributes.name,
+                image,
+                description: store.attributes.about,
+                aggregateRating: {
+                  "@type": "AggregateRating",
+                  ratingValue: store.attributes.ratings.stars,
+                  reviewCount: store.attributes.ratings.total,
+                },
+              }),
+            }}
+          />
+          <article>
+            {/* sm:bg-gradient-to-tl from-dbg via-pc to-dbg */}
+            <section className="overflow-hidden relative flex justify-center items-center -mx-1 sm:mx-0 h-44 sm:rounded-2xl">
+              <Image
+                priority
+                src={image}
+                width="1000"
+                height="1000"
+                alt={store.attributes.name}
+                className="preview w-full"
+              />
 
-            <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
-              <span
-                className={`inline-block w-6 h-6 bg-${
-                  store.attributes.open ? "green" : "dt"
-                } rounded-full`}></span>{" "}
-              <span className="mx-2">{store.attributes.name}</span>
-            </h1>
-            <StoreLinks
-              lang={lang}
-              storeId={+storeId}
-              name={store.attributes.name}
-              about={store.attributes.about}
-              ratings={store.attributes.ratings}
-              phone={store.attributes.meta?.phone}
-              scroll="175"
-            />
-          </section>
+              <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
+                <span
+                  className={`inline-block w-6 h-6 bg-${
+                    store.attributes.open ? "green" : "dt"
+                  } rounded-full`}></span>{" "}
+                <span className="mx-2">{store.attributes.name}</span>
+              </h1>
+              <StoreLinks
+                lang={lang}
+                storeId={+storeId}
+                name={store.attributes.name}
+                about={store.attributes.about}
+                ratings={store.attributes.ratings}
+                phone={store.attributes.meta?.phone}
+                scroll="175"
+              />
+            </section>
 
-          <div className="mt-3 pb-6">
-            <Tabs
-              tabs={content.tabs.map(({ key, path, text }) => ({
-                key,
-                path: path.replace("storeId", store.id),
-                text: text[lang],
-              }))}
-              cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
-            />
-            <section className="min-h-[55vh]">{children}</section>
-          </div>
-        </article>
+            <div className="mt-3 pb-6">
+              <Tabs
+                tabs={content.tabs.map(({ key, path, text }) => ({
+                  key,
+                  path: path.replace("storeId", store.id),
+                  text: text[lang],
+                }))}
+                cls="z-1 sticky top-14 bg-bg dark:bg-dbg shadow-none border-none"
+              />
+              <section className="min-h-[55vh]">{children}</section>
+            </div>
+          </article>
+        </>
       )}
     </>
   );

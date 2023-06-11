@@ -41,6 +41,11 @@ export default async function ProductBySlug({ params, searchParams }) {
             name: product.name,
             image: product.image.data?.attributes?.url,
             description: product.description,
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: product.ratings.stars,
+              reviewCount: product.ratings.total,
+            },
           }),
         }}
       />

@@ -41,6 +41,11 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
                   name: p.attributes.name,
                   image: p.attributes.image.data?.attributes.formats.thumbnail.url,
                   description: p.attributes.description,
+                  aggregateRating: {
+                    "@type": "AggregateRating",
+                    ratingValue: p.attributes.ratings.stars,
+                    reviewCount: p.attributes.ratings.total,
+                  },
                 }),
               }}
             />
