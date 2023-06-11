@@ -4,7 +4,7 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";
 import StarRating from "../../(component)/(styled)/rating";
 const q =
-  "?fields=owner,subscriptionStatus,deliver,deliveryCost,currency,about&populate=openingHours,address,ratings";
+  "?fields=owner,subscriptionStatus,deliver,deliveryCost,currency,name,about&populate=cover,openingHours,address,ratings";
 
 export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
@@ -13,6 +13,8 @@ export default async function StoreOverview({ params, searchParams }) {
   // Todo: make the store query by id, title and about
   const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })).data?.attributes;
   if (!store) return notFound();
+
+  const image = store.cover.data?.attributes?.url || "/img/market-store-grocery-cartoon.jpg";
 
   const formatTime = (time) => {
     const arr = time.split("-");
@@ -27,6 +29,24 @@ export default async function StoreOverview({ params, searchParams }) {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: store.name,
+            image,
+            description: store.about,
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: store.ratings.stars,
+              reviewCount: store.ratings.total,
+            },
+          }),
+        }}
+      />
+
       <p dir="auto" className="flex items-center text-lg">
         <span className="">{content.delivery[lang][0]}:</span>
         <strong className="mx-2">

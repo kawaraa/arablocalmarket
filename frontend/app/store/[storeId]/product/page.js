@@ -31,35 +31,15 @@ export default async function ProductsByStore({ params: { storeId }, searchParam
 
       <ul dir="ltr" className="flex flex-wrap min-h-[30vh]">
         {products.map((p, i) => (
-          <>
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "Product",
-                  name: p.attributes.name,
-                  image: p.attributes.image.data?.attributes.formats.thumbnail.url,
-                  description: p.attributes.description,
-                  aggregateRating: {
-                    "@type": "AggregateRating",
-                    ratingValue: p.attributes.ratings.stars,
-                    reviewCount: p.attributes.ratings.total,
-                  },
-                }),
-              }}
-            />
-
-            <ProductCard
-              lang={lang}
-              currency={currency[0]}
-              product={p.attributes}
-              id={p.id}
-              link={`/store/${store?.data?.id}/product/${p.id}`}
-              key={i}
-              priority={i < 10}
-            />
-          </>
+          <ProductCard
+            lang={lang}
+            currency={currency[0]}
+            product={p.attributes}
+            id={p.id}
+            link={`/store/${store?.data?.id}/product/${p.id}`}
+            key={i}
+            priority={i < 10}
+          />
         ))}
       </ul>
 

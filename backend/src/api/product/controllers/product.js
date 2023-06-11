@@ -37,7 +37,6 @@ module.exports = createCoreController(proEty, ({ strapi }) => ({
 
     if (data[0].attributes.ratings?.data) {
       data.forEach((p) => {
-        if (!p.attributes.ratings.data[0]) return (p.attributes.ratings = []);
         p.attributes.ratings = strapi.service(storeEty).calculateStars(p.attributes.ratings.data);
       });
     }

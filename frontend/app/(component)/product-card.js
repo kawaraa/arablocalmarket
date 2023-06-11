@@ -16,6 +16,26 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
 
   return (
     <li style={getCssDelay()} className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b">
+      {!admin && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Product",
+              name: product.name,
+              image: product.image.data?.attributes.formats.thumbnail.url,
+              description: product.description,
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: product.ratings.stars,
+                reviewCount: product.ratings.total,
+              },
+            }),
+          }}
+        />
+      )}
+
       <Tag {...newP}>
         <a className="relative block w-full h-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
           <h3 className="text-ellipsis overflow-hidden whitespace-nowrap text-center mt-2">{product.name}</h3>
