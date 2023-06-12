@@ -5,7 +5,7 @@ import { Button, IconButton } from "../(component)/(styled)/button";
 
 export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }) {
   const videoRef = useRef(null);
-  const canvasRef = useRef(null);
+  const canvasRef = useRef(document.createElement("canvas"));
   const width = 500;
   const height = 250;
 
@@ -51,13 +51,10 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
 
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
 
-        const src = canvasRef.current.toDataURL("image/jpeg", 1.0);
-        onError(src.slice(-10));
-
         Quagga.decodeSingle(
           {
             decoder: { readers },
-            src,
+            src: canvasRef.current.toDataURL("image/jpeg", 1.0),
             locate: false,
             multiple: false,
           },
@@ -74,48 +71,36 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls }
     if (videoRef.current?.srcObject) {
       const tracks = videoRef.current?.srcObject.getTracks();
       for (let i = 0; i < tracks.length; i += 1) tracks[i].stop();
+      videoRef.current.srcObject = null;
     }
-    // videoRef.current.srcObject = null;
   };
 
   useEffect(() => stopStreams, []);
 
   return (
-    <>
-      <div>
-        version: (9)
-        <br />
-        paused: {videoRef.current?.paused?.toString()}
-        <br />
-        currentTime: {videoRef.current?.currentTime}
-        <br />
-      </div>
-      <div
-        dir="ltr"
-        className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${
-          cls || ""
-        }`}>
-        <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
+    <div
+      dir="ltr"
+      className={`overflow-hidden w-full h-52 sm:h-64 flex justify-center items-center w-full ${cls || ""}`}>
+      <Script src="/barcode-scanner/quagga.min.js" onReady={initializeScanner}></Script>
 
-        {onClose && (
-          <IconButton
-            icon="crossMark"
-            onClick={() => onClose(stopStreams())}
-            title="Cancel and close the modal window"
-            cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
-          />
+      {onClose && (
+        <IconButton
+          icon="crossMark"
+          onClick={() => onClose(stopStreams())}
+          title="Cancel and close the modal window"
+          cls="w-8 absolute top-4 right-4 hover:text-red print:hidden"
+        />
+      )}
+      <div className="relative w-full">
+        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg"></video>
+
+        {videoRef.current?.paused && (
+          <div className="absolute inset-0 w-full h-full bg-blur flex justify-center items-center">
+            <Button onClick={() => videoRef.current?.play()}>{content.startBtn[lang]}</Button>
+          </div>
         )}
-        <div className="relative">
-          <canvas ref={canvasRef} className="w-full bg-lbg dark:bg-cbg"></canvas>
-          {videoRef.current?.paused && (
-            <div className="absolute inset-0 w-full h-full bg-blur flex justify-center items-center">
-              <Button onClick={() => videoRef.current?.play()}>{content.startBtn[lang]}</Button>
-            </div>
-          )}
-        </div>
-        <video ref={videoRef} className="hidden"></video>
       </div>
-    </>
+    </div>
   );
 }
 const content = {

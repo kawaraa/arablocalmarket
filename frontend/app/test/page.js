@@ -2,14 +2,14 @@
 import { useState } from "react";
 import BarcodeScanner from "./barcode-scanner";
 import Modal from "../(component)/(styled)/modal";
+import BarcodeScannerPopup from "../(component)/(styled)/barcode-scanner-popup";
 
 export default function Test() {
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState(false);
 
   return (
     <>
-      <div onClick={() => setOpen(true)} className="py-5">
+      <div className="py-5">
         {/* {window.document.cookie} */}
         Click here
         <br />
@@ -18,9 +18,7 @@ export default function Test() {
         {data}
       </div>
 
-      <Modal open={open}>
-        <BarcodeScanner lang="en" onDetect={setData} onError={setData} onClose={() => setOpen(false)} />
-      </Modal>
+      <BarcodeScannerPopup lang={"en"} onBarcodeDetect={setData} onError={setData} btnCls="w-10" />
     </>
   );
 }

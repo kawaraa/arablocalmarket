@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import shdCnt from "../../(layout)/json/shared-content.json";
-import BrowserBarcodeDetecter from "../b-barcode-detecter";
-import BarcodeScanner from "../barcode-scanner";
 import Modal from "./modal";
 import { IconButton } from "./button";
 import { ToggleSwitch } from "./inputs";
+import BarcodeScanner from "../barcode-scanner";
+import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, btnCls }) {
   const [showScanner, setShowScanner] = useState(false);
-  const [browserSupportBarcodeScanner, setBrowserSupportBarcodeScanner] = useState(false);
+  const [browserScanner, setBrowserScanner] = useState(false);
 
   const handleDetect = (barcode) => {
     setShowScanner(false);
@@ -17,8 +16,10 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
   };
 
   useEffect(() => {
-    setBrowserSupportBarcodeScanner(!!window.BarcodeDetector);
+    setBrowserScanner(!!window?.BarcodeDetector);
   }, []);
+
+  const prop = { lang, onDetect: handleDetect, onError: onError, onClose: () => setShowScanner(false) };
 
   return (
     <>
@@ -33,28 +34,14 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
           cls={"p-1 cursor-pointer hover:text-pc transition " + btnCls}
         />
       )}
+
       <Modal lang={lang} title={shdCnt.scanner[lang]} open={showScanner} center>
-        {browserSupportBarcodeScanner ? (
-          <BrowserBarcodeDetecter
-            lang={lang}
-            onDetect={handleDetect}
-            onError={onError}
-            onClose={() => setShowScanner(false)}
-            cls=""
-          />
-        ) : (
-          <BarcodeScanner
-            lang={lang}
-            onDetect={handleDetect}
-            onError={onError}
-            onClose={() => setShowScanner(false)}
-            cls=""
-          />
-        )}
+        {<BarcodeScanner {...prop} browserScanner={browserScanner} />}
+
         {window?.BarcodeDetector && (
-          <div className="text-center">
+          <div className="text-center mt-3">
             <ToggleSwitch
-              onChange={() => setBrowserSupportBarcodeScanner(!browserSupportBarcodeScanner)}
+              onChange={() => setBrowserScanner(!browserScanner)}
               label={content.sc[lang] + " 1"}
             />
           </div>
