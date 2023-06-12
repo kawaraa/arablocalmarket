@@ -43,7 +43,16 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
       canvasRef.current.height = height;
 
       video.addEventListener("canplay", () => video.play());
-      video.addEventListener("play", () => check(setStarted(true)));
+      video.addEventListener("play", () => {
+        setStarted(true);
+        check();
+        if (video.exitFullscreen) video.exitFullscreen();
+        else if (video.webkitExitFullscreen) video.webkitExitFullscreen();
+        else if (video.mozCancelFullScreen) video.mozCancelFullScreen();
+        else if (video.msExitFullscreen) video.msExitFullscreen();
+        else if (video.exitFullscreen) video.exitFullscreen();
+        else if (video.exitFullscreen) video.exitFullscreen();
+      });
 
       const scanImage = async (canvas) => {
         if (barcodeDetector) {
@@ -102,8 +111,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
         />
       )}
 
-      <div className="overflow-hidden relative w-full h-full">
-        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg" playsinline></video>
+      <div className="relative w-full h-full flex justify-center items-center">
+        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg" muted autoPlay playsInline></video>
         {!started && (
           <div className="absolute inset-0 w-full h-full bg-blur flex justify-center items-center">
             <Button onClick={() => videoRef.current?.play(setStarted(true))}>{content.startBtn[lang]}</Button>
