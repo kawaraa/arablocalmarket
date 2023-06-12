@@ -43,8 +43,8 @@ export default async function ProductBySlug({ params, searchParams }) {
             description: product.description,
             aggregateRating: {
               "@type": "AggregateRating",
-              ratingValue: product.ratings.stars,
-              reviewCount: product.ratings.total,
+              ratingValue: product.ratings.stars || 1,
+              reviewCount: product.ratings.total || 1,
             },
           }),
         }}

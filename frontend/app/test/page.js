@@ -1,7 +1,5 @@
 "use client";
 import { useState } from "react";
-import BarcodeScanner from "./barcode-scanner";
-import Modal from "../(component)/(styled)/modal";
 import BarcodeScannerPopup from "../(component)/(styled)/barcode-scanner-popup";
 
 export default function Test() {
@@ -11,9 +9,8 @@ export default function Test() {
     <>
       <div className="py-5">
         {/* {window.document.cookie} */}
-        Click here
-        <br />
         {/* {window?.BarcodeDetector?.name} */}
+        Click here
         <br />
         {data}
       </div>

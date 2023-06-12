@@ -37,7 +37,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
       }
 
       if (window?.BarcodeDetector) barcodeDetector = new BarcodeDetector({ formats });
-      // if (!barcodeDetector) throw new Error("Barcode Detector is not supported by this browser.");
 
       canvasRef.current.width = width;
       canvasRef.current.height = height;
@@ -52,7 +51,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
         }
 
         const src = canvas.toDataURL("image/jpeg", 1.0); // full-quality with compressing version
-
         const result = await new Promise((res) =>
           Quagga.decodeSingle({ decoder: { readers }, src, locate: false, multiple: false }, res)
         );
@@ -60,7 +58,6 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
       };
 
       const check = async () => {
-        console.log("Barcode Scanner");
         if (!video?.srcObject || !canvasRef.current) return;
         const x = (video.videoWidth - width) / 2;
         const y = (video.videoHeight - height) / 2;
@@ -74,7 +71,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
         onDetect(barcode);
       };
     } catch (error) {
-      console.error(`${error.name}: ${error.message}`);
+      // console.error(`${error.name}: ${error.message}`);
       stopStreams();
       if (error.message == "Permission denied") onError(content.permissionErr[lang]);
       else onError(`${error.name}: ${error.message}`);
@@ -104,7 +101,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
         />
       )}
 
-      <div className="overflow-hidden relative w-full h-full">
+      <div className=" relative w-full h-full">
         <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg"></video>
 
         {videoRef.current?.paused && (
