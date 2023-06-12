@@ -42,8 +42,8 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
       canvasRef.current.width = width;
       canvasRef.current.height = height;
 
-      video.addEventListener("canplay", () => video.play(setStarted(true)));
-      video.addEventListener("play", () => check());
+      video.addEventListener("canplay", () => video.play());
+      video.addEventListener("play", () => check(setStarted(true)));
 
       const scanImage = async (canvas) => {
         if (barcodeDetector) {
@@ -103,7 +103,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
       )}
 
       <div className="overflow-hidden relative w-full h-full">
-        1<video ref={videoRef} className="w-full bg-lbg dark:bg-cbg"></video>
+        <video ref={videoRef} className="w-full bg-lbg dark:bg-cbg" playsinline></video>
         {!started && (
           <div className="absolute inset-0 w-full h-full bg-blur flex justify-center items-center">
             <Button onClick={() => videoRef.current?.play(setStarted(true))}>{content.startBtn[lang]}</Button>
