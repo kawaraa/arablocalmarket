@@ -8,7 +8,7 @@ export default function PrivacyPolicy({ searchParams }) {
 
   return (
     <>
-      <section className="max-w-4xl mx-auto pt-10">
+      <section className="max-w-4xl mx-auto mb-20 pt-10 px-2">
         <h1 className="my-10 text-center text-4xl sm:text-5xl font-extrabold">{content.title[lang]}</h1>
         <p className="text-center text-sm mb-5">{content.updated[lang]}</p>
 

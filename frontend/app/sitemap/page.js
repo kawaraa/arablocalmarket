@@ -1,16 +1,18 @@
 import { cookies } from "next/headers";
+import Footer from "../(layout)/footer";
 
 export default function Sitemap({ searchParams }) {
-  console.log("Sitemap: >>>");
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
   return (
-    <section>
-      <article>
-        <h1>{content.h1[lang]}</h1>
-      </article>
-    </section>
+    <>
+      <section className="max-w-4xl mx-auto mb-20 pt-10 px-2">
+        <h1 className="text-2xl font-bold mt-8 mb-3">{content.h1[lang]}</h1>
+      </section>
+
+      <Footer lang={lang} />
+    </>
   );
 }
 

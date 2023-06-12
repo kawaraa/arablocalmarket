@@ -8,7 +8,7 @@ export default function About({ searchParams }) {
 
   return (
     <>
-      <section className="max-w-4xl mx-auto pt-10">
+      <section className="max-w-4xl mx-auto mb-20 pt-10 px-2">
         <p className="my-10 text-center text-4xl font-extrabold sm:text-5xl">{content.title[lang]}</p>
 
         <h1 className="text-lg font-bold mt-8 mb-3">{content.h1[lang]}</h1>
