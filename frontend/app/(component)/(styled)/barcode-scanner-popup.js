@@ -2,22 +2,16 @@
 import { useEffect, useState } from "react";
 import Modal from "./modal";
 import { IconButton } from "./button";
-import { ToggleSwitch } from "./inputs";
 import BarcodeScanner from "../barcode-scanner";
 import shdCnt from "../../(layout)/json/shared-content.json";
 
 export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, btnCls }) {
   const [showScanner, setShowScanner] = useState(false);
-  const [browserScanner, setBrowserScanner] = useState(false);
 
   const handleDetect = (barcode) => {
     setShowScanner(false);
     onBarcodeDetect(barcode);
   };
-
-  useEffect(() => {
-    setBrowserScanner(!!window?.BarcodeDetector);
-  }, []);
 
   const prop = { lang, onDetect: handleDetect, onError: onError, onClose: () => setShowScanner(false) };
 
@@ -36,16 +30,7 @@ export default function BarcodeScannerPopup({ lang, onBarcodeDetect, onError, bt
       )}
 
       <Modal lang={lang} title={shdCnt.scanner[lang]} open={showScanner} center>
-        {<BarcodeScanner {...prop} browserScanner={browserScanner} />}
-
-        {window?.BarcodeDetector && (
-          <div className="text-center mt-3">
-            <ToggleSwitch
-              onChange={() => setBrowserScanner(!browserScanner)}
-              label={content.sc[lang] + " 1"}
-            />
-          </div>
-        )}
+        {<BarcodeScanner {...prop} />}
       </Modal>
     </>
   );

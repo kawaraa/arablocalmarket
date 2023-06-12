@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import Script from "next/script";
 import { Button, IconButton } from "./(styled)/button";
 
-export default function BarcodeScanner({ lang, browserScanner, onDetect, onError, onClose, cls = "" }) {
+export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls = "" }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(document.createElement("canvas"));
   const width = 500;
@@ -46,7 +46,7 @@ export default function BarcodeScanner({ lang, browserScanner, onDetect, onError
       video.addEventListener("loadeddata", () => check());
 
       const scanImage = async (canvas) => {
-        if (barcodeDetector && browserScanner) {
+        if (barcodeDetector) {
           const result = await barcodeDetector.detect(canvas).catch(console.log);
           if (result && result[0]?.rawValue) return (result[0].rawValue + "").trim();
         }
