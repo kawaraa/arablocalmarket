@@ -61,6 +61,7 @@ Bank alow: create, delete
 Stripe allow: create, findOne, upgradeDowngrade, checkout, cancel, reactivate, paymentMethods, deletePaymentMethod, webhook
 Affiliate alow: find
 Invoice alow: findOne
+contact allow: create
 ```
 
 ### `start`

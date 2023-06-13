@@ -1,4 +1,4 @@
-"use Client";
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 
@@ -227,7 +227,7 @@ export function ContentToggleSwitch({ checked, onCheck, size = 50, ...p }) {
   );
 }
 
-export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
+export function Textarea({ children, label, editable, onChange, onBlur, cls, inCls, ...p }) {
   const inputRef = useRef(null);
   const [icon, setIcon] = useState("edit");
 
@@ -242,7 +242,16 @@ export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
   };
 
   return (
-    <div className="relative m-[1px]">
+    <div className={"relative mt-3 " + cls}>
+      {label && (
+        <>
+          <label htmlFor={cls} className={`font-semibold min-w-[70px] ${p.required ? "rq" : ""}`}>
+            {label}
+          </label>
+          <span className="w-2 h-2"></span>
+        </>
+      )}
+
       {children}
       <textarea
         dir="auto"
@@ -254,9 +263,9 @@ export function Textarea({ children, editable, onChange, onBlur, cls, ...p }) {
         aria-label={p.title}
         placeholder={p.title}
         autoComplete="on"
-        className={`block w-full mt-3 p-2 bg-cbg ${
+        className={`block w-full p-2 bg-cbg ${
           editable ? "overflow-hidden focus:overflow-auto h-auto pr-10" : "h-32 card cd_hr"
-        } fs ${"rounded-md " + cls}`}
+        } fs ${"rounded-md " + inCls}`}
         {...p}></textarea>
       {editable && (
         <Button
@@ -279,9 +288,12 @@ export function Select({ children, label, cls, inCls, onChange, value, defaultVa
   return (
     <div className={"inline-block " + cls}>
       {label && (
-        <label htmlFor={cls} className={`mb-1 font-semibold ${p.required ? "rq" : ""}`}>
-          {label}
-        </label>
+        <>
+          <label htmlFor={cls} className={`font-semibold min-w-[70px] ${p.required ? "rq" : ""}`}>
+            {label}
+          </label>
+          <span className="w-2 h-2"></span>
+        </>
       )}
 
       <select

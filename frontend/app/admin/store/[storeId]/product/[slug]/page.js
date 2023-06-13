@@ -148,12 +148,13 @@ export default function ProductById({ params }) {
         </InputField>
 
         <Textarea
+          required
           name="description"
           defaultValue={product?.description}
-          title={content.description.placeholder[lang]}
-          cls="my-5 rounded-md">
-          <span className="block mt-3 text-lg font-semibold rq">{content.description.text[lang]}</span>
-        </Textarea>
+          label={content.description.text[lang]}
+          placeholder={content.description.placeholder[lang]}
+          inCls="my-5 rounded-md"
+        />
 
         <CategorySelect
           lang={lang}

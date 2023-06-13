@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contacts",
+  "info": {
+    "singularName": "contact",
+    "pluralName": "contacts",
+    "displayName": "contact",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "customer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::customer.customer",
+      "inversedBy": "contacts"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "open",
+        "completed"
+      ],
+      "default": "pending",
+      "required": true
+    },
+    "subject": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "minLength": 5
+    },
+    "message": {
+      "type": "text",
+      "required": true,
+      "maxLength": 500,
+      "minLength": 30,
+      "unique": true
+    }
+  }
+}

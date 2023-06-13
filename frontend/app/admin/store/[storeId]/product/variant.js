@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { Button, IconButton } from "../../../../(component)/(styled)/button";
 import { InputField, NumberInputWithControl, Select } from "../../../../(component)/(styled)/inputs";

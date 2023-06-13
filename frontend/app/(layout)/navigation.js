@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
 import OptionXIcon from "../(component)/option-x-icon";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import Notification from "./notification";
 
 export default function Navigation() {
+  const router = useRouter();
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
   const { lang, updateLang, themeMode, updateThemeMode, cart, user } = useContext(AppSessionContext);
@@ -65,7 +66,7 @@ export default function Navigation() {
 
             <select
               value={lang}
-              onChange={(e) => updateLang(e.target.value)}
+              onChange={(e) => updateLang(e.target.value) + router.refresh()}
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
@@ -93,7 +94,7 @@ export default function Navigation() {
           </div>
         </li>
 
-        {content.navLinks.slice(0, 1).map((link, i) => (
+        {content.navLinks.slice(0, content.navLinks.length - 1).map((link, i) => (
           <li
             onClick={() => setShowMenu(!showMenu)}
             key={i}
@@ -103,18 +104,6 @@ export default function Navigation() {
             </Link>
           </li>
         ))}
-
-        {user?.id && (
-          <li
-            onClick={() => setShowMenu(!showMenu)}
-            className="font-medium hover:bg-dbg hover:text-dt md:hover:bg-[transparent] md:hover:!text-bg9 text-sm duration-200">
-            <Link passHref legacyBehavior href={content.navLinks[1].path}>
-              <a className="block p-3 text-lg md:underline underline-offset-8">
-                {content.navLinks[1].text[lang]}
-              </a>
-            </Link>
-          </li>
-        )}
       </ul>
 
       <div className="flex items-center justify-end flex-auto">
@@ -175,13 +164,14 @@ const content = {
   ],
   navLinks: [
     { text: { en: "Find a store", ar: "ابحث عن متجر" }, path: "/store" },
-    { text: { en: "Orders", ar: "الطلبات" }, path: "/order" },
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
+    { text: { en: "Orders", ar: "الطلبات" }, path: "/order" },
     { text: { en: "My stores", ar: "متاجري" }, path: "/admin/store?tab=my" },
     { text: { en: "clients", ar: "العملاء" }, path: "/admin/client" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
+    { text: { en: "Help", ar: "المساعدة" }, path: "/help" },
     { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },
   ],
   langAlt: { en: "Change Language", ar: "تغيير اللغة" },

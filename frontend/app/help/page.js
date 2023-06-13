@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import Article from "../(component)/article";
 import Footer from "../(layout)/footer";
+import { LinkButton } from "../(component)/(styled)/button";
+import SvgIcon from "../(component)/(styled)/svg-icon";
 
 export default function Help({ searchParams }) {
   const cookieStore = cookies();
@@ -14,6 +16,15 @@ export default function Help({ searchParams }) {
           <Article lang={lang} article={a} key={i} />
         ))}
       </section>
+      <div className="mb-20 flex justify-center">
+        <LinkButton href="/contact" cls="!rounded-full">
+          {content.contactUs[lang]}
+          <span className={"w-8 " + (lang == "ar" ? "rotate-90" : "-rotate-90")}>
+            <SvgIcon name="arrowDown" />
+          </span>
+        </LinkButton>
+      </div>
+
       <Footer lang={lang} />
     </>
   );
@@ -31,6 +42,7 @@ export async function generateMetadata({ params, searchParams }) {
 const content = {
   title: { en: "Help", ar: "المساعدة" },
   h1: { en: "Common questions", ar: "الأسئلة الشائعة" },
+  contactUs: { en: "Contact us", ar: "اتصل بنا" },
   articles: [
     {
       h: {

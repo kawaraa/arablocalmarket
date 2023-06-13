@@ -17,5 +17,6 @@
   "order": "/api/orders",
   "rating": "/api/ratings",
   "stripe": "/api/stripe",
-  "affiliate": "/api/affiliates"
+  "affiliate": "/api/affiliates",
+  "contact": "/api/contacts"
 }

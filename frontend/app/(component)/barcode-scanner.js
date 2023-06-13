@@ -73,6 +73,7 @@ export default function BarcodeScanner({ lang, onDetect, onError, onClose, cls =
         const y = (video.videoHeight - height) / 2;
 
         ctx.drawImage(video, x, y, width, height, 0, 0, width, height);
+        // ctx.drawImage(await createImageBitmap(video), x, y, width, height, 0, 0, width, height);
         const barcode = await scanImage(canvasRef.current);
 
         // setTimeout(check, 1000 / 30); // drawing at 30fps Or just use 50s

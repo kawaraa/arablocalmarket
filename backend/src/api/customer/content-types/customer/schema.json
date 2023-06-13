@@ -59,6 +59,12 @@
       "type": "component",
       "repeatable": true,
       "component": "product.cart-item"
+    },
+    "contacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contact.contact",
+      "mappedBy": "customer"
     }
   }
 }

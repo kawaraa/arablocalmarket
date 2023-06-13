@@ -1,5 +1,4 @@
 "use client";
-
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../../app-session-context";
@@ -188,9 +187,14 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             <span className="block mb-1 font-semibold rq">{content.name[lang]}</span>
           </InputField>
         )}
-        <Textarea name="about" defaultValue={store?.about} title={content.about.placeholder[lang]} cls="1">
-          <span className="block mb-1 font-semibold rq">{content.about[lang]}</span>
-        </Textarea>
+        <Textarea
+          required
+          name="about"
+          defaultValue={store?.about}
+          label={content.about[lang]}
+          placeholder={content.about.placeholder[lang]}
+          inCls="1"
+        />
 
         <Select
           name="type"

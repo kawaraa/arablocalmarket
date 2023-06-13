@@ -141,7 +141,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
               name="note"
               defaultValue={order.note}
               onBlur={({ target }) => onChange(target)}
-              cls="mt-5 rounded-md"
+              inCls="mt-5 rounded-md"
             />
           )}
 
