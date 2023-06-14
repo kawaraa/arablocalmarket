@@ -20,8 +20,8 @@ export default function Dashboard({}) {
   return (
     <div>
       <h1>Dashboard!</h1>
-      <p>Widgets</p>
-      <p>Statistics</p>
+      {/* <p>Widgets</p>
+      <p>Statistics</p> */}
     </div>
   );
 }

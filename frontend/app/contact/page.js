@@ -6,8 +6,10 @@ import { Select, Textarea } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 import shdCnt from "../(layout)/json/shared-content.json";
 import { request } from "../(service)/api-provider";
+import { useRouter } from "next/navigation";
 
 export default function Contact() {
+  const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +54,7 @@ export default function Contact() {
           ))}
         </Select>
 
-        <Textarea name="message" label={"Message"} cls="mt-8 flex flex-col sm:flex-row " />
+        <Textarea required name="message" label={"Message"} cls="mt-8 flex flex-col sm:flex-row " />
 
         <div className="text-right mt-5">
           <Button type="submit" loading={loading} cls="w-full sm:w-auto">

@@ -58,37 +58,45 @@ export default async function StoreOverview({ params, searchParams }) {
       <p>{store.about}</p>
 
       {h2(content.openHrs[lang])}
-      <ul dir="auto">
+      <ul dir="auto" className="flex flex-col md:flex-row md:flex-wrap">
         {store.openingHours.map((item, i) => (
-          <li className="" key={i}>
-            <p className="w-24 mb-2 mt-5 capitalize">
+          <li className="flex my-2 min-w-[50%]" key={i}>
+            <span className="min-w-[100px] capitalize">
               {shdCnt.day.values.find((d) => d.en == item.day)[lang]}
-            </p>
-            <div className="flex">
-              <span className="flex" dir="auto">
-                {shdCnt.open[lang]}
-                <span className="w-2"></span>
-                {formatTime(item.opens)}
-              </span>
+            </span>
+            <strong className="flex-9">
+              {formatTime(item.opens)}
               <span className="mx-4">-</span>
-              <span className="flex" dir="auto">
-                {shdCnt.close[lang]}
-                <span className="w-2"></span>
-                {formatTime(item.closes)}
-              </span>
-            </div>
+              {formatTime(item.closes)}
+            </strong>
           </li>
         ))}
       </ul>
 
-      {h2(content.adr[lang])}
-      <p>
-        {store.address.line1} {store.address.line2}
-        <br /> {store.address.city} {store.address.postalCode}
-        <br />
-        {store.address.province} {store.address.country}
-      </p>
-      <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
+      <address dir="ltr">
+        {h2(content.adr[lang])}
+        <p>
+          {store.address.line1} {store.address.line2 || ""}
+          <br /> {store.address.city} {store.address.postalCode}
+          <br />
+          {store.address.province} {store.address.country}
+        </p>
+      </address>
+
+      <a
+        href={
+          "http://maps.google.com/?q=" +
+          (store.address.currentLat
+            ? `${store.address.currentLat},${store.address.currentLng}`
+            : `${store.address.line1},${store.address.line2 || ""},${store.address.postalCode},${
+                store.address.city
+              },${store.address.country}`)
+        }
+        rel="noreferrer"
+        target="_blank"
+        className="black w-full">
+        <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
+      </a>
 
       <div className="text-center mt-7">
         <StarRating stars={store.ratings.stars} cls="text-blur text-3xl" />
