@@ -60,7 +60,7 @@ export default function ImageUpload({ children, onFile, imageUrl, alt, fullHeigh
             alt={alt}
             width="1000"
             height="1000"
-            className={"preview " + (fullHeight ? "h-full" : "w-full")}
+            className={"preview " + (fullHeight ? "h-full w-auto" : "w-full h-auto")}
           />
 
           <label

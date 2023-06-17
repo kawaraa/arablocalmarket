@@ -74,7 +74,6 @@ export default function StoreById({ children, params: { storeId } }) {
       <ImageUpload
         id="store-cover"
         imageUrl={image}
-        fullHeight={false}
         onFile={handleCoverChange}
         alt={store.name || content.coverAlt[lang]}
         title={content.coverEdit[lang]}>
