@@ -93,7 +93,7 @@ const getProducts = async (storeId, { category, search, page }) => {
     if (category) sq = `&filters[category][$eqi]=${category}`;
   }
 
-  const query = `?filters[storeId][$eqi]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
+  const query = `?filters[storeId][$eqi]=${storeId}${sq}&fields=id,storeId,name,category&populate[image]=*&populate[ratings]=*&populate[variants][fields]=price,comparePrice&pagination[page]=${page}&pagination[pageSize]=50&sort=createdAt:desc`;
 
   return serverRequest("product", "GET", { query });
 };

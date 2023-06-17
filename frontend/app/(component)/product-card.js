@@ -14,6 +14,8 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
       ? { onClick: () => link(product) }
       : { href: link, passHref: true, legacyBehavior: true };
 
+  const v = product.variants.sort()[0];
+
   return (
     <li style={getCssDelay()} className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b">
       {!admin && (
@@ -50,9 +52,11 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
             />
           </div>
           <div className={`flex justify-end items-center`}>
-            <strong className="text-red text-lg">
-              {currency}
-              {product.variants.sort()[0].price}
+            <strong className="text-lg">
+              <span className="text-red">{currency + v.price} </span>
+              {!admin && v.comparePrice > 0 && (
+                <span className="line-through">{currency + v.comparePrice}</span>
+              )}
             </strong>
 
             <ProductCardButtons

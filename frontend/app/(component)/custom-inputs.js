@@ -191,9 +191,11 @@ export function CategorySelect({ lang, ...p }) {
     <Select
       name="category"
       label={content.categories.text[lang]}
-      cls="flex items-center"
-      inCls="mx-1 !p-[2px] rounded-full"
+      required
+      cls="my-5 w-full"
+      inCls="!p-[2px] text-center mx-2 rounded-full invalid:border-red"
       {...p}>
+      <option value="">{content.categories.default[lang]}</option>
       {content.categories.values.map((v, i) => (
         <option value={v.key} key={i}>
           {v.text[lang]}
@@ -228,6 +230,7 @@ const content = {
   },
   categories: {
     text: { en: "Category", ar: "الفئة" },
+    default: { en: "Select a category", ar: "اختر فئة" },
     values: categories,
   },
   times: [
