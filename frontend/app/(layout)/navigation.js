@@ -109,7 +109,7 @@ export default function Navigation() {
       <div className="flex items-center justify-end flex-auto">
         <Link passHref legacyBehavior href="/cart">
           <a className="relative flex mr-2">
-            <span className="w-6 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
+            <span className="w-8 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
               <SvgIcon name="cart" />
             </span>
             <span id="nav-cart" className="text-sm font-medium text-red -mt-1">

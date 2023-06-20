@@ -14,7 +14,7 @@ module.exports = {
       // testbg: "linear-gradient(to bottom right, #9bface, #b26cfc)",
       // hpbg: "radial-gradient(#b8f5d9, #ffffff)",
       pc: "#9bface", // Primary Color // #cbf7f2 // #b2ebf9
-      pc2: "#b26cfc", // #aea1ea
+      pc2: "#aea1ea", // #aea1ea
       bg: "#ffffff", // Background & Dark Title Color
       lbg: "#e5e7eb", //f9fafb Light Background
       dbg: "#121212", // Dark Background

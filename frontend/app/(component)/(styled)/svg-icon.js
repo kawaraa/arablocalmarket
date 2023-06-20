@@ -27,19 +27,35 @@ const icons = {
     </svg>
   ),
   cart: (
+    // <svg
+    //   xmlns="http://www.w3.org/2000/svg"
+    //   viewBox="0 0 24 24"
+    //   className="pointer-events-none w-full"
+    //   fill="none"
+    //   strokeWidth="2"
+    //   stroke="currentColor"
+    //   aria-hidden="true">
+    //   <path
+    //     strokeLinecap="round"
+    //     strokeLinejoin="round"
+    //     d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+    //   />
+    // </svg>
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      viewBox="0 0 20 20"
       className="pointer-events-none w-full"
       fill="none"
-      strokeWidth="2"
+      strokeWidth="1.5"
       stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true">
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-      />
+      <circle cx="8.6" cy="16.9" r="1.5" />
+      <circle cx="15.6" cy="16.9" r="1.5" />
+      <path d="m2.1,1.9l2,0l3.5,11l8,0" />
+      <path d="m6.82,10.4l-1.92,-6l12.51,0c0.34,0 0.58,0.33 0.47,0.66l-1.67,5c-0.06,0.2 -0.26,0.34 -0.47,0.34l-8.92,0z" />
     </svg>
   ),
   bell: (
