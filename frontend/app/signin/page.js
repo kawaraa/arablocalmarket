@@ -56,12 +56,12 @@ export default function SignIn() {
             priority
             src="/img/logo.png"
             alt="Arab Local market Logo"
-            width="150"
-            height="150"
-            className="h-auto w-32 mx-auto"
+            width="100"
+            height="100"
+            className="h-auto w-16 mx-auto"
           />
 
-          <h1 className=" text-center text-2xl font-bold ">{content.h1[lang]}</h1>
+          <h1 className="mt-6 text-center text-2xl font-bold ">{content.h1[lang]}</h1>
         </div>
 
         <div className="-space-y-px rounded-md shadow-sm">
