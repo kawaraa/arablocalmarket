@@ -78,7 +78,13 @@ export default async function LandingPage({ params, searchParams }) {
                 {step[lang]}
               </h4>
               <div className="overflow-hidden h-80 mt-5 rounded-lg">
-                <Image src={step.image} width="200" height="400" alt={step.alt} className="h-full" />
+                <Image
+                  src={step.image.replace("lang", lang)}
+                  width="200"
+                  height="400"
+                  alt={step.alt}
+                  className="h-full"
+                />
               </div>
             </li>
           ))}
@@ -145,7 +151,7 @@ const content = {
     {
       en: "Signup",
       ar: "إنشاء حساب",
-      image: "/img/step-1.png",
+      image: "/img/step-1-lang.png",
       alt: {
         en: "Step 1 Create ArabLocalMarket account / signup",
         ar: "الخطوة 1 إنشاء حساب / تسجيل في ArabLocalMarket",
@@ -154,7 +160,7 @@ const content = {
     {
       en: "Select a plan",
       ar: "حدد اشتراكًا",
-      image: "/img/step-2.gif",
+      image: "/img/step-2-lang.gif",
       alt: {
         en: "Step 2 Select a store plan from the available plan on ArabLocalMarket",
         ar: "الخطوة 2 حدد اشتراك للمتجر من الاشتراكات المتاحة على ArabLocalMarket",
@@ -163,7 +169,7 @@ const content = {
     {
       en: "Create a store",
       ar: "أنشئ متجرً",
-      image: "/img/step-3.gif",
+      image: "/img/step-3-lang.gif",
       alt: {
         en: "Step 2 Create a store based on the plan you chose",
         ar: "الخطوة 2 قم بإنشاء متجر بناءً على الاشتراك التي اخترته",
@@ -172,7 +178,7 @@ const content = {
     {
       en: "List your products",
       ar: "أضف منتجاتك",
-      image: "/img/step-4.gif",
+      image: "/img/step-4-lang.gif",
       alt: {
         en: "Step 2 List your products in the store you created",
         ar: "الخطوة 2 أضف منتجاتك إلى المتجر الذي أنشأته",
