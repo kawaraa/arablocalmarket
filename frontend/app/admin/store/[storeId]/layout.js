@@ -77,12 +77,13 @@ export default function StoreById({ children, params: { storeId } }) {
         onFile={handleCoverChange}
         alt={store.name || content.coverAlt[lang]}
         title={content.coverEdit[lang]}>
-        <Link passHref legacyBehavior href={`/admin/pos?storeId=${storeId}`}>
-          <a title={content.pos[lang]} className="absolute top-5 right-5 w-8">
-            <SvgIcon name="logo" />
-          </a>
+        <Link
+          passHref
+          href={`/admin/pos?storeId=${storeId}`}
+          title={content.pos[lang]}
+          className="absolute top-5 right-5 w-10 bg-blur rounded-md">
+          <SvgIcon name="store" />
         </Link>
-        {/* <div className="absolute inset-0 bg-blur sm:hidden rounded-2xl"></div> */}
 
         <LinkButton
           icon="eye"

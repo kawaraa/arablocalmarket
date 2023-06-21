@@ -108,7 +108,7 @@ export default function Navigation() {
 
       <div className="flex items-center justify-end flex-auto">
         <Link passHref legacyBehavior href="/cart">
-          <a className="relative flex mr-2">
+          <a className="relative flex mr-2" title={content.cart[lang]}>
             <span className="w-8 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
               <SvgIcon name="cart" />
             </span>
@@ -162,6 +162,7 @@ const content = {
     { text: { en: "EN", ar: "الإنجليزية" }, value: "en" },
     { text: { en: "AR", ar: "العربية" }, value: "ar" },
   ],
+  cart: { en: "Shopping cart and Favorite items", ar: "عربة التسوق والعناصر المفضلة" },
   navLinks: [
     { text: { en: "Find a store", ar: "ابحث عن متجر" }, path: "/store" },
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
