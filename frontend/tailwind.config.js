@@ -19,7 +19,7 @@ module.exports = {
       lbg: "#e5e7eb", //f9fafb Light Background
       dbg: "#121212", // Dark Background
       cbg: "#ffffff1a", // Card Background
-      dcbg: "#272727", // Dark card Background
+      dcbg: "#272727", // Dark card Background #263546
       lt: "#6b7280", // Light Title color
       dt: "#ffffffbf", // Dark Color
       t: "#666666", // Light Color

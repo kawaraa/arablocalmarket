@@ -3,3 +3,4 @@ Allow: /
 Disallow: /api/*
 Disallow: /admin/*
 Disallow: /order/*
+sitemap: https://arablocalmarket.com/sitemap.xml
