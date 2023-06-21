@@ -186,8 +186,9 @@ export default function ProductById({ params }) {
               <Button
                 icon="plus"
                 onClick={() => setVariants([...variants, { quantity: 0 }])}
-                cls="!py-1 !px-2.5 !rounded-full"
+                cls="!py-1 !px-2.5 text-sm !rounded-full"
                 iconCls="w-7">
+                <span className="w-2 h-2"></span>
                 {content.addV[lang]}
               </Button>
             </div>
@@ -195,7 +196,7 @@ export default function ProductById({ params }) {
         </div>
 
         <div className="flex my-5">
-          <Button type="submit" cls="py-2 px-5 text-lg">
+          <Button type="submit" cls={`text-lg ${product ? "" : "flex-1 sm:flex-none"}`}>
             {!product ? shdCnt.create[lang] : shdCnt.save[lang]}
           </Button>
 
@@ -205,7 +206,7 @@ export default function ProductById({ params }) {
               <Button
                 type="button"
                 onClick={() => setDeleteConfirmation(true)}
-                cls="py-2 px-5 !bg-bg3 !text-bg text-lg">
+                cls="!bg-bg3 !text-bg text-lg">
                 {shdCnt.delete[lang]}
               </Button>
             </>

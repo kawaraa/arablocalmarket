@@ -336,7 +336,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           full
         />
         <div className="flex my-5">
-          <Button type="submit" cls="py-2 px-5 text-lg">
+          <Button type="submit" cls={`text-lg ${store ? "" : "flex-1 sm:flex-none"}`}>
             {id ? shdCnt.save[lang] : shdCnt.create[lang]}
           </Button>
 
@@ -346,7 +346,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
               <Button
                 type="button"
                 onClick={() => setDeleteConfirmation(true)}
-                cls="py-2 px-5 !bg-bg3 !text-bg text-lg">
+                cls="!bg-bg3 !text-bg text-lg">
                 {shdCnt.delete[lang]}
               </Button>
             </>

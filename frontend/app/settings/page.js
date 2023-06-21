@@ -66,7 +66,7 @@ export default function Settings(props) {
           <Button
             icon="bin"
             onClick={() => setConfirmDeletion(true)}
-            cls="!text-sm !bg-bg3 !text-bg"
+            cls="text-sm !bg-bg3 !text-bg"
             iconCls="w-5">
             {content.deleteBtn[lang]}
           </Button>

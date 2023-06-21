@@ -78,7 +78,7 @@ export default function SignIn() {
         </div>
 
         <div>
-          <Button type="submit" disabled={loading} loading={loading} cls="text-base w-full py-2">
+          <Button type="submit" disabled={loading} loading={loading} cls="w-full">
             {content.submit[lang]}
           </Button>
         </div>

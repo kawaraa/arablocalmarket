@@ -32,7 +32,7 @@ export default function ForgotPassword({}) {
 
       <EmailInputField full lang={lang} cls="text-lg rounded-t-md cd_hr" inCls="rounded-md" />
 
-      <Button type="submit" disabled={loading} loading={loading} cls="text-base w-full py-2">
+      <Button type="submit" disabled={loading} loading={loading} cls="w-full">
         {content.submit[lang]}
       </Button>
     </form>

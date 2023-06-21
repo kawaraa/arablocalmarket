@@ -59,7 +59,7 @@ export default function ResetPassword({ params, searchParams: { code } }) {
         />
       </div>
 
-      <Button type="submit" disabled={loading} loading={loading} cls="text-base w-full py-2">
+      <Button type="submit" disabled={loading} loading={loading} cls="w-full">
         {shdCnt.save[lang]}
       </Button>
     </form>

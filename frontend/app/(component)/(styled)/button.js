@@ -4,7 +4,7 @@ import SvgIcon from "../(styled)/svg-icon";
 import Loader from "../../(layout)/loader";
 
 export function Button({ children, type = "button", icon, loading, disabled, cls, iconCls, ...p }) {
-  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc text-t font-medium rounded-md shadow-md md:px-4 md:py-2 disabled:opacity-60 disabled:cursor-no-drop transition-all transition `;
+  let c = `inline-flex justify-center items-center px-4 py-2 md:text-lg bg-pc text-t font-medium rounded-md shadow-md disabled:opacity-60 disabled:cursor-no-drop transition-all transition `;
   if (!disabled && !loading) c += "hover:bg-gradient-to-tl hover:from-bg9 ";
   if (loading) c += "cursor-progress ";
   c += cls || "";
@@ -40,7 +40,7 @@ export function IconButton({ children, icon, cls, ...p }) {
 }
 
 export function LinkButton({ children, icon, cls, iconCls, href, ...p }) {
-  let c = `inline-flex justify-center items-center px-3 py-1 text-sm md:text-lg bg-pc bg-gradient-to-tl hover:from-bg9 text-t font-medium rounded-md shadow-md md:px-4 md:py-2 transition-all transition `;
+  let c = `inline-flex justify-center items-center px-4 py-2 md:text-lg bg-pc bg-gradient-to-tl hover:from-bg9 text-t font-medium rounded-md shadow-md transition-all transition `;
 
   return (
     <Link passHref legacyBehavior href={href}>

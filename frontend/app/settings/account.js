@@ -55,7 +55,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
 
       <div dir="ltr" className="mb-5 flex justify-between items-center">
         <span className=" px-2 opacity-60">********</span>
-        <Button type="submit" onClick={() => setPasswordForm(true)} cls="!px-2 !py-1 !text-sm">
+        <Button type="submit" onClick={() => setPasswordForm(true)} cls="!px-2 !py-1 text-sm">
           {shdCnt.edit[lang]}
         </Button>
       </div>

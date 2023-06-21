@@ -69,7 +69,7 @@ export default function ActionButtons({ id }) {
         <span className="absolute -top-1 right-1 text-lg">+</span>
       </IconButton>
 
-      <Button onClick={handleBuy} cls="!text-lg font-medium shadow-none">
+      <Button onClick={handleBuy} cls="text-lg font-medium shadow-none">
         {content.buyBtn[lang]}
       </Button>
     </>

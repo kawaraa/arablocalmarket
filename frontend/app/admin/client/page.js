@@ -115,7 +115,7 @@ export default function Client({}) {
 
       {loadMore && !!affiliates[0] && (
         <div className="text-center mt-5">
-          <Button onClick={getAffiliates} cls="!py-1 !px-2 !text-sm">
+          <Button onClick={getAffiliates} cls="!py-1 !px-2 text-sm">
             {content.loadBtn[lang]}
           </Button>
         </div>

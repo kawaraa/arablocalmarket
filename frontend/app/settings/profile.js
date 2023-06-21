@@ -47,11 +47,7 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
       <h2 className="text-lg font-semibold mt-6 mb-2">{content.h2Adr[lang]}</h2>
 
       {!adr?.line1 ? (
-        <Button
-          type="submit"
-          icon="plus"
-          onClick={() => setAddressForm(true)}
-          cls="mt-3 !py-1 !px-2 !text-sm">
+        <Button type="submit" icon="plus" onClick={() => setAddressForm(true)} cls="mt-3 !py-1 !px-2 text-sm">
           {shdCnt.newAdr[lang]}
         </Button>
       ) : (

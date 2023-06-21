@@ -104,7 +104,7 @@ export default function Signup({}) {
         </div>
 
         <div>
-          <Button type="submit" disabled={loading} loading={loading} cls="!text-lg w-full py-2">
+          <Button type="submit" disabled={loading} loading={loading} cls="text-lg w-full">
             {content.submit[lang]}
           </Button>
         </div>

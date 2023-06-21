@@ -65,11 +65,7 @@ export default function Payout({ lang, bankAccount, showMessage }) {
           <div className="flex items-center">
             <p className="text-sm opacity-60">{content.noPayout[lang]}</p>
             <span className="w-3 h-3"></span>
-            <Button
-              icon="plus"
-              onClick={() => setShowForm(true)}
-              loading={loading}
-              cls="!py-1 !px-2 !text-sm">
+            <Button icon="plus" onClick={() => setShowForm(true)} loading={loading} cls="!py-1 !px-2 text-sm">
               {content.adBtn[lang]}
             </Button>
           </div>

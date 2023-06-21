@@ -81,8 +81,8 @@ export default function Notification() {
             </li>
           ))}
           {!done && (
-            <li className="text-center py-2">
-              <Button onClick={getNotification} loading={loading} cls=" !py-1 !text-sm">
+            <li className="w-60 py-2 text-center">
+              <Button onClick={getNotification} loading={loading} cls="!py-1 text-sm">
                 {content.btn[lang]}
               </Button>
             </li>
