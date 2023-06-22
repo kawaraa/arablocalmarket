@@ -81,7 +81,7 @@ export default function StoreById({ children, params: { storeId } }) {
           passHref
           href={`/admin/pos?storeId=${storeId}`}
           title={content.pos[lang]}
-          className="absolute top-5 right-5 w-10 bg-blur rounded-md bg-bg">
+          className="absolute top-5 right-5 w-10 bg-blur rounded-lg">
           <SvgIcon name="logo" />
         </Link>
 
