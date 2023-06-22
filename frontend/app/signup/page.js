@@ -13,6 +13,7 @@ import {
 import { request } from "../(service)/api-provider";
 import Image from "next/image";
 import { Cookies } from "../(service)/utilities";
+import SvgIcon from "../(component)/(styled)/svg-icon";
 
 export default function Signup({}) {
   const router = useRouter();
@@ -63,14 +64,11 @@ export default function Signup({}) {
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">
         <div>
-          <Image
-            src="/img/logo.png"
-            alt="Arab Local market Logo"
-            width="100"
-            height="100"
-            className="h-auto w-24 mx-auto "
-          />
-          <h1 className="mt-6 text-center text-2xl font-bold ">{content.h1[lang]}</h1>
+          <div className="w-28 mx-auto">
+            <SvgIcon name="logo" />
+          </div>
+
+          <h1 className="text-center text-2xl font-bold ">{content.h1[lang]}</h1>
         </div>
 
         <div className="flex -space-x-px shadow-sm">

@@ -11,6 +11,8 @@ export default async function Category({ params: { storeId }, searchParams }) {
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
 
   await Promise.all(categories.map(async (c) => (c.total = await getTotal(storeId, c.key))));
+  const availableCategories = categories.filter((c) => c.total > 0);
+  // const availableCategories = categories;
 
   return (
     <div>
@@ -20,7 +22,7 @@ export default async function Category({ params: { storeId }, searchParams }) {
         </h2>
 
         <ul className="flex flex-wrap">
-          {categories.map((c, i) => (
+          {availableCategories.map((c, i) => (
             <li
               style={getCssDelay()}
               className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b"
@@ -53,13 +55,3 @@ const getTotal = async (storeId, category) => {
   const { data, meta } = await serverRequest("product", "GET", { query });
   return meta.pagination.total;
 };
-
-// The rest of the categories.
-// const categories = [
-//   { text: { name: "Frozen foods" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Health - wellness products" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Office - school supplies" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Electronics" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Home - kitchen supplies" }, image: "", numberOfItems: 1031 },
-//   { text: { name: "Seasonal items" }, image: "", numberOfItems: 1031 },
-// ];
