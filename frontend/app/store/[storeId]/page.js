@@ -10,7 +10,6 @@ export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
 
-  // Todo: make the store query by id, title and about
   const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })).data?.attributes;
   if (!store) return notFound();
 
@@ -108,7 +107,7 @@ export default async function StoreOverview({ params, searchParams }) {
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
+export async function generateMetadata({ params }) {
   const store = await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })
     .then((res) => res.data?.attributes)
     .catch(() => null);

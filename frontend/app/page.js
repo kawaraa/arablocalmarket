@@ -36,7 +36,7 @@ export default async function LandingPage({ params, searchParams }) {
             {content.h2[lang]}
           </h2>
 
-          <Link passHref legacyBehavior href="/store">
+          <Link passHref legacyBehavior hrefLang={lang} href="/store">
             <a
               className="inline-flex justify-center px-4 py-2 text-sm bg-pc text-t bg-gradient-to-tl hover:from-bg9 rounded-full md:px-4 md:py-2 font-medium shadow-md duration-200 lazy-b"
               style={getCssDelay()}>
@@ -90,7 +90,7 @@ export default async function LandingPage({ params, searchParams }) {
           ))}
         </ul>
 
-        <Link passHref legacyBehavior href="/admin/store?tab=my">
+        <Link passHref legacyBehavior hrefLang={lang} href="/admin/store?tab=my">
           <a
             style={getCssDelay()}
             className="inline-block mt-3 px-6 py-3 text-lg bg-dbg text-bg rounded-full duration-200 hover:opacity-90 hover:shadow-xl lazy-b">

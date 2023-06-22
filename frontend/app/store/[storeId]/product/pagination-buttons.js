@@ -28,7 +28,12 @@ export default function PaginationButtons({ lang, query, pagination }) {
         ref={divRef}
         className="no-srl-bar w-full overflow-x-scroll flex justify-center -space-x-px scroll-smooth">
         {Array.from({ length: buttons }, (_, i) => i + 1).map((num) => (
-          <Link passHref legacyBehavior href={{ pathname, query: { ...query, page: num } }} key={num}>
+          <Link
+            passHref
+            legacyBehavior
+            hrefLang={lang}
+            href={{ pathname, query: { ...query, page: num } }}
+            key={num}>
             <a
               onClick={scrollUp}
               className={

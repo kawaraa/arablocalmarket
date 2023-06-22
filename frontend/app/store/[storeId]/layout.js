@@ -13,7 +13,6 @@ export default async function StoreLayout({ children, params: { storeId }, searc
   const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
   const accessToken = cookieStore.get("accessToken")?.value;
 
-  // Todo: make the store query by id, title and about
   const store = await serverRequest("store", "GET", { query: `/${storeId}${q}`, token: accessToken })
     .then((res) => res.data)
     .catch(() => null);

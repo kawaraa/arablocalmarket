@@ -12,7 +12,7 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
   const newP =
     typeof link == "function"
       ? { onClick: () => link(product) }
-      : { href: link, passHref: true, legacyBehavior: true };
+      : { hrefLang: lang, href: link, passHref: true, legacyBehavior: true };
 
   const v = product.variants.sort()[0];
 

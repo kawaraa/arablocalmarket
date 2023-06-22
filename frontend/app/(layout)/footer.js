@@ -16,7 +16,7 @@ export default function Footer({ lang = "en" }) {
             <ul className="mt-1 text-sm">
               {g.links.map((link, i) => (
                 <li key={i}>
-                  <Link passHref legacyBehavior href={link.path}>
+                  <Link passHref legacyBehavior hrefLang={lang} href={link.path}>
                     <a className="inline-block my-2 hover:underline underline-offset-4 hover:text-black">
                       {link.text[lang]}
                     </a>

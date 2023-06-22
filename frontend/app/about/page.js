@@ -2,9 +2,10 @@ import { cookies } from "next/headers";
 import Footer from "../(layout)/footer";
 import Article from "../(component)/article";
 
-export default function About({ searchParams }) {
+export default function About({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
 
   return (
     <>

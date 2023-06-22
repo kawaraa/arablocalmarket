@@ -7,9 +7,11 @@ import StoreSearch from "./store-search";
 import PaginationButtons from "./[storeId]/product/pagination-buttons";
 import CoordinatesCriteria from "./coordinates-criteria";
 
-export default async function StoresNearby({ searchParams }) {
+export default async function StoresNearby({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
+
   const coordinates = cookieStore.get("coordinates")?.value?.split(":") || [0, 0];
   const range = +(cookieStore.get("range")?.value || "1.5");
   const search = searchParams.search?.toLowerCase();

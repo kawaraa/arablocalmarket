@@ -16,19 +16,23 @@ export default function StoreSearch({ text }) {
   const [showFilter, setShowFilter] = useState(false);
   const [search, setSearch] = useState(text || "");
 
-  const handleSearch = () => {
+  const handleSearch = (value) => {
     if (showFilter) setShowFilter(false);
-    router.push(`${pathname}?search=${search}`);
-    router.refresh();
+    if (typeof value == "string") {
+      setSearch(value);
+      if (!value.trim() || value.length > 3) {
+        setTimeout(() => {
+          if (pathname?.includes("/ar/search/")) router.push(`/store/ar/search/${value}`);
+          else if (pathname?.includes("/store/search/")) router.push(`/store/search/${value}`);
+          else router.push(`/store?search=${value}`);
+        }, 500);
+      }
+    }
   };
 
   const handleUpdatePosition = ({ lat, lng }) => {
     updateCoordinates([lat, lng]);
   };
-
-  useEffect(() => {
-    if (!search.trim() || search.length > 3) handleSearch(search);
-  }, [search]);
 
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
@@ -50,7 +54,7 @@ export default function StoreSearch({ text }) {
 
         <SearchBox
           label={content.searchLabel[lang]}
-          onSearch={setSearch}
+          onSearch={handleSearch}
           search={search}
           onFinish={handleSearch}
           cls="flex-1 sm:flex-none"

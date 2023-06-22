@@ -4,10 +4,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
 import { fetchUser, request } from "../(service)/api-provider";
-import { InputField } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 import { EmailInputField, PswInputField } from "../(component)/custom-inputs";
-import Image from "next/image";
 import { Cookies } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 

@@ -4,9 +4,10 @@ import Footer from "../(layout)/footer";
 import { LinkButton } from "../(component)/(styled)/button";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 
-export default function Help({ searchParams }) {
+export default function Help({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
 
   return (
     <>
@@ -17,7 +18,7 @@ export default function Help({ searchParams }) {
         ))}
       </section>
       <div className="mb-20 flex justify-center">
-        <LinkButton href="/contact" cls="!rounded-full">
+        <LinkButton hrefLang={lang} href="/contact" cls="!rounded-full">
           {content.contactUs[lang]}
           <span className={"w-8 " + (lang == "ar" ? "rotate-90" : "-rotate-90")}>
             <SvgIcon name="arrowDown" />

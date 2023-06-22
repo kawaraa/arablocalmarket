@@ -2,38 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://arablocalmarket.com/</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/pricing</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/pricing/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/about</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/about/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/help</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/help/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/contact</loc>
-    <lastmod>2023-06-20</lastmod>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/privacy-policy</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/privacy-policy/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/store</loc>
-    <lastmod>2023-06-20</lastmod>
+     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/store/ar"/>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/signin</loc>
-    <lastmod>2023-06-20</lastmod>
+    <lastmod>2023-06-22</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/signup</loc>
-    <lastmod>2023-06-20</lastmod>
+    <lastmod>2023-06-22</lastmod>
   </url>
 </urlset>

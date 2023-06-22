@@ -3,9 +3,10 @@ import PlanCard from "../(component)/plan-card";
 import plans from "../(layout)/plans";
 import CheckReferral from "./check-referral";
 
-export default async function pricing({ searchParams }) {
+export default async function Pricing({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
+  if (!/en|ar/gim.test(lang)) lang = "en";
 
   const date = new Date();
   date.setMonth(date.getMonth() + 1);
