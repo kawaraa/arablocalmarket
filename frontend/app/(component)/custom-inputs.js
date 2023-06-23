@@ -79,9 +79,11 @@ export function PswInputField({ lang, newPsw, confirm, cls, ...p }) {
       cls={"items-center " + cls}
       {...newProps}
       {...p}>
-      <Tooltip position="top-left" cls="!absolute right-10 z-1">
-        <div className="w-40 text-sm leading-6 text-orange">{content.passwordTooltip[lang]}</div>
-      </Tooltip>
+      {!confirm && (
+        <Tooltip position="top-left" cls="!absolute right-10 z-1">
+          <div className="w-40 text-sm leading-6 text-orange">{content.passwordTooltip[lang]}</div>
+        </Tooltip>
+      )}
       <IconButton icon="eye" onClick={() => setVisible(!visible)} className="w-5 absolute right-2 z-1" />
     </InputField>
   );
