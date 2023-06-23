@@ -51,7 +51,7 @@ export default function SignIn() {
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form dir="auto" onSubmit={handleSignIn} className="w-full max-w-md mx-auto space-y-6">
         <div>
-          <div className="w-28 mx-auto">
+          <div className="w-20 mx-auto">
             <SvgIcon name="logo" />
           </div>
 

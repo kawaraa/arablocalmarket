@@ -11,7 +11,6 @@ import {
   PswInputField,
 } from "../(component)/custom-inputs";
 import { request } from "../(service)/api-provider";
-import Image from "next/image";
 import { Cookies } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 
@@ -64,7 +63,7 @@ export default function Signup({}) {
     <div className="min-h-[90vh] pt-12 px-4 ">
       <form onSubmit={handleSignup} className="w-full max-w-md mx-auto space-y-6">
         <div>
-          <div className="w-28 mx-auto">
+          <div className="w-20 mx-auto">
             <SvgIcon name="logo" />
           </div>
 

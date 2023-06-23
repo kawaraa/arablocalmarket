@@ -19,7 +19,7 @@ export default function StoreSearch({ text }) {
   const handleSearch = (value) => {
     if (showFilter) setShowFilter(false);
     if (typeof value == "string") {
-      setSearch(value);
+      setSearch(window.encodeURIComponent(value));
       if (!value.trim() || value.length > 3) {
         setTimeout(() => {
           if (pathname?.includes("/ar/search/")) router.push(`/store/ar/search/${value}`);
