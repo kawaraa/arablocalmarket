@@ -302,7 +302,9 @@ export function Select({ children, label, cls, inCls, onChange, value, defaultVa
         title={p.title}
         aria-label={p.title}
         value={v}
-        className={"inline-block bg-cbg w-auto px-2 py-1 card cd_hr fs " + (inCls || " rounded-md")}
+        className={
+          "inline-block bg-cbg w-auto px-2 py-1 text-center card cd_hr fs " + (inCls || " rounded-md")
+        }
         {...p}>
         {children}
       </select>

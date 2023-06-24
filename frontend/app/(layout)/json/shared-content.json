@@ -49,6 +49,7 @@
     "name": { "en": "Name", "ar": "نوع التفاصيل" },
     "value": { "en": "Value", "ar": "التفاصيل" },
     "values": {
+      "QUANTITY": { "ar": "الكمية", "placeholder": { "en": "E.g. two", "ar": "مثال، اثنين" } },
       "WEIGHT": { "ar": "الوزن", "placeholder": { "en": "E.g. 100G", "ar": "مثال، 100 جرام" } },
       "SIZE": { "ar": "الحجم", "placeholder": { "en": "E.g. Small", "ar": "مثال، صغير" } },
       "PACKAGING": {

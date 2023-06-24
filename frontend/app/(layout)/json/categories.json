@@ -1,33 +1,8 @@
 [
   {
-    "key": "vegetable",
-    "text": { "en": "Vegetables and fruits", "ar": "الخضروات والفواكه" },
-    "image": "/img/category/produce-vegetables-clipart.png"
-  },
-  {
-    "key": "bakery",
-    "text": { "en": "Bakery", "ar": "مخبوزات" },
-    "image": "/img/category/bread-clipart.png"
-  },
-  {
-    "key": "meat",
-    "text": { "en": "Meat and poultry", "ar": "لحم و دواجن" },
-    "image": "/img/category/cut-of-meat-clipart.png"
-  },
-  {
-    "key": "seafood",
-    "text": { "en": "Seafood", "ar": "مأكولات بحرية" },
-    "image": "/img/category/fish-clipart.png"
-  },
-  {
     "key": "deli",
     "text": { "en": "Deli", "ar": "الأطعمة" },
     "image": "/img/category/burger-prepared-food-clipart.png"
-  },
-  {
-    "key": "dairy",
-    "text": { "en": "Dairy and eggs", "ar": "الألبان والبيض" },
-    "image": "/img/category/dairy-clipart.png"
   },
   {
     "key": "beverages",
@@ -35,9 +10,34 @@
     "image": "/img/category/beverages-clipart.png"
   },
   {
+    "key": "bakery",
+    "text": { "en": "Bakery", "ar": "مخبوزات" },
+    "image": "/img/category/bread-clipart.png"
+  },
+  {
+    "key": "vegetable",
+    "text": { "en": "Vegetables and fruits", "ar": "الخضروات والفواكه" },
+    "image": "/img/category/produce-vegetables-clipart.png"
+  },
+  {
+    "key": "dairy",
+    "text": { "en": "Dairy and eggs", "ar": "الألبان والبيض" },
+    "image": "/img/category/dairy-clipart.png"
+  },
+  {
+    "key": "meat",
+    "text": { "en": "Meat and poultry", "ar": "لحم و دواجن" },
+    "image": "/img/category/meat-poultry-clipart.png"
+  },
+  {
+    "key": "seafood",
+    "text": { "en": "Seafood", "ar": "مأكولات بحرية" },
+    "image": "/img/category/fish-clipart.png"
+  },
+  {
     "key": "snack",
     "text": { "en": "Snacks and candy", "ar": "الوجبات الخفيفة والحلوى" },
-    "image": "/img/category/snacks-clipart.png"
+    "image": "/img/category/snacks-candy-clipart.png"
   },
   {
     "key": "canned",
@@ -46,18 +46,12 @@
   },
   {
     "key": "legumes",
-    "text": {
-      "en": "Legumes and grains",
-      "ar": "الحبوب والبقوليات"
-    },
+    "text": { "en": "Legumes and grains", "ar": "الحبوب والبقوليات" },
     "image": "/img/category/legumes-grains-clipart.png"
   },
   {
     "key": "seeds",
-    "text": {
-      "en": "Nuts and seeds",
-      "ar": "المكسرات والبذور"
-    },
+    "text": { "en": "Nuts and seeds", "ar": "المكسرات والبذور" },
     "image": "/img/category/nuts-seeds-clipart.png"
   },
   {
@@ -78,6 +72,76 @@
   {
     "key": "baby",
     "text": { "en": "Baby supplies", "ar": "مستلزمات الأطفال" },
-    "image": "/img/category/baby-food-clipart.png"
+    "image": "/img/category/baby-supplies-clipart.png"
+  },
+  {
+    "key": "frozen",
+    "text": { "en": "Frozen food", "ar": "أغذية مجمدة" },
+    "image": "/img/category/frozen-food-clipart.png"
+  },
+  {
+    "key": "health",
+    "text": { "en": "Health and supplement", "ar": "فيتامينات ومكملات غذائية" },
+    "image": "/img/category/health-supplements-clipart.png"
+  },
+  {
+    "key": "office",
+    "text": { "en": "Office and Stationery", "ar": "الأدوات المكتبية" },
+    "image": "/img/category/stationery-clipart.png"
+  },
+  {
+    "key": "appliance",
+    "text": { "en": "Appliances", "ar": "أجهزة منزلية" },
+    "image": "/img/category/appliances-clipart.png"
+  },
+  {
+    "key": "furniture",
+    "text": { "en": "Furniture and Decor", "ar": "الأثاث ومفروشات والديكور" },
+    "image": "/img/category/furniture-clipart.png"
+  },
+  {
+    "key": "home-kitchen",
+    "text": { "en": "Home and Kitchen", "ar": "معدات المنزل والمطبخ" },
+    "image": "/img/category/home-kitchen-clipart.png"
+  },
+  {
+    "key": "home-improvement",
+    "text": { "en": "Home improvement", "ar": "معدات الإصلاح" },
+    "image": "/img/category/home-improvement.png"
+  },
+  {
+    "key": "electrical-supplies",
+    "text": { "en": "Lights and Electrical Supplies", "ar": "مصابيح وللوازم الكهربائية" },
+    "image": "/img/category/lights-electrical-supplies-clipart.png"
+  },
+  {
+    "key": "male-clothing",
+    "text": { "en": "Male clothing", "ar": "ملابس الرجال" },
+    "image": "/img/category/male-clothing-clipart.png"
+  },
+  {
+    "key": "female-clothing",
+    "text": { "en": "Female clothing", "ar": "ملابس نسائية" },
+    "image": "/img/category/female-clothing-clipart.png"
+  },
+  {
+    "key": "female-footwear",
+    "text": { "en": "Female footwear", "ar": "أحذية نسائية" },
+    "image": "/img/category/female-footwear-clipart.png"
+  },
+  {
+    "key": "male-footwear",
+    "text": { "en": "Male footwear", "ar": "أحذية رجالية" },
+    "image": "/img/category/male-footwear-clipart.png"
+  },
+  {
+    "key": "female-accessory",
+    "text": { "en": "Female accessories", "ar": "اكسسوارات نسائية" },
+    "image": "/img/category/female-accessories-clipart.png"
+  },
+  {
+    "key": "male-accessory",
+    "text": { "en": "Male accessories", "ar": "اكسسوارات للذكور" },
+    "image": "/img/category/male-accessories-clipart.png"
   }
 ]

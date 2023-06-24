@@ -109,20 +109,21 @@ export default function POS({ params, searchParams }) {
   if (!user || user?.loading || !store) return null;
   return (
     <>
+      <div
+        dir="auto"
+        className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-dbg">
+        <SearchBox
+          label={content.search[lang]}
+          value={search}
+          onSearch={setSearch}
+          onFinish={handleSearch}
+          inCls="p-2"
+          cls="flex-1"
+        />
+        <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnCls="w-10" />
+      </div>
       <article>
-        <div
-          dir="auto"
-          className="flex items-center fixed z-1 top-0 right-0 left-0 sm:mx-auto sm:w-1/2 lg:w-1/3 pt-3 pb-1 px-1 bg-bg dark:bg-dbg">
-          <SearchBox
-            label={content.search[lang]}
-            value={search}
-            onSearch={setSearch}
-            onFinish={handleSearch}
-            inCls="p-2"
-            cls="flex-1"
-          />
-          <BarcodeScannerPopup lang={lang} onBarcodeDetect={handleSearch} onError={onScanErr} btnCls="w-10" />
-        </div>
+        {/* Todo: Show products per category in POS */}
 
         <h1 className="text-lg my-3 text-center font-medium">
           {content.h1[lang][0]} <span className="font-bold">( {total} )</span> {content.h1[lang][1]}
@@ -143,7 +144,6 @@ export default function POS({ params, searchParams }) {
         </ul>
         {loading && <Loader size="30" wrapperCls="my-5" />}
       </article>
-
       <ProductPopup
         lang={lang}
         open={!!clickedProduct}
@@ -152,7 +152,6 @@ export default function POS({ params, searchParams }) {
         setMsg={addMessage}
         onAddItem={addItem}
       />
-
       <OrderDetailsPopup
         open={showOrderDetails}
         onClose={() => setShowOrderDetails(false)}
@@ -166,7 +165,6 @@ export default function POS({ params, searchParams }) {
         admin
         pos
       />
-
       <Button
         onClick={() => setShowOrderDetails(true)}
         icon="cart"

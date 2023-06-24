@@ -197,10 +197,12 @@ export default function NewStore({ params, searchParams: { id, subscription } })
         />
 
         <Select
+          required
           name="type"
           label={content.storeType.label[lang]}
           cls="my-6 flex items-center"
-          inCls="mx-2 !p-[2px] rounded-full">
+          inCls="mx-2 !p-[2px] rounded-full invalid:border-red">
+          <option value="">{content.storeType.default[lang]}</option>
           {content.storeType.values.map((v, i) => (
             <option value={v.en} key={i}>
               {v[lang]}
@@ -228,15 +230,19 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             />
           )}
         </div>
+
         <h6 className="mb-2  font-semibold rq">{content.address[lang]}</h6>
         <AddressInputs lang={lang} {...(store?.address || {})} map onError={handleError} />
+
         <h6 className="font-semibold mt-7 rq">{content.workdays[lang]}</h6>
         <DaysCheckButtons lang={lang} checkedDays={days} onCheck={addDay} />
+
         <div className="my-5">
           {days.map((d, i) => (
             <DayOpeningHours lang={lang} day={d} onDayUpdate={updateDay} key={i} />
           ))}
         </div>
+
         <h6 className="font-semibold mt-7 rq">{content.payments[lang]}</h6>
         <Collapse
           onCheck={() => setOnDeliveryPayment(onDeliveryPayment ? null : { cash: true })}
@@ -271,6 +277,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             </ToggleSwitch>
           </div>
         </Collapse>
+
         <Collapse
           onCheck={(e) => setOnlinePayment(onlinePayment ? null : { card: e.target.checked })}
           checked={!!onlinePayment?.card || !!onlinePayment?.bank}
@@ -317,6 +324,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
             </CheckInput>
           </Collapse>
         </Collapse>
+
         <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
         <InputField
           type="text"
@@ -335,6 +343,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           placeholder={" US52359525 " + shdCnt.ex[lang]}
           full
         />
+
         <div className="flex my-5">
           <Button type="submit" cls={`text-lg ${store ? "" : "flex-1 sm:flex-none"}`}>
             {id ? shdCnt.save[lang] : shdCnt.create[lang]}
@@ -386,6 +395,7 @@ const content = {
     },
   },
   storeType: {
+    default: { en: "Select type", ar: "اختر نوع" },
     label: { en: "Store type", ar: "نوع المتجر" },
     values: [
       { en: "market", ar: "محل بقالة" },
