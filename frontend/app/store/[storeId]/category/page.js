@@ -11,8 +11,7 @@ export default async function Category({ params: { storeId }, searchParams }) {
   const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
 
   await Promise.all(categories.map(async (c) => (c.total = await getTotal(storeId, c.key))));
-  // const availableCategories = categories.filter((c) => c.total > 0);
-  const availableCategories = categories;
+  const availableCategories = categories.filter((c) => c.total > 0);
 
   return (
     <div>
@@ -34,8 +33,8 @@ export default async function Category({ params: { storeId }, searchParams }) {
                     <Image
                       src={c.image}
                       alt={c.text[lang]}
-                      width="200"
-                      height="200"
+                      width="150"
+                      height="80"
                       className="h-full w-auto"
                     />
                   </div>

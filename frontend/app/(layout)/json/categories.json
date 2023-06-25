@@ -1,8 +1,8 @@
 [
   {
-    "key": "deli",
-    "text": { "en": "Deli", "ar": "الأطعمة" },
-    "image": "/img/category/burger-prepared-food-clipart.png"
+    "key": "prepared-food",
+    "text": { "en": "prepared foods", "ar": "الأطعمة الجاهزة" },
+    "image": "/img/category/prepared-food-clipart.png"
   },
   {
     "key": "beverages",
@@ -107,7 +107,7 @@
   {
     "key": "home-improvement",
     "text": { "en": "Home improvement", "ar": "معدات الإصلاح" },
-    "image": "/img/category/home-improvement.png"
+    "image": "/img/category/home-improvement-clipart.png"
   },
   {
     "key": "electrical-supplies",
@@ -143,5 +143,106 @@
     "key": "male-accessory",
     "text": { "en": "Male accessories", "ar": "اكسسوارات للذكور" },
     "image": "/img/category/male-accessories-clipart.png"
+  },
+  {
+    "key": "sportswear",
+    "text": { "en": "Sportswear", "ar": "ملابس رياضية" },
+    "image": "/img/category/sportswear-clipart.png"
+  },
+  {
+    "key": "sports-equipment",
+    "text": { "en": "Sports Equipment", "ar": "ادوات ومعدات رياضية" },
+    "image": "/img/category/sports-equipment-clipart.png"
+  },
+  {
+    "key": "travel",
+    "text": { "en": "Travel and Camping Gear", "ar": "معدات السفر والتخييم" },
+    "image": "/img/category/travel-camping-clipart.png"
+  },
+  {
+    "key": "toy",
+    "text": { "en": "Toys and Games", "ar": "ألعاب ودما" },
+    "image": "/img/category/toys-games-clipart.png"
+  },
+  { "key": "book", "text": { "en": "Books", "ar": "كتب" }, "image": "/img/category/books-clipart.png" },
+  {
+    "key": "gift-souvenir",
+    "text": { "en": "Gifts and Souvenirs", "ar": "الهدايا والتذكارات" },
+    "image": "/img/category/gifts-souvenirs-clipat.png"
+  },
+  {
+    "key": "art-craft",
+    "text": { "en": "Art and Crafts", "ar": "الفنون والحرف" },
+    "image": "/img/category/art-crafts-clipart.png"
+  },
+  {
+    "key": "car",
+    "text": { "en": "Cars and accessories", "ar": "السيارات واكسسواراتها" },
+    "image": "/img/category/cars-accessories-clipart.png"
+  },
+  {
+    "key": "motorcycles",
+    "text": { "en": "Motorcycles and accessories", "ar": "الدراجات واكسسواراتها" },
+    "image": "/img/category/motorcycles-accessories-clipart.png"
+  },
+  {
+    "key": "bicycle",
+    "text": { "en": "Bicycle and accessories", "ar": "الدراجات الهوائية واكسسواراتها" },
+    "image": "/img/category/bicycle-accessories-clipart.png"
+  },
+  {
+    "key": "pet",
+    "text": { "en": "Pet supplies", "ar": "مستلزمات الحيوانات الأليفة" },
+    "image": "/img/category/pet-supplies-clipart.png"
+  },
+  {
+    "key": "gardening",
+    "text": { "en": "Gardening and Landscaping", "ar": "معدات الزراعة والاسمدة والحدائق" },
+    "image": "/img/category/gardening-landscaping-clipart.png"
+  },
+  {
+    "key": "computer",
+    "text": { "en": "Computers", "ar": "أجهزة الكمبيوتر" },
+    "image": "/img/category/computers-clipart.png"
+  },
+  {
+    "key": "smartphone",
+    "text": { "en": "Smartphones and tablets", "ar": "الهواتف الذكية واللوحية" },
+    "image": "/img/category/smartphones-tablets-clipart.png"
+  },
+  {
+    "key": "tv",
+    "text": { "en": "TV and Sound systems", "ar": "التلفزيونات وأنظمة الصوت" },
+    "image": "/img/category/tv-speakers-clipart.png"
+  },
+  {
+    "key": "camera",
+    "text": { "en": "Cameras", "ar": "الكاميرات" },
+    "image": "/img/category/cameras-clipart.png"
+  },
+  {
+    "key": "electronic-accessory",
+    "text": { "en": "Electronics Accessories", "ar": "ملحقات الإلكترونيات" },
+    "image": "/img/category/electronics-accessories-clipart.png"
+  },
+  {
+    "key": "industrial",
+    "text": { "en": "Industrial supplies and Machinery", "ar": "معدات صناعية والات" },
+    "image": "/img/category/industrial-supplies-machinery-clipart.png"
+  },
+  {
+    "key": "scientific",
+    "text": { "en": "Scientific and Laboratory equipment", "ar": "معدات المخبرية والعلمية" },
+    "image": "/img/category/scientific-laboratory-equipment-clipart.png"
+  },
+  {
+    "key": "services",
+    "text": { "en": "Services", "ar": "خدمات" },
+    "image": "/img/category/services-clipart.png"
+  },
+  {
+    "key": "smart-device",
+    "text": { "en": "Other", "ar": "آخر" },
+    "image": "/img/category/other-clipart.png"
   }
 ]
