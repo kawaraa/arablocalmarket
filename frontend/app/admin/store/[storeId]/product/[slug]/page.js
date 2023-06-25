@@ -51,15 +51,15 @@ export default function ProductById({ params }) {
         formData.append("data", JSON.stringify(data));
         body = formData;
       }
-      console.log("A");
-      // if (!product) {
-      //   id = (await request("product", "POST", body)).data.id;
-      // } else {
-      //   id = (await request("product", "PUT", { query: "/" + product.id, body })).data.id;
-      // }
 
-      // addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
-      // window.location.replace(`/store/${params.storeId}/product/${id}`);
+      if (!product) {
+        id = (await request("product", "POST", body)).data.id;
+      } else {
+        id = (await request("product", "PUT", { query: "/" + product.id, body })).data.id;
+      }
+
+      addMessage({ type: "success", text: shdCnt.done[lang], duration: 2 });
+      window.location.replace(`/store/${params.storeId}/product/${id}`);
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
