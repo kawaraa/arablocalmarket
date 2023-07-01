@@ -39,7 +39,7 @@ module.exports = (plugin) => {
 
     // Todo: Delete invoices and bank info that belongs to the user
     promises.push(strapi.query("api::customer.customer").delete({ where: { user: user.id } }));
-    promises.push(strapi.service("api::stripe.stripe").deleteCustomer(user.stripeId));
+    if (user.stripeId) promises.push(strapi.service("api::stripe.stripe").deleteCustomer(user.stripeId));
     promises.push(strapi.service("api::notification.notification").deleteNotificationByUser(user.id));
 
     await Promise.all(promises);

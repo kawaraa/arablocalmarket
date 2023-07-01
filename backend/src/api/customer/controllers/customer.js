@@ -18,7 +18,7 @@ module.exports = createCoreController(cusEty, ({ strapi }) => ({
     const user = ctx.state.user;
     if (!user?.id) return ctx.unauthorized();
 
-    ctx.params.id = await strapi.service(cusEty).getCustomerId(user.id);
+    ctx.params.id = await strapi.service(cusEty).getCustomerId(user.id + "");
     if (!ctx.params.id) {
       ctx.params.id = await strapi
         .service(cusEty)

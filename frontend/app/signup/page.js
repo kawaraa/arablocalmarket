@@ -21,14 +21,14 @@ export default function Signup({}) {
 
   const checkConfirmation = async (data, times) => {
     const response = await request("signIn", "POST", data).catch(() => null);
-    if (response?.user?.confirmed) {
-      window.localStorage.removeItem("accessToken");
+
+    if (!response?.user?.confirmed && times < 20) setTimeout(() => checkConfirmation(data, times + 1), 40000);
+    else if (response?.user?.confirmed) {
       window.localStorage.setItem("accessToken", response.jwt);
       Cookies.set("accessToken", response.jwt);
-
       const user = await request("getUser").catch(() => null);
       if (user) updateUser(user);
-    } else if (times < 20) setTimeout(() => checkConfirmation(data, times + 1), 40000);
+    }
   };
 
   const handleSignup = async (e) => {

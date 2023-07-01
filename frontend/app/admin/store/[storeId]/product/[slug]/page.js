@@ -248,7 +248,7 @@ const content = {
     text: { en: "Vendor / Supplier", ar: "المورد / المزود" },
     placeholder: { en: "E.g. Lipton", ar: "مثال, ليبتون" },
   },
-  variant: { en: "Variants", ar: "الاصناف" },
+  variant: { en: "Variants and specifications", ar: "الاصناف والمواصفات" },
   addV: { en: "New variant", ar: "صنف جديد" },
   confirmTitle: { en: "product delete confirmation", ar: "تأكيد حذف المنتج" },
   confirmP: {
