@@ -22,9 +22,11 @@ export default function SignIn() {
     // Todo: Adjust Strapi tp make return the jwt in the cookie as well with "HttpOnly"
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies
     try {
-      if (!data && !data.identifier) window.location.reload();
-      const response = await request("signIn", "POST", data);
       window.localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
+      if (!data && !data.identifier) window.location.reload();
+
+      const response = await request("signIn", "POST", data);
       window.localStorage.setItem("accessToken", response.jwt);
       Cookies.set("accessToken", response.jwt);
 

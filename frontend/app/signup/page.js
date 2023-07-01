@@ -22,7 +22,7 @@ export default function Signup({}) {
   const checkConfirmation = async (data, times) => {
     const response = await request("signIn", "POST", data).catch(() => null);
 
-    if (!response?.user?.confirmed && times < 20) setTimeout(() => checkConfirmation(data, times + 1), 40000);
+    if (!response?.user?.confirmed && times < 20) setTimeout(() => checkConfirmation(data, times + 1), 15000);
     else if (response?.user?.confirmed) {
       window.localStorage.setItem("accessToken", response.jwt);
       Cookies.set("accessToken", response.jwt);
@@ -41,6 +41,8 @@ export default function Signup({}) {
       delete data.confirmPassword;
       data.username = (firstName + lastName + email.slice(0, email.indexOf("@"))).toLowerCase();
 
+      window.localStorage.removeItem("accessToken");
+      Cookies.remove("accessToken");
       await request("signUp", "POST", data);
 
       addMessage({ type: "success", text: success(lang), duration: 30 });
