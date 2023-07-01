@@ -29,11 +29,12 @@ module.exports = (plugin) => {
     const promises = [strapi.service("api::rating.rating").deleteRatingsByUser(user.id)];
 
     const options = {
-      select: ["id", "subscriptionId", "subscriptionStatus"],
       where: { owner: user.id },
+      select: ["id", "subscriptionId", "subscriptionStatus"],
       populate: ["cover"],
     };
-    (await strapi.service("api::store.store").find(options)).results.forEach((s) => {
+
+    (await strapi.query("api::store.store").findMany(options)).forEach((s) => {
       promises.push(strapi.service("api::store.store").deleteStoreAndItsProducts(s.id, s));
     });
 

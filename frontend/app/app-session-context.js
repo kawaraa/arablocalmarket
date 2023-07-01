@@ -103,9 +103,8 @@ export default function AppSessionContextProvider({ children, language, theme })
     if (aRange) updateRange(aRange);
 
     if (window.localStorage.getItem("accessToken")) {
-      fetchUser()
-        .then(updateUser)
-        .catch((err) => setUser(null) + setAppLoading(false));
+      const cb = (err) => setUser(null) + setAppLoading(false);
+      fetchUser().then(updateUser).catch(cb);
     } else {
       setUser(null);
       setAppLoading(false);

@@ -26,6 +26,7 @@ module.exports = {
       start: sub.start_date,
       created: sub.created,
       ends: sub.cancel_at, // ends on
+      ended: sub.ended_at,
       trialPeriod, // Trial 30 days
       trialStart: sub.trial_start,
       trialEnd: sub.trial_end, // Trialing until

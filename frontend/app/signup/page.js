@@ -16,7 +16,7 @@ import SvgIcon from "../(component)/(styled)/svg-icon";
 
 export default function Signup({}) {
   const router = useRouter();
-  const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
+  const { lang, user, addMessage, refetchUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
   const checkConfirmation = async (data, times) => {
@@ -26,8 +26,7 @@ export default function Signup({}) {
     else if (response?.user?.confirmed) {
       window.localStorage.setItem("accessToken", response.jwt);
       Cookies.set("accessToken", response.jwt);
-      const user = await request("getUser").catch(() => null);
-      if (user) updateUser(user);
+      refetchUser();
     }
   };
 

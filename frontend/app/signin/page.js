@@ -11,7 +11,7 @@ import SvgIcon from "../(component)/(styled)/svg-icon";
 
 export default function SignIn() {
   const router = useRouter();
-  const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
+  const { lang, user, addMessage, refetchUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (e) => {
@@ -32,7 +32,7 @@ export default function SignIn() {
       await request("customer", "POST", { data: { customer } }).catch(() => null);
       window.localStorage.removeItem("customer");
 
-      updateUser(await fetchUser());
+      refetchUser();
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 30 });
       window.localStorage.removeItem("accessToken");

@@ -27,12 +27,11 @@ export default function StorePlan({ params: { storeId } }) {
     return content.values[value] ? content.values[value][lang] : value || content.no[lang];
   };
   const getDateValue = (v) => (v && new Date(+(v + "000")).toLocaleDateString("nl")) || content.no[lang];
-  const ended = (+(subscription?.ends + "000") - Date.now()) / day <= 1;
 
   const handleUpgrade = async (priceId) => {
     setAppLoading(true);
     try {
-      if (ended) {
+      if (subscription?.ended) {
         const session = await request("stripe", "POST", { query: "/create", body: { storeId, priceId } });
         window.location.href = session.paymentUrl;
       } else {
@@ -96,15 +95,15 @@ export default function StorePlan({ params: { storeId } }) {
   return (
     <>
       <div className="min-h-[45vh]">
-        {!subscription?.loading && ended && (
+        {!subscription?.loading && subscription?.ended && (
           <div
             dir="ltr"
             className="flex items-center justify-between mb-5 -mt-3 md:-mt-6 px-3 py-1 bg-bg3 text-sm text-t">
             <p className="">
               {content.warn[lang]}{" "}
-              <strong>{new Date(+(subscription?.ends + "000") + day * 30).toLocaleDateString("nl")}</strong>
+              <strong>{new Date(+(subscription?.ended + "000") + day * 30).toLocaleDateString("nl")}</strong>
             </p>
-            {/* new Date(Date.now()+  1000 * 60 * 60 * 24 * 30) */}
+
             <Link
               href="#"
               onClick={(e) => e.preventDefault() + setShowPlans(true)}
@@ -128,12 +127,14 @@ export default function StorePlan({ params: { storeId } }) {
                       {content.upgrade[lang]}
                     </Button>
                   )}
-                  <Button
-                    loading={loading}
-                    onClick={() => (subscription?.ends ? handleCancelation() : setShowWarning(true))}
-                    cls={`min-w-[100px] mb-5 !rounded-full ${subscription.ends ? "!bg-bg3" : "!bg-bg7"}`}>
-                    {subscription?.ends ? content.canceled[lang] : content.cancel[lang]}
-                  </Button>
+                  {(active || subscription?.status != "canceled") && (
+                    <Button
+                      loading={loading}
+                      onClick={() => (subscription?.canceledAt ? handleCancelation() : setShowWarning(true))}
+                      cls={`min-w-[100px] mb-5 !rounded-full ${subscription.ends ? "!bg-bg3" : "!bg-bg7"}`}>
+                      {subscription?.canceledAt ? content.canceled[lang] : content.cancel[lang]}
+                    </Button>
+                  )}
                   {["unpaid", "past_due", "incomplete"].includes(subscription?.status) && (
                     <Button
                       loading={loading}
@@ -196,7 +197,7 @@ export default function StorePlan({ params: { storeId } }) {
             <PlanCard lang={lang} plan={plan} key={i}>
               <div className="text-center">
                 <Button
-                  disabled={!ended && subscription?.id == plan.subscription}
+                  disabled={!subscription?.ended && subscription?.id == plan.subscription}
                   onClick={() => handleUpgrade(plan.subscription)}
                   cls="min-w-[100px] md:mx-5 mb-5 !rounded-full">
                   {subscription?.id != plan.subscription ? content.select[lang] : content.selected[lang]}

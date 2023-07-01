@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function ResetPassword({ params, searchParams: { code } }) {
   const router = useRouter();
-  const { lang, user, addMessage, updateUser } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
   const handleResetPassword = async (e) => {
