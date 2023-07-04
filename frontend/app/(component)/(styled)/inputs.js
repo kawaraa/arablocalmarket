@@ -245,7 +245,7 @@ export function Textarea({ children, label, editable, onChange, onBlur, cls, inC
     <div className={"relative mt-3 " + cls}>
       {label && (
         <>
-          <label htmlFor={cls} className={`font-semibold min-w-[70px] ${p.required ? "rq" : ""}`}>
+          <label htmlFor={cls} className={`font-semibold flex ${p.required ? "rq" : ""}`}>
             {label}
           </label>
           <span className="w-2 h-2"></span>
@@ -289,7 +289,7 @@ export function Select({ children, label, cls, inCls, onChange, value, defaultVa
     <div className={"inline-block " + cls}>
       {label && (
         <>
-          <label htmlFor={cls} className={`font-semibold min-w-[70px] ${p.required ? "rq" : ""}`}>
+          <label htmlFor={cls} className={`font-semibold ${p.required ? "rq" : ""}`}>
             {label}
           </label>
           <span className="w-2 h-2"></span>

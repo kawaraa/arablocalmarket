@@ -96,7 +96,6 @@ export function PriceInputField({ lang, compare, ...p }) {
       name={compare ? "comparePrice" : "price"}
       required
       min="0"
-      max="1000"
       step="0.10"
       inputMode="numeric"
       pattern="\d*"

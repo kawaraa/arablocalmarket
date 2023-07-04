@@ -12,7 +12,7 @@ export default function Sitemap({ searchParams }) {
         <h1 className="text-2xl font-bold mt-8 mb-3">{content.h1[lang]}</h1>
         <ul className="flex flex-wrap">
           {content.links.map((link, i) => (
-            <li className="min-w-[200px] my-3 text-pc2 underline underline-offset-8" key={i}>
+            <li className="min-w-[200px] my-3 text-link underline underline-offset-8" key={i}>
               <Link href={link.href} className="">
                 {link[lang]}
               </Link>

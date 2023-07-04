@@ -54,7 +54,7 @@ export default function Client({}) {
         <span className="w-2 h-2"></span>
         <button
           onClick={() => copyText(referralLink, showOne)}
-          className="flex items-center p-1 text-sm font-semibold text-pc2 bg-lbg dark:bg-dcbg rounded-md">
+          className="flex items-center p-1 text-sm font-semibold text-link bg-lbg dark:bg-dcbg rounded-md">
           <span className="w-3"></span>
           {referralLink}
           <span className="w-5 mx-2">
@@ -91,7 +91,7 @@ export default function Client({}) {
         {affiliates.map((aff, i) => (
           <tr className={trClass} key={i}>
             <td className={tdClass}>
-              <Link href={`/store/${aff.store.id}`} className="text-pc2">
+              <Link href={`/store/${aff.store.id}`} className="text-link">
                 {aff.store.name}
               </Link>
             </td>

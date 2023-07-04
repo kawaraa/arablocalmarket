@@ -123,7 +123,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
                 }
                 rel="noreferrer"
                 target="_blank"
-                className="w-8 absolute top-2 right-2 text-pc2 hover:text-red">
+                className="w-8 absolute top-2 right-2 text-link hover:text-red">
                 <SvgIcon name="location" />
               </a>
               <p>

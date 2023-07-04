@@ -15,26 +15,26 @@ module.exports = createCoreController(cusEty, ({ strapi }) => ({
   },
 
   async findOne(ctx) {
-    const user = (ctx.state.user?.id || "") + "";
-    if (!user) return ctx.unauthorized();
+    const user = ctx.state.user;
+    if (!user?.id) return ctx.unauthorized();
 
-    ctx.params.id = await strapi.service(cusEty).getCustomerId(user);
+    ctx.params.id = await strapi.service(cusEty).getCustomerId(user.id);
 
     if (!ctx.params.id) {
       const name = user.firstName + " " + user.lastName;
-      ctx.params.id = (await strapi.service(cusEty).create({ data: { user, name } })).id;
+      ctx.params.id = (await strapi.service(cusEty).create({ data: { user: user.id + "", name } })).id;
     }
 
     let { data, meta } = await super.findOne(ctx);
     if (!data) return { data, meta };
 
     data.attributes.workStores?.data?.forEach((s) => {
-      s.attributes = strapi.service(storeEty).removePrivateFields(user, s.attributes);
+      s.attributes = strapi.service(storeEty).removePrivateFields(user.id, s.attributes);
     });
 
     if (data.attributes.favoriteStores?.data[0]) {
       data.attributes.favoriteStores.data = data.attributes.favoriteStores.data.filter((s) =>
-        strapi.service(storeEty).isPublic(s, user)
+        strapi.service(storeEty).isPublic(s, user.id)
       );
     }
 

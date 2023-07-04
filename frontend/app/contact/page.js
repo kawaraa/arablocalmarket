@@ -41,10 +41,9 @@ export default function Contact() {
     <>
       <form onSubmit={handleSend} className="max-w-xl card rounded-lg mx-auto my-20 p-5">
         <h1 className="text-2xl text-center font-bold mb-10">{content.h1[lang]}</h1>
-
         <Select
           name="subject"
-          label="Subject"
+          label={<span className="inline-block min-w-[100px]">{content.labels[0][lang]}</span>}
           cls="flex flex-col sm:flex-row sm:items-center"
           inCls="flex-1 rounded-md">
           {content.subjects.map((s, i) => (
@@ -54,11 +53,15 @@ export default function Contact() {
           ))}
         </Select>
 
-        <Textarea required name="message" label={"Message"} cls="mt-8 flex flex-col sm:flex-row " />
-
-        <div className="text-right mt-5">
+        <Textarea
+          required
+          name="Message"
+          label={<span className="inline-block min-w-[90px]">{content.labels[1][lang]}</span>}
+          cls="mt-8 flex flex-col sm:flex-row "
+        />
+        <div className="text-center mt-10">
           <Button type="submit" loading={loading} cls="w-full sm:w-auto">
-            Send
+            {content.btn[lang]}
           </Button>
         </div>
       </form>
@@ -70,6 +73,11 @@ export default function Contact() {
 
 const content = {
   h1: { en: "Contact us", ar: "تواصل - اتصل بنا" },
+  labels: [
+    { en: "Subject", ar: "الموضوع" },
+    { en: "Message", ar: "الرسالة" },
+  ],
+  btn: { en: "Send", ar: "إرسال" },
   subjects: [
     { en: "General Inquiry", ar: "استفسار عام" },
     { en: "Customer Support", ar: "دعم العملاء" },

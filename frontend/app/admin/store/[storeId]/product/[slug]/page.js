@@ -13,12 +13,14 @@ import shdCnt from "../../../../../(layout)/json/shared-content.json";
 import Modal from "../../../../../(component)/(styled)/modal";
 
 export default function ProductById({ params }) {
+  const vTemplate = { quantity: 0, comparePrice: 0, barcode: "" };
+
   const router = useRouter();
   const { lang, setAppLoading, addMessage } = useContext(AppSessionContext);
   const [initialLoading, setInitialLoading] = useState(false);
   const [product, setProduct] = useState(null);
   const [file, setFile] = useState(null);
-  const [variants, setVariants] = useState([{ quantity: 0, comparePrice: 0, barcode: "" }]);
+  const [variants, setVariants] = useState([{ ...vTemplate }]);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
 
   const handleUpdateVariant = (index, data) => {
@@ -185,7 +187,7 @@ export default function ProductById({ params }) {
             <div className="text-center">
               <Button
                 icon="plus"
-                onClick={() => setVariants([...variants, { quantity: 0 }])}
+                onClick={() => setVariants([...variants, { ...vTemplate }])}
                 cls="!py-1 !px-2.5 text-sm !rounded-full"
                 iconCls="w-7">
                 <span className="w-2 h-2"></span>

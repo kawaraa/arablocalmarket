@@ -73,7 +73,7 @@ export function User({ Tag, name, cls }) {
 }
 
 export function StoreHeaderInfo({ children, id, name, phone, cls }) {
-  const c = "hover:text-pc2 duration-150";
+  const c = "hover:text-link duration-150";
   return (
     <div
       className={`pb-2 flex justify-between items-center border-b-[1px] border-bc dark:border-bf ${

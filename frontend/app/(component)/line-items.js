@@ -17,8 +17,8 @@ export default function LineItems({ favorite, bill, storeId, items, currency, on
               <Link passHref legacyBehavior href={`/store/${storeId}/product/${item.productNumber}`}>
                 <a
                   className={
-                    "block truncate text-sm hover:text-pc2 print:text-3xl" +
-                    (bill ? "" : "underline underline-offset-2 text-pc2")
+                    "block truncate text-sm hover:text-link print:text-3xl" +
+                    (bill ? "" : "underline underline-offset-2 text-link")
                   }>
                   {item.title}
                 </a>

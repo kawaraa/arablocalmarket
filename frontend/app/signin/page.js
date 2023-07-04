@@ -68,7 +68,7 @@ export default function SignIn() {
 
         <div className="text-sm text-right">
           <Link passHref legacyBehavior href="/forgot-password">
-            <a className="inline-block font-medium underline underline-offset-4 hover:text-pc2">
+            <a className="inline-block font-medium underline underline-offset-4 hover:text-link">
               {content.forget[lang]}
             </a>
           </Link>
@@ -82,7 +82,7 @@ export default function SignIn() {
 
         <div className="text-sm text-left">
           <Link passHref legacyBehavior href="/signup">
-            <a className="inline-block font-medium underline underline-offset-4 hover:text-pc2">
+            <a className="inline-block font-medium underline underline-offset-4 hover:text-link">
               {content.createAccount[lang]}
             </a>
           </Link>
