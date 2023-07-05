@@ -21,7 +21,7 @@ import Modal from "../../(component)/(styled)/modal";
 import { Cookies } from "../../(service)/utilities";
 // import Tooltip from "../(component)/(styled)/tooltip";
 const q =
-  "?fields=owner,subscriptionStatus,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
+  "?fields=owner,subscriptionStatus,type,about,currency,deliver,deliveryCost,cocNumber,vatNumber,meta&populate=address,openingHours,payments";
 const openingHour = { open: "AM-07.00", close: "PM-07.00" };
 
 export default function NewStore({ params, searchParams: { id, subscription } }) {
@@ -199,6 +199,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
         <Select
           required
           name="type"
+          defaultValue={store?.type}
           label={content.storeType.label[lang]}
           cls="my-6 flex items-center"
           inCls="mx-2 !p-[2px] rounded-full invalid:border-red">
@@ -398,10 +399,16 @@ const content = {
     default: { en: "Select type", ar: "اختر نوع" },
     label: { en: "Store type", ar: "نوع المتجر" },
     values: [
-      { en: "market", ar: "محل بقالة" },
+      { en: "market", ar: "بقالة" },
       { en: "bakery", ar: "مخبز" },
-      { en: "grocery", ar: "محل خضروات" },
+      { en: "grocery", ar: "خضروات" },
       { en: "restaurant", ar: "مطعم" },
+      { en: "butcher", ar: "جزار" },
+      { en: "confectionery", ar: "حلويات" },
+      { en: "gifts", ar: "هدايا" },
+      { en: "pets", ar: "حيوانات أليفة" },
+      { en: "real-estate", ar: "العقارات" },
+      { en: "services", ar: "خدمات" },
       { en: "other", ar: "آخر" },
     ],
   },

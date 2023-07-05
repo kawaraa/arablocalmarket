@@ -125,7 +125,19 @@
     },
     "type": {
       "type": "enumeration",
-      "enum": ["market", "bakery", "grocery", "restaurant", "other"],
+      "enum": [
+        "market",
+        "bakery",
+        "grocery",
+        "restaurant",
+        "butcher",
+        "confectionery",
+        "gifts",
+        "pets",
+        "real-estate",
+        "services",
+        "other"
+      ],
       "required": true,
       "default": "MARKET"
     }
