@@ -7,8 +7,10 @@ const notificationTypes = ["READY", "SENT", "DELIVERED", "CANCELED", "RETURNED"]
 
 module.exports = createCoreController(orderEty, ({ strapi }) => ({
   async create(ctx) {
-    const posOrder = ctx.request.body.data?.customer?.id == 1;
+    let customerId = ctx.request.body.data.customer;
+    const posOrder = customerId == 1;
     const oldItems = ctx.request.body.data.lineItems;
+    let customer = null;
 
     const store = await strapi.service("api::store.store").findOne(ctx.request.body.data.storeId);
     if (!store?.owner) return ctx.badRequest();
@@ -45,26 +47,31 @@ module.exports = createCoreController(orderEty, ({ strapi }) => ({
       }
     }
 
-    if (!posOrder && ctx.state.user) {
-      const options = { where: { user: ctx.state.user.id }, select: ["id"] };
-      ctx.request.body.data.customer = (await strapi.db.query("api::customer.customer").findOne(options)).id;
-    } else if (!posOrder) {
-      let name = "Visitor";
-      if (ctx.request.body.data.address) {
-        name = ctx.request.body.data.address.firstName + " " + ctx.request.body.data.address.lastName;
-      }
-      if (ctx.request.body.data.customer) {
-        ctx.request.body.data.customer = await strapi
-          .service("api::customer.customer")
-          .findOne(ctx.request.body.data.customer.id);
-      }
-      if (!ctx.request.body.data.customer) {
-        ctx.request.body.data.customer = await strapi
-          .service("api::customer.customer")
-          .create({ data: { user: "visitor-" + crypto.randomBytes(16).toString("base64"), name } });
+    if (!posOrder) {
+      if (ctx.state.user) {
+        const options = { where: { user: ctx.state.user.id }, select: ["id"] };
+        customerId = (await strapi.db.query("api::customer.customer").findOne(options)).id;
+      } else {
+        let name = "Visitor";
+        if (ctx.request.body.data.address?.firstName) {
+          name = ctx.request.body.data.address.firstName + " " + ctx.request.body.data.address.lastName;
+        }
+
+        if (customerId) {
+          customer = await strapi.service("api::customer.customer").findOne(customerId);
+          customerId = customer?.id;
+        }
+
+        if (!customerId) {
+          customer = await strapi
+            .service("api::customer.customer")
+            .create({ data: { user: "visitor-" + crypto.randomBytes(16).toString("base64"), name } });
+          customerId = customer.id;
+        }
       }
     }
 
+    ctx.request.body.data.customer = customerId;
     ctx.request.body.data.store = store.id;
     ctx.request.body.data.lineItems = oldItems;
     ctx.request.body.data.currency = store.currency;
@@ -83,7 +90,7 @@ module.exports = createCoreController(orderEty, ({ strapi }) => ({
       orderNumber: order.id,
     });
 
-    order.customer = ctx.request.body.data.customer;
+    order.customer = customer;
     return order;
   },
 

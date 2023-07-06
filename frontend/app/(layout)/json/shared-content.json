@@ -100,5 +100,9 @@
   "favErr": {
     "en": "Only signed in users can add a store to favorite",
     "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم إضافة متجر إلى المفضلة"
+  },
+  "locateErr": {
+    "en": "Please select your location on the map so your deliveryman can find your address",
+    "ar": "يرجى تحديد موقعك على الخريطة حتى يتمكن موظف التوصيل من العثور على عنوانك"
   }
 }

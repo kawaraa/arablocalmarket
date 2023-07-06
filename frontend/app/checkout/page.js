@@ -32,6 +32,11 @@ export default function Checkout({}) {
   const items = useRef(JSON.parse(window.localStorage.getItem("checkoutItems"))).current;
 
   const validateOrder = () => {
+    if (!firstName) {
+      setLoading(false);
+      setConfirmCheckout(false);
+      return addMessage({ type: "warning", text: content.nameErr[lang], duration: 4 });
+    }
     if (!deliveryMethod) {
       setLoading(false);
       setConfirmCheckout(false);
@@ -56,20 +61,28 @@ export default function Checkout({}) {
     return true;
   };
 
-  const handleCreateAddress = (e) => {
+  const handleCreateAddress = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const { country, province, city } = store.address;
       const data = { country, province, city };
       new FormData(e.target).forEach((value, key) => (data[key] = value));
+      const { lat, lng, search, ...address } = data;
+
+      if (!+lat || !+lng) throw new Error(shdCnt.locateErr[lang]);
+      if (user?.id) {
+        await request("updateUser", "PUT", {
+          query: user.id,
+          body: { address: { ...address, currentLat: +lat, currentLng: +lng } },
+        });
+      }
       setAddress(data);
+      setAddressForm(false);
     } catch (err) {
       addMessage({ type: "error", text: err.message, duration: 5 });
     }
-
     setLoading(false);
-    setAddressForm(false);
   };
 
   const sendOrderViaWhatsApp = (e) => {
@@ -121,7 +134,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
         address: { firstName, lastName, ...(address || {}) },
       };
 
-      order.customer = JSON.parse(window.localStorage.getItem("customer")) || null;
+      order.customer = JSON.parse(window.localStorage.getItem("customer"))?.id || null;
       const { customer } = await request("order", "POST", { data: order });
       if (!user) window.localStorage.setItem("customer", JSON.stringify(customer));
       router.replace("/checkout/success");
@@ -154,11 +167,14 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
   };
 
   useEffect(() => {
-    if (items || items[0]) fetchStore();
-    if (user) {
-      if (user.address) setAddress(user.address);
-      setFirstName(user.firstName || "");
-      setLastName(user.lastName || "");
+    if (items && items[0]) fetchStore();
+    if (user?.id) {
+      const keys = ["country", "province", "city"];
+      if (user.address && store?.address && !keys.find((k) => user.address[k] != store.address[k])) {
+        setAddress(user.address);
+      }
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
     }
   }, [user]);
 
@@ -178,7 +194,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           cls="1 relative w-1/2"
-          inCls="text-lg rounded"
+          inCls="text-lg rounded invalid:border-red"
         />
         <span className="w-2"></span>
         <NameInputField
@@ -187,7 +203,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           cls="2 relative w-1/2"
-          inCls="text-lg rounded"
+          inCls="text-lg rounded invalid:border-red"
         />
       </div>
 
@@ -420,6 +436,7 @@ const content = {
   addressH3: { en: "Saved Addresses", ar: "العناوين المحفوظة" },
   addressP: { en: "Seems you haven't added your address yet", ar: "يبدو أنك لم تقم بإضافة عنوانك حتى الآن" },
   savedAdr: { en: "Saved Address", ar: "العنوان المحفوظ" },
+  nameErr: { en: "Please fill in your name", ar: "يرجى ملء اسمك" },
   adrErr: { en: "Please fill in your address", ar: "يرجى ملء عنوانك" },
   deliveryErr: { en: "Please select a delivery method", ar: "الرجاء تحديد طريقة التسليم" },
   payErr: { en: "Please select a payment method", ar: "الرجاء اختيار طريقة الدفع" },

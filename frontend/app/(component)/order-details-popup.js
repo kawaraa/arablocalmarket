@@ -15,12 +15,14 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
   const [loading, setLoading] = useState(false);
 
   const handleCheckout = async (e) => {
-    if (!order.lineItems[0])
+    if (!order.lineItems[0]) {
       return addMessage({ type: "warning", text: shdCnt.noItemWarn[lang], duration: 6 });
+    }
+
     setLoading(true);
     try {
       if (pos) {
-        await request("order", "POST", { data: { ...order, customer: { id: 1 } } });
+        await request("order", "POST", { data: { ...order, customer: 1 } });
         const barcodes = order.lineItems.map((o) => o.barcode);
         onRemoveItem(null, barcodes);
       }

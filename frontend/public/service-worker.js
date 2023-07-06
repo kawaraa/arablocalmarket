@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-898762345";
+const staticFileCacheName = "static-files-v-89876234";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = [
   "/",

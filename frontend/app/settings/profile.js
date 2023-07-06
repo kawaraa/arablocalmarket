@@ -15,12 +15,19 @@ export default function Profile({ lang, firstName, lastName, address, handleUpda
     e.preventDefault();
     const data = {};
     setAddressLoading(true);
-    new FormData(e.target).forEach((value, key) => (data[key] = value));
-    const { lat, lng, search, ...address } = data;
-    await handleUpdate({ address: { ...address, currentLat: +lat, currentLng: +lng } });
-    setAdr(address);
+
+    try {
+      new FormData(e.target).forEach((value, key) => (data[key] = value));
+      const { lat, lng, search, ...address } = data;
+      if (!+lat || !+lng) throw new Error(shdCnt.locateErr[lang]);
+      await handleUpdate({ address: { ...address, currentLat: +lat, currentLng: +lng } });
+      setAdr(address);
+      setAddressForm(false);
+    } catch (error) {
+      setMessage({ type: "error", text: error.message, duration: 5 });
+    }
+
     setAddressLoading(false);
-    setAddressForm(false);
   };
 
   return (

@@ -14,6 +14,7 @@ export default function ActionButtons({ id }) {
   const showWarning = () => addMessage({ type: "warning", text: shdCnt.noItemErr[lang], duration: 4 });
 
   const handleBuy = () => {
+    if (!window.localStorage.getItem("checkoutItems")) return showWarning();
     router.push("/checkout");
   };
 

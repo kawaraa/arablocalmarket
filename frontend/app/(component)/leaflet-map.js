@@ -42,8 +42,9 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
     const attribution = "&copy; OpenStreetMap contributors";
 
     if ((Map && !Map.newMap) || !Map.newMap._mapPane) {
+      // Amsterdam coordinates: 52.4 - 4.9
       Map.newMap = Map.map("map").setView(
-        [coordinates[0] || 52, coordinates[1] || 4],
+        [coordinates[0] || 52.4, coordinates[1] || 4.9],
         coordinates[0] ? 6 : 1
       );
     }
@@ -85,7 +86,7 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
   };
 
   useEffect(() => {
-    if (window.L?.newMap?.marker && coordinates) {
+    if (window.L?.newMap?.marker && coordinates[0]) {
       window.L.newMap.setView([coordinates[0], coordinates[1]]);
       window.L.newMap.marker.setLatLng([coordinates[0], coordinates[1]]);
     }

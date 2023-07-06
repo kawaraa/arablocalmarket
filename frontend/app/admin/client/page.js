@@ -81,7 +81,7 @@ export default function Client({}) {
       <Table lang={lang} header={content.detailsHeader.map((h) => h[lang])} cls="mb-10" hCls="!py-1">
         <tr className={trClass + " text-xl font-semibold"}>
           <td className={tdClass + " text-black"}>€{details.totalEarnings}</td>
-          <td className={tdClass + " text-blue"}>€{details.paid}</td>
+          {/* <td className={tdClass + " text-blue"}>€{details.paid}</td> */}
           <td className={tdClass + " text-orange"}>€{details.pending}</td>
           <td className={tdClass + " text-green"}>€{details.payable}</td>
         </tr>

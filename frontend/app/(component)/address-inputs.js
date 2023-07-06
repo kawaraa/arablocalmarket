@@ -11,8 +11,8 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
   const [postalCode, setPostalCode] = useState("");
   const [line1, setLine1] = useState("");
   const [line2, setLine2] = useState("");
-  const [lat, setLat] = useState(52.4); // Amsterdam coordinates
-  const [lng, setLng] = useState(4.9);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
 
   const handleUpdate = (lat, lng, adrName) => {
     if (lat) setLat(lat);
@@ -75,15 +75,15 @@ export default function AddressInputs({ lang, checkout, map, onError, ...adr }) 
         <>
           <LeafletMap
             lang={lang}
-            coordinates={[lat || 0, lng || 0]}
+            coordinates={[lat, lng]}
             onLocate={({ lat, lng, display_name }) =>
               handleUpdate(lat, lng, display_name?.toLowerCase() || "")
             }
             requestUserLocation={true}
             onError={onError}
           />
-          <input type="hidden" name="lat" value={lat || ""} />
-          <input type="hidden" name="lng" value={lng || ""} />
+          <input type="hidden" name="lat" value={lat} />
+          <input type="hidden" name="lng" value={lng} />
         </>
       )}
 
