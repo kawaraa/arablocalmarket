@@ -50,7 +50,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
       title={content.modalTitle[lang]}
       open={open}
       onCancel={onClose}
-      okBtn={pos ? shdCnt.checkout[lang] : shdCnt.print[lang]}
+      okBtn={pos ? shdCnt.completeOrder[lang] : shdCnt.print[lang]}
       onApprove={admin ? handleCheckout : null}
       loading={loading}>
       {order?.lineItems && order.lineItems[0] && (

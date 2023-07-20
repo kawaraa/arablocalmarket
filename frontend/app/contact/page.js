@@ -6,10 +6,8 @@ import { Select, Textarea } from "../(component)/(styled)/inputs";
 import { Button } from "../(component)/(styled)/button";
 import shdCnt from "../(layout)/json/shared-content.json";
 import { request } from "../(service)/api-provider";
-import { useRouter } from "next/navigation";
 
 export default function Contact() {
-  const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
 
@@ -17,6 +15,7 @@ export default function Contact() {
     setLoading(true);
     e.preventDefault();
     try {
+      if (!user) throw new Error(shdCnt.contactErr[lang]);
       const data = {};
       new FormData(e.target).forEach((value, key) => (data[key] = value));
       await request("contact", "POST", { data });
@@ -32,11 +31,6 @@ export default function Contact() {
     document.title = content.h1[lang] + " - ALM";
   }, []);
 
-  useEffect(() => {
-    if (!user && !user?.loading) router.replace("/signin");
-  }, [user]);
-
-  if (!user || user?.loading) return null;
   return (
     <>
       <form onSubmit={handleSend} className="max-w-xl card rounded-lg mx-auto my-20 p-5">

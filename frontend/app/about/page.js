@@ -53,13 +53,13 @@ const content = {
       p: {
         en: [
           "It all began in Jan 2023 when the owner was looking for an Arabic market to buy some Eastern and Halal food, then he realized that he can develop a platform that help Arabic Community find food and other products easily",
-          "So he built a solutions that gather all the Arabic eastern markets in one place and give them what they need",
-          "Today, markets of all sizes can ArabLocalMarket, whether they're selling online, in retail stores, or on-the-go",
+          "So he built a solutions that gather all the Arabic eastern stores in one place and give them what they need",
+          "Today, stores of all sizes can join ArabLocalMarket, whether they're selling online, in retail stores, or on-the-go",
         ],
         ar: [
-          "بدأ كل شيء في يناير 2023 عندما كان المالك يبحث عن سوق عربي لشراء بعض الأطعمة الشرقية والحلال ، ثم أدرك أنه يمكنه تطوير منصة تساعد المجتمع العربي في العثور على الطعام والمنتجات الأخرى بسهولة",
-          "لذلك بنى حلولًا تجمع كل الأسواق العربية الشرقية في مكان واحد وتعطيها ما يحتاجون إليه",
-          "اليوم ، يمكن للأسواق بجميع أحجامها ArabLocalMarket ، سواء كانت تبيع عبر الإنترنت أو في متاجر البيع بالتجزئة أو أثناء التنقل",
+          "بدأ كل شيء في يناير 2023 عندما كان المالك يبحث عن متاجر عربي لشراء بعض الأطعمة الشرقية والحلال، ثم أدرك أنه يمكنه تطوير منصة تساعد المجتمع العربي في العثور على الطعام والمنتجات الأخرى بسهولة",
+          "لذلك بنى حلولًا تجمع كل المتاجر العربية والشرقية في مكان واحد وتوفير لهم ما يحتاجونه",
+          "اليوم ، يمكن للمتاجر من جميع الأحجام الانضمام إلى ArabLocalMarket ، سواء كانت تبيع عبر الإنترنت أو في متاجر البيع بالتجزئة أو أثناء التنقل",
         ],
       },
     },

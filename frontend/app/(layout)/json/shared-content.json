@@ -44,6 +44,7 @@
   "stock": { "en": "In stock", "ar": "في المخزن" },
   "add": { "en": "Add", "ar": "أضف" },
   "checkout": { "en": "Checkout", "ar": "تاكيد الطلب" },
+  "completeOrder": { "en": "Complete order", "ar": "اكمل الطلب" },
   "print": { "en": "Print", "ar": "طباعة" },
   "options": {
     "name": { "en": "Name", "ar": "نوع التفاصيل" },
@@ -104,5 +105,9 @@
   "locateErr": {
     "en": "Please select your location on the map so your deliveryman can find your address",
     "ar": "يرجى تحديد موقعك على الخريطة حتى يتمكن موظف التوصيل من العثور على عنوانك"
+  },
+  "contactErr": {
+    "en": "Only signed in users can contact us",
+    "ar": "فقط المستخدمين الذين سجلوا الدخول يمكنهم الاتصال بنا"
   }
 }
