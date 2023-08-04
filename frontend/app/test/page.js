@@ -10,7 +10,7 @@ export default function Test() {
       <div className="py-5">
         {/* {window.document.cookie} */}
         {/* {window?.BarcodeDetector?.name} */}
-        Click here
+        Data:
         <br />
         {data}
       </div>
