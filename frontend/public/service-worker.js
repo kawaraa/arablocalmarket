@@ -1,14 +1,8 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0";
+const staticFileCacheName = "static-files-v-1";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
-const staticFileCachePaths = [
-  "/",
-  // "/offline.html",
-  "/barcode-scanner/quagga.min.js",
-  "/signin",
-  "/signup",
-];
+const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));

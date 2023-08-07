@@ -21,7 +21,7 @@ export default async function LandingPage({ params, searchParams }) {
           {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
 
           <h1 className="mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
-            {content.h1[lang]}. <span className="sr-only">{content.h1Hidden[lang]}</span>
+            {content.h1[lang]} <span className="sr-only">{content.h1Hidden[lang]}</span>
           </h1>
 
           <p className="px-3 opacity-0">{content.h1PHidden[lang]}</p>

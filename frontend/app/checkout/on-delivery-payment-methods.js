@@ -12,7 +12,7 @@ export default function OnDeliveryPaymentMethods({ lang, cnt, payments, paymentM
         checked={paymentMethod == p.method}
         onChange={() => selectPayment(p.method)}
         title={cnt.paymentMethods.online.methods[p.method]?.title[lang]}
-        cls="mx-1 !p-0 w-initial !rounded-full flex"
+        cls="mx-1 !p-0 w-initial !rounded-full flex mb-2"
         inCls="!rounded-full"
         key={i}>
         <Badge
@@ -26,7 +26,7 @@ export default function OnDeliveryPaymentMethods({ lang, cnt, payments, paymentM
   return methods[0] ? (
     <>
       <p className="pb-3 mt-6 mb-3 mx-2 ">{cnt.paymentMethods.p[lang]}</p>
-      <div className="mb-3 flex lazy-b">{methods}</div>
+      <div className="mb-3 flex flex-wrap overflow-auto lazy-b">{methods}</div>
     </>
   ) : (
     <p className="w-full mt-6 mb-3 text-orange text-center">{cnt.noOnDeliveryPay[lang]}</p>
