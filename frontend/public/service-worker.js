@@ -26,22 +26,13 @@ const handleRequest = async (request) => {
   // console.log("caches ERROR: >>>", request.method, request.url);
   try {
     // !request.url.includes("http") ||
-    if (/api|api\/auth|api\/users/gim.test(request.url)) {
-      // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
-      return await fetch(request);
-    } else {
-      const cachedResponse = await caches.match(request.url); // { ignoreSearch: true, ignoreVary: true }
-      console.log(
-        "cachedResponse: >>> ",
-        navigator.onLine,
-        request.method,
-        request.url,
-        " >>> ",
-        cachedResponse
-      );
+    // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+
+    if (/api|api\/auth|api\/users/gim.test(request.url)) return await fetch(request);
+    else {
+      const cachedResponse = await caches.match(request.url);
 
       if (cachedResponse) return cachedResponse;
-      console.log("After cachedResponse: >>> ");
 
       const response = await fetch(request);
       if (request.method != "GET" || !response.ok) return response;
@@ -50,8 +41,8 @@ const handleRequest = async (request) => {
       return response;
     }
   } catch (error) {
-    console.log("caches ERROR: >>>", request.method, request.url, error);
-    if (request.method == "GET" && (request.mode === "navigate" || !request.url.includes("api"))) {
+    // console.log("caches ERROR: >>>", request.method, request.url, error);
+    if (request.method == "GET" && (request.mode == "navigate" || !request.url.includes("api"))) {
       return caches.match(staticFileCachePaths[1]); // offline fallback page
     }
     return networkErrorResponse;
