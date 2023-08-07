@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0";
+const staticFileCacheName = "static-files-v-1";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -41,14 +41,14 @@ const handleRequest = async (request) => {
       );
 
       if (cachedResponse) return cachedResponse;
-      // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+      console.log("After cachedResponse: >>> ");
 
       const response = await fetch(request);
       if (request.method != "GET" || !response.ok) {
         console.log("response: >>> ", response);
         return response;
       }
-
+      console.log("staticFileCacheName: >>> ");
       await caches.open(staticFileCacheName).then((cache) => cache.put(request, response.clone()));
       return response;
     }
