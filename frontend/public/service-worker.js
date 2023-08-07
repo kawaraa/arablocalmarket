@@ -44,7 +44,7 @@ const handleRequest = async (request) => {
       // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
 
       const response = await fetch(request);
-      if (request.method == "GET" || !response.ok) {
+      if (request.method != "GET" || !response.ok) {
         console.log("response: >>> ", response);
         return response;
       }
