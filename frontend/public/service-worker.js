@@ -30,7 +30,7 @@ const handleRequest = async (request) => {
       // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
       return await fetch(request);
     } else {
-      const cachedResponse = await caches.match(request);
+      const cachedResponse = await caches.match(request, { ignoreVary: true }); //  ignoreSearch: true,
       console.log(
         "cachedResponse: >>> ",
         navigator.onLine,
