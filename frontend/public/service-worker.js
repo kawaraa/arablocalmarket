@@ -43,7 +43,7 @@ const handleRequest = async (request) => {
       if (cachedResponse) return cachedResponse;
       console.log("After cachedResponse: >>> ");
 
-      const response = await fetch(request);
+      const response = await fetch(request).catch((err) => console.log("ERR: ", err));
       if (request.method != "GET" || !response.ok) {
         console.log("response: >>> ", response);
         return response;
