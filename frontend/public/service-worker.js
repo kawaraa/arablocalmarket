@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-09y655e79449856834959";
+const staticFileCacheName = "static-files-v-09y655e794498568349";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -43,20 +43,17 @@ const handleRequest = async (request) => {
       if (cachedResponse) return cachedResponse;
       console.log("After cachedResponse: >>> ");
 
-      const response = await fetch(request).catch((err) => console.log("ERR: ", err));
-      console.log("response AAA: >>> ", response);
+      const response = await fetch(request);
+      if (request.method != "GET" || !response.ok) return response;
 
-      if (request.method != "GET" || !response.ok) {
-        console.log("response: >>> ", response);
-        return response;
-      }
-      console.log("staticFileCacheName: >>> ");
       await caches.open(staticFileCacheName).then((cache) => cache.put(request, response.clone()));
       return response;
     }
   } catch (error) {
     console.log("caches ERROR: >>>", request.method, request.url, error);
-    if (request.url.includes("_next")) return caches.match(staticFileCachePaths[1]); // offline fallback page
+    if (request.method == "GET" && (request.mode === "navigate" || !request.url.includes("api"))) {
+      return caches.match(staticFileCachePaths[1]); // offline fallback page
+    }
     return networkErrorResponse;
   }
 };
