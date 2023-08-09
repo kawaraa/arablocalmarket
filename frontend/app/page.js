@@ -16,11 +16,9 @@ export default async function LandingPage({ params, searchParams }) {
       <CheckUser />
       <section className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
-          className="relative flex-auto pt-5 sm:pt-10 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
+          className="relative flex-auto mt-12 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
-          {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
-
-          <h1 className="mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mt-0 mb-5 text-left font-bold">
+          <h1 className="-mt-8 sm:mt-0 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mb-5 text-left font-bold">
             {content.h1[lang]} <span className="sr-only">{content.h1Hidden[lang]}</span>
           </h1>
 
