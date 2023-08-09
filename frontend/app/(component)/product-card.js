@@ -39,19 +39,19 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
       )}
 
       <Tag {...newP}>
-        <a className="relative block w-full h-full p-2 bg-cbg card cd_hr rounded-xl duration-150">
-          <h3 className="text-ellipsis overflow-hidden whitespace-nowrap text-center mt-2">{product.name}</h3>
+        <a className="relative block w-full h-full bg-cbg card cd_hr rounded-xl duration-150">
+          <h3 className="text-ellipsis overflow-hidden whitespace-nowrap text-center m-2">{product.name}</h3>
           <div className="overflow-hidden h-40 flex justify-center items-center">
             <Image
               src={product.image.data?.attributes.formats.thumbnail.url}
               alt={product.name}
-              width="200"
+              width="300"
               height="300"
               className="w-auto h-full"
               priority={priority}
             />
           </div>
-          <div className={`flex justify-end items-center`}>
+          <div className={`flex justify-end items-center mx-2`}>
             <strong className="text-lg">
               <span className="text-red">{currency + v.price} </span>
               {!admin && v.comparePrice > 0 && (
@@ -67,7 +67,7 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
             />
           </div>
           {admin && (
-            <div className="flex justify-between items-center mt-1">
+            <div className="flex justify-between items-center mt-1 mx-2">
               <div title={shdCnt.variants[lang]} className="flex items-center">
                 {product.variants.length}
                 <div className="flex items-center -space-x-1">
@@ -85,10 +85,10 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
               </div>
             </div>
           )}
-          <div className="mt-1">
+          <div className="mt-1 mb-2 mx-2">
             <StarRating stars={product.ratings.stars} cls="text-md md:text-lg" />
             {admin && <span className="text-xs mx-1">{product.ratings.total}</span>}
-          </div>{" "}
+          </div>
         </a>
       </Tag>
       {Tag != "div" && (
