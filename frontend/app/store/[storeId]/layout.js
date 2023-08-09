@@ -37,11 +37,12 @@ export default async function StoreLayout({ children, params: { storeId }, searc
 
             <h1 className="absolute w-full top-8 px-8 text-bg text-xl font-bold flex items-center t-shadow lazy-l">
               <span
-                className={`inline-block w-6 h-6 bg-${
-                  store.attributes.open ? "green" : "dt"
-                } rounded-full`}></span>{" "}
-              <span className="mx-2">{store.attributes.name}</span>
+                className={`inline-block w-6 h-6 ${
+                  store.attributes.open ? "bg-green" : "bg-dt"
+                } rounded-full`}></span>
+              <span className="mx-2"> {store.attributes.name}</span>
             </h1>
+
             <StoreLinks
               lang={lang}
               storeId={+storeId}
@@ -53,7 +54,7 @@ export default async function StoreLayout({ children, params: { storeId }, searc
             />
           </section>
 
-          <div className="mt-3 pb-6">
+          <div dir="auto" className="mt-3 pb-6">
             <Tabs
               tabs={content.tabs.map(({ key, path, text }) => ({
                 key,

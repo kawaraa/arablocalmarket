@@ -41,6 +41,7 @@ export default function Account({ lang, username, email, phone, handleUpdate }) 
       </div>
 
       <PhoneInputField
+        lang={lang}
         editable
         full
         defaultValue={phone || ""}

@@ -46,37 +46,19 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
 
   return (
     <>
-      <ul className="absolute bottom-3 px-3 justify-end w-full flex text-bg text-2xl font-bold lazy-b">
-        {phone && (
-          <>
-            <li className={liCls}>
-              <a className="block p-1.5" href={`tel:${phone}`}>
-                <SvgIcon name="phone" />
-              </a>
-            </li>
-
-            <li className={liCls}>
-              <a
-                href={`https://wa.me/:${phone}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title="WhatsApp"
-                aria-label="WhatsApp"
-                className="p-1.5">
-                <SvgIcon name="whatsapp" />
-              </a>
-            </li>
-          </>
-        )}
-        <li className={liCls}>
+      <ul dir="ltr" className="absolute bottom-3 px-3 w-full flex text-bg text-2xl font-bold lazy-b">
+        <li className={liCls + (ratings.userStars > 0 ? " text-pc" : "")}>
           <a
             href="#"
-            onClick={(e) => e.preventDefault() + setShowQR(true)}
-            title="Show QR Code"
-            aria-label="Show QR Code"
+            title={shdCnt.rateH[lang]}
+            aria-label={shdCnt.rateH[lang]}
+            onClick={(e) => e.preventDefault() + setShowRatingInput(true)}
             className="p-1.5">
-            <SvgIcon name="qr" />
+            &#9733;
           </a>
+        </li>
+        <li className={liCls + " p-1.5"}>
+          <ShareButton title={name} text={about} />
         </li>
         <li className={liCls}>
           <a
@@ -88,19 +70,36 @@ export default function StoreLinks({ lang, storeId, name = "", about = "", phone
             <SvgIcon name="favorite" />
           </a>
         </li>
-        <li className={liCls + " p-1.5"}>
-          <ShareButton title={name} text={about} />
-        </li>
-        <li className={liCls + (ratings.userStars > 0 ? " text-pc" : "")}>
+        <li className={liCls}>
           <a
             href="#"
-            title={shdCnt.rateH[lang]}
-            aria-label={shdCnt.rateH[lang]}
-            onClick={(e) => e.preventDefault() + setShowRatingInput(true)}
+            onClick={(e) => e.preventDefault() + setShowQR(true)}
+            title="Show QR Code"
+            aria-label="Show QR Code"
             className="p-1.5">
-            &#9733;
+            <SvgIcon name="qr" />
           </a>
         </li>
+        {phone && (
+          <>
+            <li className={liCls}>
+              <a
+                href={`https://wa.me/:${phone}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="WhatsApp"
+                aria-label="WhatsApp"
+                className="p-1.5">
+                <SvgIcon name="whatsapp" />
+              </a>
+            </li>
+            <li className={liCls}>
+              <a className="block p-1.5" href={`tel:${phone}`}>
+                <SvgIcon name="phone" />
+              </a>
+            </li>
+          </>
+        )}
       </ul>
 
       <Modal lang={lang} open={showQR} onCancel={() => setShowQR(false)} center>

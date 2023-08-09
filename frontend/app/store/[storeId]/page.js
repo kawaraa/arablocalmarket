@@ -45,63 +45,62 @@ export default async function StoreOverview({ params, searchParams }) {
           }),
         }}
       />
-
-      <p dir="auto" className="flex items-center text-lg">
-        <span className="">{content.delivery[lang][0]}:</span>
-        <strong className="mx-2">
-          {store.deliver ? store.currency.split("-")[0] + store.deliveryCost : content.delivery[lang][1]}
-        </strong>
-      </p>
-
-      {h2(content.about[lang])}
-      <p>{store.about}</p>
-
-      {h2(content.openHrs[lang])}
-      <ul dir="auto" className="flex flex-col md:flex-row md:flex-wrap">
-        {store.openingHours.map((item, i) => (
-          <li className="flex my-2 min-w-[50%]" key={i}>
-            <span className="min-w-[100px] capitalize">
-              {shdCnt.day.values.find((d) => d.en == item.day)[lang]}
-            </span>
-            <strong className="flex-9">
-              {formatTime(item.opens)}
-              <span className="mx-4">-</span>
-              {formatTime(item.closes)}
-            </strong>
-          </li>
-        ))}
-      </ul>
-
-      <address dir="ltr">
-        {h2(content.adr[lang])}
-        <p>
-          {store.address.line1} {store.address.line2 || ""}
-          <br /> {store.address.city} {store.address.postalCode}
-          <br />
-          {store.address.province} {store.address.country}
+      <div className="mx-1">
+        <p dir="auto" className="flex items-center text-lg">
+          <span className="">{content.delivery[lang][0]}:</span>
+          <strong className="mx-2">
+            {store.deliver ? store.currency.split("-")[0] + store.deliveryCost : content.delivery[lang][1]}
+          </strong>
         </p>
-      </address>
 
-      <a
-        href={
-          "http://maps.google.com/?q=" +
-          (store.address.currentLat
-            ? `${store.address.currentLat},${store.address.currentLng}`
-            : `${store.address.line1},${store.address.line2 || ""},${store.address.postalCode},${
-                store.address.city
-              },${store.address.country}`)
-        }
-        rel="noreferrer"
-        target="_blank"
-        className="black w-full">
-        <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
-      </a>
+        {h2(content.about[lang])}
+        <p>{store.about}</p>
 
-      <div className="text-center mt-7">
-        <StarRating stars={store.ratings.stars} cls="text-blur text-3xl" />
-        {store.ratings.total > 0 && (
-          <sub className="absolute -right-1 bottom-0 !text-xs text-bg">{store.ratings.total}</sub>
-        )}
+        {h2(content.openHrs[lang])}
+        <ul dir="auto" className="flex flex-col md:flex-row md:flex-wrap">
+          {store.openingHours.map((item, i) => (
+            <li className="flex my-2 min-w-[50%]" key={i}>
+              <span className="min-w-[100px] capitalize">
+                {shdCnt.day.values.find((d) => d.en == item.day)[lang]}
+              </span>
+              <strong className="flex-9">
+                {formatTime(item.opens)}
+                <span className="mx-4">-</span>
+                {formatTime(item.closes)}
+              </strong>
+            </li>
+          ))}
+        </ul>
+
+        <address dir="ltr">
+          {h2(content.adr[lang])}
+          <p>
+            {store.address.line1} {store.address.line2 || ""}
+            <br /> {store.address.city} {store.address.postalCode}
+            <br />
+            {store.address.province} {store.address.country}
+          </p>
+        </address>
+
+        <a
+          href={
+            "http://maps.google.com/?q=" +
+            (store.address.currentLat
+              ? `${store.address.currentLat},${store.address.currentLng}`
+              : `${store.address.line1},${store.address.line2 || ""},${store.address.postalCode},${
+                  store.address.city
+                },${store.address.country}`)
+          }
+          rel="noreferrer"
+          target="_blank"
+          className="black w-full">
+          <LeafletMap lang={lang} coordinates={[store.address.currentLat, store.address.currentLng]} />
+        </a>
+
+        <div dir="ltr" className="relative text-center mt-7">
+          <StarRating stars={store.ratings.stars} cls="text-blur text-3xl" />
+          {store.ratings.total > 0 && <span className="text-xl mx-1 ">{store.ratings.total}</span>}
+        </div>
       </div>
     </>
   );
