@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-09y655e794498568349";
+const staticFileCacheName = "static-files-v-09y655e79449856834";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -21,17 +21,13 @@ self.addEventListener("activate", async (evt) => {
 self.addEventListener("fetch", (evt) => evt.respondWith(handleRequest(evt.request)));
 
 const handleRequest = async (request) => {
-  // console.log("caches Start", request.method, request.url);
   const networkErrorResponse = Response.error();
-  // console.log("caches ERROR: >>>", request.method, request.url);
   try {
-    // !request.url.includes("http") ||
+    // !request.url.includes("http")
     // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
-
     if (/api|api\/auth|api\/users/gim.test(request.url)) return await fetch(request);
     else {
-      const cachedResponse = await caches.match(request.url);
-
+      const cachedResponse = await caches.match(request);
       if (cachedResponse) return cachedResponse;
 
       const response = await fetch(request);

@@ -16,7 +16,7 @@ export default async function LandingPage({ params, searchParams }) {
       <CheckUser />
       <section className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
-          className="relative mb-5 sm:mb-8 flex-auto mt-10 md:pt-6 mx-auto rounded-xl bg-[url(/img/landing-page.png)] bg-contain bg-no-repeat bg-center lazy-b"
+          className="relative flex-auto pt-5 sm:pt-10 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
           {/* <div className="absolute inset-0 w-ful dark:bg-[#0000001a]"></div> */}
 
@@ -119,12 +119,12 @@ const content = {
     ar: "المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا",
   },
   h1P: {
-    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores or supermarkets nearby. Discover Hundreds of Unique Stores in One Place, a nice, easy and free Smartphone app for groceries markets and restaurants delivery at home",
-    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني لأسواق والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby. Discover Hundreds of Unique Stores in One Place, a nice, easy and free Smartphone app for groceries stores, markets, services and restaurants delivery at home",
+    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني لأسواق والمحلات التجارية والخدمات والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
   },
   h1PHidden: {
     en: "Look for a nearby store or supermarket, Select and add the products you need to the cart, Select the payment method you like, checkout and let the store deliver you order to you",
-    ar: "ابحث عن متجر أو سوبر ماركت قريب ، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق ، وحدد طريقة الدفع التي تريدها ، وقم بتسجيل الخروج ، ودع المتجر يقوم بتسليم طلبك إليك",
+    ar: "ابحث عن متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق ، وحدد طريقة الدفع التي تريدها، وقم بتسجيل الخروج، ودع المتجر يقوم بتسليم طلبك إليك",
   },
   h2: {
     en: "Find an Arabic Store and Supermarket near you.",
