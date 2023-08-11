@@ -265,7 +265,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
               name="onDeliveryCard"
               checked={!!onDeliveryPayment?.card}
               onChange={(e) => setOnDeliveryPayment({ ...onDeliveryPayment, card: e.target.checked })}
-              cls="!flex my-3">
+              cls="!flex my-3 8768">
               <div className="flex-1">{content.card[lang]}</div>
             </ToggleSwitch>
 
@@ -320,7 +320,18 @@ export default function NewStore({ params, searchParams: { id, subscription } })
               full
               cls="flex-col my-1"
             />
-            <CheckInput type="checkbox" name="private" cls="my-3">
+            <CheckInput
+              type="checkbox"
+              name="private"
+              cls="my-3"
+              checked={onlinePayment?.bank?.private}
+              onChange={() =>
+                onlinePayment?.bank &&
+                setOnlinePayment({
+                  ...onlinePayment,
+                  bank: { ...onlinePayment.bank, private: !onlinePayment.bank.private },
+                })
+              }>
               {content.privateBank[lang]}
             </CheckInput>
           </Collapse>

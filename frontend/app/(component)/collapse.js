@@ -11,13 +11,13 @@ export default function Collapse({ children, title, checked, onCheck, name, id, 
   const headerClass = "flex w-full bg-lbg dark:bg-cbg px-3 py-2";
 
   useEffect(() => {
-    setActive(checked);
+    setActive(checked ? true : false);
   }, [checked]);
 
   return (
     <div className={`border border-bc dark:border-bf ${onCheck && "rounded-lg"} ${cls}`}>
       {onCheck ? (
-        <div className={`${headerClass} justify-between rounded-${active ? "-t-lg" : "lg"} ${hCls} `}>
+        <div className={`${headerClass} justify-between ${active ? "rounded--t-lg" : "rounded-lg"} ${hCls} `}>
           <span className="mx-1">{title}</span>
           <ToggleSwitch name={name} cls={id} checked={checked} onChange={onCheck} />
         </div>

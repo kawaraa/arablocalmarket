@@ -110,7 +110,7 @@ export function InputWithSelect({ label, options, value, onChange, cls, ...p }) 
   );
 }
 
-export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
+export function CheckInput({ children, size = "20", color = 0, cls, onChange, ...p }) {
   const [changed, setChanged] = useState(false);
   const colors = ["border-red", "border-pc", "border-pc1", "border-bg3", "border-bg8"];
   const btnRef = useRef(null);
@@ -119,11 +119,21 @@ export function CheckInput({ children, size = "20", color = 0, cls, ...p }) {
   const radius = p.type == "radio" ? "rounded-full" : "rounded";
   const s = (w, h) => ({ width: `${w}px`, height: `${h}px` });
 
+  const handleCheck = () => {
+    if (p.type != "radio") setChanged(!changed);
+    if (onChange) onChange();
+  };
+
+  useEffect(() => {
+    if (p.type != "radio" && btnRef.current) btnRef.current.checked = p.checked;
+  }, [p.checked]);
+
   return (
     <label htmlFor={cls} className={`inline-flex justify-center items-center ${cls}`}>
       <div style={s(size, size)} className={`relative flex justify-center items-center`}>
         <input
-          onClick={() => p.type != "radio" && setChanged(!changed)}
+          onClick={handleCheck}
+          onChange={() => {}}
           ref={btnRef}
           id={cls}
           title={p.title || p.name}

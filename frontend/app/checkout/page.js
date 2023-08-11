@@ -345,6 +345,7 @@ ${address?.province ? address.province + "," : ""} ${address?.country || ""}`;
               <OnlinePaymentMethods
                 lang={lang}
                 cnt={content}
+                user={user}
                 payments={store.payments}
                 selected={paymentMethod}
                 showMsg={addMessage}

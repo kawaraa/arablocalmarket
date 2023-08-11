@@ -31,7 +31,7 @@ export default function SignIn() {
       Cookies.set("accessToken", response.jwt);
 
       const customer = JSON.parse(window.localStorage.getItem("customer"));
-      await request("customer", "POST", { data: { customer } }).catch(() => null);
+      if (customer) await request("customer", "POST", { data: { customer } }).catch(() => null);
       window.localStorage.removeItem("customer");
 
       refetchUser();
