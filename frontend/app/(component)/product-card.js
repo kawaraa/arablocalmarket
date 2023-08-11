@@ -40,7 +40,11 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
 
       <Tag {...newP}>
         <a className="relative block w-full h-full bg-cbg card cd_hr rounded-xl duration-150">
-          <h3 className="text-ellipsis overflow-hidden whitespace-nowrap text-center m-2">{product.name}</h3>
+          <h3
+            title={product.name}
+            className="text-ellipsis overflow-hidden whitespace-nowrap text-center m-2">
+            {product.name}
+          </h3>
           <div className="overflow-hidden h-40 flex justify-center items-center">
             <Image
               src={product.image.data?.attributes.formats.thumbnail.url}

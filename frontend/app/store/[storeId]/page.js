@@ -115,7 +115,7 @@ export async function generateMetadata({ params }) {
 }
 
 const content = {
-  delivery: { en: ["Delivery", "NO"], ar: ["توصيل", "لا يوجد"] },
+  delivery: { en: ["Delivery", "Free"], ar: ["توصيل", "لا يوجد"] },
   openHrs: { en: "Opening hours", ar: "ساعات العمل" },
   about: { en: "About", ar: "حول المتجر" },
   adr: { en: "Location", ar: "موقع المتجر" },
