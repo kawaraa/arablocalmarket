@@ -40,7 +40,7 @@ export default async function StoreLayout({ children, params: { storeId }, searc
                 className={`inline-block w-6 h-6 ${
                   store.attributes.open ? "bg-green" : "bg-dt"
                 } rounded-full`}></span>
-              <span className="mx-2"> {store.attributes.name}</span>
+              <span className="mx-2 backdrop-blur-sm"> {store.attributes.name}</span>
             </h1>
 
             <StoreLinks

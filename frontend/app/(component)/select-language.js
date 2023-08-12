@@ -2,45 +2,49 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
-import Modal from "./(styled)/modal";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage() {
   const router = useRouter();
-  const { lang, updateLang } = useContext(AppSessionContext);
+  const { updateLang } = useContext(AppSessionContext);
+  const [cls, setCls] = useState("-translate-y-24");
   const [open, setOpen] = useState(false);
 
   const changeLanguage = (lang) => {
     updateLang(lang);
-    setOpen(false);
+    setCls("-translate-y-24");
+    setTimeout(() => setOpen(false), 200);
     router.refresh();
   };
 
   useEffect(() => {
     const clientLang = Cookies.get("lang");
-    if (!clientLang) setTimeout(() => setOpen(true), 500);
+    if (!clientLang) {
+      setOpen(true);
+      setTimeout(() => setCls("-translate-y-0"), 1500);
+    }
   }, []);
 
+  if (!open) return null;
   return (
-    <Modal lang={lang} open={open} center title={content.h[lang]}>
-      <div className="flex justify-center items-center">
-        <CheckCard
-          type="radio"
-          name="language"
-          onChange={() => changeLanguage("en")}
-          cls="w-1/2 md:w-44 !h-10 mx-1 flex justify-center items-center text-lg">
-          English
-        </CheckCard>
-        <CheckCard
-          type="radio"
-          name="language"
-          onChange={() => changeLanguage("ar")}
-          cls="w-1/2 md:w-44 !h-10 mx-1 flex justify-center items-center text-lg">
-          العربية
-        </CheckCard>
-      </div>
-    </Modal>
+    <div
+      className={`fixed z-9 top-2 right-1/2 translate-x-1/2 px-5 py-3 bg-bg dark:bg-dcbg card shadow-lg rounded-lg flex justify-center items-center transition ${cls}`}>
+      <CheckCard
+        type="radio"
+        name="language"
+        onChange={() => changeLanguage("en")}
+        cls="w-28 !h-10 mx-1 flex justify-center items-center text-lg">
+        English
+      </CheckCard>
+      <CheckCard
+        type="radio"
+        name="language"
+        onChange={() => changeLanguage("ar")}
+        cls="w-28 !h-10 mx-1 flex justify-center items-center text-lg font-arabic">
+        العربية
+      </CheckCard>
+    </div>
   );
 }
 

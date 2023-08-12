@@ -39,22 +39,22 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
       )}
 
       <Tag {...newP}>
-        <a className="relative block w-full h-full bg-cbg card cd_hr rounded-xl duration-150">
-          <h3
-            title={product.name}
-            className="text-ellipsis overflow-hidden whitespace-nowrap text-center m-2">
-            {product.name}
-          </h3>
-          <div className="overflow-hidden h-40 flex justify-center items-center">
+        <a className="relative overflow-hidden block w-full h-full bg-cbg card cd_hr rounded-xl duration-150">
+          <div className="overflow-hidden aspect-square">
             <Image
               src={product.image.data?.attributes.formats.thumbnail.url}
               alt={product.name}
               width="300"
               height="300"
-              className="w-auto h-full"
+              className="w-full"
               priority={priority}
             />
           </div>
+          <h3
+            title={product.name}
+            className="text-ellipsis overflow-hidden whitespace-nowrap text-center m-2">
+            {product.name}
+          </h3>
           <div className={`flex justify-end items-center mx-2`}>
             <strong className="text-lg">
               <span className="text-red">{currency + v.price} </span>
