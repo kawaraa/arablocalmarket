@@ -14,7 +14,7 @@ export default async function LandingPage({ params, searchParams }) {
   return (
     <>
       <CheckUser />
-      <section className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
+      <article className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
           className="relative flex-auto mt-12 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
@@ -25,14 +25,14 @@ export default async function LandingPage({ params, searchParams }) {
           <p className="px-3 opacity-0">{content.h1PHidden[lang]}</p>
         </div>
 
-        <article dir="auto" className="relative text-center px-4 w-full">
+        <div dir="auto" className="relative text-center px-4 w-full">
           <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
             {content.h1P[lang]}
           </p>
 
-          <h2 className="text-lg mt-10 md:mt-3 mb-6 md:mb-3 font-bold lazy-r" style={getCssDelay()}>
-            {content.h2[lang]}
-          </h2>
+          <p className="text-lg mt-6 md:mt-3 mb-6 md:mb-3 font-bold lazy-r" style={getCssDelay()}>
+            {content.h1P2[lang]}
+          </p>
 
           <Link passHref legacyBehavior hrefLang={lang} href="/store">
             <a
@@ -47,25 +47,29 @@ export default async function LandingPage({ params, searchParams }) {
             title={content.readMore[lang]}
             aria-label={content.readMore[lang]}
             className="block w-10 mt-8 mx-auto animate-bounce">
+            <span className="sr-only">{content.readMore[lang]}</span>
             <SvgIcon name="arrowDownInCircle" />
           </a>
-        </article>
-      </section>
+        </div>
+      </article>
 
       <div id="section2" className="h-12"></div>
 
       <section className="min-h-screen pt-14 pb-24 px-1 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-dbg text-center bg-pc bg-gradient-to-tl from-bg9">
-        <h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm" style={getCssDelay()}>
-          {content.h3[lang]}
-        </h3>
+        <h2 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm" style={getCssDelay()}>
+          {content.h2[lang]} <span className="sr-only">{content.h2Hidden[lang]}</span>
+        </h2>
         <p className="text-lg lazy-b" style={getCssDelay()}>
-          {content.h3P[lang][0]}
+          {content.h2P[lang][0]}
         </p>
         <p className="text-lg lazy-b" style={getCssDelay()}>
-          {content.h3P[lang][1]}
+          {content.h2P[lang][1]}
+        </p>
+        <p className="text-sm mt-3 lazy-b" style={getCssDelay()}>
+          {content.h2P[lang][2]}
         </p>
 
-        <h3 className="text-xl mt-10 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
+        <h3 className="text-xl mt-8 mb-5 font-bold mb-sm lazy-b" style={getCssDelay()}>
           {content.stepsH[lang]}
         </h3>
         <ul className="mb-10 flex flex-wrap items-center justify-around">
@@ -75,14 +79,21 @@ export default async function LandingPage({ params, searchParams }) {
                 <span className="text-lg font-semibold">{i + 1} </span>
                 {step[lang]}
               </h4>
+
               <div className="overflow-hidden h-80 mt-5 rounded-lg">
-                <Image
-                  src={step.image.replace("lang", lang)}
-                  width="200"
-                  height="400"
-                  alt={step.alt}
-                  className="h-full"
-                />
+                {step.image.includes("video") ? (
+                  <video autoPlay loop muted playsInline className="h-full">
+                    <source src={step.image.replace("lang", lang)} type="video/mp4" />
+                  </video>
+                ) : (
+                  <Image
+                    src={step.image.replace("lang", lang)}
+                    width="200"
+                    height="400"
+                    alt={step.alt}
+                    className="h-full"
+                  />
+                )}
               </div>
             </li>
           ))}
@@ -113,31 +124,42 @@ export default async function LandingPage({ params, searchParams }) {
 const content = {
   h1: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
   h1Hidden: {
-    en: "Arabic Stores Supermarkets near you Halal food around the world Create your store and start selling Halal food products online locally",
-    ar: "المتاجر العربية سوبر ماركت بالقرب منك أطعمة حلال حول العالم أنشئ متجرك وابدأ في بيع منتجات الأطعمة الحلال عبر الإنترنت محليًا",
+    en: "Manage your local business, Create your online store and start selling Halal food products locally for free, local services Arabic Stores Supermarkets and Halal food near you",
+    ar: "قم بإدارة أعمالك المحلية، أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، خدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
   },
   h1P: {
-    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby. Discover Hundreds of Unique Stores in One Place, a nice, easy and free Smartphone app for groceries stores, markets, services and restaurants delivery at home",
-    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني لأسواق والمحلات التجارية والخدمات والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby. Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
+    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
   },
   h1PHidden: {
-    en: "Look for a nearby store or supermarket, Select and add the products you need to the cart, Select the payment method you like, checkout and let the store deliver you order to you",
-    ar: "ابحث عن متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق ، وحدد طريقة الدفع التي تريدها، وقم بتسجيل الخروج، ودع المتجر يقوم بتسليم طلبك إليك",
+    en: "Look for local services, Grocery store or supermarket in your neighborhood, Select and add the products you need to the cart, Select the payment method you like, pay checkout and let the store deliver you order to you",
+    ar: "ابحث عن خدمات محلية أو متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق، وحدد طريقة الدفع التي تريدها، وقم بالدفع، ودع المتجر يقوم توصيل طلبك إليك",
   },
-  h2: {
-    en: "Find an Arabic Store and Supermarket near you.",
-    ar: "ابحث عن متجر عربي وسوبر ماركت بالقرب منك.",
+  h1P2: {
+    en: "Look for local services, Grocery store or supermarket in your neighborhood",
+    ar: "ابحث عن الخدمات المحلية أو محلات البقالة والسوبر ماركت في منطقتك",
   },
-  findStoreLink: { en: "Find a store to order from", ar: "ابحث عن متجر للطلب منه" },
-  h3: { en: "Grow your business here", ar: "نمي عملك هنا" },
-  h3P: {
+  findStoreLink: { en: "Find a store near you", ar: "ابحث عن متجر بالقرب منك" },
+  // storeOwnerLink: { en: "I'm a store owner", ar: "أنا صاحب متجر" },
+  readMore: {
+    en: "Are you a store owner? Read more on how to create an online store and manage you the store inventory",
+    ar: "هل انت صاحب محل؟ اقرأ المزيد حول كيفية إنشاء متجر على الانترنت وإدارة مخزون المتجر",
+  },
+  h2: { en: "Grow your local business here", ar: "نمي عملك المحلي هنا" },
+  h2Hidden: {
+    en: "Bring your store to the internet and start selling your products locally for free",
+    ar: "اجعل متجرك متاحًا للإنترنت وابدأ في بيع منتجاتك محليًا مجانًا",
+  },
+  h2P: {
     en: [
-      "Are you a store owner or you have a grocery store and want to grow your business?",
-      "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun.",
+      "Are you a store owner, You provide a local service or you have a grocery store and want to grow your business and make your customers happy?",
+      "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun",
+      "No credit cared required, you can start rgiht away and free",
     ],
     ar: [
-      "هل أنت صاحب متجر أو لديك متجر بقالة وترغب في تنمية عملك؟",
-      "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة.",
+      "هل أنت صاحب متجر أو لديك متجر بقالة وترغب في تنمية عملك وجعل عملائك سعداء؟",
+      "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة",
+      "لا حاجة لبطاقة ائتمان مصرفية، يمكنك البدء على الفور ومجانيًا",
     ],
   },
   stepsH: {
@@ -158,7 +180,7 @@ const content = {
     {
       en: "Select a plan",
       ar: "حدد اشتراكًا",
-      image: "/img/step-2-lang.gif",
+      image: "/video/step-2-lang.mp4",
       alt: {
         en: "Step 2 Select a store plan from the available plan on ArabLocalMarket",
         ar: "الخطوة 2 حدد اشتراك للمتجر من الاشتراكات المتاحة على ArabLocalMarket",
@@ -167,7 +189,7 @@ const content = {
     {
       en: "Create a store",
       ar: "أنشئ متجرً",
-      image: "/img/step-3-lang.gif",
+      image: "/video/step-3-lang.mp4",
       alt: {
         en: "Step 2 Create a store based on the plan you chose",
         ar: "الخطوة 2 قم بإنشاء متجر بناءً على الاشتراك التي اخترته",
@@ -176,7 +198,7 @@ const content = {
     {
       en: "List your products",
       ar: "أضف منتجاتك",
-      image: "/img/step-4-lang.gif",
+      image: "/video/step-4-lang.mp4",
       alt: {
         en: "Step 2 List your products in the store you created",
         ar: "الخطوة 2 أضف منتجاتك إلى المتجر الذي أنشأته",
@@ -184,8 +206,4 @@ const content = {
     },
   ],
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
-  readMore: {
-    en: "Read more on how to create a store and manage you the store inventory",
-    ar: "اقرأ المزيد حول كيفية إنشاء متجر وإدارة مخزون المتجر",
-  },
 };

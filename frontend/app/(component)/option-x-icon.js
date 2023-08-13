@@ -17,11 +17,11 @@ export default function OptionXIcon({ onChange, open = false, cls = "", barsCls 
       aria-controls="mobile-menu"
       aria-expanded="false"
       aria-haspopup="menu">
-      <div
-        className={`${barCls} group-[.active]:-rotate-45 group-[.active]:-translate-x-[0px] group-[.active]:translate-y-[7px]`}></div>
-      <div className={`${barCls} group-[.active]:opacity-0`}></div>
-      <div
-        className={`${barCls} group-[.active]:rotate-45 group-[.active]:-translate-x-[0px] group-[.active]:translate-y-[-7px]`}></div>
+      <span
+        className={`block ${barCls} group-[.active]:-rotate-45 group-[.active]:-translate-x-[0px] group-[.active]:translate-y-[7px]`}></span>
+      <span className={`block ${barCls} group-[.active]:opacity-0`}></span>
+      <span
+        className={`block ${barCls} group-[.active]:rotate-45 group-[.active]:-translate-x-[0px] group-[.active]:translate-y-[-7px]`}></span>
       <span className="sr-only">Open main menu</span>
     </button>
   );

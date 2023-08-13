@@ -51,6 +51,7 @@ export default function Navigation() {
         }`}></div>
 
       <ul
+        id="mobile-menu"
         className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
           showMenu && "left-[0]"
         }`}>
@@ -67,7 +68,7 @@ export default function Navigation() {
               value={lang}
               onChange={(e) => updateLang(e.target.value) + router.refresh()}
               style={{ background: "none", color: "transparent" }}
-              className="absolute inset-0 w-full cursor-pointer">
+              className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
                   {opt.text[lang]}
@@ -78,23 +79,21 @@ export default function Navigation() {
         </li>
         <li className="absolute top-3 right-3 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:mx-3">
           <div className="relative overflow-hidden w-7 h-7 rounded-full">
+            <label htmlFor="theme-select" className="w-full h-full">
+              <SvgIcon name={content.themeModeIconsMap[themeMode]} />
+            </label>
             <select
               id="theme-select"
               value={themeMode}
               onChange={(e) => updateThemeMode(e.target.value)}
               style={{ background: "none", color: "transparent" }}
-              className="absolute inset-0 w-full">
+              className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.languageOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
                   {opt.text[lang]}
                 </option>
               ))}
             </select>
-            <label
-              htmlFor="theme-select"
-              className="absolute inset-0 w-full h-full bg-bg dark:bg-dbg cursor-pointer">
-              <SvgIcon name={content.themeModeIconsMap[themeMode]} />
-            </label>
           </div>
         </li>
 

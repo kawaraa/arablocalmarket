@@ -29,7 +29,7 @@ export default function SelectLanguage() {
   if (!open) return null;
   return (
     <div
-      className={`fixed z-9 top-2 right-1/2 translate-x-1/2 px-5 py-3 bg-bg dark:bg-dcbg card shadow-lg rounded-lg flex justify-center items-center transition ${cls}`}>
+      className={`card fixed z-9 top-2 right-1/2 translate-x-1/2 px-5 py-3 bg-bg dark:bg-dcbg dark:text-bg shadow-lg rounded-lg flex justify-center items-center transition ${cls}`}>
       <CheckCard
         type="radio"
         name="language"

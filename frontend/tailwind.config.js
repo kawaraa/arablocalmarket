@@ -16,13 +16,13 @@ module.exports = {
       pc: "#9bface", // Primary Color // #cbf7f2 // #b2ebf9
       pc2: "#aea1ea",
       bg: "#ffffff", // Background & Dark Title Color
-      lbg: "#e5e7eb", //f9fafb Light Background
+      lbg: "#e5e7eb", // Light Background #f9fafb
       dbg: "#121212", // Dark Background
       cbg: "#ffffff1a", // Card Background
       dcbg: "#272727", // Dark card Background #263546
       lt: "#6b7280", // Light Title color
-      dt: "#ffffffbf", // Dark Color
-      t: "#666666", // Light Color
+      dt: "#ffffffbf", // Dark Text Color
+      t: "#666666", // Light Text Color
       bc: "#0000001a", // Border Color & Hover effect
       bf: "#9aa0a6", // Border focus color
       link: "#b485e6",
