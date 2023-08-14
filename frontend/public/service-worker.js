@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-09";
+const staticFileCacheName = "static-files-v-0";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -46,6 +46,6 @@ const handleRequest = async (request) => {
     // if (request.method == "GET" && (request.mode == "navigate" || !request.url.includes("api"))) {
     //   return caches.match(staticFileCachePaths[1]); // offline fallback page
     // }
-    // return networkErrorResponse;
+    return networkErrorResponse;
   }
 };
