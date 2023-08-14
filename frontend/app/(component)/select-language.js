@@ -6,7 +6,6 @@ import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
 
 export default function SelectLanguage() {
-  const router = useRouter();
   const { updateLang } = useContext(AppSessionContext);
   const [cls, setCls] = useState("-translate-y-24");
   const [open, setOpen] = useState(false);
@@ -15,7 +14,6 @@ export default function SelectLanguage() {
     updateLang(lang);
     setCls("-translate-y-24");
     setTimeout(() => setOpen(false), 200);
-    router.refresh();
   };
 
   useEffect(() => {

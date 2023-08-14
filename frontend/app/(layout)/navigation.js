@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
 import OptionXIcon from "../(component)/option-x-icon";
@@ -11,7 +11,6 @@ import Image from "next/image";
 import Notification from "./notification";
 
 export default function Navigation() {
-  const router = useRouter();
   const pathName = usePathname();
   const [showMenu, setShowMenu] = useState(false);
   const { lang, updateLang, themeMode, updateThemeMode, cart, user } = useContext(AppSessionContext);
@@ -66,7 +65,7 @@ export default function Navigation() {
             />
             <select
               value={lang}
-              onChange={(e) => router.refresh(updateLang(e.target.value))}
+              onChange={(e) => updateLang(e.target.value)}
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
