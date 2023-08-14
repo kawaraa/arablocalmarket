@@ -80,18 +80,27 @@ export default async function LandingPage({ params, searchParams }) {
                 {step[lang]}
               </h4>
 
-              <div className="overflow-hidden h-80 mt-5 rounded-lg">
+              <div className="overflow-hidden h-80 w-[200px] mt-5 rounded-lg">
                 {step.image.includes("video") ? (
-                  <video autoPlay loop muted playsInline className="h-full">
+                  <video
+                    width="200"
+                    height="350"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    title={step.alt[lang]}
+                    className="w-full h-auto">
                     <source src={step.image.replace("lang", lang)} type="video/mp4" />
+                    {step.alt[lang]}
                   </video>
                 ) : (
                   <Image
                     src={step.image.replace("lang", lang)}
                     width="200"
-                    height="400"
-                    alt={step.alt}
-                    className="h-full"
+                    height="350"
+                    alt={step.alt[lang]}
+                    className="w-full h-auto"
                   />
                 )}
               </div>
