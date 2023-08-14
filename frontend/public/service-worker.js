@@ -1,8 +1,8 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapoa";
+const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapo";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
-const staticFileCachePaths = ["/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
+const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));
@@ -23,7 +23,7 @@ self.addEventListener("fetch", (evt) => evt.respondWith(handleRequest(evt.reques
 const handleRequest = async (request) => {
   const networkErrorResponse = Response.error();
   try {
-    console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
+    // console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
     if (
       !request.url.includes("http") ||
       !["GET", "HEAD"].includes(request.method) ||
@@ -44,10 +44,11 @@ const handleRequest = async (request) => {
       await caches
         .open(staticFileCacheName)
         .then((cache) => cache.put(request, response.clone()).catch(() => null));
+      // cache.put(request, response.clone()).catch(() => null) ignore the error when the request are not supported in cashing like "GET", "HEAD" and responses with 206 status code
       return response;
     }
   } catch (error) {
-    console.log("caches ERROR: >>>", request.method, request.url, error);
+    // console.log("caches ERROR: >>>", request.method, request.url, error);
     if (request.method == "GET" && (request.mode == "navigate" || !request.url.includes("api"))) {
       return caches.match(staticFileCachePaths[0]); // offline fallback page
     }
