@@ -1,8 +1,14 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9";
+const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
-const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
+const staticFileCachePaths = [
+  "/offline.html",
+  "/home",
+  "/barcode-scanner/quagga.min.js",
+  "/signin",
+  "/signup",
+];
 
 self.addEventListener("install", (evt) => {
   evt.waitUntil(caches.open(staticFileCacheName).then((cache) => cache.addAll(staticFileCachePaths)));
@@ -35,7 +41,7 @@ const handleRequest = async (request) => {
       const cachedResponse = await caches.match(request);
       if (cachedResponse) return cachedResponse;
       else if (!navigator.onLine) {
-        const res = await caches.match(request.url);
+        const res = await caches.match(request.url == "https://arablocalmarket.com/" ? "/home" : request.url);
         if (res) return res;
       }
 
