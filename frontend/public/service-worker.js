@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t65347";
+const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -21,7 +21,6 @@ self.addEventListener("activate", async (evt) => {
 self.addEventListener("fetch", (evt) => evt.respondWith(handleRequest(evt.request)));
 
 const handleRequest = async (request) => {
-  console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
   const networkErrorResponse = Response.error();
   try {
     // console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
@@ -49,7 +48,7 @@ const handleRequest = async (request) => {
       return response;
     }
   } catch (error) {
-    console.log("caches ERROR: >>>", request.method, request.url, error);
+    // console.log("caches ERROR: >>>", request.method, request.url, error);
     if (request.method == "GET" && (request.mode == "navigate" || !request.url.includes("api"))) {
       return caches.match(staticFileCachePaths[0]); // offline fallback page
     }

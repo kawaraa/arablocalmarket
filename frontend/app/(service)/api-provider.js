@@ -171,7 +171,7 @@ export function mergeCarts(userCart, localCart) {
 
 export function registerServiceWorker() {
   if ("serviceWorker" in navigator && !window.location.origin.includes("localhost")) {
-    navigator.serviceWorker.getRegistrations().then(async (registrations) => {
+    return navigator.serviceWorker.getRegistrations().then(async (registrations) => {
       for (const registration of registrations) {
         if (
           registration.active.state == "activated" &&

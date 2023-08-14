@@ -7,13 +7,11 @@ import ImagePreview from "./(component)/(styled)/image-preview";
 import Messages from "./(component)/(styled)/messages";
 import SelectLanguage from "./(component)/select-language";
 import shdCnt from "./(layout)/json/shared-content.json";
-import { useRouter } from "next/navigation";
 const currency = process.env.NEXT_PUBLIC_CURRENCY || "€";
 
 export const AppSessionContext = createContext();
 
 export default function AppSessionContextProvider({ children, language, theme }) {
-  const router = useRouter();
   const [messages, setMessages] = useState([]);
   const [lang, setLang] = useState(language);
   const [themeMode, setThemeMode] = useState(theme);
@@ -35,10 +33,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
     setLang(lang);
-    await caches.delete((await caches.keys())[0] || ""); // Delete the "/" cache because Iphone does not change the language
-    // await caches.open((await caches.keys())[0] || "").then((cache) => cache.delete("/"));
-    router.refresh();
-    // window.location.reload();
+    // await caches.delete((await caches.keys())[0] || "");
+    await registerServiceWorker(); // Delete the cache because Iphone does not change the language
+    window.location.reload();
   };
   const updateThemeMode = (mode) => {
     if (Cookies.get("themeMode") != mode) Cookies.set("themeMode", mode);
