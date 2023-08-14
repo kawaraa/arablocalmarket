@@ -109,7 +109,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       setAppLoading(false);
     }
 
-    registerServiceWorker();
+    // registerServiceWorker();
   }, []);
 
   const state = {
