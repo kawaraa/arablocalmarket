@@ -1,7 +1,7 @@
 // self.importScripts('foo.js', 'bar.js');
 
 const staticFileCacheName =
-  "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapoanfs";
+  "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapoanf";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -23,7 +23,7 @@ self.addEventListener("fetch", (evt) => evt.respondWith(handleRequest(evt.reques
 
 const handleRequest = async (request) => {
   const networkErrorResponse = Response.error();
-    console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
+  console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
   try {
     // !request.url.includes("http")
     // console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
@@ -38,7 +38,7 @@ const handleRequest = async (request) => {
       }
 
       const response = await fetch(request);
-      if (!response.ok) return response;
+      if (!response.ok || response.type != "basic") return response;
 
       await caches.open(staticFileCacheName).then((cache) => cache.put(request, response.clone()));
       return response;
