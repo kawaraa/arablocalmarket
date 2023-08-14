@@ -88,11 +88,11 @@ export default async function LandingPage({ params, searchParams }) {
                   <video
                     width="200"
                     height="350"
-                    // autoPlay
-                    // loop
+                    autoPlay
+                    loop
                     controls
                     muted
-                    // playsInline
+                    playsInline
                     title={step.alt[lang]}
                     className="w-full h-auto">
                     <source src={step.image.replace("lang", lang)} type="video/mp4" />
@@ -112,8 +112,7 @@ export default async function LandingPage({ params, searchParams }) {
           ))}
         </ul>
 
-        <h5>{content.h5Hidden[lang]}</h5>
-        <p>{content.h5P2[lang]}</p>
+        <p>{content.stepsP2[lang]}</p>
 
         <Link passHref legacyBehavior hrefLang={lang} href="/admin/store?tab=my">
           <a
@@ -123,15 +122,7 @@ export default async function LandingPage({ params, searchParams }) {
           </a>
         </Link>
       </section>
-      {/* 
-        <p>Todo: Here should show what the app can do for you, the App features and how to use it.</p>
-        <p>Some images, GIFTs and videos </p> */}
 
-      {/* <section>
-        <h3 h3 className="text-3xl sm:text-4xl mb-4 font-bold mb-sm">
-          Become Representative and start making money with us
-        </h3>
-      </section> */}
       <Footer lang={lang} />
     </>
   );
@@ -227,13 +218,9 @@ const content = {
       },
     },
   ],
-  h5Hidden: {
-    en: "Don't miss out Manage your local business for free",
-    ar: "لا تفوت إدارة أعمالك المحلية مجانًا",
-  },
-  h5P2: {
-    en: "Create your first online store and start adding products so your so customers can see the products you sell",
-    ar: "أنشئ متجرك الأول على الإنترنت وابدأ في إضافة المنتجات حتى يتمكن عملاؤك من رؤية المنتجات التي تبيعها",
+  stepsP2: {
+    en: "Don't miss out Manage your local business for free, Create your first online store and start adding products so your so customers can see the products you sell",
+    ar: "لا تفوت إدارة أعمالك المحلية مجانًا, أنشئ متجرك الأول على الإنترنت وابدأ في إضافة المنتجات حتى يتمكن عملاؤك من رؤية المنتجات التي تبيعها",
   },
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
 };

@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-09y65";
+const staticFileCacheName = "static-files-v-09y6";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -25,15 +25,15 @@ const handleRequest = async (request) => {
   try {
     // !request.url.includes("http")
     // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
-    if (/api|api\/auth|api\/users/gim.test(request.url)) return fetch(request);
+    if (/api|api\/auth|api\/users|mp4/gim.test(request.url)) return fetch(request);
     else {
-      // const cachedResponse = await caches.match(request);
-      const cachedResponse = await caches.match(request.url);
+      const cachedResponse = await caches.match(request);
+      // const cachedResponse = await caches.match(request.url);
       if (cachedResponse) return cachedResponse;
-      // else if (!navigator.onLine) {
-      //   const res = await caches.match(request.url);
-      //   if (res) return res;
-      // }
+      else if (!navigator.onLine) {
+        const res = await caches.match(request.url);
+        if (res) return res;
+      }
 
       const response = await fetch(request);
       if (!["GET", "HEAD"].includes(request.method) || !response.ok) return response;

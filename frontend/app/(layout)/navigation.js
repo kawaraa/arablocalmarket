@@ -66,8 +66,7 @@ export default function Navigation() {
             />
             <select
               value={lang}
-              onChange={(e) => updateLang(e.target.value)}
-              // Todo: router.refresh();
+              onChange={(e) => router.refresh(updateLang(e.target.value))}
               style={{ background: "none", color: "transparent" }}
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
