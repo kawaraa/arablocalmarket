@@ -182,10 +182,10 @@ export function registerServiceWorker() {
         await new Promise((res, rej) => registration.unregister().then(res).catch(rej));
       }
 
-      // navigator.serviceWorker
-      //   .register("/service-worker.js")
-      //   .then((registration) => console.log("Registration scope: ", registration.scope))
-      //   .catch((error) => console.log("Web Worker Registration Error: ", error));
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then((registration) => console.log("Registration scope: ", registration.scope))
+        .catch((error) => console.log("Web Worker Registration Error: ", error));
     });
   }
 }

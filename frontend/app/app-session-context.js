@@ -38,6 +38,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     // Delete the "/" cache because Iphone does not change the language
     // await caches.open((await caches.keys())[0] || "").then((cache) => cache.delete("/"));
     router.refresh();
+    // window.location.reload();
   };
   const updateThemeMode = (mode) => {
     if (Cookies.get("themeMode") != mode) Cookies.set("themeMode", mode);
