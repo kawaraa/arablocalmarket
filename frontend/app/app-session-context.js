@@ -35,7 +35,7 @@ export default function AppSessionContextProvider({ children, language, theme })
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
     setLang(lang);
-    // Delete the "/" cache because Iphone does not change the language
+    await caches.delete((await caches.keys())[0] || ""); // Delete the "/" cache because Iphone does not change the language
     // await caches.open((await caches.keys())[0] || "").then((cache) => cache.delete("/"));
     router.refresh();
     // window.location.reload();
