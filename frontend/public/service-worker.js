@@ -1,7 +1,7 @@
 // self.importScripts('foo.js', 'bar.js');
 
 const staticFileCacheName =
-  "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapoanfsdhv";
+  "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79q0djoancbsfyq8e7t6534702q9oapoanfsdh";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -25,20 +25,26 @@ const handleRequest = async (request) => {
   const networkErrorResponse = Response.error();
   try {
     // !request.url.includes("http")
-    // console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
+    console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
     if (!["GET", "HEAD"].includes(request.method) || /api|api\/auth|api\/users/gim.test(request.url)) {
       return fetch(request);
     } else {
+      console.log("Caching: >>> ", navigator.onLine, request.method, request.url);
       const cachedResponse = caches.match(request);
       // const cachedResponse = await caches.match(request.url);
+      console.log("cachedResponse: >>> ", cachedResponse);
       if (cachedResponse) return cachedResponse;
       else if (!navigator.onLine) {
         const res = await caches.match(request.url);
         if (res) return res;
+        console.log("After res: >>> ", res);
       }
+      console.log("After cachedResponse: >>> ", cachedResponse);
 
       const response = await fetch(request);
-      if (!["GET", "HEAD"].includes(request.method) || !response.ok) return response;
+      console.log("response: >>> ", response);
+
+      if (!response.ok) return response;
 
       await caches.open(staticFileCacheName).then((cache) => cache.put(request, response.clone()));
       return response;
