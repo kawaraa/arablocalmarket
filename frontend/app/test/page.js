@@ -18,9 +18,9 @@ export default function Test() {
     return userAgent;
   };
 
-  const toggleLang = () => {
+  const toggleLang = async () => {
     setData(lang + getMobileOperatingSystem());
-    updateLang(lang == "en" ? "ar" : "en");
+    await updateLang(lang == "en" ? "ar" : "en");
     window.location.reload();
   };
 
