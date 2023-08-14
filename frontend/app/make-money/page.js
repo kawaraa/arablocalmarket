@@ -18,13 +18,13 @@ export default function MakeMoney({ params, searchParams }) {
       <h2>{content.h1P[lang][1]}</h2>
 
       <ol className="list-decimal mx-5 my-8">
-        {content.ol[lang].map((item) => (
-          <li>{item}</li>
+        {content.ol[lang].map((item, i) => (
+          <li key={i}>{item}</li>
         ))}
       </ol>
 
-      {content.h2P[lang].map((item) => (
-        <p>{item}</p>
+      {content.h2P[lang].map((item, i) => (
+        <p key={i}>{item}</p>
       ))}
     </>
   );
