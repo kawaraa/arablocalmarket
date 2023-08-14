@@ -169,13 +169,14 @@ export function mergeCarts(userCart, localCart) {
   return userCart;
 }
 
-export function registerServiceWorker() {
+export function registerServiceWorker(update) {
   if ("serviceWorker" in navigator && !window.location.origin.includes("localhost")) {
     return navigator.serviceWorker.getRegistrations().then(async (registrations) => {
       for (const registration of registrations) {
         if (
           registration.active.state == "activated" &&
-          registration.active?.scriptURL?.includes("service-worker.js")
+          registration.active?.scriptURL?.includes("service-worker.js") &&
+          !update
         ) {
           continue;
         }
