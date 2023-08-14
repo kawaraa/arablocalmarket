@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-09y655e";
+const staticFileCacheName = "static-files-v-09y655";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/", "/offline.html", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
@@ -29,7 +29,7 @@ const handleRequest = async (request) => {
     else {
       const cachedResponse = await caches.match(request);
       if (cachedResponse) return cachedResponse;
-      else if (!navigator.onLine) {
+      else {
         const res = await caches.match(request.url);
         if (res) return res;
       }
