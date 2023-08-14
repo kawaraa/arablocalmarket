@@ -27,7 +27,10 @@ export default async function LandingPage({ params, searchParams }) {
 
         <div dir="auto" className="relative text-center px-4 w-full">
           <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
-            {content.h1P[lang]}
+            {content.h1P[lang][0]}
+          </p>
+          <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
+            {content.h1P[lang][1]}
           </p>
 
           <p className="text-lg mt-6 md:mt-3 mb-6 md:mb-3 font-bold lazy-r" style={getCssDelay()}>
@@ -109,6 +112,9 @@ export default async function LandingPage({ params, searchParams }) {
           ))}
         </ul>
 
+        <h5>{content.h5Hidden[lang]}</h5>
+        <p>{content.h5P2[lang]}</p>
+
         <Link passHref legacyBehavior hrefLang={lang} href="/admin/store?tab=my">
           <a
             style={getCssDelay()}
@@ -134,12 +140,18 @@ export default async function LandingPage({ params, searchParams }) {
 const content = {
   h1: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
   h1Hidden: {
-    en: "Manage your local business, Create your online store and start selling Halal food products locally for free, local services Arabic Stores Supermarkets and Halal food near you",
-    ar: "قم بإدارة أعمالك المحلية، أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، خدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
+    en: "Create your online store and start selling Halal food products locally for free, local services Arabic Stores Supermarkets and Halal food near you",
+    ar: "أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، خدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
   },
   h1P: {
-    en: "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby. Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
-    ar: "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة. اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+    en: [
+      "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby.",
+      "Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
+    ],
+    ar: [
+      "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
+      "اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+    ],
   },
   h1PHidden: {
     en: "Look for local services, Grocery store or supermarket in your neighborhood, Select and add the products you need to the cart, Select the payment method you like, pay checkout and let the store deliver you order to you",
@@ -163,12 +175,12 @@ const content = {
   h2P: {
     en: [
       "Are you a store owner, You provide a local service or you have a grocery store and want to grow your business and make your customers happy?",
-      "Then you are in the right place, We are here to help you grow and manage your business and make it easy and fun",
+      "Then you are in the right place, We are here to help you grow and Manage your local business, and make it easy and fun",
       "No credit cared required, you can start rgiht away and free",
     ],
     ar: [
       "هل أنت صاحب متجر أو لديك متجر بقالة وترغب في تنمية عملك وجعل عملائك سعداء؟",
-      "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك وإدارتها وجعلها سهلة وممتعة",
+      "إذا أنت في المكان المناسب، نحن هنا لمساعدتك على تنمية أعمالك المحلية وإدارتها وجعلها سهلة وممتعة",
       "لا حاجة لبطاقة ائتمان مصرفية، يمكنك البدء على الفور ومجانيًا",
     ],
   },
@@ -215,5 +227,13 @@ const content = {
       },
     },
   ],
+  h5Hidden: {
+    en: "Don't miss out Manage your local business for free",
+    ar: "لا تفوت إدارة أعمالك المحلية مجانًا",
+  },
+  h5P2: {
+    en: "Create your first online store and start adding products so your so customers can see the products you sell",
+    ar: "أنشئ متجرك الأول على الإنترنت وابدأ في إضافة المنتجات حتى يتمكن عملاؤك من رؤية المنتجات التي تبيعها",
+  },
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
 };

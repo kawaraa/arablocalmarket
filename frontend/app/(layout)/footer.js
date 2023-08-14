@@ -17,7 +17,9 @@ export default function Footer({ lang = "en" }) {
               {g.links.map((link, i) => (
                 <li key={i}>
                   <Link passHref legacyBehavior hrefLang={lang} href={link.path}>
-                    <a className="inline-block my-2 hover:underline underline-offset-4 hover:text-black">
+                    <a
+                      {...link.props}
+                      className="inline-block my-2 hover:underline underline-offset-4 hover:text-black">
                       {link.text[lang]}
                     </a>
                   </Link>
@@ -38,29 +40,35 @@ const content = {
     {
       h: { en: "We", ar: "نحن" },
       links: [
-        { text: { en: "About", ar: "لمحة" }, path: "/about" },
+        { text: { en: "About", ar: "لمحة" }, path: "/about", props: {} },
         // { text: { en: "Investors", ar: "المستثمرون" }, path: "" },
         // { text: { en: "Press and Media", ar: "صحافة واعلام" }, path: "" },
-        { text: { en: "Privacy policy", ar: "سياسة الخصوصية" }, path: "/privacy-policy" },
+        { text: { en: "Privacy policy", ar: "سياسة الخصوصية" }, path: "/privacy-policy", props: {} },
         {
           text: { en: "Terms and conditions", ar: "الأحكام والشروط" },
           path: "/privacy-policy/#terms-conditions",
+          props: {},
         },
-        { text: { en: "Changelog", ar: "التغييرات" }, path: "/privacy-policy/#changelog" },
+        { text: { en: "Changelog", ar: "التغييرات" }, path: "/privacy-policy/#changelog", props: {} },
       ],
     },
     {
       h: { en: "Support", ar: "الدعم" },
       links: [
-        { text: { en: "Contact", ar: "تواصل" }, path: "/contact" },
-        { text: { en: "Help", ar: "المساعدة" }, path: "/help" },
-        // { text: { en: "Community", ar: "الجمهور" }, path: "/community" },
-        { text: { en: "Sitemap", ar: "خريطة الموقع" }, path: "/sitemap" }, // https://www.shopify.com/sitemap
+        { text: { en: "Contact", ar: "تواصل" }, path: "/contact", props: {} },
+        { text: { en: "Help", ar: "المساعدة" }, path: "/help", props: {} },
+        // { text: { en: "Community", ar: "الجمهور" }, path: "/community" , props: { }},
+        {
+          text: { en: "Facebook", ar: "فيسبوك" },
+          path: "https://www.facebook.com/ArabLocalMarket",
+          props: { target: "_blank" },
+        },
+        { text: { en: "Sitemap", ar: "خريطة الموقع" }, path: "/sitemap", props: {} }, // https://www.shopify.com/sitemap
       ],
     },
     // {
     //   h: { en: "Products", ar: "المنتجات" },
-    //   links: [{ text: { en: "Store", ar: "المتجر" }, path: "" }],
+    //   links: [{ text: { en: "Store", ar: "المتجر" }, path: "" ,  props: {}}],
     // },
   ],
 };
