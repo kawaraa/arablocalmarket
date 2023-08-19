@@ -33,7 +33,6 @@ export default function AppSessionContextProvider({ children, language, theme })
     document.documentElement.classList.remove("en", "ar");
     document.documentElement.classList.add(lang);
     setLang(lang);
-    // await caches.delete((await caches.keys())[0] || "");
     await registerServiceWorker(true); // Delete the cache because Iphone does not change the language
     window.location.reload();
   };

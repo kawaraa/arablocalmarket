@@ -7,7 +7,7 @@ export default function MakeMoney({ params, searchParams }) {
 
   return (
     <>
-      <h1 dir="auto" className="text-center font-bold mt-10 mb-5">
+      <h1 className="text-center font-bold mt-10 mb-5">
         <span className="block text-3xl sm:text-4xl mb-4 font-bold mb-sm">{content.h1[lang][0]}</span>
         <span className="block ">{content.h1[lang][1]}</span>
       </h1>
