@@ -2,40 +2,55 @@
 <urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://arablocalmarket.com/</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/ar"/>
-    <lastmod>2023-06-22</lastmod>
-  </url>
-  <url>
-    <loc>https://arablocalmarket.com/pricing</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/pricing/ar"/>
-    <lastmod>2023-06-22</lastmod>
-  </url>
-  <url>
-    <loc>https://arablocalmarket.com/about</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/about/ar"/>
-    <lastmod>2023-06-22</lastmod>
-  </url>
-  <url>
-    <loc>https://arablocalmarket.com/help</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/help/ar"/>
-    <lastmod>2023-06-22</lastmod>
-  </url>
-  <url>
-    <loc>https://arablocalmarket.com/privacy-policy</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/privacy-policy/ar"/>
-    <lastmod>2023-06-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/ar"/>
+    <lastmod>2023-08-19</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/store</loc>
-     <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/store/ar"/>
-    <lastmod>2023-06-22</lastmod>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/store/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/pricing/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/how-to-install</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/how-to-install/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/make-money</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/make-money/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/about</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/about/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/help</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/help/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/privacy-policy/ar"/>
+    <lastmod>2023-08-19</lastmod>
+  </url>
+  <url>
+    <loc>https://arablocalmarket.com/sitemap</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://arablocalmarket.com/sitemap/ar"/>
+    <lastmod>2023-08-19</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/signin</loc>
-    <lastmod>2023-06-22</lastmod>
+    <lastmod>2023-08-19</lastmod>
   </url>
   <url>
     <loc>https://arablocalmarket.com/signup</loc>
-    <lastmod>2023-06-22</lastmod>
+    <lastmod>2023-08-19</lastmod>
   </url>
 </urlset>

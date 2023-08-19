@@ -1,6 +1,5 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { AppSessionContext } from "../app-session-context";
 import { CheckCard } from "./(styled)/inputs";
 import { Cookies } from "../(service)/utilities";
@@ -17,8 +16,7 @@ export default function SelectLanguage() {
   };
 
   useEffect(() => {
-    const clientLang = Cookies.get("lang");
-    if (!clientLang) {
+    if (!Cookies.get("lang")) {
       setOpen(true);
       setTimeout(() => setCls("-translate-y-0"), 1500);
     }

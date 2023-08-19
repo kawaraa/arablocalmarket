@@ -97,11 +97,11 @@ export async function generateMetadata({ params, searchParams }) {
 const content = {
   title: {
     en: "Arab Local Market - local stores - Arabic stores nearby",
-    ar: "السوق العربي المحلي - المتاجر المحلية - المتاجر العربية القريبة",
+    ar: "السوق المحلي العربي - المتاجر المحلية - المتاجر العربية القريبة",
   },
   description: {
     en: "ArabLocalMarket is a platform where Arabic stores sell Arabic Halal Food Products or provide services and users can look for nearby stores and order from it",
-    ar: "السوق العربي المحلي ArabLocalMarket هو عبارة عن منصة حيث تبيع المتاجر العربية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للمستخدمين البحث عن المتاجر القريبة والطلب منها",
+    ar: "السوق المحلي العربي ArabLocalMarket هو عبارة عن منصة حيث تبيع المتاجر العربية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للمستخدمين البحث عن المتاجر القريبة والطلب منها",
   },
   keywords: {
     en: "Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food",

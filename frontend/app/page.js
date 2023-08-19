@@ -16,7 +16,7 @@ export default async function LandingPage({ params, searchParams }) {
       <CheckUser />
       <article className="min-h-[calc(100vh-55px)] w-full flex flex-col dark:bg-dbg">
         <div
-          className="relative flex-auto mt-12 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
+          className="relative flex-auto mt-12 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:max-w-4xl xl:mx-auto bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
           <h1 className="-mt-8 sm:mt-0 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mb-5 text-left font-bold">
             {content.h1[lang]} <span className="sr-only">{content.h1Hidden[lang]}</span>
@@ -131,8 +131,8 @@ export default async function LandingPage({ params, searchParams }) {
 const content = {
   h1: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
   h1Hidden: {
-    en: "Create your online store and start selling Halal food products locally for free, local services Arabic Stores Supermarkets and Halal food near you",
-    ar: "أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، خدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
+    en: "Create your online store and start selling Halal food products locally for free, Best local services Arabic Stores Supermarkets and Halal food near you",
+    ar: "أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، أفضل الخدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
   },
   h1P: {
     en: [
@@ -160,8 +160,8 @@ const content = {
   },
   h2: { en: "Grow your local business here", ar: "نمي عملك المحلي هنا" },
   h2Hidden: {
-    en: "Bring your store to the internet and start selling your products locally for free",
-    ar: "اجعل متجرك متاحًا للإنترنت وابدأ في بيع منتجاتك محليًا مجانًا",
+    en: "Setup free online store Bring your store to the internet and start selling your products locally online for free",
+    ar: "قم بإعداد متجر إلكتروني مجاني اجعل متجرك متاحًا على الانترنت وابدأ في بيع منتجاتك محليًا عبر الإنترنت مجانًا",
   },
   h2P: {
     en: [

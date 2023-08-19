@@ -7,24 +7,26 @@ export default function MakeMoney({ params, searchParams }) {
 
   return (
     <>
-      <h1 className="text-center font-bold mt-10 mb-5">
+      <h1 className="text-center font-bold mt-10 mb-5 lazy-b">
         <span className="block text-3xl sm:text-4xl mb-4 font-bold mb-sm">{content.h1[lang][0]}</span>
         <span className="block ">{content.h1[lang][1]}</span>
       </h1>
 
-      <p className=" lazy-b">{content.h1P[lang][0]}</p>
-      <p className=" lazy-b">{content.h1P[lang][1]}</p>
+      <p className=" lazy-l">{content.h1P[lang][0]}</p>
+      <p className=" lazy-r">{content.h1P[lang][1]}</p>
 
-      <h2>{content.h1P[lang][1]}</h2>
+      <h2 className="lazy-l">{content.h1P[lang][1]}</h2>
 
-      <ol className="list-decimal mx-5 my-8">
+      <ol className="list-decimal mx-5 my-8 lazy-b">
         {content.ol[lang].map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ol>
 
       {content.h2P[lang].map((item, i) => (
-        <p key={i}>{item}</p>
+        <p className="lazy-b" key={i}>
+          {item}
+        </p>
       ))}
     </>
   );

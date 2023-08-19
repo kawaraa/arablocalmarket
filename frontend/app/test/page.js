@@ -1,10 +1,8 @@
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import BarcodeScannerPopup from "../(component)/(styled)/barcode-scanner-popup";
-import { AppSessionContext } from "../app-session-context";
 
 export default function Test() {
-  const { lang, updateLang } = useContext(AppSessionContext);
   const [data, setData] = useState(false);
 
   const getMobileOperatingSystem = () => {
@@ -18,10 +16,7 @@ export default function Test() {
     return userAgent;
   };
 
-  const toggleLang = () => {
-    setData(lang + getMobileOperatingSystem());
-    updateLang(lang == "en" ? "ar" : "en");
-  };
+  const toggleLang = () => {};
 
   return (
     <>

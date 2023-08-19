@@ -19,8 +19,6 @@ export default function Navigation() {
 
   useEffect(() => {
     setShowMenu(false);
-    if (pathName?.toLowerCase() === "/en") updateLang("en");
-    else if (pathName?.toLowerCase() === "/ar") updateLang("ar");
   }, [pathName]);
 
   if (pathName == "/admin/pos") return "";
