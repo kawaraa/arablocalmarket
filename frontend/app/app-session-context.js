@@ -74,7 +74,7 @@ export default function AppSessionContextProvider({ children, language, theme })
 
   const addToCart = (storeCart) => {
     const copyCart = [...cart];
-    updateCart(mergeCarts(copyCart, [storeCart]));
+    updateCart(mergeCarts(copyCart, [storeCart]), true);
   };
   const removeFromCart = (storeId, barcode) => {
     let copyCart = [...cart];
@@ -83,14 +83,14 @@ export default function AppSessionContextProvider({ children, language, theme })
     else copyCart[index].items = copyCart[index].items.filter((i) => i.barcode != barcode);
     updateCart(copyCart, barcode);
   };
-  const updateCart = async (cart, barcode) => {
+  const updateCart = async (cart, updated) => {
     try {
       if (user) await syncUserCart(cart);
       else window.localStorage.setItem("cart", JSON.stringify(cart));
       setCart(cart);
-      if (barcode) addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
+      if (updated) addMessage({ type: "success", text: shdCnt.done[lang], duration: 3 });
     } catch (error) {
-      if (barcode) addMessage({ type: "error", text: error.message, duration: 5 });
+      if (updated) addMessage({ type: "error", text: error.message, duration: 5 });
     }
   };
 
@@ -103,13 +103,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     if (aCoordinates) updateCoordinates(aCoordinates.split(":"));
     if (aRange) updateRange(aRange);
 
-    if (window.localStorage.getItem("accessToken")) {
-      const cb = (err) => setUser(null) + setAppLoading(false);
-      fetchUser().then(updateUser).catch(cb);
-    } else {
-      setUser(null);
-      setAppLoading(false);
-    }
+    const handleError = () => setUser(null) + updateUser();
+    if (!window.localStorage.getItem("accessToken")) handleError();
+    else fetchUser().then(updateUser).catch(handleError);
 
     registerServiceWorker();
   }, []);
