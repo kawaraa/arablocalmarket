@@ -104,7 +104,7 @@ const content = {
     ar: "السوق المحلي العربي ArabLocalMarket هو عبارة عن منصة حيث تبيع المتاجر العربية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للمستخدمين البحث عن المتاجر القريبة والطلب منها",
   },
   keywords: {
-    en: "Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food",
-    ar: "محلات البقالة قريبة, المتاجر والسوبر ماركت العربية المحلية, طعام منتجات غذائية حلال, طعام حلال عربي عالي الجودة",
+    en: "ArabLocalMarket, Arab Local Market, Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food, Create online store free, Connect your local store with online store, Mange your local business, Mange your grocery store",
+    ar: "السوق المحلي العربي, السوق العربي المحلي, محلات البقالة قريبة, المتاجر والسوبر ماركت العربية المحلية, طعام منتجات غذائية حلال, طعام حلال عربي عالي الجودة, إنشاء متجر على الإنترنت مجانً, قم بتوصيل متجرك المحلي بالمتجر عبر الإنترنت, إدارة عملك المحلي, إدارة متجر البقالة الخاص بك",
   },
 };
