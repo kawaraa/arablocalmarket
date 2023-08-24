@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../(service)/utilities";
 import Article from "../(component)/article";
 import Footer from "../(layout)/footer";
 import { LinkButton } from "../(component)/(styled)/button";
@@ -6,8 +7,7 @@ import SvgIcon from "../(component)/(styled)/svg-icon";
 
 export default function Help({ params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function Help({ params, searchParams }) {
 
 export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   return {
     title: content.title[lang] + " - ALM",
     // description: content.desc[lang],

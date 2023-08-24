@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../(service)/utilities";
 import Footer from "../(layout)/footer";
 import Article from "../(component)/article";
 
 export default function PrivacyPolicy({ params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   return (
     <>

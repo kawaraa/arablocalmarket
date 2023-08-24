@@ -1,11 +1,11 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../(service)/utilities";
 import Footer from "../(layout)/footer";
 import Link from "next/link";
 
 export default function Sitemap({ params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Sitemap({ params, searchParams }) {
 
 export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   return {
     title: content.h1[lang] + " - ALM",
     // description: content.desc[lang],

@@ -3,8 +3,8 @@ import Badge from "./(styled)/badge";
 import shdCnt from "../(layout)/json/shared-content.json";
 import SvgIcon from "./(styled)/svg-icon";
 import Link from "next/link";
-import { getCssDelay } from "../(service)/style-methods";
-import { IconButton } from "./(styled)/button";
+import { getCssDelay } from "../(service)/utilities";
+// import { IconButton } from "./(styled)/button";
 
 export default function OrderCard({ lang, admin, onClick, style = getCssDelay(), onDelete, order }) {
   const handleClick = (e) => {

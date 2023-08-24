@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 import categories from "../../../(layout)/json/categories.json";
@@ -9,7 +10,7 @@ const q = "?fields=subscriptionStatus,currency";
 
 export default async function ProductsByStore({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
+  const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
 
   const storeReq = serverRequest("store", "GET", { query: `/${storeId}${q}` });
   const [store, { data, meta }] = await Promise.all([storeReq, getProducts(storeId, searchParams)]);

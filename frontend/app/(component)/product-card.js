@@ -5,7 +5,7 @@ import SvgIcon from "./(styled)/svg-icon";
 import StarRating from "./(styled)/rating";
 import shdCnt from "../(layout)/json/shared-content.json";
 import { ShareButton } from "./share-button";
-import { getCssDelay } from "../(service)/style-methods";
+import { getCssDelay } from "../(service)/utilities";
 
 export default function ProductCard({ lang, link, currency, id, admin, product, priority }) {
   const Tag = typeof link == "function" ? "div" : Link;

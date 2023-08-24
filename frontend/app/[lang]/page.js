@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import LandingPage from "../page";
+import HomePage from "../page";
 
-export default function LandingPageByLang(props) {
+export default function HomePageByLang(props) {
   if (!/en|ar/gim.test(props.params?.lang)) notFound();
-  return <LandingPage {...props} />;
+  return <HomePage {...props} />;
 }

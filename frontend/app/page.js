@@ -1,15 +1,14 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { getCssDelay } from "./(service)/style-methods";
+import { extractLang, getCssDelay } from "./(service)/utilities";
 import Footer from "./(layout)/footer";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 import CheckUser from "./(component)/check-user";
 import Image from "next/image";
 
-export default async function LandingPage({ params, searchParams }) {
+export default async function HomePage({ params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../../(service)/utilities";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import StoreLinks from "../store-links";
@@ -10,7 +11,7 @@ const q = "?fields=owner,subscriptionStatus,name,open,about,meta&populate=cover,
 
 export default async function StoreLayout({ children, params: { storeId }, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
   const accessToken = cookieStore.get("accessToken")?.value;
 
   const store = await serverRequest("store", "GET", { query: `/${storeId}${q}`, token: accessToken })

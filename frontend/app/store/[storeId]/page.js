@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../../(service)/utilities";
 import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";
@@ -8,7 +9,7 @@ const q =
 
 export default async function StoreOverview({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   const store = (await serverRequest("store", "GET", { query: `/${params.storeId}${q}` })).data?.attributes;
   if (!store) return notFound();

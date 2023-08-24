@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getCssDelay } from "../(service)/style-methods";
+import { getCssDelay } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 import { StoreCustomerInfo, StoreAdminInfo } from "./store-card-info";
 import shdCnt from "../(layout)/json/shared-content.json";

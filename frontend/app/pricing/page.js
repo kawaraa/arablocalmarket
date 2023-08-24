@@ -1,12 +1,12 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../(service)/utilities";
 import PlanCard from "../(component)/plan-card";
 import plans from "../(layout)/plans";
 import CheckReferral from "./check-referral";
 
 export default async function Pricing({ params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || cookieStore.get("lang")?.value || searchParams?.lang)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
 
   const date = new Date();
   date.setMonth(date.getMonth() + 1);
@@ -33,7 +33,7 @@ export default async function Pricing({ params, searchParams }) {
 
 export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   return {
     title: content.title[lang] + " - ALM",
     description: content.desc[lang],

@@ -1,5 +1,6 @@
-import AppSessionContextProvider from "./app-session-context";
 import { cookies } from "next/headers";
+import { extractLang } from "./(service)/utilities";
+import AppSessionContextProvider from "./app-session-context";
 import Navigation from "./(layout)/navigation";
 import "./global.css";
 
@@ -8,8 +9,7 @@ import "./global.css";
 
 export default function RootLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
-  let lang = (params?.lang || searchParams?.lang || cookieStore.get("lang")?.value)?.toLowerCase();
-  if (!/en|ar/gim.test(lang)) lang = "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
 
   return (
@@ -39,7 +39,7 @@ export default function RootLayout({ children, params, searchParams }) {
 
 export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams?.lang || "en";
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   const themeMode = cookieStore.get("themeMode")?.value;
 
   return {

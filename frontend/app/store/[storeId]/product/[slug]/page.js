@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { extractLang } from "../../../../(service)/utilities";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ActionButtons from "../action-buttons";
@@ -13,7 +14,7 @@ const q1 =
 
 export default async function ProductBySlug({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
+  const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
   const accessToken = cookieStore.get("accessToken")?.value;
 
   const storeReq = serverRequest("store", "GET", { query: `/${params.storeId}${q}` });

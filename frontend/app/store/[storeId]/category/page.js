@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
+import { extractLang, getCssDelay } from "../../../(service)/utilities";
 import Link from "next/link";
 import Image from "next/image";
 import { serverRequest } from "../../../(service)/api-provider";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 import categories from "../../../(layout)/json/categories.json";
-import { getCssDelay } from "../../../(service)/style-methods";
 
 export default async function Category({ params: { storeId }, searchParams }) {
   const cookieStore = cookies();
-  const lang = cookieStore.get("lang")?.value || searchParams.lang || "en";
+  const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
 
   await Promise.all(categories.map(async (c) => (c.total = await getTotal(storeId, c.key))));
   const availableCategories = categories.filter((c) => c.total > 0);
