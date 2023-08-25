@@ -14,7 +14,7 @@ import { request } from "../(service)/api-provider";
 import { Cookies } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
 
-export default function Signup({}) {
+export default function Signup() {
   const router = useRouter();
   const { lang, user, addMessage, refetchUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);

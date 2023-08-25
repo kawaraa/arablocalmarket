@@ -10,7 +10,7 @@ import shdCnt from "../../(layout)/json/shared-content.json";
 import Table, { trClass, tdClass } from "../../(component)/table";
 import { Button } from "../../(component)/(styled)/button";
 
-export default function Client({}) {
+export default function Client() {
   const router = useRouter();
   const { lang, user, addMessage } = useContext(AppSessionContext);
   const [details, setDetails] = useState({ totalEarnings: 0, paid: 0, pending: 0, payable: 0 });

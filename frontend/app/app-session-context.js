@@ -137,6 +137,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       <ImagePreview />
       <Messages messages={messages} setMessages={setMessages} />
       <SelectLanguage />
+      {/* Todo: if shouldShowIosInstallModal true show install modal like this https://i.imgur.com/gOZBWBH.png then set shownIosInstallModal to true */}
     </AppSessionContext.Provider>
   );
 }
