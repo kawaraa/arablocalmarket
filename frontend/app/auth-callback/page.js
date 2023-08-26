@@ -1,11 +1,12 @@
 "use client";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import { Cookies } from "../(service)/utilities";
 import { request } from "../(service)/api-provider";
 
 export default function AuthCallback({ params, searchParams }) {
   const { lang, setAppLoading, addMessage } = useContext(AppSessionContext);
+  const [data, setData] = useState("No Data");
   const firstRenderRef = useRef(false);
 
   const updateUserName = async (data) => {
@@ -31,6 +32,7 @@ export default function AuthCallback({ params, searchParams }) {
   useEffect(() => {
     if (!firstRenderRef.current) {
       let name = window.localStorage.getItem("name") || "";
+      setData(name + " - " + searchParams.access_token);
       if (searchParams.access_token && name) {
         name = name.split("::");
         updateUserName({ firstName: name[0], lastName: name[1] });
@@ -43,6 +45,7 @@ export default function AuthCallback({ params, searchParams }) {
 
   return (
     <div className="text-xl font-semibold w-full h-[70vh] flex justify-center items-center">
+      <div>{data}</div>
       {content.message[lang]} ...
     </div>
   );
