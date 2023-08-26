@@ -1,6 +1,6 @@
 # ArabLocalMarket (ALM)
 
-This is a local stores based market platform.
+This is an e-commerce service platform which is a local stores based online market.
 The Slogan is (ALM)
 
 Owner: This is the default role given to the user who owns a store.
