@@ -28,7 +28,7 @@ export default function AuthCallback({ params, searchParams }) {
       }
       window.location.href = "/";
     } catch (error) {
-      addMessage({ type: "error", text: error.message, duration: 5 });
+      setTimeout(() => addMessage({ type: "error", text: error.message, duration: 5 }), 1000);
       setAppLoading(false);
     }
   };
