@@ -1,12 +1,13 @@
 "use client";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AppSessionContext } from "../app-session-context";
 import { Cookies } from "../(service)/utilities";
 import { request } from "../(service)/api-provider";
 
 export default function AuthCallback({ params, searchParams }) {
-  const { lang, setAppLoading, addMessage } = useContext(AppSessionContext);
+  const { lang, setAppLoading } = useContext(AppSessionContext);
   const firstRenderRef = useRef(false);
+  const [error, setError] = useState("");
 
   const confirmAccount = async () => {
     setAppLoading(true);
@@ -28,7 +29,7 @@ export default function AuthCallback({ params, searchParams }) {
       }
       window.location.href = "/";
     } catch (error) {
-      setTimeout(() => addMessage({ type: "error", text: error.message, duration: 5 }), 1000);
+      setError(error.message);
       setAppLoading(false);
     }
   };
@@ -40,7 +41,7 @@ export default function AuthCallback({ params, searchParams }) {
 
   return (
     <div className="text-xl font-semibold w-full h-[70vh] flex justify-center items-center">
-      {content.message[lang]} ...
+      {!error ? <p>{content.message[lang]} ...</p> : <p className="text-red">{error.message}</p>}
     </div>
   );
 }
