@@ -7,6 +7,7 @@ import ImagePreview from "./(component)/(styled)/image-preview";
 import Messages from "./(component)/(styled)/messages";
 import SelectLanguage from "./(component)/select-language";
 import shdCnt from "./(layout)/json/shared-content.json";
+import IosInstallModal from "./(component)/ios-install-modal";
 const currency = process.env.NEXT_PUBLIC_CURRENCY || "€";
 
 export const AppSessionContext = createContext();
@@ -137,7 +138,7 @@ export default function AppSessionContextProvider({ children, language, theme })
       <ImagePreview />
       <Messages messages={messages} setMessages={setMessages} />
       <SelectLanguage />
-      {/* Todo: if shouldShowIosInstallModal true show install modal like this https://i.imgur.com/gOZBWBH.png then set shownIosInstallModal to true */}
+      <IosInstallModal />
     </AppSessionContext.Provider>
   );
 }
