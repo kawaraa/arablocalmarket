@@ -13,8 +13,7 @@ import {
 import { request } from "../(service)/api-provider";
 import { Cookies } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
-import Link from "next/link";
-import Image from "next/image";
+import OAuthProviderButtons from "../(component)/oauth-provider-buttons";
 
 export default function Signup() {
   const router = useRouter();
@@ -123,27 +122,7 @@ export default function Signup() {
         </div>
       </form>
 
-      <p className="max-w-md mx-auto text-center text-xl my-8 leading-[0px] border-b-[0.5px] border-b-bf">
-        <span className="bg-bg dark:bg-dbg px-3">{content.or[lang]}</span>
-      </p>
-
-      <div>
-        <Link passHref legacyBehavior href="https://api.arablocalmarket.com/api/connect/google">
-          <a
-            dir="ltr"
-            onClick={checkNameField}
-            className="flex justify-center items-center max-w-md mx-auto p-2 text-lg border-[0.5px] border-bf rounded-lg">
-            <Image
-              src="/img/google-icon.png"
-              width="100"
-              height="100"
-              alt="Google icon"
-              className="w-6 h-6 mr-2"
-            />
-            {content.oAuth[lang]}
-          </a>
-        </Link>
-      </div>
+      <OAuthProviderButtons lang={lang} onClick={checkNameField} />
     </div>
   );
 }
@@ -160,8 +139,6 @@ const content = {
   h1: { en: "Create a new account", ar: "انشاء حساب جديد" },
   // username: { en: "Username", ar: "اسم المستخدم" } ,
   submit: { en: "Create", ar: "إنشاء حساب" },
-  or: { en: "or", ar: "أو" },
-  oAuth: { en: "Google", ar: "Google" },
   nameErr: { en: "Please fill in your first and last name", ar: "يرجى ملء الاسم واسم العائلة" },
   success: {
     en: [

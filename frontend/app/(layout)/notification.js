@@ -21,6 +21,13 @@ export default function Notification() {
     return !key ? str : str.replace(key, note.meta[key]);
   };
 
+  const getUnseenNotifications = () => {
+    if (user && !user.loading && window.localStorage.getItem("accessToken")) {
+      const { unseen } = request("notification", "GET", { query: "/unseen" }).catch(() => ({}));
+      return unseen;
+    }
+  };
+
   const handleMarkSeen = (note) => {
     if (!note.seen) {
       request("notification", "PUT", { query: `/${note.id}`, body: { seen: true } }).catch(console.log);
@@ -33,12 +40,13 @@ export default function Notification() {
     if (note.meta?.path) router.push(note.meta.path);
   };
 
-  const getNotification = async (e) => {
+  const getNotification = async () => {
     setLoading(true);
     try {
       const query = `?filters[seen][$not]=true&pagination[start]=${notifications.length}&pagination[limit]=10&sort=createdAt:desc`;
       const { data } = await request("notification", "GET", { query });
       if (!data[0]) setDone(true);
+      else setNotifications(notifications.concat(data));
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
     }
@@ -49,7 +57,7 @@ export default function Notification() {
     if (user?.notifications) setNotifications(user?.notifications);
   }, [user]);
 
-  const { unseen, refresh } = useCheckNotifications({ user, getNotification });
+  const { unseen, refresh } = useCheckNotifications({ getUnseenNotifications });
   return (
     <Dropdown
       event="click"
@@ -93,26 +101,19 @@ export default function Notification() {
   );
 }
 
-function useCheckNotifications({ user, getNotification }) {
-  const mountedRef = useRef(0);
+function useCheckNotifications({ getUnseenNotifications }) {
+  const mountedRef = useRef(false);
   const [notification, setNotifications] = useState(0);
 
   const fetchContent = async () => {
-    try {
-      if (user && !user.loading) {
-        const { unseen } = await request("notification", "GET", { query: "/unseen" });
-        if (unseen > notification && getNotification) getNotification();
-        setNotifications(unseen);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const unseen = await getUnseenNotifications();
+    if (!Number.isNaN(+unseen)) setNotifications(unseen);
     setTimeout(fetchContent, 1000 * 30);
   };
 
   useEffect(() => {
-    if (mountedRef.current < 1) fetchContent();
-    mountedRef.current = mountedRef.current + 1;
+    if (!mountedRef.current) fetchContent();
+    mountedRef.current = true;
   }, []);
 
   return { unseen: notification, refresh: fetchContent };

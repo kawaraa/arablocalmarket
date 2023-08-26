@@ -3,11 +3,12 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AppSessionContext } from "../app-session-context";
-import { fetchUser, request } from "../(service)/api-provider";
+import { request } from "../(service)/api-provider";
 import { Button } from "../(component)/(styled)/button";
 import { EmailInputField, PswInputField } from "../(component)/custom-inputs";
 import { Cookies } from "../(service)/utilities";
 import SvgIcon from "../(component)/(styled)/svg-icon";
+import OAuthProviderButtons from "../(component)/oauth-provider-buttons";
 
 export default function SignIn() {
   const router = useRouter();
@@ -79,6 +80,7 @@ export default function SignIn() {
             {content.submit[lang]}
           </Button>
         </div>
+        <OAuthProviderButtons lang={lang} />
 
         <div className="text-sm text-left">
           <Link passHref legacyBehavior href="/signup">
