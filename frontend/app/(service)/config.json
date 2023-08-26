@@ -2,6 +2,7 @@
   "apiHost": null,
   "signUp": "/api/auth/local/register",
   "signIn": "/api/auth/local",
+  "googleOAuth": "/api/auth/google/callback?",
   "EmailConfiguration": "/api/auth/send-email-confirmation",
   "forgotPassword": "/api/auth/forgot-password",
   "resetPassword": "/api/auth/reset-password",

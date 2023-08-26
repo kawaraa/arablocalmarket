@@ -15,7 +15,7 @@ export default function AuthCallback({ params, searchParams }) {
       Cookies.remove("accessToken");
       window.localStorage.removeItem("accessToken");
 
-      const res = await request(`/api/auth/google/callback?`, "GET", {
+      const res = await request("googleOAuth", "GET", {
         query: `access_token=${searchParams.access_token}`,
       });
       Cookies.set("accessToken", res.jwt);
@@ -46,6 +46,7 @@ export default function AuthCallback({ params, searchParams }) {
   return (
     <div className="text-xl font-semibold w-full h-[70vh] flex justify-center items-center">
       <div>{data}</div>
+      <br />
       {content.message[lang]} ...
     </div>
   );
