@@ -20,6 +20,8 @@ export default function Signup() {
   const router = useRouter();
   const { lang, user, addMessage, refetchUser } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const checkConfirmation = async (data, times) => {
     const response = await request("signIn", "POST", data).catch(() => null);
@@ -57,6 +59,15 @@ export default function Signup() {
     setLoading(false);
   };
 
+  const checkNameField = (e) => {
+    if (!firstName || !lastName) {
+      e.preventDefault();
+      addMessage({ type: "warning", text: content.nameErr[lang], duration: 5 });
+    } else {
+      window.localStorage.setItem("name", `${firstName}::${lastName}`);
+    }
+  };
+
   useEffect(() => {
     if (user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
   }, [user]);
@@ -78,12 +89,14 @@ export default function Signup() {
             full
             lang={lang}
             first
+            onChange={(e) => setFirstName(e.target.value)}
             cls="1 w-1/2"
             inCls={`text-lg rounded-${lang == "ar" ? "r" : "l"}-md`}
           />
           <NameInputField
             full
             lang={lang}
+            onChange={(e) => setLastName(e.target.value)}
             cls="2 w-1/2"
             inCls={`text-lg rounded-${lang == "ar" ? "l" : "r"}-md`}
           />
@@ -118,6 +131,7 @@ export default function Signup() {
         <Link passHref legacyBehavior href="https://api.arablocalmarket.com/api/connect/google">
           <a
             dir="ltr"
+            onClick={checkNameField}
             className="flex justify-center items-center max-w-md mx-auto p-2 text-lg border-[0.5px] border-bf rounded-lg">
             <Image
               src="/img/google-icon.png"
@@ -148,6 +162,7 @@ const content = {
   submit: { en: "Create", ar: "إنشاء حساب" },
   or: { en: "or", ar: "أو" },
   oAuth: { en: "Google", ar: "Google" },
+  nameErr: { en: "Please fill in your first and last name", ar: "يرجى ملء الاسم واسم العائلة" },
   success: {
     en: [
       "Your account has been created",

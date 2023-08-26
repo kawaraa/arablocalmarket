@@ -66,13 +66,15 @@
       "type": "string",
       "required": true,
       "minLength": 1,
-      "maxLength": 30
+      "maxLength": 30,
+      "default": "User"
     },
     "lastName": {
       "type": "string",
       "required": true,
       "maxLength": 30,
-      "minLength": 1
+      "minLength": 1,
+      "default": "Surname"
     },
     "phone": {
       "type": "string",

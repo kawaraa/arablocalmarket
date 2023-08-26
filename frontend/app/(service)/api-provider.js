@@ -3,7 +3,7 @@ import { validateError } from "./utilities";
 config.apiHost = process.env.NEXT_PUBLIC_API_HOST;
 
 export function getURL(key) {
-  return config.apiHost + config[key];
+  return !config[key] ? null : config.apiHost + config[key];
 }
 
 export async function serverRequest(url, method = "GET", data, type = "application/json", arg = {}) {
