@@ -12,7 +12,7 @@ export default function Test() {
     const isIos = /iphone|ipad|ipod/gim.test(window.navigator.userAgent); // detect if the device is on iOS
     const isInstalled = "standalone" in window.navigator; // check if the device is in standalone mode
     // show the modal only once
-    return isIos && !isInstalled && !JSON.parse(localStorage.getItem("shownIosInstallModal"));
+    return isIos + " - " + !isInstalled + " - " + !JSON.parse(localStorage.getItem("shownIosInstallModal"));
   };
 
   return (
