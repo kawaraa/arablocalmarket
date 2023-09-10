@@ -55,13 +55,13 @@ export async function generateMetadata({ params, searchParams }) {
     ],
     colorScheme: themeMode,
     icons: {
-      icon: { type: "image/png", url: "/img/favicon-16x16.png", sizes: "16x16" },
-      shortcut: { type: "image/ico", url: "/img/favicon.ico", sizes: "48x48" },
-      apple: { type: "image/png", url: "/img/apple-touch-icon.png", sizes: "180x180" },
+      shortcut: { type: "image/ico", sizes: "48x48", url: "/img/favicon.ico" },
+      icon: { type: "image/png", sizes: "16x16", url: "/img/favicon-16x16.png" },
+      apple: { type: "image/png", sizes: "180x180", url: "/img/apple-touch-icon.png" },
       other: [
-        { rel: "icon", type: "image/png", url: "/img/favicon-32x32.png", sizes: "32x32" },
-        { rel: "icon", type: "image/png", url: "/img/android-chrome-192x192.png", sizes: "192x192" },
-        { rel: "icon", type: "image/png", url: "/img/android-chrome-512x512.png", sizes: "512x512" },
+        { rel: "icon", type: "image/png", sizes: "32x32", url: "/img/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "192x192", url: "/img/android-chrome-192x192.png" },
+        { rel: "icon", type: "image/png", sizes: "512x512", url: "/img/android-chrome-512x512.png" },
       ],
     },
     manifest: "/manifest.json",
@@ -88,7 +88,7 @@ export async function generateMetadata({ params, searchParams }) {
       images: ["https://arablocalmarket.com/img/android-chrome-512x512.png"],
     },
     appleWebApp: {
-      title: content.title[lang],
+      title: "ALM",
       statusBarStyle: "black-translucent",
     },
   };
