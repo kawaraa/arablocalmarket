@@ -1,6 +1,6 @@
 // self.importScripts('foo.js', 'bar.js');
 
-const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r79";
+const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r7";
 // const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
 const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
