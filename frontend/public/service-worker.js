@@ -1,7 +1,5 @@
 // self.importScripts('foo.js', 'bar.js');
-
-const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt4r";
-// const filesMustCache = /(googleapis|gstatic)|\.(JS|CSS|SVG|PNG|JPG|jPEG|GIF|ICO|JSON)$/gim;
+const staticFileCacheName = "static-files-v-0njhvb83erwyuqwdbvujpo02i98rt";
 const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
 self.addEventListener("install", (evt) => {
@@ -21,9 +19,9 @@ self.addEventListener("activate", async (evt) => {
 self.addEventListener("fetch", (evt) => evt.respondWith(handleRequest(evt.request)));
 
 const handleRequest = async (request) => {
+  // console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
   const networkErrorResponse = Response.error();
   try {
-    // console.log("Started Caching: >>> ", navigator.onLine, request.method, request.url);
     if (
       !request.url.includes("http") ||
       !["GET", "HEAD"].includes(request.method) ||
@@ -41,10 +39,10 @@ const handleRequest = async (request) => {
       const response = await fetch(request);
       if (!response.ok) return response;
 
-      await caches
-        .open(staticFileCacheName)
-        .then((cache) => cache.put(request, response.clone()).catch(() => null));
-      // cache.put(request, response.clone()).catch(() => null) ignore the error when the request are not supported in cashing like "GET", "HEAD" and responses with 206 status code
+      const cache = await caches.open(staticFileCacheName);
+      await cache.put(request, response.clone()).catch(() => null);
+      // Ignore the error in case the responses can not be cached or is not supported in cashing like "POST", "PUT" and responses with 206 status code
+
       return response;
     }
   } catch (error) {

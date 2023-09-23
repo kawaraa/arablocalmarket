@@ -82,7 +82,7 @@ export default async function HomePage({ params, searchParams }) {
                 {step[lang]}
               </h4>
 
-              <div className="overflow-hidden h-[350px] w-[200px] mt-5 rounded-lg">
+              <div className="overflow-hidden w-[200px] h-[350px] mt-5 rounded-lg">
                 {step.image.includes("video") ? (
                   <video
                     width="200"
@@ -120,6 +120,20 @@ export default async function HomePage({ params, searchParams }) {
             {content.stepsLink[lang]}
           </a>
         </Link>
+      </section>
+
+      <section className="pt-12 px-1 mb-20 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-center">
+        <h4 className="text-xl mt-8 mb-8 font-bold">{content.storeOwnerVideoAd[lang].title}</h4>
+        <div className="max-w-[700px] m-auto aspect-video">
+          <iframe
+            width="100%"
+            height="100%"
+            src={content.storeOwnerVideoAd[lang].src}
+            title={content.storeOwnerVideoAd[lang].alt}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen></iframe>
+        </div>
       </section>
 
       <Footer lang={lang} />
@@ -222,4 +236,16 @@ const content = {
     ar: "لا تفوت إدارة أعمالك المحلية مجانًا, أنشئ متجرك الأول على الإنترنت وابدأ في إضافة المنتجات حتى يتمكن عملاؤك من رؤية المنتجات التي تبيعها",
   },
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
+  storeOwnerVideoAd: {
+    en: {
+      title: "Learn more about ArabLocalMarket",
+      alt: "ArabLocalMarket - Create your online store and start selling products locally for free ",
+      src: "https://www.youtube.com/embed/WMwmgPzlpNY?si=FR-bC99orjItfOW9",
+    },
+    ar: {
+      title: "تعرف على المزيد حول السوق المحلي العربي ArabLocalMarket",
+      alt: "السوق المحلي العربي - أنشئ متجرك على الإنترنت وابدأ في بيع منتجات محليًا مجانا - ArabLocalMarket",
+      src: "https://www.youtube.com/embed/WMwmgPzlpNY?si=FR-bC99orjItfOW9",
+    },
+  },
 };
