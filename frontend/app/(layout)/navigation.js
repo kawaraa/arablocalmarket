@@ -165,6 +165,7 @@ const content = {
   cart: { en: "Shopping cart and Favorite items", ar: "عربة التسوق والعناصر المفضلة" },
   navLinks: [
     { text: { en: "Find a store", ar: "ابحث عن متجر" }, path: "/store" },
+    { text: { en: "How to instal", ar: "كيفية التثبيت" }, path: "/how-to-install" },
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
