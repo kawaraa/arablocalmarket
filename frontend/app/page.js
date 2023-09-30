@@ -232,7 +232,7 @@ const content = {
     },
   ],
   stepsP2: {
-    en: "Don't miss out Manage your local business for free, Create your first online store and start adding products so your so customers can see the products you sell",
+    en: "Don't miss out Manage your local business for free, Create your first online store and start adding products and let your customers see the products you sell",
     ar: "لا تفوت إدارة أعمالك المحلية مجانًا, أنشئ متجرك الأول على الإنترنت وابدأ في إضافة المنتجات حتى يتمكن عملاؤك من رؤية المنتجات التي تبيعها",
   },
   stepsLink: { en: "Start free", ar: "ابدأ مجانا" },
