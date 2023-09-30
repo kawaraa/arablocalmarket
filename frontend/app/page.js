@@ -240,7 +240,7 @@ const content = {
     en: {
       title: "Learn more about ArabLocalMarket",
       alt: "ArabLocalMarket - Create your online store and start selling products locally for free ",
-      src: "https://www.youtube.com/embed/WMwmgPzlpNY?si=FR-bC99orjItfOW9",
+      src: "https://www.youtube.com/embed/w1o5zFdSnPc?si=lJ3wa6Ex8g2KMR15",
     },
     ar: {
       title: "تعرف على المزيد حول السوق المحلي العربي ArabLocalMarket",

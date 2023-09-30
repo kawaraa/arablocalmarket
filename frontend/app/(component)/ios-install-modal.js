@@ -27,7 +27,7 @@ export default function IosInstallModal() {
   return (
     <Modal lang={lang} title={content.title[lang]} open={open} onCancel={() => handleCancel(false)}>
       <div className="h-12 w-12 mx-auto rounded-full">
-        <Image src="/img/apple-touch-icon.png" width="100" height="100" />
+        <Image src="/img/apple-touch-icon.png" width="100" height="100" alt={content.imgAlt[lang]} />
       </div>
       <div className="mb-4 mt-1 text-medium font-semibold text-center">ALM</div>
       <p dir="auto" className="text-center">
@@ -64,4 +64,5 @@ const content = {
       "'إضافة إلى الصفحة الرئيسية'",
     ],
   },
+  imgAlt: { en: "ArabLocalMarket Logo", ar: "شعار السوق المحلي العربي" },
 };
