@@ -123,8 +123,10 @@ export default async function HomePage({ params, searchParams }) {
 
       <section className="pt-12 px-1 mb-20 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-center">
         <h5 className="text-xl mt-8 mb-8 font-bold">{content.storeOwnerVideoAd[lang].title}</h5>
-        {content.storeOwnerVideoAd[lang].description.map((text) => (
-          <p className="sr-only">{text}</p>
+        {content.storeOwnerVideoAd[lang].description.map((text, i) => (
+          <p className="sr-only" key={i}>
+            {text}
+          </p>
         ))}
         <div className="max-w-[700px] m-auto aspect-video">
           <iframe
