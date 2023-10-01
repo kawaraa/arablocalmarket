@@ -18,10 +18,10 @@ export default async function HomePage({ params, searchParams }) {
           className="relative flex-auto mt-12 mb-5 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:max-w-4xl xl:mx-auto bg-[url(/img/home-page-image.svg)] bg-contain bg-no-repeat bg-center lazy-b"
           style={{ ...getCssDelay() }}>
           <h1 className="-mt-8 sm:mt-0 mx-6 sm:mx-20 md:mx-4 text-xl md:text-3xl mb-5 text-left font-bold">
-            {content.h1[lang]} <span className="sr-only">{content.h1Hidden[lang]}</span>
+            {content.h1[lang][0]} <span className="sr-only">{content.h1[lang][1]}</span>
           </h1>
 
-          <p className="px-3 opacity-0">{content.h1PHidden[lang]}</p>
+          <p className="px-3 opacity-0">{content.h1P[lang][3]}</p>
         </div>
 
         <div dir="auto" className="relative text-center px-4 w-full">
@@ -31,9 +31,8 @@ export default async function HomePage({ params, searchParams }) {
           <p className="text-md text-center font-medium lazy-l" style={getCssDelay()}>
             {content.h1P[lang][1]}
           </p>
-
           <p className="text-lg mt-6 md:mt-3 mb-6 md:mb-3 font-bold lazy-r" style={getCssDelay()}>
-            {content.h1P2[lang]}
+            {content.h1P[lang][2]}
           </p>
 
           <Link passHref legacyBehavior hrefLang={lang} href="/store">
@@ -123,16 +122,19 @@ export default async function HomePage({ params, searchParams }) {
       </section>
 
       <section className="pt-12 px-1 mb-20 -mx-1 sm:-mx-2 md:-mx-4 lg:-mx-6 xl:-mx-8 text-center">
-        <h4 className="text-xl mt-8 mb-8 font-bold">{content.storeOwnerVideoAd[lang].title}</h4>
+        <h5 className="text-xl mt-8 mb-8 font-bold">{content.storeOwnerVideoAd[lang].title}</h5>
+        {content.storeOwnerVideoAd[lang].description.map((text) => (
+          <p className="sr-only">{text}</p>
+        ))}
         <div className="max-w-[700px] m-auto aspect-video">
           <iframe
             width="100%"
             height="100%"
             src={content.storeOwnerVideoAd[lang].src}
             title={content.storeOwnerVideoAd[lang].alt}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen></iframe>
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"
+            allowFullScreen
+            className="border-none"></iframe>
         </div>
       </section>
 
@@ -142,29 +144,32 @@ export default async function HomePage({ params, searchParams }) {
 }
 
 const content = {
-  h1: { en: "Arab Local Market", ar: "السوق المحلي العربي" },
-  h1Hidden: {
-    en: "Create your online store and start selling Halal food products locally for free, Best local services Arabic Stores Supermarkets and Halal food near you",
-    ar: "أنشئ متجرك على الإنترنت وابدأ في بيع منتجات الأطعمة الحلال محليًا مجانا، أفضل الخدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
-  },
-  h1P: {
+  h1: {
     en: [
-      "Welcome to the first Local Arabic Stores platform where you can look for Arabic stores and supermarkets nearby.",
-      "Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
+      "Arab Local Market",
+      "Create your online store and start selling products locally for free, Best local services, Arabic Stores Supermarkets and Halal food near you",
     ],
     ar: [
-      "مرحبًا بك في أول منصة متاجر عربية محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
-      "اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+      "السوق المحلي العربي",
+      "أنشئ متجرك على الإنترنت وابدأ في بيع منتجات محليًا مجانا، أفضل الخدمات محلية ومتاجر ومحلات سوبر ماركت العربية وأطعمة الحلال بالقرب منك",
     ],
   },
-  h1PHidden: {
-    en: "Look for local services, Grocery store or supermarket in your neighborhood, Select and add the products you need to the cart, Select the payment method you like, pay checkout and let the store deliver you order to you",
-    ar: "ابحث عن خدمات محلية أو متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق، وحدد طريقة الدفع التي تريدها، وقم بالدفع، ودع المتجر يقوم توصيل طلبك إليك",
+
+  h1P: {
+    en: [
+      "Welcome to the first Local Stores Based Platform where you can look for Arabic stores and supermarkets nearby.",
+      "Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
+      "Look for local services, Grocery store or supermarket in your neighborhood",
+      "Look for local services, Halal food, Grocery store or supermarket in your neighborhood on Arab Local Market, Select and add the products you need to the cart, Select the payment method you like, pay checkout and let the store deliver you order to you",
+    ],
+    ar: [
+      "مرحبًا بك في أول منصة متاجر محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
+      "اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
+      "ابحث عن الخدمات المحلية أو محلات البقالة والسوبر ماركت في منطقتك",
+      "ابحث عن خدمات محلية أو متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق، وحدد طريقة الدفع التي تريدها، وقم بالدفع، ودع المتجر يقوم توصيل طلبك إليك",
+    ],
   },
-  h1P2: {
-    en: "Look for local services, Grocery store or supermarket in your neighborhood",
-    ar: "ابحث عن الخدمات المحلية أو محلات البقالة والسوبر ماركت في منطقتك",
-  },
+
   findStoreLink: { en: "Find a store near you", ar: "ابحث عن متجر بالقرب منك" },
   // storeOwnerLink: { en: "I'm a store owner", ar: "أنا صاحب متجر" },
   readMore: {
@@ -239,11 +244,43 @@ const content = {
   storeOwnerVideoAd: {
     en: {
       title: "Learn more about ArabLocalMarket",
-      alt: "ArabLocalMarket - Create your online store and start selling products locally for free ",
+      description: [
+        "ArabLocalMarket.com is a Web App that brings local stores to the internet and bring Arabic people and Arabic stores together in all over the world",
+        "It can be installed on any smart device and it support English and Arabic languages",
+        "Stores owners can create Store on ArabLocalMarket and list products or service and customers can search for stores nearby and visit their store, browse the products and place orders",
+        "Stores owners can sell their Halal food products and  services on their stores",
+        "Do you provide a local service, or you have a grocery store, a restaurant, or maybe another local business and you want to promote it and make it easy for new customers to find your store and order their daily needs? Then you are in the right place",
+        "ArabLocalMarket.com gives you a professional online store where all your customers can visit by using QR barcode and see the opening hours, the delivery cost or contact you or browse the products and order easily via ArabLocalMarket or via WhatsApp and pay with card or cash",
+        "Customers can search for your products either on Google or in your ArabLocalMarket store",
+        "Your store will show on Google when customers look for stores nearby",
+        "With a Real Time Notification System you can sell even when you are not at your store",
+        "It also helps you track product stock by notifying you about the products that are about to stock out",
+        "ArabLocalMarket has an easy UI design which makes adding and managing products extremely easy, Like adjusting the Stock and Price",
+        "The Point of Sale (POS) Dashboard and barcode scanner help you complete in-store transactions easily and smoothly",
+        "It's built using the latest technology which makes it easy to install on any device directly from ArabLocalMarket.com in just one click",
+        "Ready to boost your local business? Visit ArabLocalMarket.com now to set up your online store and start adding products for free!",
+        "With ArabLocalMarket managing your store will become enjoyable!",
+      ],
+      alt: "ArabLocalMarket - Create your online store and start selling products locally for free",
       src: "https://www.youtube.com/embed/w1o5zFdSnPc?si=lJ3wa6Ex8g2KMR15",
     },
     ar: {
       title: "تعرف على المزيد حول السوق المحلي العربي ArabLocalMarket",
+      description: [
+        "ArabLocalMarket.com هي عبارة عن منصة إلكترونية تعمل على جمع بين المحلات المحلي العربية والعرب في جميع أنحاء العالم وخاصة في الدول الغير عربية",
+        "تعمل على جميع الأجهزة الذكية وتدعم اللغة الانكليزية والعربية",
+        "يمكن لأصحاب المتاجر المحلية البيع عليها المنتجات الغذائية الحلال العربية أو تقدم الخدمات ويمكن للمستخدمين البحث عن المتاجر القريبة والطلب منها",
+        "هل لديك نشاط تجاري محلي او سوبرماركت أو مطعم أو ربما خدمات أخرى وتريد ترويجها وتسهيل لزبائنك الجدد العثور على متجرك وطلب احتياجاتهم اليومية؟ إذا أنت في المكان الصحيح",
+        "ArabLocalMarket.com السوق المحلي العربي يمنحك متجرًا احترافيًا على الإنترنت حيث يمكن لجميع الزبائن زيارته عن طريق استخدام ال QR Barcode ورؤية ساعات العمل وخدمة التوصيل أو الاتصال بك أو تصفح المنتجات والطلب بكل سهولة عبر ArabLocalMarket او عبر WhatsApp والدفع فيزا او كاش",
+        "يمكن لزبائن البحث عن منتجاتك على Google أو في متجرك على ArabLocalMarket",
+        "سيظهر متجرك على Google عندما يبحثون عن متاجر قريبة",
+        "مع نظام الإشعارات يمكنك البيع حتى عندما تكون خارج المتجر, يساعدك أيضا على تتبع مخزون المنتجات من خلال ابلاغك بالمنتجات التي على وشك الانتهاء",
+        "يتميز ArabLocalMarket بواجهة سهلة الاستخدام مما يجعل إضافة المنتجات وإدارتها أمرًا سهلاً، مثل تعديل المخزون والأسعار",
+        "لوحة تحكم نقاط البيع و ماسح الباركود الذي يساعدك على إكمال معاملات الشراء في المتجر بسلاسة",
+        "تم تصميمه باستخدام أحدث التقنيات لهذا يمكنك تثبيته على أي جهاز مباشرة من الموقع بنقرة واحدة فقط",
+        "قم بإعداد متجرك على الإنترنت الآن وابدأ في إضافة المنتجات مجانًا",
+        "مع ArabLocalMarket ادارة متجرك ستصبح ممتعة للغاية",
+      ],
       alt: "السوق المحلي العربي - أنشئ متجرك على الإنترنت وابدأ في بيع منتجات محليًا مجانا - ArabLocalMarket",
       src: "https://www.youtube.com/embed/WMwmgPzlpNY?si=FR-bC99orjItfOW9",
     },

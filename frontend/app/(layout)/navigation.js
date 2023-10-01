@@ -54,17 +54,22 @@ export default function Navigation() {
         }`}>
         <li className="absolute top-4 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-3">
           <div className="relative overflow-hidden w-8 rounded-full">
-            <Image
-              src={`/img/${lang}.png`}
-              alt={content.langAlt[lang]}
-              width="30"
-              height="30"
-              className="w-full"
-            />
+            <label htmlFor="lang-select" className="w-full h-full">
+              <Image
+                src={`/img/${lang}.png`}
+                alt={content.langAlt[lang]}
+                width="30"
+                height="30"
+                priority
+                className="w-full"
+              />
+            </label>
             <select
               value={lang}
               onChange={(e) => updateLang(e.target.value)}
               style={{ background: "none", color: "transparent" }}
+              name="langSelect"
+              id="lang-select"
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.themeOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
@@ -80,10 +85,11 @@ export default function Navigation() {
               <SvgIcon name={content.themeModeIconsMap[themeMode]} />
             </label>
             <select
-              id="theme-select"
               value={themeMode}
               onChange={(e) => updateThemeMode(e.target.value)}
               style={{ background: "none", color: "transparent" }}
+              name="themeSelect"
+              id="theme-select"
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
               {content.languageOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
