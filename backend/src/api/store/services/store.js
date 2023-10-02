@@ -55,7 +55,7 @@ module.exports = createCoreService(storeEty, ({ strapi }) => ({
     };
     if (!store) store = store = await strapi.query(storeEty).findOne(options);
 
-    if (!["canceled", "incomplete_expired"].includes(store.subscriptionStatus)) {
+    if (store.subscriptionId && !["canceled", "incomplete_expired"].includes(store.subscriptionStatus)) {
       await strapi.service("api::stripe.stripe").cancelSubscription(store.subscriptionId);
     }
     await Promise.all([

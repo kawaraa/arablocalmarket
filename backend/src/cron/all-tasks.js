@@ -13,7 +13,7 @@ module.exports = {
     console.log("\nInvoices job cron is running...\n");
 
     createInvoices(strapi);
-    // deleteExpiredStores(strapi);
+    deleteExpiredStores(strapi);
   },
   "0 0 2 * * *": async ({ strapi }) => {
     console.log("\nDatabase Job cron is running...\n");
@@ -104,6 +104,22 @@ async function createInvoices(strapi) {
 }
 
 async function deleteExpiredStores(strapi) {
+  async function checkStore(store) {
+    try {
+      if (store.subscriptionId) {
+        const sub = await strapi.service(stripeEty).getSubscription(store.subscriptionId);
+        const endedAt = +(sub?.ended_at + "000");
+        if (!Number.isNaN(endedAt) && endedAt + day * 30 > Date.now()) return;
+      } else if ((Date.now() - Date.parse(store.createdAt)) / day < 30) {
+        return; // if the store does not have store.subscriptionId and hasn't been 30 days created
+      }
+
+      return strapi.service(storeEty).deleteStoreAndItsProducts(store.id, store);
+    } catch (error) {
+      console.warn("[XXX]-[Store Task Error] ", error);
+    }
+  }
+
   try {
     const options = {
       select: ["id", "subscriptionId"],
@@ -115,16 +131,6 @@ async function deleteExpiredStores(strapi) {
     const stores = await strapi.query(storeEty).findMany(options);
 
     await Promise.all(stores.map(checkStore));
-
-    async function checkStore(store) {
-      try {
-        const sub = await strapi.service(stripeEty).getSubscription(store.subscriptionId);
-        if (+(sub?.ended_at + "000") + day * 30 > Date.now()) return;
-        return strapi.service(storeEty).deleteStoreAndItsProducts(store.id, store);
-      } catch (error) {
-        console.warn("[XXX]-[Store Task Error] ", error);
-      }
-    }
 
     if (stores[0]) return deleteStores(strapi);
     console.log("[###]-[Store Cron] Successfully deleted stores that been 30 days inactive");
