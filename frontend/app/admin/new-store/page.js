@@ -417,6 +417,7 @@ const content = {
       { en: "butcher", ar: "جزار" },
       { en: "confectionery", ar: "حلويات" },
       { en: "gifts", ar: "هدايا" },
+      { en: "florist", ar: "بائع الزهور" },
       { en: "pets", ar: "حيوانات أليفة" },
       { en: "real-estate", ar: "العقارات" },
       { en: "services", ar: "خدمات" },
