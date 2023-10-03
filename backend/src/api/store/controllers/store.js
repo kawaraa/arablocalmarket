@@ -25,7 +25,7 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
     ctx.request.body.data = JSON.stringify(newStore);
 
     const res = await super.create(ctx).catch((err) => err);
-    if (err?.message?.includes && !err.message.includes("uploading file")) throw res;
+    if (res?.message?.includes && !res.message.includes("uploading file")) throw res;
 
     const c = user.stripeId || (await strapi.service(stripeEty).createCustomer({ name, email, address })).id;
     const { id, status, plan } = await strapi
