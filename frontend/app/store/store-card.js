@@ -8,7 +8,7 @@ import shdCnt from "../(layout)/json/shared-content.json";
 export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open, cls, ...s }) {
   return (
     <Tag
-      className={"relative p-1 text-t dark:text-dt lazy-b " + (cls || "w-full sm:w-1/2 xl:w-1/3")}
+      className={"relative p-1 text-t dark:text-dt lazy-b " + (cls || "w-full sm:w-1/2 xl:w-1/3 2xl:w-1/4")}
       style={getCssDelay()}>
       <Link passHref legacyBehavior hrefLang={lang} href={link}>
         <a className="relative flex flex-col justify-between w-full h-full bg-cbg card cd_hr rounded-xl duration-200">
@@ -19,8 +19,8 @@ export default function StoreCard({ Tag, lang, admin, link, name, imageUrl, open
             </span>
           </p>
           <h2 className="p-3 font-medium">{name}</h2>
-          <div className="overflow-hidden w-ful max-h-72 flex items-center">
-            <Image priority src={imageUrl} width="250" height="250" alt={name} className="block w-full" />
+          <div className="overflow-hidden w-ful aspect-video flex items-center">
+            <Image priority src={imageUrl} width="250" height="250" alt={name} className="w-full" />
           </div>
 
           {admin ? <StoreAdminInfo {...s} /> : <StoreCustomerInfo lang={lang} {...s} />}

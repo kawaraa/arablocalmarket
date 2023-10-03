@@ -43,7 +43,7 @@ export default async function StoresNearby({ params, searchParams }) {
           <EmptyState lang={lang} type="noStore" />
         </div>
       ) : (
-        <ul className="flex flex-wrap  mx-auto mb-16">
+        <ul className="flex flex-wrap mx-auto mb-16">
           {data.map((store, i) => (
             <StoreCard
               Tag="li"

@@ -17,7 +17,7 @@ export default function ProductCard({ lang, link, currency, id, admin, product, 
   const v = product.variants.sort()[0];
 
   return (
-    <li style={getCssDelay()} className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b">
+    <li className="relative w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-1 lazy-b" style={getCssDelay()}>
       {!admin && (
         <script
           type="application/ld+json"
