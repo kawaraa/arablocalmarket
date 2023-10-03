@@ -75,7 +75,7 @@ async function createInvoices(strapi) {
             data: {
               affiliates: [...affiliates, { id: aff.id }],
               amount: (amount_paid / 100 / 100) * percentage + amount,
-              bank: bank.id || null,
+              bank: bank?.id || null,
               stripeInvoices: !stripeInvoices ? latest_invoice : `${stripeInvoices},${latest_invoice}`,
             },
           });
@@ -85,7 +85,7 @@ async function createInvoices(strapi) {
               user: user.id,
               affiliates: aff.id,
               amount: (amount_paid / 100 / 100) * percentage,
-              bank: bank.id || null,
+              bank: bank?.id || null,
               status: "PENDING",
               stripeInvoices: latest_invoice,
               amount: amount_paid,
