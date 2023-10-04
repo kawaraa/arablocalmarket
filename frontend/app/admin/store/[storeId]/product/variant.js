@@ -14,7 +14,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
   };
   const handleChangeOption = (index, key, value) => {
     const copy = [...options];
-    copy[index][key] = value;
+    copy[index][key] = key == "name" ? value : value?.slice(0, 20);
     setOptions(copy);
   };
   const handleAddOption = () => {
@@ -116,7 +116,7 @@ export default function Variant({ lang, number, onRemove, onUpdate, setMessage, 
                 onChange={(e) => handleChangeOption(index, "value", e.target.value)}
                 required
                 min="1"
-                max="10"
+                max="20"
                 placeholder={shdCnt.options.values[o.name].placeholder[lang]}
                 full
                 cls="flex-1"
