@@ -8,6 +8,7 @@ module.exports = createCoreController(proEty, ({ strapi }) => ({
     const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
     if (!owner) return ctx.unauthorized();
 
+    await strapi.service(storeEty).checkUploadConnection(); // Test upload provider connection
     return super.create(ctx);
   },
 

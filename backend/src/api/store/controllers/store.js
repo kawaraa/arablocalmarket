@@ -24,6 +24,7 @@ module.exports = createCoreController(storeEty, ({ strapi }) => ({
 
     ctx.request.body.data = JSON.stringify(newStore);
 
+    await strapi.service(storeEty).checkUploadConnection(); // Test upload provider connection
     const res = await super.create(ctx);
 
     const c = user.stripeId || (await strapi.service(stripeEty).createCustomer({ name, email, address })).id;

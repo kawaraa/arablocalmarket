@@ -1,6 +1,15 @@
 "use strict"; /** store service */
 const { createCoreService } = require("@strapi/strapi").factories;
 const storeEty = "api::store.store";
+const TestFileToTestGoogleStorage = {
+  buffer: Buffer.from("Test connect file"),
+  type: "text/plain",
+  ext: "txt",
+  path: "test",
+  hash: "",
+  name: { normalize: () => "test" },
+  url: "https://storage.googleapis.com/arablocalmarket-bucket/test/txt",
+};
 
 module.exports = createCoreService(storeEty, ({ strapi }) => ({
   async checkStoreOwner(ctx, storeId) {
@@ -45,6 +54,11 @@ module.exports = createCoreService(storeEty, ({ strapi }) => ({
     const owner = store.owner || store.attributes.owner;
     const status = store.subscriptionStatus || store.attributes.subscriptionStatus;
     return owner == user || ["active", "trialing"].includes(status);
+  },
+
+  async checkUploadConnection() {
+    await strapi.plugin("upload").provider.upload(TestFileToTestGoogleStorage);
+    await strapi.plugin("upload").provider.delete(TestFileToTestGoogleStorage);
   },
 
   async deleteStoreAndItsProducts(storeId, store) {
