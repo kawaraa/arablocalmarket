@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import Script from "next/script";
 import { extractLang } from "./(service)/utilities";
 import AppSessionContextProvider from "./app-session-context";
 import Navigation from "./(layout)/navigation";
@@ -18,6 +19,17 @@ export default function RootLayout({ children, params, searchParams }) {
         className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"
         }`}>
+        {/* Google tag (gtag.js)  */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11358381234" />
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-11358381234');
+        `}
+        </Script>
+
         <AppSessionContextProvider language={lang} theme={themeMode}>
           <header>
             <Navigation />
