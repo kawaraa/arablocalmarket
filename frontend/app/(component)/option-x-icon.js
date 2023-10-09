@@ -10,7 +10,7 @@ export default function OptionXIcon({ onChange, open = false, cls = "", barsCls 
   return (
     <button
       type="button"
-      className={`group ${open && "active"} ${cls}`}
+      className={`group select-none ${open && "active"} ${cls}`}
       onClick={onChange}
       onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

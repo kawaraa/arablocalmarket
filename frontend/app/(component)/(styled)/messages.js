@@ -22,7 +22,7 @@ export default class Message extends Component {
     return (
       <TransitionContainer
         Tag="div"
-        className="z-10 fixed top-0 left-1/2 max-w-[80%] md:max-w-[50%] -translate-x-1/2 flex flex-col justify-center"
+        className="z-10 fixed top-0 left-1/2 max-w-[80%] md:max-w-[50%] -translate-x-1/2 flex flex-col justify-center select-none"
         base="flex items-start card bg-bg dark:bg-dcbg mt-3 py-2 px-3 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] rounded-lg duration-300 "
         enter="-translate-y-12 opacity-0"
         exit="-translate-y-12 opacity-0"

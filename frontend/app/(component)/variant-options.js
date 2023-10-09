@@ -1,7 +1,7 @@
 "use client";
 export default function VariantOptions({ name, values, onSelect, selectedOptions, label }) {
   return (
-    <div dir="auto" className="flex items-center mt-3">
+    <div dir="auto" className="flex items-center mt-3 select-none">
       {label && <h3 className="w-20">{name}</h3>}
       <span className="w-2 h-2"></span>
       <ul className="flex-1 flex items-center flex-wrap overflow-auto">

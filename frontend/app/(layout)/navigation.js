@@ -25,7 +25,7 @@ export default function Navigation() {
   return (
     <nav
       aria-label="Primary Navigation"
-      className="z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg ">
+      className="z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg select-none">
       <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
 
       <Link passHref legacyBehavior href="/">

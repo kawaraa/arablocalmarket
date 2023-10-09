@@ -51,7 +51,7 @@ export default function Tooltip({ children, description = "", size, position, cl
 
   return (
     <div
-      className={"relative inline-flex " + cls}
+      className={"relative inline-flex select-none " + cls}
       onClick={() => setTooltipOpen(!tooltipOpen)}
       onMouseEnter={() => setTooltipOpen(true)}
       onMouseLeave={() => setTooltipOpen(false)}>

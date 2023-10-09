@@ -29,7 +29,7 @@ export default function Dropdown({ children, title, event, btnContent, icon, ico
 
   const mt = event == "click" ? "mt-[10px]" : "";
   return (
-    <div ref={wrapper} {...btnProps} className={`relative inline-block ${cls}`}>
+    <div ref={wrapper} {...btnProps} className={`relative inline-block select-none ${cls}`}>
       <button
         type="button"
         onClick={() => setActive(!active)}

@@ -5,10 +5,10 @@ import Image from "next/image";
 export default function OAuthProviderButtons({ lang, onClick }) {
   return (
     <>
-      <p className="max-w-md mx-auto text-center text-xl my-8 leading-[0px] border-b-[0.5px] border-b-bf">
+      <p className="max-w-md mx-auto text-center text-xl my-8 leading-[0px] border-b-[0.5px] border-b-bf select-none">
         <span className="bg-bg dark:bg-dbg px-3">{content.or[lang]}</span>
       </p>
-      <div>
+      <div className="select-none">
         <Link passHref legacyBehavior href="https://api.arablocalmarket.com/api/connect/google">
           <a
             onClick={onClick}
