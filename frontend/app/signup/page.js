@@ -17,21 +17,10 @@ import OAuthProviderButtons from "../(component)/oauth-provider-buttons";
 
 export default function Signup() {
   const router = useRouter();
-  const { lang, user, addMessage, refetchUser } = useContext(AppSessionContext);
+  const { lang, user, addMessage } = useContext(AppSessionContext);
   const [loading, setLoading] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-
-  const checkConfirmation = async (data, times) => {
-    const response = await request("signIn", "POST", data).catch(() => null);
-
-    if (!response?.user?.confirmed && times < 20) setTimeout(() => checkConfirmation(data, times + 1), 15000);
-    else if (response?.user?.confirmed) {
-      window.localStorage.setItem("accessToken", response.jwt);
-      Cookies.set("accessToken", response.jwt);
-      refetchUser();
-    }
-  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -48,14 +37,13 @@ export default function Signup() {
       Cookies.remove("accessToken");
       await request("signUp", "POST", data);
 
-      addMessage({ type: "success", text: success(lang), duration: 30 });
-
-      checkConfirmation({ identifier: email, password }, 1);
+      localStorage.setItem("credentials", JSON.stringify({ identifier: email, password }));
+      setLoading(false);
+      router.replace("/signup/welcome");
     } catch (error) {
       addMessage({ type: "error", text: error.message, duration: 5 });
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   const checkNameField = (e) => {
@@ -68,7 +56,7 @@ export default function Signup() {
   };
 
   useEffect(() => {
-    if (user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "store");
+    if (user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store");
   }, [user]);
 
   if (user?.loading) return null;
@@ -127,29 +115,9 @@ export default function Signup() {
   );
 }
 
-const success = (lang) => (
-  <div>
-    <h4 className="font-semibold">{content.success[lang][0]}</h4>
-    <p>{content.success[lang][1]}</p>
-    <p>{content.success[lang][2]}</p>
-  </div>
-);
-
 const content = {
   h1: { en: "Create a new account", ar: "انشاء حساب جديد" },
   // username: { en: "Username", ar: "اسم المستخدم" } ,
   submit: { en: "Create", ar: "إنشاء حساب" },
   nameErr: { en: "Please fill in your first and last name", ar: "يرجى ملء الاسم واسم العائلة" },
-  success: {
-    en: [
-      "Your account has been created",
-      "A confirmation Email is sent to your Email address",
-      "Please go to your Email inbox and confirm your Email address",
-    ],
-    ar: [
-      "لقد تم إنشاء حسابك",
-      "تم إرسال بريد إلكتروني للتأكيد عنوان بريدك الإلكتروني",
-      "يرجى الذهاب إلى صندوق البريد الإلكتروني الخاص بك وتأكيد عنوان البريد الإلكتروني الخاص بك",
-    ],
-  },
 };
