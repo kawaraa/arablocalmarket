@@ -81,6 +81,7 @@ export async function generateMetadata({ params, searchParams }) {
     other: {
       google: "notranslate",
     },
+    metadataBase: new URL("https://arablocalmarket.com"),
     openGraph: {
       title: content.title[lang],
       description: content.description[lang],

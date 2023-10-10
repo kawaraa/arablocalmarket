@@ -14,9 +14,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "eslint-config-next": "^13.1.6",
+    "eslint-config-next": "^13.5.4",
     "k-utilities": "^1.2.3",
-    "next": "^13.4.3",
+    "next": "^13.5.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

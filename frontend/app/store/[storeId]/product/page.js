@@ -63,6 +63,7 @@ export async function generateMetadata({ params, searchParams }) {
   return {
     title: store.attributes.name + " - ALM",
     description: store.attributes.about,
+    metadataBase: new URL("https://arablocalmarket.com"),
     openGraph: {
       title: store.attributes.name,
       description: store.attributes.about,
