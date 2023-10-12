@@ -22,7 +22,7 @@ export default function RootLayout({ children, params, searchParams }) {
         }`}>
         {/* Google tag (gtag.js)  */}
         <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11358381234" />
-        <Script id="google-analytics">
+        <Script strategy="beforeInteractive" id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
