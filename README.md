@@ -1,7 +1,7 @@
 # ArabLocalMarket (ALM)
 
-This is an e-commerce service platform which is a local stores based online market.
-It's Software is a software-as-a-service that provides online stores for monthly subscription
+Online Marketplace
+This is a local Online Marketplace where people and local store owners can create an online store and sell products or provide services for monthly subscription.
 The Slogan is (ALM)
 
 Owner: This is the default role given to the user who owns a store.

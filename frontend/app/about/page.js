@@ -40,8 +40,8 @@ const content = {
     ar: "ArabLocalMarket هو أفضل حل للسوبر ماركت والبقالة والمتاجر الصغيرة",
   },
   h1P: {
-    en: "The all-in-one local market based commerce platform to start, run, and grow a business",
-    ar: "منصة التجارة الشاملة القائمة على السوق المحلية لبدء الأعمال التجارية وإدارتها وتنميتها",
+    en: "The all-in-one local marketplace based e-commerce platform to start, run, and grow a business",
+    ar: "السوق لمحلية المحلية التجارة الشاملة القائمة لبدء الأعمال التجارية وإدارتها وتنميتها",
   },
   articles: [
     {
@@ -52,12 +52,12 @@ const content = {
       },
       p: {
         en: [
-          "It all began in Jan 2023 when the owner was looking for an Arabic market to buy some Eastern and Halal food, then he realized that he can develop a platform that help Arabic Community find food and other products easily",
+          "It all began in Jan 2023 when the owner was looking for an Arabic market to buy some Eastern and Halal food, then he realized that he can develop a Local Online Marketplace that help Arabic Community find food and other products easily",
           "So he built a solutions that gather all the Arabic eastern stores in one place and give them what they need",
           "Today, stores of all sizes can join ArabLocalMarket, whether they're selling online, in retail stores, or on-the-go",
         ],
         ar: [
-          "بدأ كل شيء في يناير 2023 عندما كان المالك يبحث عن متاجر عربي لشراء بعض الأطعمة الشرقية والحلال، ثم أدرك أنه يمكنه تطوير منصة تساعد المجتمع العربي في العثور على الطعام والمنتجات الأخرى بسهولة",
+          "بدأ كل شيء في يناير 2023 عندما كان المالك يبحث عن متاجر عربي لشراء بعض الأطعمة الشرقية والحلال، ثم أدرك أنه يمكنه تطوير سوق محلية على الإنترنت حيث تساعد المجتمع العربي في العثور على الطعام والمنتجات الأخرى بسهولة",
           "لذلك بنى حلولًا تجمع كل المتاجر العربية والشرقية في مكان واحد وتوفير لهم ما يحتاجونه",
           "اليوم ، يمكن للمتاجر من جميع الأحجام الانضمام إلى ArabLocalMarket ، سواء كانت تبيع عبر الإنترنت أو في متاجر البيع بالتجزئة أو أثناء التنقل",
         ],

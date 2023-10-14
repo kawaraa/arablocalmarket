@@ -115,11 +115,11 @@ const content = {
   },
   // ArabLocalMarket was founded by Kawara to help shoppers find and buy products at their favorite nearby stores
   description: {
-    en: "ArabLocalMarket is a platform where Local stores sell Arabic Halal Food Products or provide services and users can look for nearby stores and order from it",
-    ar: "السوق المحلي العربي ArabLocalMarket هو عبارة عن منصة حيث تبيع المتاجر المحلية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للمستخدمين البحث عن المتاجر القريبة والطلب منها",
+    en: "ArabLocalMarket is a Local Online Marketplace where Local stores sell Arabic Halal Food Products or provide services and users can look for nearby stores and order from it",
+    ar: "السوق المحلي العربي ArabLocalMarket هو عبارة عن سوق محلية على الإنترنت حيث تبيع المتاجر المحلية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للمستخدمين اكتشف عن المتاجر القريبة والطلب منها",
   },
   keywords: {
-    en: "ArabLocalMarket, Arab Local Market, find and buy products at nearby stores, Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food, Create online store free, Connect your local store with online store, Mange your local business, Mange your grocery store, Sell products locally online",
-    ar: "السوق المحلي العربي, السوق العربي المحلي, البحث عن المنتجات وشرائها من المتاجر القريبة, محلات البقالة قريبة, المتاجر والسوبر ماركت العربية المحلية, طعام منتجات غذائية حلال, طعام حلال عربي عالي الجودة, إنشاء متجر على الإنترنت مجانً, قم بتوصيل متجرك المحلي بالمتجر عبر الإنترنت, إدارة عملك المحلي, إدارة متجر البقالة الخاص بك, بيع المنتجات محليا عبر الإنترنت",
+    en: "ArabLocalMarket, Arab Local Market, Local Online Marketplace, find and buy products at nearby stores, Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food, Create online store free, Connect your local store with online store, Mange your local business, Mange your grocery store, Sell products locally online",
+    ar: "السوق المحلي العربي, السوق العربي المحلي, سوق محلية على الإنترنت, اكتشف عن المنتجات وشرائها من المتاجر القريبة, محلات البقالة قريبة, المتاجر والسوبر ماركت العربية المحلية, طعام منتجات غذائية حلال, طعام حلال عربي عالي الجودة, إنشاء متجر على الإنترنت مجانً, قم بتوصيل متجرك المحلي بالمتجر عبر الإنترنت, إدارة عملك المحلي, إدارة متجر البقالة الخاص بك, بيع المنتجات محليا عبر الإنترنت",
   },
 };
