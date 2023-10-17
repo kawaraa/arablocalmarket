@@ -3,7 +3,8 @@ import SvgIcon from "./(styled)/svg-icon";
 
 export default function PlanCard({ children, lang, plan, referralId }) {
   return (
-    <article className="overflow-hidden flex-1 flex flex-col md:max-w-sm md:mx-3 rounded-lg card">
+    // sm:mx-3
+    <article className="overflow-hidden mb-5 sm:mx-3 sm:w-[45%] lg:flex-1 flex flex-col rounded-lg card">
       <div className="h-0.5 bg-pc mb-5"></div>
       <header className="px-2 mb-5 flex-1">
         <h3 className="mb-3 text-lg text-center font-semibold">{plan.name[lang]}</h3>
@@ -37,7 +38,7 @@ export default function PlanCard({ children, lang, plan, referralId }) {
                 ? `/payment?storeId=${plan.storeId}&plan=${plan.subscription}`
                 : `/admin/new-store?subscription=${plan.subscription}`
             }
-            cls="!flex max-w-[120px] mx-auto md:max-w-full md:mx-5 mb-5 !rounded-full">
+            cls="!flex max-w-[120px] mx-auto lg:max-w-full lg:mx-5 mb-5 !rounded-full">
             {content.link[lang]}
           </LinkButton>
         )}{" "}

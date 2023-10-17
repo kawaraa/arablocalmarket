@@ -21,7 +21,7 @@ export default async function Pricing({ params, searchParams }) {
         {content.h1P[lang][2]}
       </p>
 
-      <div className="space-y-5 md:space-y-0 md:flex md:justify-between ">
+      <div className="flex-wrap sm:flex sm:justify-around md:justify-between">
         {plans.map((plan, i) => (
           <PlanCard lang={lang} plan={plan} key={i} />
         ))}

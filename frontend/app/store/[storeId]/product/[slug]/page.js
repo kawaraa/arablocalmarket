@@ -57,7 +57,7 @@ export default async function ProductBySlug({ params, searchParams }) {
           alt={product.name}
           width="1000"
           height="1000"
-          className="preview h-full w-auto"
+          className="preview h-full w-auto rounded-lg"
         />
 
         <ShareButton
