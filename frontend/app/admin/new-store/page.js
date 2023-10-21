@@ -415,15 +415,26 @@ const content = {
       { en: "grocery", ar: "خضروات" },
       { en: "restaurant", ar: "مطعم" },
       { en: "butcher", ar: "جزار" },
-      { en: "confectionery", ar: "حلويات" },
+      { en: "confectionery", ar: "حلويات" }, // Cupcake
+      { en: "supplements", ar: "مكملات غذائية" }, // health and wellness products
+      { en: "beauty", ar: "العناية والجمال" }, // cosmetics, personal care products, oral care, skin care, hair care, decorative cosmetics, body care, perfumes and beauty tools
+      { en: "apparel", ar: "ملابس" }, // Clothing, Accessories and Jewelry
+      // { en: "Jewelry", ar: "آخر" },
+      { en: "stationery", ar: "مستلزمات مكتبية" }, // paper, pens, and notebooks
+      { en: "bookstore", ar: "مكتبة لبيع الكتب" },
+      { en: "library", ar: "مكتبة للإقراض الكتب" },
+      { en: "electronics", ar: "إلكترونيات" }, // Electronics Appliances
+      { en: "home-improvement", ar: "معدات وأجهزة" }, // Home Decor, fasteners, building materials, hand tools, power tools, keys, locks, hinges, chains, plumbing supplies, electrical supplies, cleaning products, housewares, tools, utensils, paint
+      { en: "furniture", ar: "أثاث و مفروشات" }, // Mattress outlets
       { en: "gifts", ar: "هدايا" },
       { en: "florist", ar: "بائع الزهور" },
       { en: "pets", ar: "حيوانات أليفة" },
-      { en: "apparel", ar: "ملابس" },
-      { en: "electronics", ar: "إلكترونيات" },
-      { en: "home-improvement", ar: "معدات وأجهزة" },
+      { en: "sporting-goods", ar: "لوازم رياضية" },
+      { en: "outdoor", ar: "مستلزمات في الخارج" }, // Travel, camping, hunting, fishing, Bait, hiking, trekking, mountaineering, skiing
+      { en: "medical", ar: "مستلزمات طبية" }, // surgical or medical items that are expandable, consumable, disposable, or non-durable, which might be used for the diagnosis or treatment of a specific illness, condition, or injury of the patient.Feb
+      { en: "detergents", ar: "منظفات" },
       { en: "real-estate", ar: "العقارات" },
-      { en: "services", ar: "خدمات" },
+      { en: "services", ar: "خدمات" }, // Plumbers, Painters, Hairdresser, Law, Dentist, chiropractor
       { en: "other", ar: "آخر" },
     ],
   },

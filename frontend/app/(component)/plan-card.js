@@ -3,7 +3,6 @@ import SvgIcon from "./(styled)/svg-icon";
 
 export default function PlanCard({ children, lang, plan, referralId }) {
   return (
-    // sm:mx-3
     <article className="overflow-hidden mb-5 sm:mx-3 sm:w-[45%] lg:flex-1 flex flex-col rounded-lg card">
       <div className="h-0.5 bg-pc mb-5"></div>
       <header className="px-2 mb-5 flex-1">

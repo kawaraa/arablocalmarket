@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blog_list_items",
+  "info": {
+    "displayName": "listItem",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "string"
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "ul",
+        "ol",
+        "none"
+      ],
+      "default": "ul",
+      "required": true
+    }
+  }
+}

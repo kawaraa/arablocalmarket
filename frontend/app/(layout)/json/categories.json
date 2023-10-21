@@ -55,6 +55,11 @@
     "image": "/img/category/nuts-seeds-clipart.png"
   },
   {
+    "key": "frozen",
+    "text": { "en": "Frozen food", "ar": "أغذية مجمدة" },
+    "image": "/img/category/frozen-food-clipart.png"
+  },
+  {
     "key": "spices",
     "text": { "en": "Spices and sauces", "ar": "البهارات والصلصات" },
     "image": "/img/category/condiments-sauces-spices-clipart.png"
@@ -66,18 +71,13 @@
   },
   {
     "key": "care",
-    "text": { "en": "Beauty and Care", "ar": "الجمال والعناية" },
+    "text": { "en": "Beauty and Care", "ar": "العناية والجمال" },
     "image": "/img/category/care-products-clipart.png"
   },
   {
     "key": "baby",
     "text": { "en": "Baby supplies", "ar": "مستلزمات الأطفال" },
     "image": "/img/category/baby-supplies-clipart.png"
-  },
-  {
-    "key": "frozen",
-    "text": { "en": "Frozen food", "ar": "أغذية مجمدة" },
-    "image": "/img/category/frozen-food-clipart.png"
   },
   {
     "key": "health",
@@ -155,7 +155,7 @@
     "image": "/img/category/sports-equipment-clipart.png"
   },
   {
-    "key": "travel",
+    "key": "travel-camping",
     "text": { "en": "Travel and Camping Gear", "ar": "معدات السفر والتخييم" },
     "image": "/img/category/travel-camping-clipart.png"
   },
@@ -181,7 +181,7 @@
     "image": "/img/category/cars-accessories-clipart.png"
   },
   {
-    "key": "motorcycles",
+    "key": "motorcycle",
     "text": { "en": "Motorcycles and accessories", "ar": "الدراجات واكسسواراتها" },
     "image": "/img/category/motorcycles-accessories-clipart.png"
   },
@@ -236,7 +236,7 @@
     "image": "/img/category/scientific-laboratory-equipment-clipart.png"
   },
   {
-    "key": "services",
+    "key": "service",
     "text": { "en": "Services", "ar": "خدمات" },
     "image": "/img/category/services-clipart.png"
   },
