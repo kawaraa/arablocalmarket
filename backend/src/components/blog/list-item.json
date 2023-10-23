@@ -16,11 +16,13 @@
     "style": {
       "type": "enumeration",
       "enum": [
-        "ul",
-        "ol",
-        "none"
+        "none",
+        "disc",
+        "circle",
+        "square",
+        "lower-alpha"
       ],
-      "default": "ul",
+      "default": "none",
       "required": true
     }
   }

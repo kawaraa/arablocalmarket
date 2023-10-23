@@ -19,5 +19,6 @@
   "rating": "/api/ratings",
   "stripe": "/api/stripe",
   "affiliate": "/api/affiliates",
-  "contact": "/api/contacts"
+  "contact": "/api/contacts",
+  "blog": "/api/blogs"
 }
