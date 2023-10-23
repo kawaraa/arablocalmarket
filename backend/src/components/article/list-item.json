@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_article_list_items",
+  "info": {
+    "displayName": "listItem",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "string"
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "disc",
+        "circle",
+        "square",
+        "lower-alpha"
+      ],
+      "default": "none",
+      "required": true
+    }
+  }
+}
