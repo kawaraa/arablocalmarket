@@ -14,6 +14,9 @@ export default async function StoreLayout({ children, params: { storeId }, searc
   const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
   const accessToken = cookieStore.get("accessToken")?.value;
 
+  // Todo: make the query by store ID and name
+  // const q = slug.reduce((acc, word, i) => acc + `&filters[$or][${i}][name][$contains]=${word}`, "");
+
   const store = await serverRequest("store", "GET", { query: `/${storeId}${q}`, token: accessToken })
     .then((res) => res.data)
     .catch(() => null);

@@ -26,6 +26,15 @@
       "required": true,
       "unique": true
     },
+    "keywords": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "text",
+      "required": true
+    },
     "image": {
       "type": "media",
       "multiple": false,
