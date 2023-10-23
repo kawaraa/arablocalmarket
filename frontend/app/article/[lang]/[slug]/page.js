@@ -1,25 +1,29 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { extractLang } from "../../(service)/utilities";
-import { serverRequest } from "../../(service)/api-provider";
-import SectionImage from "../section-image";
-import Section from "../section";
-import SectionList from "../section-list";
+import { extractLang } from "../../../(service)/utilities";
+import { serverRequest } from "../../../(service)/api-provider";
+import SectionImage from "../../section-image";
+import Section from "../../section";
+import SectionList from "../../section-list";
 
 export default async function Article({ params, searchParams }) {
   const cookieStore = cookies();
-  const lang = extractLang({}, searchParams, cookieStore.get("lang")?.value);
+  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+  const slug = (params.slug || "").split("-");
+  const qs = slug.reduce(
+    (acc, word, i) =>
+      acc +
+      `&filters[$or][${i + i}][heading][$contains]=${word}&filters[$or][${i + 1}][p][$contains]=${word}`,
+    ""
+  );
 
-  console.log({ lang }, params);
-  // /api/blogs?locale=ar&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list
-
-  const query = `?locale=${lang}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
+  const query = `?locale=${lang}${qs}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
 
   const data = await serverRequest("blog", "GET", { query })
     .then((res) => res.data[0])
     .catch(() => null);
+  console.log(data);
   if (!data?.id) return notFound();
-
   const { title, image, heading, p, list, sections } = data.attributes;
 
   return (
