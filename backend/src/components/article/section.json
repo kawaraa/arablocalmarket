@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_blog_sections",
+  "collectionName": "components_article_sections",
   "info": {
     "displayName": "section",
     "description": ""
@@ -23,12 +23,12 @@
     "list": {
       "type": "component",
       "repeatable": true,
-      "component": "blog.list-item"
+      "component": "article.list-item"
     },
     "subsections": {
       "type": "component",
       "repeatable": true,
-      "component": "blog.subsection"
+      "component": "article.subsection"
     }
   }
 }

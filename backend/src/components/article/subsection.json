@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_blog_subsections",
+  "collectionName": "components_article_subsections",
   "info": {
     "displayName": "subsection",
     "description": ""
@@ -18,22 +18,17 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "list": {
       "type": "component",
       "repeatable": true,
-      "component": "blog.list-item"
+      "component": "article.list-item"
     },
     "headings": {
       "type": "component",
       "repeatable": true,
-      "component": "blog.subheading"
+      "component": "article.subheading"
     }
   }
 }

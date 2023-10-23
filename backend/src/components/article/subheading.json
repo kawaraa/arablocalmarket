@@ -1,5 +1,5 @@
 {
-  "collectionName": "components_blog_subheadings",
+  "collectionName": "components_article_subheadings",
   "info": {
     "displayName": "subheading",
     "description": ""
@@ -22,7 +22,7 @@
     "list": {
       "type": "component",
       "repeatable": true,
-      "component": "blog.list-item"
+      "component": "article.list-item"
     }
   }
 }
