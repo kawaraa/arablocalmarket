@@ -19,7 +19,7 @@ export default async function Article({ params, searchParams }) {
 
   const query = `?locale=${lang}${qs}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
 
-  const data = await serverRequest("blog", "GET", { query })
+  const data = await serverRequest("article", "GET", { query })
     .then((res) => res.data[0])
     .catch(() => null);
   console.log(data);
@@ -29,7 +29,7 @@ export default async function Article({ params, searchParams }) {
   return (
     <article className="">
       <SectionImage {...image} alt={heading} cls="overflow-hidden h-[30vh] text-center" />
-      <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl">{heading}</h1>
+      <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
       <p className="text-center leading-8">{p}</p>
       <SectionList list={list} />
       {sections.map((section, i) => (

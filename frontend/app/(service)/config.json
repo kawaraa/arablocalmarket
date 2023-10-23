@@ -20,5 +20,5 @@
   "stripe": "/api/stripe",
   "affiliate": "/api/affiliates",
   "contact": "/api/contacts",
-  "blog": "/api/blogs"
+  "article": "/api/articles"
 }
