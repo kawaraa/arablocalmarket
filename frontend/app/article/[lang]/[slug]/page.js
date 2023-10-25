@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { extractLang } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
+import Footer from "../../../(layout)/footer";
 import SectionImage from "../../section-image";
 import Section from "../../section";
 import SectionList from "../../section-list";
@@ -25,26 +26,33 @@ export default async function Article({ params, searchParams }) {
   if (!data?.id) return notFound();
 
   const { title, image, heading, p, list, sections } = data.attributes;
+  const [visibleP, hiddenP] = p.split("::");
 
   return (
-    <article className="">
-      {image.data ? "" : <div className="h-10"></div>}
-      <SectionImage {...image} alt={heading} cls="overflow-hidden max-w-xl h-[30vh] mx-auto text-center" />
-      <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
-      <p className="text-center leading-8">{p}</p>
-      <SectionList list={list} />
-      {sections.map((section, i) => (
-        <Section {...section} level="2" key={i}>
-          {section.subsections.map((subsection, i) => (
-            <Section {...subsection} level="3" key={i}>
-              {subsection.headings.map((heading, i) => (
-                <Section {...heading} level="4" key={i} />
-              ))}
-            </Section>
-          ))}
-        </Section>
-      ))}
-    </article>
+    <>
+      <article className="mb-24">
+        {image.data ? "" : <div className="h-10"></div>}
+        <SectionImage {...image} alt={heading} cls="overflow-hidden max-w-xl h-[30vh] mx-auto text-center" />
+        <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
+        <p className="text-center leading-8">{visibleP}</p>
+        <p className="sr-only">{hiddenP}</p>
+        <SectionList list={list} />
+        <div className="h-10"></div>
+        {sections.map((section, i) => (
+          <Section {...section} level="2" key={i}>
+            {section.subsections.map((subsection, i) => (
+              <Section {...subsection} level="3" key={i}>
+                {subsection.headings.map((heading, i) => (
+                  <Section {...heading} level="4" key={i} />
+                ))}
+              </Section>
+            ))}
+          </Section>
+        ))}
+      </article>
+
+      <Footer lang={lang} />
+    </>
   );
 }
 
@@ -66,6 +74,6 @@ export async function generateMetadata({ params, searchParams }) {
     .catch(() => null);
   if (!data?.id) return {};
 
-  const { title, image, heading, p, list, sections } = data.attributes;
-  return { title: (title || heading) + " - ALM", description: p };
+  const { title, keywords, heading, p } = data.attributes;
+  return { title: (title || heading) + " - ALM", description: p, keywords };
 }

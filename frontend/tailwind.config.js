@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 // Error bg: #fde3c2, Color: red
+// Font: Verdana,sans-serif
 
 module.exports = {
   content: [

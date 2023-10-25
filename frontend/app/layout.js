@@ -17,7 +17,7 @@ export default function RootLayout({ children, params, searchParams }) {
   return (
     <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
       <body
-        className={`relative min-h-screen bg-bg dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
+        className={`relative min-h-screen bg-bg antialiased font-base dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
           lang == "ar" && "font-arabic"
         }`}>
         {/* Google tag (gtag.js)  */}
