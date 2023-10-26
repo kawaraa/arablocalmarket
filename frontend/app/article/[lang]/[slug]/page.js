@@ -6,19 +6,14 @@ import Footer from "../../../(layout)/footer";
 import SectionImage from "../../section-image";
 import Section from "../../section";
 import SectionList from "../../section-list";
+const extractQuery = (q) => q.replace(/arablocalmarket|-/gim, " ").slice(0, 20);
 
 export default async function Article({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-  const slug = (params.slug || "").split("-");
-  const q = slug.reduce(
-    (acc, word, i) =>
-      acc +
-      `&filters[$or][${i + i}][heading][$contains]=${word}&filters[$or][${i + 1}][p][$contains]=${word}`,
-    ""
-  );
+  const slug = extractQuery(params.slug || "").trim();
 
-  const query = `?locale=${lang}${q}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
+  const query = `?locale=${lang}&filters[$or][0][heading][$contains]=${slug}&filters[$or][1][p][$contains]=${slug}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
 
   const data = await serverRequest("article", "GET", { query })
     .then((res) => res.data[0])
