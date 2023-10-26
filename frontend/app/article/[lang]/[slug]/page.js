@@ -31,7 +31,7 @@ export default async function Article({ params, searchParams }) {
         <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
         <p className="text-center leading-8 lazy-b">{visibleP}</p>
         <p className="sr-only">{hiddenP}</p>
-        <SectionList list={list} />
+        <SectionList list={list} cls="lazy-b" style={getCssDelay()} />
         <div className="h-10"></div>
         {sections.map((section, i) => (
           <Section {...section} level="2" key={i}>
