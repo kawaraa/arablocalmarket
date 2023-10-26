@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getCssDelay } from "../(service)/utilities";
 
 export default function SectionList({ list, cls = "" }) {
   if (!list || !list[0]) return null;
@@ -7,7 +8,9 @@ export default function SectionList({ list, cls = "" }) {
   const listStyles = ["list-[disc]", "list-[circle]", "list-[square]", "list-[lower-alpha]"];
 
   return (
-    <ol className={`px-6 ${listStyles.find((c) => c.includes(listType)) || ""} ${cls}`}>
+    <ol
+      className={`px-6 ${listStyles.find((c) => c.includes(listType)) || ""} ${cls} lazy-b`}
+      style={getCssDelay()}>
       {list.map((item, i) => (
         <li key={i}>
           {!item.link ? (

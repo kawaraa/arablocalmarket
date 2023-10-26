@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { extractLang } from "../../../(service)/utilities";
+import { extractLang, getCssDelay } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
 import Footer from "../../../(layout)/footer";
 import SectionImage from "../../section-image";
@@ -29,7 +29,7 @@ export default async function Article({ params, searchParams }) {
         {image.data ? "" : <div className="h-10"></div>}
         <SectionImage {...image} alt={heading} cls="overflow-hidden max-w-xl h-[30vh] mx-auto text-center" />
         <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
-        <p className="text-center leading-8">{visibleP}</p>
+        <p className="text-center leading-8 lazy-b">{visibleP}</p>
         <p className="sr-only">{hiddenP}</p>
         <SectionList list={list} />
         <div className="h-10"></div>

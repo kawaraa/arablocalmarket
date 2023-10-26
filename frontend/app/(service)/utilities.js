@@ -3,7 +3,7 @@ export function random() {
 }
 
 export function getCssDelay() {
-  return { animationDelay: Math.random() * 600 + "ms" };
+  return { animationDelay: (Math.random() * 600).toFixed() + "ms" };
 }
 
 export function extractLang(params, searchParams, cookieLang) {
