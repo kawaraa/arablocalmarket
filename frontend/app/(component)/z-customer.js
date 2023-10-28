@@ -1,8 +1,6 @@
 "use client";
 
 export default function Customer(props) {
-  console.log("Profile: >>>", props);
-
   return (
     <div>
       <h1>Profile!</h1>

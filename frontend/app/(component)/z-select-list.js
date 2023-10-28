@@ -2,8 +2,6 @@
 import Image from "next/image";
 
 export default function SelectList({ a }) {
-  console.log("SelectList: >>>", a);
-
   return (
     <div>
       <label id="listbox-label" className="block text-sm font-medium text-gray-700">

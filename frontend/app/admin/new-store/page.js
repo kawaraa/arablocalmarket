@@ -162,7 +162,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
 
   useEffect(() => {
     if (!user && !user?.loading) router.replace("/signin");
-    else if (!id && !subscription) router.replace("/pricing");
+    else if (!id && !subscription) router.replace(`/${lang}/pricing`);
     else if (id) fetchStoreById(id);
   }, [user, id, subscription]);
 

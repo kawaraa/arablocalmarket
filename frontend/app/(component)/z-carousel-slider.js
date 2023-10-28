@@ -3,8 +3,6 @@
 import Image from "next/image";
 
 export default function CarouselSlider({ a }) {
-  console.log("CarouselSlider: >>>", a);
-
   return (
     <div id="indicators-carousel" className="relative" data-carousel="static">
       {/* <!-- Carousel wrapper --> */}

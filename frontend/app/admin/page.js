@@ -7,8 +7,6 @@ import { AppSessionContext } from "../app-session-context";
 export default function Admin({ params, searchParams }) {
   const router = useRouter();
   const { lang, user } = useContext(AppSessionContext);
-  // const [activeTab, setActiveTab] = useState(null);
-  // console.log("Todo, Show content based on this selected tab: >>>", activeTab);
 
   useEffect(() => {
     document.title = "Admin dashboard - ALM";

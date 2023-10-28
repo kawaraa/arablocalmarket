@@ -1,16 +1,14 @@
-import { cookies } from "next/headers";
-import { extractLang } from "../../(service)/utilities";
+import getMetadata from "../../metadata";
 import Footer from "../../(layout)/footer";
 import Article from "../../(component)/article";
 
-export default function About({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+export default function About({ params }) {
+  const lang = params.lang;
 
   return (
     <>
       <section className="max-w-4xl mx-auto mb-20 pt-10 px-2">
-        <p className="my-10 text-center text-4xl font-extrabold sm:text-5xl">{content.title[lang]}</p>
+        <p className="my-10 text-center text-3xl font-semibold">{content.title[lang]}</p>
 
         <h1 className="text-lg font-bold mt-8 mb-3">{content.h1[lang]}</h1>
         <p>{content.h1P[lang]}.</p>
@@ -19,18 +17,15 @@ export default function About({ params, searchParams }) {
           <Article lang={lang} article={a} key={i} />
         ))}
       </section>
+
       <Footer lang={lang} />
     </>
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-  return {
-    title: content.h1[lang] + " - ALM",
-    // description: content.desc[lang],
-  };
+export function generateMetadata({ params }) {
+  const lang = params.lang;
+  return getMetadata({ lang, title: content.h1[lang] + " - ALM" });
 }
 
 const content = {

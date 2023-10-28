@@ -16,7 +16,7 @@ export default function Footer({ lang = "en" }) {
             <ul className="mt-1 text-sm">
               {g.links.map((link, i) => (
                 <li key={i}>
-                  <Link passHref legacyBehavior hrefLang={lang} href={link.path}>
+                  <Link passHref legacyBehavior hrefLang={lang} href={link.path.replace("lang", lang)}>
                     <a
                       {...link.props}
                       className="inline-block my-2 hover:underline underline-offset-4 hover:text-black">
@@ -40,30 +40,30 @@ const content = {
     {
       h: { en: "We", ar: "نحن" },
       links: [
-        { text: { en: "About", ar: "لمحة" }, path: "/about", props: {} },
+        { text: { en: "About", ar: "لمحة" }, path: "/lang/about", props: {} },
         // { text: { en: "Investors", ar: "المستثمرون" }, path: "" },
         // { text: { en: "Press and Media", ar: "صحافة واعلام" }, path: "" },
-        { text: { en: "Privacy policy", ar: "سياسة الخصوصية" }, path: "/privacy-policy", props: {} },
+        { text: { en: "Privacy policy", ar: "سياسة الخصوصية" }, path: "/lang/privacy-policy", props: {} },
         {
           text: { en: "Terms and conditions", ar: "الأحكام والشروط" },
-          path: "/privacy-policy/#terms-conditions",
+          path: "/lang/privacy-policy/#terms-conditions",
           props: {},
         },
-        { text: { en: "Changelog", ar: "التغييرات" }, path: "/privacy-policy/#changelog", props: {} },
+        { text: { en: "Changelog", ar: "التغييرات" }, path: "/lang/privacy-policy/#changelog", props: {} },
       ],
     },
     {
       h: { en: "Support", ar: "الدعم" },
       links: [
         { text: { en: "Contact", ar: "تواصل" }, path: "/contact", props: {} },
-        { text: { en: "Help", ar: "المساعدة" }, path: "/help", props: {} },
+        { text: { en: "Help", ar: "المساعدة" }, path: "/lang/help", props: {} },
         // { text: { en: "Community", ar: "الجمهور" }, path: "/community" , props: { }},
         {
           text: { en: "Facebook", ar: "فيسبوك" },
           path: "https://www.facebook.com/ArabLocalMarket",
           props: { target: "_blank" },
         },
-        { text: { en: "Sitemap", ar: "خريطة الموقع" }, path: "/sitemap", props: {} }, // https://www.shopify.com/sitemap
+        { text: { en: "Sitemap", ar: "خريطة الموقع" }, path: "/lang/sitemap", props: {} }, // https://www.shopify.com/sitemap
       ],
     },
     // {

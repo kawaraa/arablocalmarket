@@ -1,51 +1,51 @@
-import { cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
-import PlanCard from "../(component)/plan-card";
-import plans from "../(layout)/plans";
+import PlanCard from "../../(component)/plan-card";
+import plans from "../../(layout)/plans";
 import CheckReferral from "./check-referral";
+import Footer from "../../(layout)/footer";
 
-export default async function Pricing({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-
+export default function Pricing({ params, searchParams }) {
+  const lang = params.lang;
   const date = new Date();
   date.setMonth(date.getMonth() + 1);
 
   return (
-    <section>
-      <h1 className="mt-16 mb-4 text-3xl text-center font-bold">{content.h1[lang]}</h1>
-      <p className="text-center">{content.h1P[lang][0]}</p>
+    <>
+      <section className="mb-24">
+        <h1 className="mt-16 mb-4 text-3xl text-center font-bold">{content.h1[lang]}</h1>
+        <p className="text-center">{content.h1P[lang][0]}</p>
 
-      <p className="mt-10 mb-3 text-sm">
-        {content.h1P[lang][1]} <strong className="font-medium">{date.toLocaleDateString("nl")}</strong>,{" "}
-        {content.h1P[lang][2]}
-      </p>
+        <p className="mt-10 mb-3 text-sm">
+          {content.h1P[lang][1]} <strong className="font-medium">{date.toLocaleDateString("nl")}</strong>,{" "}
+          {content.h1P[lang][2]}
+        </p>
 
-      <div className="flex-wrap sm:flex sm:justify-around md:justify-between">
-        {plans.map((plan, i) => (
-          <PlanCard lang={lang} plan={plan} key={i} />
-        ))}
-      </div>
-      <CheckReferral referralId={searchParams?.referral} />
-    </section>
+        <div className="flex-wrap sm:flex sm:justify-around md:justify-between">
+          {plans.map((plan, i) => (
+            <PlanCard lang={lang} plan={plan} key={i} />
+          ))}
+        </div>
+        <CheckReferral referralId={searchParams?.referral} />
+      </section>
+
+      <Footer lang={lang} />
+    </>
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-  return {
-    title: content.title[lang] + " - ALM",
-    description: content.desc[lang],
-  };
+export function generateMetadata({ params }) {
+  const lang = params.lang;
+  return { title: content.title[lang], description: content.desc[lang] };
 }
 
 const content = {
-  title: { en: "Pricing - Subscriptions", ar: "صفحة أسعار الاشتراكات" },
+  title: {
+    en: "Pricing - ArabLocalMarket Store Subscriptions",
+    ar: "صفحة أسعار الاشتراكات متاجر السوق المحلي العربي",
+  },
   h1: { en: "Start for free and enjoy the trial month.", ar: "ابدأ مجانًا واستمتع بالشهر التجريبي" },
   desc: {
-    en: "Arab Local Market store plans and subscriptions prices",
-    ar: "أسعار خطط واشتراكات متجر السوق المحلي العربي",
+    en: "ArabLocalMarket plans and store subscription prices",
+    ar: "أسعار خطط واشتراكات متاجر السوق المحلي العربي",
   },
   h1P: {
     en: [

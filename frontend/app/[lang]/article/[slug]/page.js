@@ -1,6 +1,6 @@
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { extractLang, getCssDelay } from "../../../(service)/utilities";
+import getMetadata from "../../../metadata";
+import { getCssDelay } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
 import Footer from "../../../(layout)/footer";
 import SectionImage from "../section-image";
@@ -8,9 +8,8 @@ import Section from "../section";
 import SectionList from "../section-list";
 const extractQuery = (q) => q.replace(/arablocalmarket|السوق-المحلي-العربي|-/gim, " ").slice(0, 20);
 
-export default async function Article({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+export default async function Article({ params }) {
+  const lang = params.lang;
   const slug = extractQuery(decodeURI(params.slug || "")).trim();
 
   const query = `?locale=${lang}&filters[$or][0][heading][$contains]=${slug}&filters[$or][1][p][$contains]=${slug}&populate[0]=image,list,sections&populate[1]=sections.image,sections.list,sections.subsections&populate[2]=sections.subsections.image,sections.subsections.list,sections.subsections.headings&populate[3]=sections.subsections.headings.image,sections.subsections.headings.list`;
@@ -28,7 +27,7 @@ export default async function Article({ params, searchParams }) {
       <article className="mb-24">
         {image.data ? "" : <div className="h-10"></div>}
         <SectionImage {...image} alt={heading} cls="overflow-hidden max-w-xl h-[30vh] mx-auto text-center" />
-        <h1 className="text-center my-5 leading-10 text-2xl sm:text-3xl font-semibold">{heading}</h1>
+        <h1 className="text-center my-5 text-2xl sm:text-3xl font-semibold">{heading}</h1>
         <p className="text-center leading-8 lazy-b">{visibleP}</p>
         <p className="sr-only">{hiddenP}</p>
         <SectionList list={list} cls="lazy-b" style={getCssDelay()} />
@@ -51,9 +50,8 @@ export default async function Article({ params, searchParams }) {
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+export async function generateMetadata({ params }) {
+  const lang = params.lang;
   const slug = (params.slug || "").split("-");
   const q = slug.reduce(
     (acc, word, i) =>
@@ -70,5 +68,5 @@ export async function generateMetadata({ params, searchParams }) {
   if (!data?.id) return {};
 
   const { title, keywords, heading, p } = data.attributes;
-  return { title: (title || heading) + " - ALM", description: p, keywords };
+  return getMetadata({ lang: params.lang, title: (title || heading) + " - ALM", description: p, keywords });
 }

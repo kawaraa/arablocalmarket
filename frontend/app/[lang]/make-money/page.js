@@ -1,10 +1,8 @@
-import { cookies } from "next/headers";
-import { extractLang } from "../../(service)/utilities";
+import getMetadata from "../../metadata";
+import Footer from "../../(layout)/footer";
 
-export default function MakeMoney({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-
+export default function MakeMoney({ params }) {
+  const lang = params.lang;
   return (
     <>
       <h1 className="text-center font-bold mt-10 mb-5 lazy-b">
@@ -28,17 +26,33 @@ export default function MakeMoney({ params, searchParams }) {
           {item}
         </p>
       ))}
+
+      <div className="h-24"></div>
+
+      <Footer lang={lang} />
     </>
   );
 }
 
+export function generateMetadata({ params }) {
+  const lang = params.lang;
+  return getMetadata({ lang, title: content.title[lang] });
+}
+
 const content = {
+  title: {
+    en: "Make money online with ArabLocalMarket",
+    ar: "اربح المال عبر الإنترنت مع السوق المحلي العربي",
+  },
   h1: {
     en: [
       "You don't have experience but you still want to make money online?",
-      "Become Representative and start making money with us",
+      "Become Representative and start making money with ArabLocalMarket",
     ],
-    ar: ["ليس لديك خبرة ولكنك لا تزال ترغب في كسب المال عبر الإنترنت؟", "كن مندوب وابدأ في جني الأموال معنا"],
+    ar: [
+      "ليس لديك خبرة ولكنك لا تزال ترغب في كسب المال عبر الإنترنت؟",
+      "كن مندوب وابدأ في جني الأموال معنا السوق المحلي العربي",
+    ],
   },
   h1P: {
     en: [

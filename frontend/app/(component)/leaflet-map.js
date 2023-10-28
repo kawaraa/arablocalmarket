@@ -69,7 +69,6 @@ export default function LeafletMap({ lang, coordinates, onLocate, requestUserLoc
       setLoading(true);
 
       window.L.newMap.addEventListener("locationfound", (e) => {
-        // console.log("locationfound: ", e);
         onLocate({ lat: (+e.latlng.lat).toFixed(6), lng: (+e.latlng.lng).toFixed(6) });
         setPermissionGranted(true);
         setLoading(false);

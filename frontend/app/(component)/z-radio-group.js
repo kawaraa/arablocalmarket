@@ -1,7 +1,6 @@
 "use client";
 
 export default function RadioGroup({ a }) {
-  console.log("RadioGroup: >>>", a);
   // https://headlessui.com/react/radio-group
   return (
     <div class="w-full px-4 py-16">

@@ -71,7 +71,7 @@ export default function Navigation() {
               name="langSelect"
               id="lang-select"
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
-              {content.themeOptions.map((opt, i) => (
+              {content.languageOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
                   {opt.text[lang]}
                 </option>
@@ -91,7 +91,7 @@ export default function Navigation() {
               name="themeSelect"
               id="theme-select"
               className="absolute inset-0 w-full appearance-none border-none rounded-full cursor-pointer">
-              {content.languageOptions.map((opt, i) => (
+              {content.themeOptions.map((opt, i) => (
                 <option value={opt.value} key={i}>
                   {opt.text[lang]}
                 </option>
@@ -105,7 +105,7 @@ export default function Navigation() {
             onClick={() => setShowMenu(!showMenu)}
             key={i}
             className="font-medium hover:bg-dbg hover:text-dt md:hover:bg-[transparent] md:hover:!text-bg9 text-sm duration-200">
-            <Link passHref legacyBehavior href={link.path}>
+            <Link passHref legacyBehavior href={link.path.replace("lang", lang)}>
               <a className="block p-3 text-lg md:underline underline-offset-8">{link.text[lang]}</a>
             </Link>
           </li>
@@ -142,7 +142,7 @@ export default function Navigation() {
               title="View user menu">
               {content.userLinks.map((link, i) => (
                 <li className="text-lg" key={i}>
-                  <Link passHref legacyBehavior href={link.path}>
+                  <Link passHref legacyBehavior href={link.path.replace("lang", lang)}>
                     <a className="block min-w-[200px] text-center whitespace-nowrap px-4 py-3 hover:bg-dbg hover:text-dt dark:hover:bg-pc dark:hover:text-t duration-200">
                       {link.text[lang]}
                     </a>
@@ -156,22 +156,23 @@ export default function Navigation() {
     </nav>
   );
 }
-
+// languageOptions, themeOptions
 const content = {
-  themeModeIconsMap: { auto: "circleHalf", dark: "brightness", light: "moon" },
   languageOptions: [
+    { text: { en: "EN", ar: "الإنجليزية" }, value: "en" },
+    { text: { en: "AR", ar: "العربية" }, value: "ar" },
+  ],
+  langAlt: { en: "Change Language", ar: "تغيير اللغة" },
+  themeOptions: [
     { text: { en: "Auto", ar: "افتراضي" }, value: "auto" },
     { text: { en: "Light", ar: "فاتح" }, value: "light" },
     { text: { en: "Dark", ar: "داكن" }, value: "dark" },
   ],
-  themeOptions: [
-    { text: { en: "EN", ar: "الإنجليزية" }, value: "en" },
-    { text: { en: "AR", ar: "العربية" }, value: "ar" },
-  ],
+  themeModeIconsMap: { auto: "circleHalf", dark: "brightness", light: "moon" },
   cart: { en: "Shopping cart and Favorite items", ar: "عربة التسوق والعناصر المفضلة" },
   navLinks: [
     { text: { en: "Find a store", ar: "ابحث عن متجر" }, path: "/store" },
-    { text: { en: "How to instal", ar: "كيفية التثبيت" }, path: "/how-to-install" },
+    { text: { en: "How to instal", ar: "كيفية التثبيت" }, path: "/lang/how-to-install" },
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
@@ -179,8 +180,7 @@ const content = {
     { text: { en: "My stores", ar: "متاجري" }, path: "/admin/store?tab=my" },
     { text: { en: "clients", ar: "العملاء" }, path: "/admin/client" },
     { text: { en: "Settings", ar: "إعدادات" }, path: "/settings" },
-    { text: { en: "Help", ar: "المساعدة" }, path: "/help" },
+    { text: { en: "Help", ar: "المساعدة" }, path: "/lang/help" },
     { text: { en: "Sign out", ar: "تسجيل خروج" }, path: "/signout" },
   ],
-  langAlt: { en: "Change Language", ar: "تغيير اللغة" },
 };

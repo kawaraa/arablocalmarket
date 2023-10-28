@@ -8,8 +8,7 @@ import { Button } from "../(component)/(styled)/button";
 export default function Payment({ searchParams }) {
   const { lang } = useContext(AppSessionContext);
 
-  console.log("Payment", searchParams);
-  console.log("Payment", searchParams.storeId);
+  // console.log("Payment", searchParams.storeId);
   useEffect(() => {
     window.document.title = content.title[lang] + " - ALM";
   }, []);

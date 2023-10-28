@@ -1,13 +1,13 @@
-import { cookies } from "next/headers";
-import { extractLang, getCssDelay } from "../../(service)/utilities";
+import getMetadata from "../../metadata";
+import { getCssDelay } from "../../(service)/utilities";
+import Footer from "../../(layout)/footer";
 
-export default function HowToInstall({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+export default function HowToInstall({ params }) {
+  const lang = params.lang;
 
   return (
     <>
-      <h1 className="text-center mt-10  leading-10">
+      <h1 className="text-center mt-10 leading-10">
         <span className="text-2xl sm:text-3xl text-center font-bold">{content.h1[lang][0]}</span>
         <br />
         <span className="">{content.h1[lang][1]}</span>
@@ -17,7 +17,7 @@ export default function HowToInstall({ params, searchParams }) {
         {content.h1P[lang]}
       </p>
 
-      <section className="flex flex-wrap">
+      <section className="flex flex-wrap mb-24">
         <article className="w-1/1 sm:w-1/2 px-3 text-center">
           <h2 className="mb-3 font-semibold lazy-b" style={getCssDelay()}>
             {content.android.h[lang]}
@@ -52,8 +52,15 @@ export default function HowToInstall({ params, searchParams }) {
           </video>
         </article>
       </section>
+
+      <Footer lang={lang} />
     </>
   );
+}
+
+export function generateMetadata({ params }) {
+  const lang = params.lang;
+  return getMetadata({ lang, title: content.h1[lang] });
 }
 
 const content = {

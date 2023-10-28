@@ -9,7 +9,7 @@ export default function Section({ children, heading, image, p, list, level }) {
 
   return (
     <section className={sectionPadding}>
-      <HTag className={`mt-5 mb-2 leading-8 ${hCls} font-semibold lazy-r`} style={getCssDelay()}>
+      <HTag className={`mt-5 mb-2 ${hCls} font-semibold lazy-r`} style={getCssDelay()}>
         {heading}
       </HTag>
       <SectionImage

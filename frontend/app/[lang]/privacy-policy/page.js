@@ -1,15 +1,13 @@
-import { cookies } from "next/headers";
-import { extractLang } from "../../(service)/utilities";
+import getMetadata from "../../metadata";
 import Footer from "../../(layout)/footer";
 import Article from "../../(component)/article";
 
-export default function PrivacyPolicy({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+export default function PrivacyPolicy({ params }) {
+  const lang = params.lang;
 
   return (
     <>
-      <section className="max-w-4xl mx-auto mb-20 pt-10 px-2">
+      <section className="max-w-4xl mx-auto mb-24 pt-10 px-2">
         <h1 className="my-10 text-center text-4xl sm:text-5xl font-extrabold">{content.title[lang]}</h1>
         <p className="text-center text-sm mb-5">{content.updated[lang]}</p>
 
@@ -27,6 +25,11 @@ export default function PrivacyPolicy({ params, searchParams }) {
       <Footer lang={lang} />
     </>
   );
+}
+
+export function generateMetadata({ params }) {
+  const lang = params.lang;
+  return getMetadata({ lang, title: content.title[lang] + " - ALM" });
 }
 
 const content = {

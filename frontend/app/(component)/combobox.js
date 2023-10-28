@@ -2,8 +2,6 @@
 import SvgIcon from "./(styled)/svg-icon";
 
 export default function ComboBox({ a }) {
-  console.log("ComboBox: >>>", a);
-
   return (
     <div className="fixed top-16 w-72">
       <div className="relative mt-1">
