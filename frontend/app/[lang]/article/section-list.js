@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCssDelay } from "../(service)/utilities";
+import { getCssDelay } from "../../(service)/utilities";
 
 export default function SectionList({ list, cls = "" }) {
   if (!list || !list[0]) return null;

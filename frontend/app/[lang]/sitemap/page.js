@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
-import Footer from "../(layout)/footer";
+import { extractLang } from "../../(service)/utilities";
+import Footer from "../../(layout)/footer";
 import Link from "next/link";
 
 export default function Sitemap({ params, searchParams }) {

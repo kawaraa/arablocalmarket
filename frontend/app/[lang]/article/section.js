@@ -1,4 +1,4 @@
-import { getCssDelay } from "../(service)/utilities";
+import { getCssDelay } from "../../(service)/utilities";
 import SectionImage from "./section-image";
 import SectionList from "./section-list";
 

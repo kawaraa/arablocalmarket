@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
-import Footer from "../(layout)/footer";
-import Article from "../(component)/article";
+import { extractLang } from "../../(service)/utilities";
+import Footer from "../../(layout)/footer";
+import Article from "../../(component)/article";
 
 export default function PrivacyPolicy({ params, searchParams }) {
   const cookieStore = cookies();

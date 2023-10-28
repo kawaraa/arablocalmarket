@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { extractLang, getCssDelay } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
 import Footer from "../../../(layout)/footer";
-import SectionImage from "../../section-image";
-import Section from "../../section";
-import SectionList from "../../section-list";
+import SectionImage from "../section-image";
+import Section from "../section";
+import SectionList from "../section-list";
 const extractQuery = (q) => q.replace(/arablocalmarket|السوق-المحلي-العربي|-/gim, " ").slice(0, 20);
 
 export default async function Article({ params, searchParams }) {

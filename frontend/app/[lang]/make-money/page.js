@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
+import { extractLang } from "../../(service)/utilities";
 
 export default function MakeMoney({ params, searchParams }) {
   const cookieStore = cookies();

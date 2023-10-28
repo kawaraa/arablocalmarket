@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
-import Article from "../(component)/article";
-import Footer from "../(layout)/footer";
-import { LinkButton } from "../(component)/(styled)/button";
-import SvgIcon from "../(component)/(styled)/svg-icon";
+import { extractLang } from "../../(service)/utilities";
+import Article from "../../(component)/article";
+import Footer from "../../(layout)/footer";
+import { LinkButton } from "../../(component)/(styled)/button";
+import SvgIcon from "../../(component)/(styled)/svg-icon";
 
 export default function Help({ params, searchParams }) {
   const cookieStore = cookies();

@@ -13,6 +13,7 @@ export default function RootLayout({ children, params, searchParams }) {
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
   let lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   if ((children?.props?.childProp?.segment || []).includes("ar")) lang = "ar";
+  console.log("RootLayout: ", params, searchParams);
 
   return (
     <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
@@ -51,6 +52,7 @@ export default function RootLayout({ children, params, searchParams }) {
 }
 
 export async function generateMetadata({ params, searchParams }) {
+  console.log("generateMetadata: ", params, searchParams);
   const cookieStore = cookies();
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   const themeMode = cookieStore.get("themeMode")?.value;

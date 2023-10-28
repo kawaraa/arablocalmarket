@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { extractLang, getCssDelay } from "../(service)/utilities";
+import { extractLang, getCssDelay } from "../../(service)/utilities";
 
 export default function HowToInstall({ params, searchParams }) {
   const cookieStore = cookies();

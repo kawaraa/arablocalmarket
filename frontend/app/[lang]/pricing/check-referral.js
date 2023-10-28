@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { Cookies } from "../(service)/utilities";
+import { Cookies } from "../../(service)/utilities";
 
 export default function CheckReferral({ referralId }) {
   useEffect(() => {
