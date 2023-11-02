@@ -29,7 +29,7 @@ export default function AppSessionContextProvider({ children, language, theme })
   const addMessage = (msg) => setMessages([...messages, msg]);
 
   const updateLang = async (lang) => {
-    const langRegEx = /\/en\/|\/ar\//gim;
+    const langRegEx = /\/en|\/ar/gim;
     if (Cookies.get("lang") != lang) Cookies.set("lang", lang);
     document.documentElement.setAttribute("lang", lang);
     document.documentElement.classList.remove("en", "ar");
@@ -37,8 +37,8 @@ export default function AppSessionContextProvider({ children, language, theme })
     setLang(lang);
     await registerServiceWorker(true); // Delete the cache because Iphone does not change the language
     if (window.location.pathname == "/") window.location.href = `/${lang}`;
-    else if (!langRegEx.test(window.location.pathname)) return window.location.reload();
-    else window.location.href = window.location.pathname.replace(langRegEx, `/${lang}/`);
+    else if (!window.location.pathname.match(langRegEx)) window.location.reload();
+    else window.location.href = window.location.pathname.replace(langRegEx, `/${lang}`);
   };
   const updateThemeMode = (mode) => {
     if (Cookies.get("themeMode") != mode) Cookies.set("themeMode", mode);
