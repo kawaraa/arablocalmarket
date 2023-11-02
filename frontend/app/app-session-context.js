@@ -36,8 +36,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     document.documentElement.classList.add(lang);
     setLang(lang);
     await registerServiceWorker(true); // Delete the cache because Iphone does not change the language
-    if (!langRegEx.test(window.location.pathname)) return window.location.reload();
-    window.location.href = window.location.pathname.replace(langRegEx, `/${lang}/`);
+    if (window.location.pathname == "/") window.location.href = `/${lang}`;
+    else if (!langRegEx.test(window.location.pathname)) return window.location.reload();
+    else window.location.href = window.location.pathname.replace(langRegEx, `/${lang}/`);
   };
   const updateThemeMode = (mode) => {
     if (Cookies.get("themeMode") != mode) Cookies.set("themeMode", mode);
