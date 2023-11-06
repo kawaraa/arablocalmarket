@@ -1,4 +1,4 @@
-export default function getMetadata({ lang, title, description, keywords, author, themeMode }) {
+export default function getMetadata({ lang, title, description, keywords, author, themeMode, data }) {
   const themeColor = themeMode == "dark" ? "#121212" : "#ffffff";
 
   return {
@@ -26,6 +26,7 @@ export default function getMetadata({ lang, title, description, keywords, author
     manifest: "/manifest.json",
     other: { google: "notranslate" },
     metadataBase: new URL("https://arablocalmarket.com"),
+    ...(data || {}),
     openGraph: {
       title: title || content.title[lang],
       description: description || content.description[lang],

@@ -52,7 +52,7 @@ export default function RootLayout({ children, params, searchParams }) {
   );
 }
 
-export async function generateMetadata({ params, searchParams }) {
+export function generateMetadata({ params, searchParams }) {
   // console.log("generateMetadata: ", params, searchParams);
   const cookieStore = cookies();
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
