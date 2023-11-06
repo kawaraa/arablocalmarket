@@ -83,8 +83,8 @@ export default function NewStore({ params, searchParams: { id, subscription } })
         type: f.type.value,
         currency: f.currency.value,
         deliver: f.deliver.checked,
-        cocNumber: f.cocNumber.value,
-        vatNumber: f.vatNumber.value,
+        // cocNumber: f.cocNumber.value,
+        // vatNumber: f.vatNumber.value,
         address: {
           line1: f.line1.value,
           line2: f.line2.value,
@@ -337,7 +337,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           </Collapse>
         </Collapse>
 
-        <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
+        {/* <h6 className="font-semibold mt-7"> {content.businessInfo[lang]}</h6>
         <InputField
           type="text"
           name="cocNumber"
@@ -354,7 +354,7 @@ export default function NewStore({ params, searchParams: { id, subscription } })
           label={content.vatNumber[lang]}
           placeholder={" US52359525 " + shdCnt.ex[lang]}
           full
-        />
+        /> */}
 
         <div className="flex my-5">
           <Button type="submit" cls={`text-lg ${store ? "" : "flex-1 sm:flex-none"}`}>
