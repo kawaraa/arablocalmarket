@@ -159,13 +159,13 @@ const content = {
 
   h1P: {
     en: [
-      "Welcome to the first Local Stores Based Platform where you can look for Arabic stores and supermarkets nearby.",
+      "Welcome to the first Local Stores Based online marketplace where you can look for Arabic stores and supermarkets nearby.",
       "Discover hundreds of unique stores in one place, a nice, easy and free Smartphone app for local services, groceries stores, markets and restaurants delivery at home",
       "Look for local services, Grocery store or supermarket in your neighborhood",
       "Look for local services, Halal food, Grocery store or supermarket in your neighborhood on Arab Local Market, Select and add the products you need to the cart, Choose the payment method you like, pay checkout and let the store deliver you order to you",
     ],
     ar: [
-      "مرحبًا بك في أول منصة متاجر محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
+      "مرحبًا بك في أول منصة سوق على الانترنت تعتمد على المتاجر محلية حيث يمكنك البحث عن المتاجر العربية ومحلات السوبر ماركت القريبة.",
       "اكتشف المئات من المتاجر الفريدة في مكان واحد، تطبيق هاتف ذكي لطيف وسهل ومجاني الخدمات محلية والأسواق والمحلات التجارية والبقالة والمطاعم التي يتم توصيلها إلى المنزل",
       "ابحث عن الخدمات المحلية أو محلات البقالة والسوبر ماركت في منطقتك",
       "ابحث عن خدمات محلية أو متجر أو سوبر ماركت قريب، حدد المنتجات التي تريدها وأضفها إلى سلة التسوق، وحدد طريقة الدفع التي تريدها، وقم بالدفع، ودع المتجر يقوم توصيل طلبك إليك",

@@ -31,7 +31,7 @@ export function generateMetadata({ params }) {
 const content = {
   title: { en: "About us", ar: "معلومات عنا" },
   h1: {
-    en: "ArabLocalMarket is best solution for supermarket, grocery and small market stores",
+    en: "ArabLocalMarket is best solution for any type of brick-and-mortar supermarket, grocery and small market stores",
     ar: "ArabLocalMarket هو أفضل حل للسوبر ماركت والبقالة والمتاجر الصغيرة",
   },
   h1P: {
@@ -58,13 +58,12 @@ const content = {
         ],
       },
     },
-
     ,
     {
       t: { en: "Our mission", ar: "مهمتنا" },
       h: {
-        en: "Making Markets, Groceries and other local stores reachable and easily for everyone",
-        ar: "جعل الأسواق ومحلات البقالة والمتاجر المحلية الأخرى في متناول الجميع بسهولة",
+        en: "Making brick-and-mortar Markets, Groceries and other local stores reachable and easily for everyone",
+        ar: "جعل المحلات والمتاجر المحلية والأسواق ومحلات البقالة في متناول الجميع بسهولة",
       },
       p: {
         en: [

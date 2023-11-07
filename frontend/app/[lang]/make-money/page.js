@@ -56,7 +56,7 @@ const content = {
   },
   h1P: {
     en: [
-      "ArabLocalMarket.com is the first online local market where customers find all types of local stores like Eastern and Arabic groceries, restaurants or even services like automobile mechanics and more",
+      "ArabLocalMarket.com is the first local online marketplace where customers find all types of local stores like Eastern and Arabic groceries, restaurants or even services like automobile mechanics and more",
       "Local store owners can create an online store for a monthly subscription, where they list their products and services so customers can see them",
     ],
     ar: [
