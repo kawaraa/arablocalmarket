@@ -265,6 +265,7 @@ const content = {
       ],
       alt: "ArabLocalMarket - Create your online store and start selling products locally for free",
       src: "https://www.youtube.com/embed/w1o5zFdSnPc?si=lJ3wa6Ex8g2KMR15",
+      // poster: "/", // Todo: add a thumbnail to the vvideo
     },
     ar: {
       title: "تعرف على المزيد حول السوق المحلي العربي ArabLocalMarket",
@@ -285,6 +286,7 @@ const content = {
       ],
       alt: "السوق المحلي العربي - أنشئ متجرك على الإنترنت وابدأ في بيع منتجات محليًا مجانا - ArabLocalMarket",
       src: "https://www.youtube.com/embed/WMwmgPzlpNY?si=FR-bC99orjItfOW9",
+      // poster: "/", // Todo: add a thumbnail to the vvideo
     },
   },
 };

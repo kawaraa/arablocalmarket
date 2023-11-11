@@ -107,9 +107,9 @@ export default function AppSessionContextProvider({ children, language, theme })
     if (aCoordinates) updateCoordinates(aCoordinates.split(":"));
     if (aRange) updateRange(aRange);
 
-    const handleError = () => setUser(null) + updateUser();
-    if (!window.localStorage.getItem("accessToken")) handleError();
-    else fetchUser().then(updateUser).catch(handleError);
+    const clearUserData = () => setUser(null) + updateUser();
+    if (!window.localStorage.getItem("accessToken")) clearUserData();
+    else fetchUser().then(updateUser).catch(clearUserData);
 
     registerServiceWorker();
   }, []);
