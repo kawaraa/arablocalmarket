@@ -1,5 +1,5 @@
 // self.importScripts('foo.js', 'bar.js');
-const staticFileCacheName = "static-files-v-0xbcy2ye7y3ubfhwvdtw1tye984it0y45plmlbaplalkomvne8ygbr28w9rh";
+const staticFileCacheName = "static-files-v-0xbcy2ye7y3ubfhwvdtw1tye984it0y45plmlbaplalkomvne8ygbr28w9r";
 const staticFileCachePaths = ["/offline.html", "/", "/barcode-scanner/quagga.min.js", "/signin", "/signup"];
 
 self.addEventListener("install", (evt) => {

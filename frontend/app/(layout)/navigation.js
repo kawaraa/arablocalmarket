@@ -25,8 +25,8 @@ export default function Navigation() {
   return (
     <nav
       aria-label="Primary Navigation"
-      className="z-7 fixed w-full flex h-14 md:h-16 px-3 md:px-8 items-center top-0 bg-bg dark:bg-dcbg select-none">
-      <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 md:hidden" />
+      className="z-7 fixed w-full flex h-14 lg:h-16 px-3 lg:px-8 items-center top-0 bg-bg dark:bg-dcbg select-none">
+      <OptionXIcon open={showMenu} onChange={() => setShowMenu(!showMenu)} cls="z-8 mr-3 lg:hidden" />
 
       <Link passHref legacyBehavior href="/">
         <a
@@ -43,16 +43,16 @@ export default function Navigation() {
       <div
         onClick={() => setShowMenu(false)}
         onTouchStart={() => setTimeout(() => setShowMenu(false), 100)}
-        className={`z-7 block fixed md:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
+        className={`z-7 block fixed lg:hidden inset-0 bg-blur w-0 opacity-0 transition-opacity duration-300 ${
           showMenu && "w-[100%] opacity-100"
         }`}></div>
 
       <ul
         id="mobile-menu"
-        className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg md:static md:flex md:w-auto md:h-auto md:pt-0 md:ml-6 md:bg-[transparent] md:shadow-none transition-all duration-200 ${
+        className={`z-7 overflow-hidden fixed top-0 block items-center h-[100vh] w-[75%] pt-14 left-[-75%] bg-bg shadow-md dark:bg-dcbg lg:static lg:flex lg:w-auto lg:h-auto lg:pt-0 lg:ml-6 lg:bg-[transparent] lg:shadow-none transition-all duration-200 ${
           showMenu && "left-[0]"
         }`}>
-        <li className="absolute top-4 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:ml-3">
+        <li className="absolute top-4 right-14 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 lg:static lg:ml-3">
           <div className="relative overflow-hidden w-8 rounded-full">
             <label htmlFor="lang-select" className="w-full h-full">
               <Image
@@ -79,7 +79,7 @@ export default function Navigation() {
             </select>
           </div>
         </li>
-        <li className="absolute top-3 right-3 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 md:static md:mx-3">
+        <li className="absolute top-3 right-3 hover:text-lt dark:text-pc dark:hover:text-dt duration-200 lg:static lg:mx-3">
           <div className="relative overflow-hidden w-7 h-7 rounded-full">
             <label htmlFor="theme-select" className="w-full h-full">
               <SvgIcon name={content.themeModeIconsMap[themeMode]} />
@@ -104,9 +104,9 @@ export default function Navigation() {
           <li
             onClick={() => setShowMenu(!showMenu)}
             key={i}
-            className="font-medium hover:bg-dbg hover:text-dt md:hover:bg-[transparent] md:hover:!text-bg9 text-sm duration-200">
+            className="font-medium hover:bg-dbg hover:text-dt lg:hover:bg-[transparent] lg:hover:!text-bg9 text-sm duration-200">
             <Link passHref legacyBehavior href={link.path.replace("lang", lang)}>
-              <a className="block p-3 text-lg md:underline underline-offset-8">{link.text[lang]}</a>
+              <a className="block p-3 text-lg lg:underline underline-offset-8">{link.text[lang]}</a>
             </Link>
           </li>
         ))}
@@ -115,7 +115,7 @@ export default function Navigation() {
       <div className="flex items-center justify-end flex-auto">
         <Link passHref legacyBehavior href="/cart">
           <a className="relative flex mr-2" title={content.cart[lang]}>
-            <span className="w-8 md:w-7 hover:text-lt dark:hover:text-bg duration-200">
+            <span className="w-8 lg:w-7 hover:text-lt dark:hover:text-bg duration-200">
               <SvgIcon name="cart" />
             </span>
             <span id="nav-cart" className="text-sm font-medium text-red -mt-1">
@@ -126,13 +126,13 @@ export default function Navigation() {
 
         {!user?.id ? (
           <Link passHref legacyBehavior href={signinLink.path}>
-            <a className="text-center ml-3 px-3 py-1 text-sm rounded-md md:px-4 md:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
+            <a className="text-center ml-3 px-3 py-1 text-sm rounded-md lg:px-4 lg:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2">
               {signinLink.text[lang]}
             </a>
           </Link>
         ) : (
           <>
-            <div className="hidden md:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
+            <div className="hidden lg:block block mx-4 h-6 w-px bg-[#e5e7eb]" aria-hidden="true"></div>
             <Notification />
             <Dropdown
               event="click"
