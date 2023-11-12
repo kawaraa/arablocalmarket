@@ -9,12 +9,16 @@ export default function MakeMoney({ params }) {
         <span className="block text-3xl sm:text-4xl mb-4 font-bold mb-sm">{content.h1[lang][0]}</span>
         <span className="block ">{content.h1[lang][1]}</span>
       </h1>
-
       <p className=" lazy-l">{content.h1P[lang][0]}</p>
       <p className=" lazy-r">{content.h1P[lang][1]}</p>
 
-      <h2 className="lazy-l">{content.h1P[lang][1]}</h2>
+      <ul className="list-[disc] mx-5 my-8 lazy-b">
+        {content.list[lang].map((item, i) => (
+          <li key={i}>{item}</li>
+        ))}
+      </ul>
 
+      <p className=" lazy-r">{content.h2[lang]}</p>
       <ol className="list-decimal mx-5 my-8 lazy-b">
         {content.ol[lang].map((item, i) => (
           <li key={i}>{item}</li>
@@ -26,9 +30,7 @@ export default function MakeMoney({ params }) {
           {item}
         </p>
       ))}
-
       <div className="h-24"></div>
-
       <Footer lang={lang} />
     </>
   );
@@ -57,16 +59,22 @@ const content = {
   h1P: {
     en: [
       "ArabLocalMarket.com is the first local online marketplace where customers find all types of local stores like Eastern and Arabic groceries, restaurants or even services like automobile mechanics and more",
-      "Local store owners can create an online store for a monthly subscription, where they list their products and services so customers can see them",
+      "Local store owners Brick-and-mortars can create an online store for a monthly subscription, where they can list their products and services so customers can see them",
+      "ArabLocalMarket has features that support:",
     ],
     ar: [
-      "ArabLocalMarket.com هو أول سوق محلي على الإنترنت حيث يجد العملاء جميع أنواع المتاجر المحلية مثل البقالة الشرقية والعربية أو المطاعم أو حتى الخدمات مثل ميكانيكا السيارات والمزيد",
-      "يمكن لمالكي المتاجر المحلية إنشاء متجر على الإنترنت مقابل اشتراك شهري ، حيث يسردون منتجاتهم وخدماتهم حتى يتمكن العملاء من رؤيتها",
+      "ArabLocalMarket.com هو أول سوق محلي عربي على الإنترنت حيث يجد العملاء جميع أنواع المتاجر المحلية مثل البقالة الشرقية والعربية أو المطاعم أو حتى الخدمات مثل ميكانيكا السيارات والمزيد",
+      "يمكن لمالكي المتاجر المحلية إنشاء متجر على الإنترنت مقابل اشتراك شهري، حيث يمكنهم إضافة منتجاتهم وخدماتهم حتى يتمكن العملاء من رؤيتها",
+      "يتمتع السوق المحلي العربي بمميزات تدعم:",
     ],
+  },
+  list: {
+    en: ["Content management", "Shopping cart", "Checkout", "Payment methods"],
+    ar: ["ادارة المخزون", "عربة التسوق", "عملية الطلب", "طرق الدفع"],
   },
   h2: {
     en: "Here is how it works",
-    ar: "تعلم كيف يعمل",
+    ar: "تعلم كيف طريق العمل",
   },
   ol: {
     en: [

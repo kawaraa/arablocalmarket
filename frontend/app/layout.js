@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import Script from "next/script";
+// import Script from "next/script";
 import { extractLang } from "./(service)/utilities";
 import AppSessionContextProvider from "./app-session-context";
 import Navigation from "./(layout)/navigation";
@@ -23,7 +23,7 @@ export default function RootLayout({ children, params, searchParams }) {
           lang == "ar" && "font-arabic"
         }`}>
         {/* Google tag (gtag.js)  */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11358381234" />
+        {/* <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11358381234" />
         <Script strategy="beforeInteractive" id="google-analytics">
           {`
           window.dataLayer = window.dataLayer || [];
@@ -31,7 +31,7 @@ export default function RootLayout({ children, params, searchParams }) {
           gtag('js', new Date());
           gtag('config', 'AW-11358381234');
         `}
-        </Script>
+        </Script> */}
 
         <AppSessionContextProvider language={lang} theme={themeMode}>
           <header>

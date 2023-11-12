@@ -173,6 +173,8 @@ const content = {
   navLinks: [
     { text: { en: "Find a store", ar: "ابحث عن متجر" }, path: "/store" },
     { text: { en: "How to instal", ar: "كيفية التثبيت" }, path: "/lang/how-to-install" },
+    { text: { en: "Make money", ar: "ربح المال" }, path: "/lang/make-money" },
+    { text: { en: "Articles", ar: "مقالات" }, path: "/lang/article" },
     { text: { en: "Sign in", ar: "تسجيل الدخول" }, path: "/signin" },
   ],
   userLinks: [
