@@ -14,8 +14,7 @@
       "maxLength": 25
     },
     "imageUrl": {
-      "type": "string",
-      "maxLength": 500
+      "type": "string"
     },
     "comparePrice": {
       "type": "decimal",
