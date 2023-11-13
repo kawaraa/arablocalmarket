@@ -67,6 +67,9 @@
       "relation": "manyToMany",
       "target": "api::customer.customer",
       "mappedBy": "favoriteProducts"
+    },
+    "meta": {
+      "type": "json"
     }
   }
 }
