@@ -55,7 +55,7 @@ const content = {
     {
       h: { en: "Support", ar: "الدعم" },
       links: [
-        { text: { en: "Contact", ar: "تواصل" }, path: "/contact", props: {} },
+        { text: { en: "Contact", ar: "اتصل بنا" }, path: "/contact", props: {} },
         { text: { en: "Help", ar: "المساعدة" }, path: "/lang/help", props: {} },
         // { text: { en: "Community", ar: "الجمهور" }, path: "/community" , props: { }},
         {

@@ -37,7 +37,7 @@ export function generateMetadata({ params }) {
 const content = {
   title: { en: "Help", ar: "المساعدة" },
   h1: { en: "Common questions", ar: "الأسئلة الشائعة" },
-  contactUs: { en: "Contact us", ar: "اتصل بنا" },
+  contactUs: { en: "Contact us", ar: "تواصل معنا" },
   articles: [
     {
       h: {

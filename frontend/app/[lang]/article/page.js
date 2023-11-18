@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getCssDelay } from "../../(service)/utilities";
 import Footer from "../../(layout)/footer";
 
-export default function Sitemap({ params }) {
+export default function Articles({ params }) {
   const lang = params.lang;
   return (
     <>

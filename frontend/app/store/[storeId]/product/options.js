@@ -13,7 +13,9 @@ export default function Options({ store, id, variants, name, image, discount }) 
 
   const getVariant = (ops) => {
     ops = ops.filter((o) => o);
-    const v = variants.find((v) => v.options.filter((o) => ops.includes(o.value)).length == ops.length);
+    // const v = variants.find((v) => v.options.filter((o) => ops.includes(o.value)).length == ops.length);
+    const v = variants.find((v) => v.options.every((o) => ops.includes(o.value)));
+
     if (!v || v.quantity < 1) {
       return addMessage({ type: "warning", text: shdCnt.noStockErr[lang], duration: 6 });
     }

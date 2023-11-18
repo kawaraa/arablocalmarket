@@ -8,10 +8,10 @@ export default function Transition({ Tag, children, base, enter, exit, time = "3
   useEffect(() => {
     if (open) {
       setActive(true);
-      setTimeout(() => setCls(enter), 10);
+      setTimeout(() => setCls(enter), 50);
     } else {
       setCls(exit);
-      setTimeout(() => setActive(false), +time);
+      setTimeout(() => setActive(false), +time + 50);
     }
   }, [open]);
 

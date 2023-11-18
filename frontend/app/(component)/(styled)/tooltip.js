@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Transition from "../../(layout)/transitions";
+import Transition from "../../(layout)/transition";
 import SvgIcon from "./svg-icon";
 
 export default function Tooltip({ children, description = "", size, position, cls = "" }) {

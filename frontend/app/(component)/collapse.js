@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Transition from "../(layout)/transitions";
+import Transition from "../(layout)/transition";
 import { ToggleSwitch } from "./(styled)/inputs";
 import SvgIcon from "./(styled)/svg-icon";
 

@@ -1,5 +1,5 @@
 "use client";
-import Transition from "../../(layout)/transitions";
+import Transition from "../../(layout)/transition";
 import { Button, IconButton } from "./button";
 import SvgIcon from "./svg-icon";
 

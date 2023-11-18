@@ -7,8 +7,7 @@ import SvgIcon from "./(component)/(styled)/svg-icon";
 import CheckUser from "./(component)/check-user";
 
 export default async function HomePage({ params, searchParams }) {
-  const cookieStore = cookies();
-  const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
+  const lang = extractLang(params, searchParams, cookies().get("lang")?.value);
 
   return (
     <>

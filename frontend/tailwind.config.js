@@ -22,8 +22,8 @@ module.exports = {
       cbg: "#ffffff1a", // Card Background
       dcbg: "#272727", // Dark card Background #263546
       lt: "#6b7280", // Light Title color
-      dt: "#ffffffbf", // Dark Text Color
-      t: "#515151", // Light Text Color
+      dt: "#dcd9d9", // Dark Text Color
+      t: "#414141", // Light Text Color
       bc: "#0000001a", // Border Color & Hover effect
       bf: "#9aa0a6", // Border focus color
       link: "#b485e6",

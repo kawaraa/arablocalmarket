@@ -66,7 +66,7 @@ export default function Contact() {
 }
 
 const content = {
-  h1: { en: "Contact us", ar: "تواصل - اتصل بنا" },
+  h1: { en: "Contact us", ar: "تواصل معنا" },
   labels: [
     { en: "Subject", ar: "الموضوع" },
     { en: "Message", ar: "الرسالة" },

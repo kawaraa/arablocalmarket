@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import SvgIcon from "./svg-icon";
-import Transition from "../../(layout)/transitions";
+import Transition from "../../(layout)/transition";
 import { usePathname } from "next/navigation";
 
 export default function Dropdown({ children, title, event, btnContent, icon, iconCls, cls, btnCls, ...p }) {
