@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Noto Kufi Arabic";
-  src: url(/font/NotoKufiArabic-VariableFont_wght.ttf);
-}
-
 :root {
   --dark-background: #111;
   --dark-foreground: #999;

@@ -152,7 +152,7 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
               checked={print}
               onChange={({ target }) => setPrint(target.checked)}
               cls="w-full mt-3 flex justify-between print:hidden">
-              <span className="ml-3 text-sm font-medium">Print after checkout</span>
+              <span className="ml-3 text-sm font-medium">{content.print[lang]}</span>
               <span className="w-2"></span>
             </ToggleSwitch>
           )}
@@ -164,4 +164,5 @@ export default function OrderDetailsPopup({ open, onClose, onChange, onRemoveIte
 
 const content = {
   modalTitle: { en: "Order details", ar: "تفاصيل الطلب" },
+  print: { en: "Print after checkout", ar: "الطباعة بعد اتمام الطلب" },
 };

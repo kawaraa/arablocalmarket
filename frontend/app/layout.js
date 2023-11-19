@@ -1,13 +1,15 @@
 import { cookies } from "next/headers";
-// import Script from "next/script";
+import localFont from "next/font/local";
 import { extractLang } from "./(service)/utilities";
 import AppSessionContextProvider from "./app-session-context";
 import Navigation from "./(layout)/navigation";
 import getMetadata from "./metadata";
 import "./global.css";
 
+const kufiFont = localFont({ src: "../public/font/NotoKufiArabic-VariableFont_wght.ttf", display: "swap" });
+
 // revalidate all the underneath routes and layouts
-// export const revalidate = 60;
+// export const revalidate = 1800; // 30 mins in seconds
 
 export default function RootLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
@@ -17,22 +19,11 @@ export default function RootLayout({ children, params, searchParams }) {
   // console.log("RootLayout lang: ", params, searchParams, children?.props?.childProp?.segment);
 
   return (
-    <html translate="no" lang={lang} className={`scroll-smooth group ${themeMode}`}>
-      <body
-        className={`relative min-h-screen bg-bg antialiased font-base dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t ${
-          lang == "ar" && "font-arabic"
-        }`}>
-        {/* Google tag (gtag.js)  */}
-        {/* <Script src="https://www.googletagmanager.com/gtag/js?id=AW-11358381234" />
-        <Script strategy="beforeInteractive" id="google-analytics">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-11358381234');
-        `}
-        </Script> */}
-
+    <html
+      translate="no"
+      lang={lang}
+      className={`scroll-smooth group ${lang == "ar" ? kufiFont.className : ""} ${themeMode}`}>
+      <body className="relative min-h-screen bg-bg antialiased font-base dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t">
         <AppSessionContextProvider language={lang} theme={themeMode}>
           <header>
             <Navigation />
