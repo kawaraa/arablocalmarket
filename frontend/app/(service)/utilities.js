@@ -57,6 +57,7 @@ export function copyText(text = "", cb) {
 }
 
 export function validateError(error) {
+  console.log("validateError: >>> ", error);
   const lang = Cookies.get("lang") || "en";
   let name = Object.keys(errors).find((errName) => error?.toLowerCase().includes(errName));
   if (/^(?=.*phone)(?=.*unique).*$/gim.test(error)) name = "phoneExist";
