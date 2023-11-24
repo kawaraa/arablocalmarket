@@ -53,7 +53,7 @@
       "repeatable": true,
       "component": "product.variant",
       "required": true,
-      "max": 10,
+      "max": 200,
       "min": 1
     },
     "ratings": {

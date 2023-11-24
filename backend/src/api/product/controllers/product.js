@@ -2,13 +2,16 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 const proEty = "api::product.product";
 const storeEty = "api::store.store";
+const otherShopsIds = process.env.OTHER_SHOP_ID.split(",");
 
 module.exports = createCoreController(proEty, ({ strapi }) => ({
   async create(ctx) {
-    const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
-    if (!owner) return ctx.unauthorized();
+    if (!otherShopsIds.includes(ctx.request.body.data.storeId + "")) {
+      const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
+      if (!owner) return ctx.unauthorized();
 
-    await strapi.service(storeEty).checkUploadConnection(); // Test upload provider connection
+      await strapi.service(storeEty).checkUploadConnection(); // Test upload provider connection
+    }
     return super.create(ctx);
   },
 
