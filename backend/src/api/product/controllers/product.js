@@ -48,8 +48,10 @@ module.exports = createCoreController(proEty, ({ strapi }) => ({
   },
 
   async update(ctx) {
-    const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
-    if (!owner) return ctx.unauthorized();
+    if (!otherShopsIds.includes(ctx.request.body.data.storeId + "")) {
+      const owner = await strapi.service(storeEty).checkStoreOwner(ctx);
+      if (!owner) return ctx.unauthorized();
+    }
 
     if (ctx.request.files) {
       const options = { where: { id: ctx.params.id }, populate: ["image"] };
