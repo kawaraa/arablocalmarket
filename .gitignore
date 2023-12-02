@@ -5,12 +5,12 @@
 .env*.local
 variable.json
 
-# build
 build
 .next
 dist
 out
 */bundle.*
+!backend/build
 
 # OS X
 .DS_Store
@@ -99,7 +99,7 @@ coverage
 # Strapi
 license.txt
 exports
-*.cache
+.cache
 .strapi-updater.json
 
 # vercel

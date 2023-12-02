@@ -21,6 +21,7 @@ export default async function StoresNearby({ params, searchParams }) {
   // const headersList = headers();
   // if (coordinates[0] == 0) {
   //   const userGeo = await getGeoInfo(headersList.get("x-forwarded-for"));
+  // Todo: This is not valid: look at Kawara Shop solution
   //   if (userGeo?.latitude) coordinates = [userGeo.latitude, userGeo.longitude];
   // }
 
@@ -92,11 +93,6 @@ async function getData(page, criteria, search) {
 
   return serverRequest("store", "GET", { query });
 }
-
-// function getGeoInfo(ip) {
-//   // `https://get.geojs.io/v1/ip/geo/${ip}.json` Or ` https://ip-api.com/json/${ip}`
-//   return serverRequest(`https://get.geojs.io/v1/ip/geo/${ip}.json`).catch(() => null);
-// }
 
 const content = {
   title: { en: "Stores nearby", ar: "المتاجر القريبة" },
