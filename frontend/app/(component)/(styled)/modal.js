@@ -45,7 +45,7 @@ export default function Modal({ lang = "en", tag, title, okBtn, open, loading, .
           )}
 
           <div dir="auto" className="flex-auto">
-            <h2 className="mb-1 text-lg text-center print:text-3xl font-semibold">{title}</h2>
+            <h2 className="mb-1 mx-8 text-lg text-center print:text-3xl font-semibold">{title}</h2>
             <div className="max-h-[70vh] overflow-scroll no-srl-bar print:max-h-none print:overflow-auto">
               {children}
             </div>
