@@ -23,7 +23,7 @@ export default function RootLayout({ children, params, searchParams }) {
       translate="no"
       lang={lang}
       className={`scroll-smooth group ${lang == "ar" ? kufiFont.className : ""} ${themeMode}`}>
-      <body className="relative min-h-screen bg-bg antialiased font-base dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t">
+      <body className="no-select relative min-h-screen bg-bg antialiased font-base dark:bg-dbg text-t dark:text-dt print:min-h-fit print:text-t">
         <AppSessionContextProvider language={lang} theme={themeMode}>
           <header>
             <Navigation />
