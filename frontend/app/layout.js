@@ -49,3 +49,12 @@ export function generateMetadata({ params, searchParams }) {
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   return getMetadata({ lang, themeMode: cookieStore.get("themeMode")?.value });
 }
+
+export const viewport = {
+  themeColor: "#ffffff",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#121212" },
+  ],
+  colorScheme: "light dark",
+};

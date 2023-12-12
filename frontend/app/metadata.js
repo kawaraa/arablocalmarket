@@ -12,7 +12,7 @@ export default function getMetadata({ lang, title, description, keywords, author
       { media: "(prefers-color-scheme: light)", color: "#ffffff" },
       { media: "(prefers-color-scheme: dark)", color: "#121212" },
     ],
-    colorScheme: themeMode,
+    colorScheme: "light dark",
     icons: {
       shortcut: { type: "image/ico", sizes: "48x48", url: "/img/favicon.ico" },
       icon: { type: "image/png", sizes: "16x16", url: "/img/favicon-16x16.png" },
