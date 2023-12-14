@@ -8,7 +8,18 @@
   "attributes": {
     "name": {
       "type": "enumeration",
-      "enum": ["QUANTITY", "WEIGHT", "SIZE", "PACKAGING", "COLOR", "FLAVOR", "TYPE", "SCENT"],
+      "enum": [
+        "QUANTITY",
+        "WEIGHT",
+        "SIZE",
+        "MATERIAL",
+        "FEATURES",
+        "PACKAGING",
+        "COLOR",
+        "FLAVOR",
+        "TYPE",
+        "SCENT"
+      ],
       "required": true
     },
     "value": {
@@ -16,7 +27,7 @@
       "required": true,
       "unique": false,
       "minLength": 1,
-      "maxLength": 20
+      "maxLength": 50
     }
   }
 }
