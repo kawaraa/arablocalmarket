@@ -2,7 +2,7 @@
   "collectionName": "components_product_options",
   "info": {
     "displayName": "option",
-    "description": ""
+    "description": "These are the most common product variant options"
   },
   "options": {},
   "attributes": {
@@ -27,7 +27,7 @@
       "required": true,
       "unique": false,
       "minLength": 1,
-      "maxLength": 50
+      "maxLength": 25
     }
   }
 }
