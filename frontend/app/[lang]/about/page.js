@@ -29,7 +29,7 @@ export function generateMetadata({ params }) {
 }
 
 const content = {
-  title: { en: "About us", ar: "معلومات عنا" },
+  title: { en: "About us", ar: "لمحة عنا" },
   h1: {
     en: "ArabLocalMarket is best solution for any type of brick-and-mortar supermarket, grocery and small market stores",
     ar: "ArabLocalMarket هو أفضل حل للسوبر ماركت والبقالة والمتاجر الصغيرة",

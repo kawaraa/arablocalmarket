@@ -36,7 +36,7 @@ const content = {
     { en: "Homepage", ar: "الصفحة الرئيسية", href: "/" },
     { en: "Stores nearby", ar: "المتاجر القريبة", href: "/store" },
     { en: "Pricing", ar: "أسعار الاشتراكات", href: "/lang/pricing" },
-    { en: "About us", ar: "معلومات عنا", href: "/lang/about" },
+    { en: "About us", ar: "لمحة عنا", href: "/lang/about" },
     { en: "How to install", ar: "كيفية تثبيت التطبيق", href: "/lang/how-to-install" },
     { en: "Make money", ar: "جني المال", href: "/lang/make-money" },
     { en: "Help", ar: "المساعدة", href: "/lang/help" },

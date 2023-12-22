@@ -1,25 +1,30 @@
 "use client";
+import { Cookies } from "./(service)/utilities";
 
-export default function Error() {
+export default function Error({ reset, error }) {
+  // console.log("Compiling and Server Error >>> ", error?.message);
+  const lang = Cookies.get("lang") || "en";
   return (
-    <article className="grid min-h-full place-items-center bg-white py-24 px-6 sm:py-32 lg:px-8">
-      <div className="text-center">
-        <p className="text-base font-semibold">404</p>
-        <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Page not found</h1>
-        <p className="mt-6 text-base leading-7 text-gray-600">
-          Sorry, we couldn't find the page you're looking for.
-        </p>
-        <div className="mt-10 flex items-center justify-center gap-x-6">
-          <a
-            href="#"
-            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold  shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Go back home
-          </a>
-          <a href="#" className="text-sm font-semibold">
-            Contact support <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </div>
-    </article>
+    <div
+      dir="auto"
+      className="mx-auto my-4 flex max-w-xl flex-col rounded-lg border border-neutral-200 bg-white p-8 dark:border-neutral-800 dark:bg-black md:p-12">
+      {content.h2[lang]}
+      <h2 className="text-xl font-bold"></h2>
+      <p className="my-2">{content.p[lang]}</p>
+      <button
+        className="mx-auto mt-4 flex w-full items-center justify-center ml-3 px-3 py-1 text-sm rounded-md lg:px-4 lg:py-2 bg-pc text-t bg-gradient-to-tl hover:from-pc2"
+        onClick={() => reset()}>
+        {content.btn[lang]}
+      </button>
+    </div>
   );
 }
+
+const content = {
+  h2: { en: "Oh sorry!", ar: "أه المعذرة!" },
+  p: {
+    en: "There was an issue with our storefront. This could be a temporary issue, please try your action again.",
+    ar: "يبدو أن هناك مشكلة في واجهة متجرنا. قد تكون هذه مشكلة مؤقتة، يرجى محاولة الإجراء مرة أخرى.",
+  },
+  btn: { en: "Try Again", ar: "حاول ثانية" },
+};

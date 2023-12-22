@@ -13,11 +13,11 @@
         "WEIGHT",
         "SIZE",
         "MATERIAL",
+        "TYPE",
         "FEATURES",
         "PACKAGING",
         "COLOR",
         "FLAVOR",
-        "TYPE",
         "SCENT"
       ],
       "required": true
