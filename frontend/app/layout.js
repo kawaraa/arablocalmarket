@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import localFont from "next/font/local";
-import { extractLang } from "./(service)/utilities";
 import AppSessionContextProvider from "./app-session-context";
 import Navigation from "./(layout)/navigation";
 import getMetadata from "./metadata";
@@ -14,8 +13,8 @@ const kufiFont = localFont({ src: "../public/font/NotoKufiArabic-VariableFont_wg
 export default function RootLayout({ children, params, searchParams }) {
   const cookieStore = cookies();
   const themeMode = cookieStore.get("themeMode")?.value || "auto";
-  let lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-  if ((children?.props?.childProp?.segment || []).includes("ar")) lang = "ar";
+  let lang = getSupportedLanguage((children?.props?.childProp?.segment || [])[1]);
+  if (!lang) lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   // console.log("RootLayout lang: ", params, searchParams, children?.props?.childProp?.segment);
 
   return (
@@ -44,7 +43,6 @@ export default function RootLayout({ children, params, searchParams }) {
 }
 
 export function generateMetadata({ params, searchParams }) {
-  // console.log("generateMetadata: ", params, searchParams);
   const cookieStore = cookies();
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
   return getMetadata({ lang, themeMode: cookieStore.get("themeMode")?.value });
@@ -58,3 +56,9 @@ export const viewport = {
   ],
   colorScheme: "light dark",
 };
+
+export const getSupportedLanguage = (lang) => ["en", "ar"].find((l) => l === lang);
+
+export function extractLang(params, searchParams, cookieLang) {
+  return getSupportedLanguage((params?.lang || searchParams?.lang || cookieLang)?.toLowerCase()) || "en";
+}

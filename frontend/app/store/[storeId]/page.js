@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../../(service)/utilities";
+import { extractLang } from "../../layout";
 import { serverRequest } from "../../(service)/api-provider";
 import shdCnt from "../../(layout)/json/shared-content.json";
 import LeafletMap from "../../(component)/leaflet-map";

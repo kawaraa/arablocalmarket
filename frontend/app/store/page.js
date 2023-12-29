@@ -1,5 +1,5 @@
 import { headers, cookies } from "next/headers";
-import { extractLang } from "../(service)/utilities";
+import { extractLang } from "../layout";
 import { Distance } from "k-utilities";
 import EmptyState from "../(component)/(styled)/empty-state";
 import { serverRequest } from "../(service)/api-provider";
@@ -70,10 +70,7 @@ export default async function StoresNearby({ params, searchParams }) {
 export async function generateMetadata({ params, searchParams }) {
   const cookieStore = cookies();
   const lang = extractLang(params, searchParams, cookieStore.get("lang")?.value);
-  return {
-    title: content.title[lang] + " - ALM",
-    description: content.desc[lang],
-  };
+  return { title: content.title[lang], description: content.desc[lang] };
 }
 
 async function getData(page, criteria, search) {

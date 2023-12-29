@@ -6,11 +6,6 @@ export function getCssDelay() {
   return { animationDelay: (Math.random() * 600).toFixed() + "ms" };
 }
 
-export function extractLang(params, searchParams, cookieLang) {
-  let lang = (params?.lang || searchParams?.lang || cookieLang)?.toLowerCase();
-  return !/en|ar/gim.test(lang) ? "en" : lang;
-}
-
 export class Cookies {
   static set(name, value, expireDays = 180, date = new Date()) {
     date.setTime(date.getTime() + expireDays * 24 * 60 * 60 * 1000);

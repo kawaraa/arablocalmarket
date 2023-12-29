@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation";
+import { getSupportedLanguage } from "../layout";
 import HomePage from "../page";
 
 export default function HomePageByLang(props) {
-  if (props.params?.lang != "en" && props.params?.lang != "ar") notFound();
+  if (!getSupportedLanguage(props.params.lang)) return null;
   return <HomePage {...props} />;
 }
 

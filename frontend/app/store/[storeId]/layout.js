@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../../(service)/utilities";
+import { extractLang } from "../../layout";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import StoreLinks from "../store-links";

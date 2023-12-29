@@ -50,7 +50,7 @@ export default function getMetadata({ lang, title, description, keywords, author
   };
 }
 
-const content = {
+export const content = {
   title: {
     en: "Arab Local Market - local stores - Arabic stores nearby",
     ar: "السوق المحلي العربي - المتاجر المحلية العربية القريبة",

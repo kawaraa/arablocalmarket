@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
-import { extractLang, getCssDelay } from "./(service)/utilities";
+import { extractLang } from "./layout";
+import { getCssDelay } from "./(service)/utilities";
 import Footer from "./(layout)/footer";
 import SvgIcon from "./(component)/(styled)/svg-icon";
 import CheckUser from "./(component)/check-user";

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
-import { extractLang, getCssDelay } from "../../../(service)/utilities";
+import { extractLang } from "../../../layout";
+import { getCssDelay } from "../../../(service)/utilities";
 import Link from "next/link";
 import Image from "next/image";
 import { serverRequest } from "../../../(service)/api-provider";
