@@ -2,7 +2,7 @@ export default function getMetadata({ lang, title, description, keywords, author
   const themeColor = themeMode == "dark" ? "#121212" : "#ffffff";
 
   return {
-    title: title || content.title[lang],
+    title: title || { default: content.title[lang], template: `%s - ArabLocalMarket` },
     description: description || content.description[lang],
     keywords: keywords || content.keywords[lang],
     category: "retail", // grocery
@@ -25,15 +25,15 @@ export default function getMetadata({ lang, title, description, keywords, author
     },
     manifest: "/manifest.json",
     other: { google: "notranslate" },
-    metadataBase: new URL("https://arablocalmarket.com"),
+    metadataBase: `https://arablocalmarket.com/${lang}`,
     ...(data || {}),
     openGraph: {
       title: title || content.title[lang],
       description: description || content.description[lang],
-      url: "https://arablocalmarket.com",
+      url: `https://arablocalmarket.com/${lang}`,
       siteName: "ArabLocalMarket",
       images: [
-        { url: "https://arablocalmarket.com/img/android-chrome-512x512.png", width: 600, height: 600 },
+        { url: "https://arablocalmarket.com/img/android-chrome-512x512.png", width: 500, height: 500 },
       ],
       type: "website",
     },
@@ -53,12 +53,12 @@ export default function getMetadata({ lang, title, description, keywords, author
 const content = {
   title: {
     en: "Arab Local Market - local stores - Arabic stores nearby",
-    ar: "السوق المحلي العربي - المتاجر المحلية - المتاجر العربية القريبة",
+    ar: "السوق المحلي العربي - المتاجر المحلية العربية القريبة",
   },
   // ArabLocalMarket was founded by Kawara to help shoppers find and buy products at their favorite nearby stores
   description: {
     en: "ArabLocalMarket is a Local Online Marketplace where Local stores sell Arabic Halal Food Products or provide services and shoppers can look for nearby stores and order from it",
-    ar: "السوق المحلي العربي ArabLocalMarket هو عبارة عن سوق محلية على الإنترنت حيث تبيع المتاجر المحلية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للزبائن والمستخدمين اكتشاف المتاجر القريبة والطلب منها",
+    ar: "السوق المحلي العربي هو عبارة عن سوق محلية على الإنترنت حيث تبيع المتاجر المحلية المنتجات الغذائية الحلال العربية أو تقدم خدمات ويمكن للزبائن والمستخدمين اكتشاف المتاجر القريبة والطلب منها",
   },
   keywords: {
     en: "ArabLocalMarket, Arab Local Market, Local Online Marketplace, find and buy products at nearby stores, Nearby grocery stores, local Arabic Stores and supermarkets, Halal food, heigh quality Arabic Halal food, Create online store free, Connect your local store with online store, Mange your local business, Mange your grocery store, Mange your brick-and-mortar, Sell products locally online, list your products on the internet, manage inventory, manage stock, stock management, inventory management system, facilitate customer service, facilitate customer support, local dropshipping, local drop-shipping",

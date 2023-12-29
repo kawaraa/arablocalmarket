@@ -1,4 +1,3 @@
-import getMetadata from "../../metadata";
 import Footer from "../../(layout)/footer";
 
 export default function MakeMoney({ params }) {
@@ -36,9 +35,8 @@ export default function MakeMoney({ params }) {
   );
 }
 
-export function generateMetadata({ params }) {
-  const lang = params.lang;
-  return getMetadata({ lang, title: content.title[lang] });
+export function generateMetadata({ params: { lang } }) {
+  return { title: content.title[lang] };
 }
 
 const content = {

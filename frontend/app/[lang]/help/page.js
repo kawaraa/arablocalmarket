@@ -2,7 +2,6 @@ import Article from "../../(component)/article";
 import Footer from "../../(layout)/footer";
 import { LinkButton } from "../../(component)/(styled)/button";
 import SvgIcon from "../../(component)/(styled)/svg-icon";
-import getMetadata from "../../metadata";
 
 export default function Help({ params }) {
   const lang = params.lang;
@@ -29,9 +28,8 @@ export default function Help({ params }) {
   );
 }
 
-export function generateMetadata({ params }) {
-  const lang = params.lang;
-  return getMetadata({ lang, title: content.title[lang] + " - ALM" });
+export function generateMetadata({ params: { lang } }) {
+  return { title: content.title[lang] };
 }
 
 const content = {

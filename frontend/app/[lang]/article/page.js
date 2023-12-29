@@ -1,4 +1,3 @@
-import getMetadata from "../../metadata";
 import Link from "next/link";
 import { getCssDelay } from "../../(service)/utilities";
 import Footer from "../../(layout)/footer";
@@ -29,9 +28,8 @@ export default function Articles({ params }) {
   );
 }
 
-export function generateMetadata({ params }) {
-  const lang = params.lang;
-  return getMetadata({ lang, title: content.h1[lang] + " - ALM" });
+export function generateMetadata({ params: { lang } }) {
+  return { title: content.h1[lang] };
 }
 
 const content = {

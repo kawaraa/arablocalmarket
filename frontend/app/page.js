@@ -128,6 +128,7 @@ export default async function HomePage({ params, searchParams }) {
           </p>
         ))}
         <div className="max-w-[700px] m-auto aspect-video">
+          {/* Todo: serve video from our server instead of using YouTube */}
           <iframe
             width="100%"
             height="100%"

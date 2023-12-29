@@ -1,4 +1,3 @@
-import getMetadata from "../../metadata";
 import { getCssDelay } from "../../(service)/utilities";
 import Footer from "../../(layout)/footer";
 
@@ -58,9 +57,8 @@ export default function HowToInstall({ params }) {
   );
 }
 
-export function generateMetadata({ params }) {
-  const lang = params.lang;
-  return getMetadata({ lang, title: content.h1[lang] });
+export function generateMetadata({ params: { lang } }) {
+  return { title: content.h1[lang].join(" ") };
 }
 
 const content = {

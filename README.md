@@ -11,3 +11,9 @@ Customer: This is the default role given to the user who buys from stores and do
 To be able to create a store, your business has to be registered and have Tax-ID / VAT-ID and a COC-Number.
 The (COC) number which stands for "Chamber of Commerce" Number known in EU, in US called (RN number) which stands for "Registered Identification Number" and in UK called (CRN) which stands for "Companies House number"
 The Tax-ID in EU known as VAT-ID Or VAT-Number
+
+### Resources
+
+- https://www.youtube.com/watch?v=JsBkxW5Joos (تطبيق ركوة)
+- https://www.youtube.com/watch?v=pvwkwyXka2Q (تطبيق ركوة)
+- https://www.youtube.com/watch?v=JQEFuYVSFbE (ad example)

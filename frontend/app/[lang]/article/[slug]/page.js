@@ -68,5 +68,10 @@ export async function generateMetadata({ params }) {
   if (!data?.id) return {};
 
   const { title, keywords, heading, p } = data.attributes;
-  return getMetadata({ lang: params.lang, title: (title || heading) + " - ALM", description: p, keywords });
+  return getMetadata({
+    lang: params.lang,
+    title: (title || heading) + " - ArabLocalMarket",
+    description: p,
+    keywords,
+  });
 }

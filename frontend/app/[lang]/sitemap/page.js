@@ -1,4 +1,3 @@
-import getMetadata from "../../metadata";
 import Footer from "../../(layout)/footer";
 import Link from "next/link";
 
@@ -25,9 +24,8 @@ export default function Sitemap({ params }) {
   );
 }
 
-export function generateMetadata({ params }) {
-  const lang = params.lang;
-  return getMetadata({ lang, title: content.h1[lang] + " - ALM" });
+export function generateMetadata({ params: { lang } }) {
+  return { title: content.h1[lang] };
 }
 
 const content = {
