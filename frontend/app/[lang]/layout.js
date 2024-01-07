@@ -9,5 +9,7 @@ export default async function LayoutPageByLang({ children, params: { lang } }) {
 }
 
 export function generateMetadata({ params: { lang } }) {
-  return !getSupportedLanguage(lang) ? null : getMetadata({ lang, title: content.title[lang] });
+  return !getSupportedLanguage(lang)
+    ? null
+    : getMetadata({ lang, title: content.title[lang] + " ArabLocalMarket" });
 }
