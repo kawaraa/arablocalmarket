@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
-import { extractLang } from "../../../(service)/utilities";
 import { serverRequest } from "../../../(service)/api-provider";
+import { extractLang } from "../../../layout";
 import shdCnt from "../../../(layout)/json/shared-content.json";
 import categories from "../../../(layout)/json/categories.json";
 import ProductSearch from "../../../(component)/product-search";
