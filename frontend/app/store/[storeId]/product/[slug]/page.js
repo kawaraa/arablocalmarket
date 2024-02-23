@@ -42,10 +42,20 @@ export default async function ProductBySlug({ params, searchParams }) {
             name: product.name,
             image: product.image.data?.attributes?.url,
             description: product.description,
+            // offers: {
+            //   "@type": "AggregateOffer",
+            //   offerCount: variants.length,
+            //   availability: available > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            //   priceCurrency: "EUR",
+            //   highPrice: product.highPrice,
+            //   lowPrice: product.lowPrice,
+            // },
             aggregateRating: {
               "@type": "AggregateRating",
               ratingValue: product.ratings.stars || 1,
               reviewCount: product.ratings.total || 1,
+              bestRating: 5,
+              worstRating: 1,
             },
           }),
         }}

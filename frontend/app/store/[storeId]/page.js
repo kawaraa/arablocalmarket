@@ -38,10 +38,20 @@ export default async function StoreOverview({ params, searchParams }) {
             name: store.name,
             image,
             description: store.about,
+            // offers: {
+            //   "@type": "AggregateOffer",
+            //   offerCount: variants.length,
+            //   availability: available > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            //   priceCurrency: "EUR",
+            //   highPrice: product.highPrice,
+            //   lowPrice: product.lowPrice,
+            // },
             aggregateRating: {
               "@type": "AggregateRating",
               ratingValue: store.ratings.stars,
               reviewCount: store.ratings.total,
+              bestRating: 5,
+              worstRating: 1,
             },
           }),
         }}
