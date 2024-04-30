@@ -13,7 +13,7 @@ export default class Message extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.messages.length > prevProps.messages.length) {
       const msg = this.props.messages[this.props.messages.length - 1];
-      msg.id = (Math.random() + "").replace("0.", "");
+      msg.id = crypto.randomUUID();
       setTimeout(() => this.remove(msg.id), msg.duration * 1000);
     }
   }

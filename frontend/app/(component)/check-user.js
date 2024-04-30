@@ -10,5 +10,6 @@ export default function CheckUser() {
   useEffect(() => {
     if (!user?.loading && user?.myStores) router.replace(user.myStores[0] ? "/admin/store?tab=my" : "/store");
   }, [user]);
+
   return null;
 }

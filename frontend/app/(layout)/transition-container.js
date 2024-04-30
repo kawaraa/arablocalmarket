@@ -38,7 +38,7 @@ export default function TransitionContainer({ Tag, children, base, enter, update
         setElements(newChildren);
         setTimeout(() => setActiveElement({ index: -1, class: "" }), 20);
       } else {
-        const index = elements.findIndex((child) => !newChildren.find((c) => compareComponents(child, c)));
+        const index = elements.findIndex((el) => !newChildren.find((c) => compareComponents(el, c)));
         // If index, then there is an element is updated.
         // Else an element is removed.
 

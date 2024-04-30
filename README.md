@@ -1,7 +1,6 @@
 # ArabLocalMarket (ALM)
 
-Online Marketplace
-This is a local Online Marketplace where people and local store owners can create an online store and sell products or provide services for monthly subscription.
+This is a Local stores based Online Marketplace. where people and local store owners can create an online store and sell products or provide services for monthly subscription.
 The Slogan is (ALM)
 
 Owner: This is the default role given to the user who owns a store.
