@@ -11,7 +11,7 @@ variable.json
 dist
 out
 */bundle.*
-build
+*build
 
 # OS X
 .DS_Store
