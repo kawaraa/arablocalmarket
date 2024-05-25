@@ -63,7 +63,7 @@ jobs:
       - name: Terraform Apply - Provision Resources
         # env:
         # TOKEN: ${{ secrets.DIGITALOCEAN_IAC_TOKEN }}
-        run: terraform -chdir=iac/ apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+        run: ls -la && terraform -chdir=iac/ apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
