@@ -14,15 +14,15 @@ module.exports = {
     createInvoices(strapi);
     deleteExpiredStores(strapi);
   },
-  "0 0 2 * * *": async ({ strapi }) => {
-    console.log("\nDatabase Job cron is running...\n");
-    createDatabaseBackup();
-  },
+  // "0 0 2 * * *": async ({ strapi }) => {
+  //   console.log("\nDatabase Job cron is running...\n");
+  //   createDatabaseBackup();
+  // },
 };
 
 async function createDatabaseBackup() {
   try {
-    const serviceAccount = JSON.parse(process.env.GCS_SERVICE_ACCOUNT);
+    const serviceAccount = JSON.parse(process.env.GCP_SERVICE_ACCOUNT);
     const { Storage } = require("@google-cloud/storage");
 
     await new Storage({
@@ -32,9 +32,9 @@ async function createDatabaseBackup() {
         private_key: serviceAccount.private_key,
       },
     })
-      .bucket(process.env.GCS_DATABASE_BACKUP)
-      .upload(process.env.HOME + process.env.SQLITE_DATABASE_FILENAME, {
-        destination: require("path").basename(process.env.SQLITE_DATABASE_FILENAME),
+      .bucket(process.env.GCP_DATABASE_BACKUP_BUCKET)
+      .upload(process.env.HOME + process.env.SQLITE_DATABASE_FILE_PATH, {
+        destination: require("path").basename(process.env.SQLITE_DATABASE_FILE_PATH),
       });
 
     console.log("[###]-[Database Cron] Database backup has been created successfully");

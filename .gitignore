@@ -3,6 +3,8 @@
 # environment variables file
 .env
 .env*.local
+*id_ed25519*
+*id_rsa*
 variable.json
 
 build
@@ -10,7 +12,6 @@ build
 dist
 out
 */bundle.*
-!backend/build
 
 # OS X
 .DS_Store
@@ -122,3 +123,22 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+
+# Terraform state and other genereted files
+*.terraform/
+*.terraformrc
+*.terraformrc.*
+*.tfstate
+*.tfstate.backup
+*terraform.lock.hcl
+*crash.log
+# Ignore variables file with sensitive data
+*/terraform.tfvars
+*.tfvars
+# Ignore override files as they are usually used to override resources locally and should not be committed
+*/override.tf
+*/override.tf.json
+*_override.tf
+*_override.tf.json
+# Ignore tfplan files as they are binary files that are not usually part of version contro
+*.tfplan

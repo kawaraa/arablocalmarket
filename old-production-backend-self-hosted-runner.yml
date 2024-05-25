@@ -17,30 +17,44 @@ jobs:
   #   runs-on: ubuntu-latest
   #   strategy:
   #     matrix:
-  #       node-version: [20.x]
+  #       node-version: [20.x, 21.x, 22.x]
   #   defaults:
   #     run:
   #       working-directory: ./backend
   #   steps:
-  #     - uses: actions/checkout@v3
+  #     - uses: actions/checkout@v4
   #     - run: npm ci
   #     - run: npm run build
 
   deployment:
     runs-on: ["self-hosted", "Linux", "X64", "production-backend"]
     environment: production
-    # strategy:
-    #   matrix:
-    #     node-version: [20.x]
+
     defaults:
       run:
         working-directory: ./backend
+
     steps:
-      - uses: actions/checkout@v3
-      - run: rm -f ~/.pm2/logs/*
-      - run: cp ~/actions-runner/_work/arablocalmarket/.env .env
-      - run: cp -r ~/actions-runner/_work/arablocalmarket/node_modules ~/actions-runner/_work/arablocalmarket/arablocalmarket/backend/
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: clean up logs
+        run: rm -f ~/.pm2/logs/*
+
+      - name: Copy environment variables
+        run: cp ~/actions-runner/_work/arablocalmarket/.env .env
+
+      - name: Copy node_modules directory
+        run: cp -r ~/actions-runner/_work/arablocalmarket/node_modules ~/actions-runner/_work/arablocalmarket/arablocalmarket/backend/
+
       # - run: npm i --production
       # - run: NODE_ENV=production npm run build
       # - run: NODE_ENV=production npx pm2 start server.js --name app # only for the first deployment
-      - run: NODE_ENV=production npx pm2 restart app --cron-restart="0 23 * * *"
+
+      - name: Start the app with pm2
+        run: NODE_ENV=production npx pm2 restart app --cron-restart="0 23 * * *"

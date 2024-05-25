@@ -1,0 +1,22 @@
+name: Database Backup
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Run every day at midnight
+
+jobs:
+  backup-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          export_default_credentials: true
+
+      - name: Upload SQLite database file
+        run: gsutil ls gs://${{ secrets.GCP_DATABASE_BACKUP_BUCKET }}
+        # run: gsutil cp ".${{ github.SQLITE_DATABASE_FILE_PATH }}" "gs://${{ github.GCP_DATABASE_BACKUP_BUCKET }}/$(basename ${{ github.SQLITE_DATABASE_FILE_PATH }})"
+
+        # run: gsutil cp ${{ github.SQLITE_DATABASE_FILE_PATH }} gs://${{ github.GCP_DATABASE_BACKUP_BUCKET }}/$(basename ${{ github.SQLITE_DATABASE_FILE_PATH }})

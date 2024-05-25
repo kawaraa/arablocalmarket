@@ -1,0 +1,130 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: build-deploy-production-backend
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+
+    # strategy:
+    #   matrix:
+    #     node-version: [20.x, 21.x, 22.x]
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Archive production artifacts
+        # run: zip -r build_artifact.zip ./
+        run: tar -czf build_artifact.tar.gz "./dist"
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_artifact
+          path: dist/
+
+  deployment:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+
+    # defaults:
+    #   run:
+    #     working-directory: ./backend
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_artifact
+          path: dist/
+
+      # Set up SSH way-1
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # Set up SSH way-2
+      # - name: Create a temporary file for SSH private key
+      #   run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa && chmod 600 id_rsa
+
+      # Provisioning the infrastructure and configure it
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Apply - Provision Resources
+        env:
+          # TOKEN: ${{ secrets.DIGITALOCEAN_IAC_TOKEN }}
+          # VM_SSH_KEY: ${{ secrets.VM_SSH_FINGERPRINT }}
+          # PRIV_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # PORT: 1337
+        # run: terraform apply -auto-approve -var "digitalocean_token=$TOKEN" -var "ssh_fingerprint=$VM_SSH_KEY" -var "private_key=$PRIV_KEY"
+        run: |
+          terraform apply -auto-approve
+          -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+          -var "ssh_fingerprint=${{ secrets.VM_SSH_FINGERPRINT }}"
+          -var "private_key=${{ secrets.SSH_PRIVATE_KEY }}"
+
+      - name: Deploy application
+        run: scp -r ./backend root@$(terraform output -raw droplet_ip):/root/app
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy build folder to remote server
+        run: |
+          scp -i id_rsa dist/build_artifact.tar.gz root@$(terraform output -raw droplet_ip):/root/
+          ssh -i id_rsa root@$(terraform output -raw droplet_ip) 'tar -xzf /root/build_artifact.tar.gz -C /root && pm2 restart server.js || pm2 start server.js && systemctl restart nginx'
+
+      - name: Cleanup
+        # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
+        if: always()
+        run: rm -f .env
+        # run: rm -f .env && rm id_rsa
+# - run: rm -f ~/.pm2/logs/*
+# - run: cp ~/actions-runner/_work/arablocalmarket/.env .env
+# - run: cp -r ~/actions-runner/_work/arablocalmarket/node_modules ~/actions-runner/_work/arablocalmarket/arablocalmarket/backend/
+# # - run: npm i --production
+# # - run: NODE_ENV=production npm run build
+# # - run: NODE_ENV=production npx pm2 start server.js --name app # only for the first deployment
+# - run: NODE_ENV=production npx pm2 restart app --cron-restart="0 23 * * *"
+
+# -var "port=1337"
+# -var "host=localhost"
+# -var "app_keys=${{ secrets.APP_KEYS }}"
+# -var "api_token_salt=${{ secrets.API_TOKEN_SALT }}"
+# -var "admin_jwt_secret=${{ secrets.ADMIN_JWT_SECRET }}"
+# -var "jwt_secret=${{ secrets.JWT_SECRET }}"
+# -var "SQLITE_DATABASE_FILE_PATH=${{ secrets.SQLITE_DATABASE_FILE_PATH }}"
+# -var "gcp_base_url=${{ secrets.GCP_BASE_URL }}"
+# -var "gcp_bucket_name=${{ secrets.GCP_BUCKET_NAME }}"
+# -var "gcp_uniform=${{ secrets.GCP_UNIFORM }}"
+# -var "gcp_database_backup=${{ secrets.GCP_DATABASE_BACKUP_BUCKET }}"
+# -var "gcp_service_account=${{ secrets.GCP_SERVICE_ACCOUNT }}"
