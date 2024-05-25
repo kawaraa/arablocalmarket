@@ -59,14 +59,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check 1 the current directory
-        run: ls -la
-
       - name: Download production build artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifact
-          path: ./backend
+          path: ./backend/build
 
       - name: Check 2 the current directory
         run: ls -la
@@ -74,6 +71,9 @@ jobs:
       - name: Create SSH key's files
         run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa && echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa.pub
         # run: xxx && chmod 600 id_rsa
+
+      - name: Check 3 the current directory
+        run: ls -la
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
