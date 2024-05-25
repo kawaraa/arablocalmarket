@@ -47,13 +47,13 @@ jobs:
 
     steps:
       - name: Create SSH key's files
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa && echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa.pub && ls -la
+        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa && echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa.pub
         # run: xxx && chmod 600 id_rsa
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: id_rsa
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
