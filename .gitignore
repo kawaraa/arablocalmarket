@@ -7,11 +7,11 @@
 *id_rsa*
 variable.json
 
-*/build
 .next
 dist
 out
 */bundle.*
+build
 
 # OS X
 .DS_Store
