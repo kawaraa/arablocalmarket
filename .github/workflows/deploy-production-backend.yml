@@ -40,17 +40,11 @@ jobs:
       - name: Build project
         run: NODE_ENV=production npm run build
 
-      # - name: Archive production artifacts
-      #   run: tar -czf artifact.tar.gz "build"
-
-      # - name: Check 02 the current directory
-      #   run: ls -la
-
       - name: Upload production build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: ./backend
+          path: ./backend/build
 
   deploy:
     needs: build
