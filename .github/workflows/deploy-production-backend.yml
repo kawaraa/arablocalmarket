@@ -53,7 +53,7 @@ jobs:
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: id_rsa
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
