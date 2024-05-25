@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifact.tar.gz
-          path: artifact.tar.gz
+          path: ./
 
   deploy:
     needs: build
