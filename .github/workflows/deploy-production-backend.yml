@@ -49,8 +49,8 @@ jobs:
       - name: Upload production build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: artifact
-          path: build
+          name: build
+          path: ./backend
 
   deploy:
     needs: build
