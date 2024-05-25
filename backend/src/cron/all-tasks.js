@@ -21,6 +21,7 @@ module.exports = {
 };
 
 async function createDatabaseBackup() {
+  //
   try {
     const serviceAccount = JSON.parse(process.env.GCP_SERVICE_ACCOUNT);
     const { Storage } = require("@google-cloud/storage");
