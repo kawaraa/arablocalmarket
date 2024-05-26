@@ -40,7 +40,7 @@ jobs:
       - name: Build project
         run: NODE_ENV=production npm run build
 
-      - name: Upload production build artifact
+      - name: Save production build artifact
         uses: actions/upload-artifact@v4
         with:
           name: artifact
@@ -59,7 +59,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download production build artifacts
+      - name: Download saved production build artifacts
         uses: actions/download-artifact@v4
         with:
           name: artifact
@@ -75,14 +75,14 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Provisioning the infrastructure and configure it
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform init
-      - name: Terraform Apply - Provision Resources
-        # env:
-        # TOKEN: ${{ secrets.DIGITALOCEAN_IAC_TOKEN }}
-        run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+      # - name: Set up Terraform
+      #   uses: hashicorp/setup-terraform@v3
+      # - name: Terraform Init
+      #   run: terraform init
+      # - name: Terraform Apply - Provision Resources
+      #   # env:
+      #   # TOKEN: ${{ secrets.DIGITALOCEAN_IAC_TOKEN }}
+      #   run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
