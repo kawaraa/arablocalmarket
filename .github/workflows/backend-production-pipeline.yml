@@ -94,14 +94,14 @@ jobs:
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
         # run: tar -czf ../app.tar.gz --exclude=id_rsa . && mv ../app.tar.gz .
 
-      - name: Create SSH key's files
-        # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && echo 206.189.50.55 > ~/.ssh/known_hosts
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 206.189.50.55 >> ~/.ssh/known_hosts
+      # - name: Create SSH key's files
+      #   # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #   # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && echo 206.189.50.55 > ~/.ssh/known_hosts
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan 206.189.50.55 >> ~/.ssh/known_hosts
 
       # scp -i ~/.ssh/id_rsa app.tar.gz root@206.189.50.55:/root
       # scp -i ~/.ssh/id_rsa -r app.tar.gz root@206.189.50.55:/root
@@ -109,10 +109,10 @@ jobs:
       # chmod 600 ~/.ssh/id_rsa
       # ssh-keyscan ${{ secrets.S_HOST }} >> ~/.ssh/known_hosts
       #
-      # - name: Set up SSH
-      #   uses: webfactory/ssh-agent@v0.9.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       # Provisioning the infrastructure and configure it
       # - name: Set up Terraform
       #   uses: hashicorp/setup-terraform@v3
@@ -128,8 +128,8 @@ jobs:
       #     ssh-keyscan -H ${{ steps.droplet_ip.outputs.droplet_ip }} >> .ssh/known_hosts
       - name: Deploy application
         run: |
-          scp -i ~/.ssh/id_rsa -r app.tar.gz root@206.189.50.55:/root
-          ssh -i ~/.ssh/id_rsa root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
+          scp -r app.tar.gz root@206.189.50.55:/root
+          ssh root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   echo root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
         #   scp -r app.tar.gz "root@$(terraform -chdir=iac output -raw droplet_ip):/root" &&
