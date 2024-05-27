@@ -93,14 +93,11 @@ jobs:
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
-      - name: Prepare SSH fingerprint key file for Terraform
-        run: echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > id_rsa.pub
-
-      - name: Add SSH Private key file
+      #  Prepare SSH fingerprint key file for Terraform
+      - name: Add SSH keys file for Terraform
         run: |
+          echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
-          chmod 600 id_rsa
-          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
@@ -115,6 +112,12 @@ jobs:
       # - name: Get Droplet IP
       #   id: droplet_ip
       #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
+
+      - name: Prepare SSH Private key
+        run: |
+          chmod 600 id_rsa
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
+
       - name: Deploy application
         run: |
           scp -i id_rsa -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
