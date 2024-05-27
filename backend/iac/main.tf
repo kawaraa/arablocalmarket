@@ -21,7 +21,7 @@ provider "digitalocean" {
 
 resource "digitalocean_ssh_key" "web" {
   name       = "VM SSH key"
-  public_key = file("${path.module}/id_rsa.pub")
+  public_key = file("../id_rsa.pub")
 }
 
 resource "digitalocean_droplet" "web" {
@@ -38,7 +38,7 @@ resource "digitalocean_droplet" "web" {
       host        = self.ipv4_address
       user        = "root"
       type        = "ssh"
-      private_key = file("${path.module}/id_rsa")
+      private_key = file("../id_rsa")
     }
     source      = "./init-setup-script.sh"
     destination = "/tmp/script.sh"
@@ -49,7 +49,7 @@ resource "digitalocean_droplet" "web" {
       host        = self.ipv4_address
       user        = "root"
       type        = "ssh"
-      private_key = file("${path.module}/id_rsa")
+      private_key = file("../id_rsa")
     }
 
     inline = [
