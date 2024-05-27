@@ -14,13 +14,17 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/strapi": "^4.24.3",
+    "@strapi-community/strapi-provider-upload-google-cloud-storage": "^4.6.1",
     "@strapi/plugin-i18n": "^4.24.3",
     "@strapi/plugin-users-permissions": "^4.24.3",
     "@strapi/provider-email-nodemailer": "^4.9.0",
-    "@strapi-community/strapi-provider-upload-google-cloud-storage": "^4.6.1",
+    "@strapi/strapi": "^4.24.3",
     "better-sqlite3": "^8.2.0",
-    "stripe": "^12.7.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^5.3.4",
+    "stripe": "^12.7.0",
+    "styled-components": "^5.3.3"
   },
   "strapi": {
     "telemetryDisabled": true

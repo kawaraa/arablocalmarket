@@ -43,6 +43,17 @@ resource "digitalocean_droplet" "web" {
   #   destination = "/tmp/script.sh"
   # }
 
+  provisioner "file" {
+    connection {
+      host        = self.ipv4_address
+      user        = "root"
+      type        = "ssh"
+      private_key = file("${path.module}/id_rsa")
+    }
+    source      = "./init-setup.js"
+    destination = "/tmp/init-setup.js"
+  }
+
   provisioner "remote-exec" {
     connection {
       host        = self.ipv4_address
@@ -51,20 +62,20 @@ resource "digitalocean_droplet" "web" {
       private_key = file("${path.module}/id_rsa")
     }
 
+    # VM setup
     inline = [
-      # VM setup
-      "DEBIAN_FRONTEND=noninteractive apt-get -y update",
-      "DEBIAN_FRONTEND=noninteractive apt-get -y install nginx || echo 'nginx already installed'",
-      "cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf",
-      "cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default",
-      "systemctl start nginx",
-      "ufw allow 'Nginx HTTP'",
-      "ufw allow 'Nginx HTTPS'",
-      "ufw enable",
+      # Install Node.js and NPM
       "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
       "DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs",
       "DEBIAN_FRONTEND=noninteractive apt-get -y install npm",
       "npm install -g pm2@latest",
+
+      "node /init-setup.js",
+
+      # Additional commands for application setup
+      "rm -f ~/.pm2/logs/*",
+
+
       # "chmod +x /tmp/script.sh",
       # "/tmp/script.sh"
       # "/tmp/script.sh ${var.database_psw}", # If MySQL Server is used
