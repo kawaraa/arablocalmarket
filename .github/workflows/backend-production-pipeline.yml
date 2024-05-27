@@ -106,6 +106,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
       # - name: Terraform Init
       #   run: terraform -chdir=iac init
+      - name: Terraform Plan
+        run: terraform -chdir=iac plan -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
