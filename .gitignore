@@ -125,7 +125,6 @@ typings/
 *.tgz
 
 # Terraform state and other genereted files
-*.terraform/
 *.terraformrc
 *.terraformrc.*
 *.tfstate*
