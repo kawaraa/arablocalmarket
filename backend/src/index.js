@@ -7,6 +7,7 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
+
   async register(/*{ strapi }*/) {
     await require("../src/cron/all-tasks").restoreDatabaseBackupIfNeeded();
   },
