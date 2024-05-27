@@ -96,13 +96,10 @@ jobs:
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
-      - name: Add SSH keys files
+      - name: Prepare SSH fingerprint key file for Terraform
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa.pub
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan 206.189.50.55 >> ~/.ssh/known_hosts
+          mkdir -p ../.ssh
+          echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > ../.ssh/id_rsa.pub
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
@@ -115,9 +112,16 @@ jobs:
       # - name: Get Droplet IP
       #   id: droplet_ip
       #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
+
+      - name: Add SSH Private key file
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ../.ssh/id_rsa
+          chmod 600 ../.ssh/id_rsa
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ../.ssh/known_hosts
+
       - name: Deploy application
         run: |
-          scp -r app.tar.gz "root@$(terraform -chdir=iac output -raw droplet_ip):/root" &&
+          scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
           ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   scp -r app.tar.gz root@206.189.50.55:/root
@@ -126,4 +130,4 @@ jobs:
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
         if: always()
-        run: rm -f .env app.tar.gz ~/.ssh/id_rsa
+        run: rm -f .env app.tar.gz ../.ssh/id_rsa
