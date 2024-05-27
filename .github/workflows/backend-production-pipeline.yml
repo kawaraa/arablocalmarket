@@ -104,17 +104,26 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       # Provisioning the infrastructure and configure it
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Terraform Init
-        run: terraform -chdir=iac init
-      - name: Terraform Apply - Provision Resources
-        run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
-
+      # - name: Set up Terraform
+      #   uses: hashicorp/setup-terraform@v3
+      # - name: Terraform Init
+      #   run: terraform -chdir=iac init
+      # - name: Terraform Apply - Provision Resources
+      #   run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+      # - name: Get Droplet IP
+      #   id: droplet_ip
+      #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
+      # - name: Add Droplet to known_hosts
+      #   run: |
+      #     ssh-keyscan -H ${{ steps.droplet_ip.outputs.droplet_ip }} >> ~/.ssh/known_hosts
       - name: Deploy application
         run: |
-          scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh root$(terraform -chdir=iac output -raw droplet_ip) 'tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx'
+          scp -r app.tar.gz root@206.189.50.55:/root &&
+          ssh root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
+        # run: |
+        #   echo root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
+        #   scp -r app.tar.gz "root@$(terraform -chdir=iac output -raw droplet_ip):/root" &&
+        #   ssh "root$(terraform -chdir=iac output -raw droplet_ip)" "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
 
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
