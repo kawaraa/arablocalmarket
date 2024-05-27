@@ -95,8 +95,7 @@ jobs:
         # run: tar -czf ../app.tar.gz --exclude=id_rsa . && mv ../app.tar.gz .
 
       - name: Create SSH key's files
-        run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-        # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && echo 206.189.50.55 > ~/.ssh/known_hosts
+        run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && ssh-keyscan 206.189.50.55 >> ~/.ssh/known_hosts
         # run: |
         #   mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
         #   echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
