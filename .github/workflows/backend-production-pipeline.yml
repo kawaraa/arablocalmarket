@@ -118,8 +118,8 @@ jobs:
       #     ssh-keyscan -H ${{ steps.droplet_ip.outputs.droplet_ip }} >> .ssh/known_hosts
       - name: Deploy application
         run: |
-          scp -i ~/id_rsa -r app.tar.gz root@206.189.50.55:/root &&
-          ssh -i ~/id_rsa root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
+          scp -i ~/.ssh/id_rsa -r app.tar.gz root@206.189.50.55:/root &&
+          ssh -i ~/.ssh/id_rsa root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   echo root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
         #   scp -r app.tar.gz "root@$(terraform -chdir=iac output -raw droplet_ip):/root" &&
