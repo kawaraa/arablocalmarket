@@ -93,8 +93,7 @@ jobs:
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
-      #  Prepare SSH fingerprint key file for Terraform
-      - name: Add SSH keys file for Terraform
+      - name: Add SSH keys files for Terraform
         run: |
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
@@ -113,15 +112,18 @@ jobs:
       #   id: droplet_ip
       #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
 
-      - name: Prepare SSH Private key
+      #  Prepare SSH fingerprint key file for Terraform
+      - name: Prepare SSH Private key for deployment
         run: |
-          chmod 600 iac/id_rsa
-          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
       - name: Deploy application
         run: |
-          scp -i iac/id_rsa -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh -i iac/id_rsa root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
+          scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
+          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   scp -r app.tar.gz root@206.189.50.55:/root
         #   ssh root@206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
