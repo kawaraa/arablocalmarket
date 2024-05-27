@@ -98,11 +98,14 @@ jobs:
         # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && echo 206.189.50.55 > ~/.ssh/known_hosts
         run: |
-          mkdir -p ~/.ssh/
+          mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 206.189.50.55 >> ~/.ssh/known_hosts
 
+      # eval $(ssh-agent)
+      # ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+      #
       # scp -i ~/.ssh/id_rsa app.tar.gz root@206.189.50.55:/root
       # scp -i ~/.ssh/id_rsa -r app.tar.gz root@206.189.50.55:/root
       #  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
@@ -128,7 +131,7 @@ jobs:
       #     ssh-keyscan -H ${{ steps.droplet_ip.outputs.droplet_ip }} >> .ssh/known_hosts
       - name: Deploy application
         run: |
-          scp -r app.tar.gz root@206.189.50.55:/root
+          scp -r app.tar.gz "root@206.189.50.55:/root"
           ssh root$206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   echo root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
