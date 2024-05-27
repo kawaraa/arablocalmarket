@@ -80,8 +80,8 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=iac init
 
-      - name: Terraform Destroy - Provision Resources
-        run: terraform -chdir=iac destroy -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+      # - name: Terraform Destroy - Provision Resources
+      #   run: terraform -chdir=iac destroy -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
@@ -112,9 +112,6 @@ jobs:
 
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz --exclude=id_rsa --exclude=id_rsa.pub . && mv ../app.tar.gz .
-
-      - name: Checking 2 droplet_ip
-        run: terraform -chdir=iac output -raw droplet_ip
 
       - name: Deploy application
         run: |
