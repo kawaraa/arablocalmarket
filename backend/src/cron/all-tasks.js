@@ -1,10 +1,13 @@
 // https://docs.strapi.io/dev-docs/configurations/cron
+const fs = require("fs");
+const path = require("path");
 const affEty = "api::affiliate.affiliate";
 const storeEty = "api::store.store";
 const stripeEty = "api::stripe.stripe";
 const invoiceEty = "api::invoice.invoice";
 const bankEty = "api::bank.bank";
 const day = 1000 * 60 * 60 * 24;
+const dbFilePath = path.join(process.cwd() + "/" + process.env.SQLITE_DATABASE_FILE_NAME);
 
 module.exports = {
   /* second, minute, hour, day, month, weekdays
@@ -14,15 +17,21 @@ module.exports = {
     createInvoices(strapi);
     deleteExpiredStores(strapi);
   },
-  // "0 0 2 * * *": async ({ strapi }) => {
-  //   console.log("\nDatabase Job cron is running...\n");
-  //   createDatabaseBackup();
-  // },
+  // This will run every */x mins
+  "0 */5 * * * *": async ({ strapi }) => {
+    createDatabaseBackup();
+  },
+  restoreDatabaseBackupIfNeeded,
 };
 
-async function createDatabaseBackup() {
-  //
+// Download SQLite database Backup file
+async function restoreDatabaseBackupIfNeeded() {
   try {
+    if (fs.existsSync(dbFilePath)) {
+      return console.log("[###]-[Database Cron] Database backup file already exists.");
+    }
+
+    console.log("[###]-[Database Cron] Started downloading/restoring Database backup file...");
     const serviceAccount = JSON.parse(process.env.GCP_SERVICE_ACCOUNT);
     const { Storage } = require("@google-cloud/storage");
 
@@ -34,8 +43,33 @@ async function createDatabaseBackup() {
       },
     })
       .bucket(process.env.GCP_DATABASE_BACKUP_BUCKET)
-      .upload(process.env.HOME + process.env.SQLITE_DATABASE_FILE_PATH, {
-        destination: require("path").basename(process.env.SQLITE_DATABASE_FILE_PATH),
+      .file(process.env.SQLITE_DATABASE_FILE_NAME)
+      .download({ destination: dbFilePath });
+
+    console.log("[###]-[Database Cron] Database backup has been Downloaded successfully");
+  } catch (error) {
+    console.warn("[XXX]-[Database Cron] Failed to create database backup", error);
+  }
+}
+
+async function createDatabaseBackup() {
+  try {
+    console.log("[###]-[Database Cron] Database backup cron Job is running");
+
+    const serviceAccount = JSON.parse(process.env.GCP_SERVICE_ACCOUNT);
+    const { Storage } = require("@google-cloud/storage");
+
+    await new Storage({
+      projectId: serviceAccount.project_id,
+      credentials: {
+        client_email: serviceAccount.client_email,
+        private_key: serviceAccount.private_key,
+      },
+    })
+      .bucket(process.env.GCP_DATABASE_BACKUP_BUCKET)
+      .upload(dbFilePath, {
+        // gzip: true,
+        destination: path.basename(process.env.SQLITE_DATABASE_FILE_NAME),
       });
 
     console.log("[###]-[Database Cron] Database backup has been created successfully");

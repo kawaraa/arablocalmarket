@@ -27,7 +27,9 @@ apt-get -y update
 check_and_install "nginx" "service nginx start \
 && ufw allow 'Nginx HTTP' \
 && ufw allow 'Nginx HTTPS' \
-&& ufw enable"
+&& ufw enable \
+&& cp ./nginx.conf /etc/nginx/nginx.conf \
+&& cp ./default-server.conf /etc/nginx/sites-available/default"
 
 # Install and configure MySQL Server on the same server
 # check_and_install "mysql-server" \
@@ -41,7 +43,7 @@ check_and_install "nginx" "service nginx start \
 # "mysql -u root -e \"mysql < ~/databases-initialize-create-update-statements.sql\"",
 
 # Install Node.js and NPM
-curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs
 npm install -g npm@latest
 npm install -g pm2@latest

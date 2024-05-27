@@ -1,0 +1,121 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Backend Production Pipeline
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+
+    # strategy:
+    #   matrix:
+    #     node-version: [18.x, 20.x, 22.x]
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: NODE_ENV=production npm run build
+
+      - name: Save production build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact
+          path: backend/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download saved production build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: artifact
+          path: backend/build
+
+      # Provisioning the infrastructure and configure it
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
+      - name: Terraform Apply - Provision Resources
+        run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+
+      - name: Add the environment variables
+        run: |
+          cat <<EOF> .env
+          NODE_ENV=${{ github.NODE_ENV }}
+          PORT=${{ github.PORT }}
+          HOST=${{ github.HOST }}
+          SQLITE_DATABASE_FILE_PATH=${{ github.SQLITE_DATABASE_FILE_PATH }}
+          GCP_BASE_URL=${{ github.GCP_BASE_URL }}
+          GCP_BUCKET_NAME=${{ github.GCP_BUCKET_NAME }}
+          GCP_UNIFORM=${{ github.GCP_UNIFORM }}
+          GCP_DATABASE_BACKUP_BUCKET=${{ github.GCP_DATABASE_BACKUP_BUCKET }}
+          OTHER_SHOP_ID=${{ github.OTHER_SHOP_ID }}
+          PUBLIC_URL=${{ github.PUBLIC_URL }}
+          STRIPE_CHECKOUT_REDIRECT_URL=${{ github.STRIPE_CHECKOUT_REDIRECT_URL }}
+          APP_KEYS=${{ secrets.APP_KEYS }}
+          API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}
+          ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          GCP_SERVICE_ACCOUNT=${{ secrets.GCP_SERVICE_ACCOUNT }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_API_KEY=${{ secrets.STRIPE_API_KEY }}
+          NODEMAILER_USER=${{ secrets.NODEMAILER_USER }}
+          NODEMAILER_PASS=${{ secrets.NODEMAILER_PASS }}
+          EOF
+
+      - name: Archive production artifacts
+        run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
+
+      - name: Create SSH key's files
+        run: echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > id_rsa.pub && echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+        # run: xxx && chmod 600 id_rsa
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy application
+        run: |
+          scp -r app.tar.gz root@$(terraform output -raw droplet_ip):/root &&
+          ssh root@$(terraform output -raw droplet_ip) 'tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || NODE_ENV=production pm2 start server.js --name app && systemctl restart nginx'
+
+      # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
+      - name: Cleanup
+        if: always()
+        run: rm -f .env app.tar.gz iac/id_rsa iac/id_rsa.pub

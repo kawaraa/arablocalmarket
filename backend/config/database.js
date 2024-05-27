@@ -1,7 +1,7 @@
 module.exports = ({ env }) => ({
   connection: {
     client: "sqlite",
-    connection: { filename: process.env.HOME + env("SQLITE_DATABASE_FILE_PATH") },
+    connection: { filename: require("path").join(process.cwd() + "/" + env("SQLITE_DATABASE_FILE_NAME")) },
     useNullAsDefault: true,
 
     // client: "mysql",

@@ -7,7 +7,9 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  async register(/*{ strapi }*/) {
+    await require("../src/cron/all-tasks").restoreDatabaseBackupIfNeeded();
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
