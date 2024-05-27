@@ -96,8 +96,8 @@ jobs:
       #  Prepare SSH fingerprint key file for Terraform
       - name: Add SSH keys file for Terraform
         run: |
-          echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > id_rsa.pub
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+          echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
@@ -115,13 +115,13 @@ jobs:
 
       - name: Prepare SSH Private key
         run: |
-          chmod 600 id_rsa
+          chmod 600 iac/id_rsa
           ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
 
       - name: Deploy application
         run: |
-          scp -i id_rsa -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh -i id_rsa root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
+          scp -i iac/id_rsa -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
+          ssh -i iac/id_rsa root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
         # run: |
         #   scp -r app.tar.gz root@206.189.50.55:/root
         #   ssh root@206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
