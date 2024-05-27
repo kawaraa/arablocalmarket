@@ -112,8 +112,10 @@ jobs:
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz --exclude=id_rsa --exclude=id_rsa.pub . && mv ../app.tar.gz .
 
-      - name: Checking droplet_ip
+      - name: Checking 1 droplet_ip
         run: terraform output -raw droplet_ip
+
+      - name: Checking 2 droplet_ip
         run: terraform -chdir=iac output -raw droplet_ip
 
       - name: Deploy application
