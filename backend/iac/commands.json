@@ -3,7 +3,9 @@
     "name": "",
     "commands": [
       "DEBIAN_FRONTEND=noninteractive apt-get -y clean",
-      "DEBIAN_FRONTEND=noninteractive apt-get -y update"
+      "DEBIAN_FRONTEND=noninteractive apt-get -y update",
+      "DEBIAN_FRONTEND=noninteractive apt-get -y install npm",
+      "npm install -g pm2@latest"
     ]
   },
   {

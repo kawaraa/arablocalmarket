@@ -67,14 +67,11 @@ resource "digitalocean_droplet" "web" {
       # Install Node.js and NPM
       "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
       "DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs",
-      "DEBIAN_FRONTEND=noninteractive apt-get -y install npm",
-      "npm install -g pm2@latest",
 
-      "node /init-setup.js",
+      "node /tmp/init-setup.js",
 
       # Additional commands for application setup
       "rm -f ~/.pm2/logs/*",
-
 
       # "chmod +x /tmp/script.sh",
       # "/tmp/script.sh"

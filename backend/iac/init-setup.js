@@ -21,8 +21,11 @@ const execCommand = (command) => {
 const checkAndInstall = async (program) => {
   try {
     if (program.name) {
-      const err = await execCommand(`dpkg -l | grep -qw ${program.name}`).catch((err) => err);
-      if (!err) return `${program.name} is already installed!`;
+      const err = await execCommand(`which ${program.name}`)
+        .then(() => true)
+        .catch(() => false);
+      // const err = await execCommand(`dpkg -l | grep -qw ${program.name}`).catch((err) => err);
+      if (err) return `${program.name} is already installed!`;
 
       await execCommand(`DEBIAN_FRONTEND=noninteractive apt-get -y install ${program.name}`);
       console.log(`${program.name} is now installed and configured.`);
