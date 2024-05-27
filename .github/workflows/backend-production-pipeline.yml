@@ -96,6 +96,12 @@ jobs:
       - name: Prepare SSH fingerprint key file for Terraform
         run: echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > id_rsa.pub
 
+      - name: Add SSH Private key file
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
+          chmod 600 id_rsa
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
+
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -109,13 +115,6 @@ jobs:
       # - name: Get Droplet IP
       #   id: droplet_ip
       #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
-
-      - name: Add SSH Private key file
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > id_rsa
-          chmod 600 id_rsa
-          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> known_hosts
-
       - name: Deploy application
         run: |
           scp -i id_rsa -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
@@ -127,4 +126,4 @@ jobs:
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
         if: always()
-        run: rm -f .env app.tar.gz id_rsa
+        run: rm -f .env app.tar.gz id_rsa id_rsa.pub
