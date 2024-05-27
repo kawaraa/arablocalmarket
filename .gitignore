@@ -3,10 +3,11 @@
 # environment variables file
 .env
 .env*.local
-*id_ed25519*
-*id_rsa*
 variable.json
 *.db
+*ssh*
+*id_ed25519*
+*id_rsa*
 
 .next
 dist
@@ -129,7 +130,7 @@ typings/
 *.terraformrc.*
 *.tfstate*
 *.tfstate.backup
-*terraform.lock.hcl
+# *terraform.lock.hcl
 *crash.log
 # Ignore variables file with sensitive data
 */terraform.tfvars

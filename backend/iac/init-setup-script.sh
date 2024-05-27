@@ -21,7 +21,9 @@ check_and_install() {
 
 export DEBIAN_FRONTEND=noninteractive
 
+apt-get -y clean
 apt-get -y update
+
 
 # === Install program if missing ===
 
@@ -30,8 +32,8 @@ check_and_install "nginx" "service nginx start \
 && ufw allow 'Nginx HTTP' \
 && ufw allow 'Nginx HTTPS' \
 && ufw enable \
-&& cp ./nginx.conf /etc/nginx/nginx.conf \
-&& cp ./default-server.conf /etc/nginx/sites-available/default"
+&& cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf \
+&& cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default"
 
 # Install and configure MySQL Server on the same server
 # check_and_install "mysql-server" \
@@ -47,7 +49,8 @@ check_and_install "nginx" "service nginx start \
 # Install Node.js and NPM
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs
-npm install -g npm@latest
+DEBIAN_FRONTEND=noninteractive apt-get -y install npm
+# npm install -g npm@latest
 npm install -g pm2@latest
 
 # Set up and Enable SSL via certbot
