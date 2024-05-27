@@ -96,7 +96,7 @@ jobs:
 
       - name: Create SSH key's files
         # run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/id_rsa && chmod 600 ~/id_rsa && echo 206.189.50.55 > ~/known_hosts
+        run: mkdir -p ~/.ssh/ && echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && echo 206.189.50.55 > ~/.ssh/known_hosts
 
       #
       # - name: Set up SSH
