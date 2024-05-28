@@ -1,5 +1,6 @@
 const { exec, execSync } = require("child_process");
 process.env.DEBIAN_FRONTEND = "noninteractive";
+// xxx | debconf-set-selections
 
 // Function to execute a command and return a promise
 const execCommand = (command) => {
@@ -26,7 +27,7 @@ const checkAndInstall = async (program) => {
       // const err = await execCommand(`dpkg -l | grep -qw ${program.name}`).catch((err) => err);
       if (err) return `${program.name} is already installed!`;
 
-      await execCommand(`export DEBIAN_FRONTEND=noninteractive &&apt-get -y install ${program.name}`);
+      await execCommand(`export DEBIAN_FRONTEND=noninteractive && apt-get -y install ${program.name}`);
       console.log(`${program.name} is now installed and configured.`);
     }
 

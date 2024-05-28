@@ -65,8 +65,9 @@ resource "digitalocean_droplet" "web" {
     # VM setup
     inline = [
       # Install Node.js and NPM
+      "export DEBIAN_FRONTEND=noninteractive",
       "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
-      "export DEBIAN_FRONTEND=noninteractive && apt-get -y install nodejs",
+      "apt-get -y install nodejs | debconf-set-selections",
 
       "node /tmp/init-setup.js",
 
