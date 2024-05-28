@@ -68,17 +68,17 @@ jobs:
       - name: Add the environment variables
         run: |
           cat <<EOF> .env
-          NODE_ENV=${{ env.NODE_ENV }}
-          PORT=${{ env.PORT }}
-          HOST=${{ env.HOST }}
-          SQLITE_DATABASE_FILE_PATH=${{ env.SQLITE_DATABASE_FILE_PATH }}
-          GCP_BASE_URL=${{ env.GCP_BASE_URL }}
-          GCP_BUCKET_NAME=${{ env.GCP_BUCKET_NAME }}
-          GCP_UNIFORM=${{ env.GCP_UNIFORM }}
-          GCP_DATABASE_BACKUP_BUCKET=${{ env.GCP_DATABASE_BACKUP_BUCKET }}
-          OTHER_SHOP_ID=${{ env.OTHER_SHOP_ID }}
-          PUBLIC_URL=${{ env.PUBLIC_URL }}
-          STRIPE_CHECKOUT_REDIRECT_URL=${{ env.STRIPE_CHECKOUT_REDIRECT_URL }}
+          NODE_ENV=${{ vars.NODE_ENV }}
+          PORT=${{ vars.PORT }}
+          HOST=${{ vars.HOST }}
+          SQLITE_DATABASE_FILE_PATH=${{ vars.SQLITE_DATABASE_FILE_PATH }}
+          GCP_BASE_URL=${{ vars.GCP_BASE_URL }}
+          GCP_BUCKET_NAME=${{ vars.GCP_BUCKET_NAME }}
+          GCP_UNIFORM=${{ vars.GCP_UNIFORM }}
+          GCP_DATABASE_BACKUP_BUCKET=${{ vars.GCP_DATABASE_BACKUP_BUCKET }}
+          OTHER_SHOP_ID=${{ vars.OTHER_SHOP_ID }}
+          PUBLIC_URL=${{ vars.PUBLIC_URL }}
+          STRIPE_CHECKOUT_REDIRECT_URL=${{ vars.STRIPE_CHECKOUT_REDIRECT_URL }}
           APP_KEYS=${{ secrets.APP_KEYS }}
           API_TOKEN_SALT=${{ secrets.API_TOKEN_SALT }}
           ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }}

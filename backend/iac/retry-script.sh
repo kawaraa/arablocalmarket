@@ -29,7 +29,7 @@ check_and_install() {
  if which $PROGRAM_NAME > /dev/null 2>&1; then
     echo "$PROGRAM_NAME is already installed!"
   else
-    retry_command 3 apt-get install -y $PROGRAM_NAME
+    retry_command 3 apt-get install $PROGRAM_NAME -y
     retry_command 3 $INSTALL_COMMAND # Execute additional command
     echo "$PROGRAM_NAME is now installed."
   fi
@@ -44,16 +44,22 @@ else
   sudo su -
   export DEBIAN_FRONTEND=noninteractive
 
+  # retry_command 3 apt-get clean
+  # retry_command 3 apt-get install -f
+  # retry_command 3 apt-get update -y
+
   # # === Install program if missing ===
 
   # Install Node.js and NPM
   retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-  retry_command 3 apt-get install -y nodejs | debconf-set-selections
-  retry_command 3 apt-get install -y npm
+  sleep 5
+  retry_command 3 apt-get install nodejs -y | debconf-set-selections
+  sleep 5
+  retry_command 3 apt-get install npm -y
   retry_command 3 npm install -g pm2@latest
 
   # Install NGINX server and configure/setup the firewall
-  check_and_install "nginx" "service nginx start \
+  check_and_install "nginx" "systemctl nginx start \
   && ufw allow 'Nginx HTTP' \
   && ufw allow 'Nginx HTTPS' \
   && ufw enable"
@@ -72,16 +78,16 @@ else
   # "mysql -u root -e \"mysql < ~/databases-initialize-create-update-statements.sql\"",
 
   # Set up and Enable SSL via certbot
-  # check_and_install "certbot" "apt-get install -y python3-certbot-nginx \
+  # check_and_install "certbot" "apt-get install python3-certbot-nginx -y \
   # && certbot --nginx -d arablocalmarket.com -d api.arablocalmarket.com \
   # && sudo certbot renew --dry-run"
 
   # Additional commands for application setup
   rm -f ~/.pm2/logs/*
   npm i --production
-  retry_command 1 NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *"
-  retry_command 1 pm2 start server.js --name app
-  # systemctl restart nginx
-  service restart nginx
+  NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app
+  pm2 save # save the current PM2 process list to ensure that your application restarts on boot
+  sudo pm2 startup # Generate Startup Script so it restarts on boot
+  systemctl restart nginx
 
 fi
