@@ -40,7 +40,7 @@ resource "digitalocean_droplet" "web" {
       private_key = file("${path.module}/id_rsa")
     }
     source      = "./retry-script.sh"
-    destination = "/tmp/retry-script.sh"
+    destination = "/tmp/script.sh"
   }
 
   provisioner "remote-exec" {
@@ -55,8 +55,11 @@ resource "digitalocean_droplet" "web" {
     inline = [
       # "chmod +x retry-script.sh",
       # "retry-script.sh init-setup",
-      "chmod +x /tmp/retry-script.sh",
-      "/tmp/retry-script.sh",
+      # "apt-get clean",
+      # "apt-get install -f",
+      # "apt-get update -y",
+      "chmod +x /tmp/script.sh",
+      "/tmp/script.sh init-setup",
 
       # Additional commands for application setup
       # "rm -f ~/.pm2/logs/*",

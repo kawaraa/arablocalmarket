@@ -125,11 +125,12 @@ typings/
 *.tgz
 
 # Terraform state and other genereted files
+*.terraform/
 *.terraformrc
 *.terraformrc.*
 *.tfstate*
 *.tfstate.backup
-# *terraform.lock.hcl
+*terraform.lock.hcl
 *crash.log
 # Ignore variables file with sensitive data
 */terraform.tfvars
