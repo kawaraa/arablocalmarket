@@ -44,10 +44,6 @@ else
   sudo su -
   export DEBIAN_FRONTEND=noninteractive
 
-  # retry_command 3 apt-get clean
-  # retry_command 3 apt-get install -f
-  # retry_command 3 apt-get update -y
-
   tar -xzf /root/app.tar.gz
 
   # # === Install program if missing ===
@@ -56,7 +52,6 @@ else
   retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   retry_command 3 apt-get install -y nodejs | debconf-set-selections
   retry_command 3 apt-get install -y npm
-  # npm install -g npm@latest
   retry_command 3 npm install -g pm2@latest
 
   # Install NGINX server and configure/setup the firewall
