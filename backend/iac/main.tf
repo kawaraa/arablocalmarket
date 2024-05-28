@@ -40,8 +40,8 @@ resource "digitalocean_droplet" "web" {
     inline = [
       "sleep 30",
       "export DEBIAN_FRONTEND=noninteractive",
-      "sudo apt update -y",
-      "sleep 5",
+      # "sudo apt update -y",
+      # "sleep 5",
       "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
       "export DEBIAN_FRONTEND=noninteractive apt install -y nodejs",
       "sleep 5",
