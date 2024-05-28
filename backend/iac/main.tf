@@ -40,7 +40,7 @@ resource "digitalocean_droplet" "web" {
     inline = [
       "sleep 10",
       "export DEBIAN_FRONTEND=noninteractive",
-      "apt-get update -y",
+      "apt-get update -y > /dev/null 2>&1",
     ]
     # inline = [
     #   <<-EOF
