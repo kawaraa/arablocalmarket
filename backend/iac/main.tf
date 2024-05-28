@@ -38,9 +38,9 @@ resource "digitalocean_droplet" "web" {
 
     # Update VM
     inline = [
-      # "sleep 10",
+      "sleep 10",
       "export DEBIAN_FRONTEND=noninteractive",
-      "sudo apt-get update",
+      "apt-get update -y",
       # "sleep 5",
       # "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
       # "export DEBIAN_FRONTEND=noninteractive apt-get install nodejs",
