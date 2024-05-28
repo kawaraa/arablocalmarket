@@ -1,5 +1,4 @@
 const { exec, execSync } = require("child_process");
-const programs = require("./commands.json");
 process.env.DEBIAN_FRONTEND = "noninteractive";
 
 // Function to execute a command and return a promise
@@ -53,11 +52,36 @@ const main = async (commands) => {
       console.log(await execCommand(command));
     }
   } else {
+    const programs = getCommands();
     for (const program of programs) {
       console.log(await checkAndInstall(program));
     }
   }
 };
+
+function getCommands() {
+  return [
+    {
+      name: "",
+      commands: [
+        "export DEBIAN_FRONTEND=noninteractive && apt-get -y clean && apt-get -y update",
+        "apt-get -y install npm",
+        "npm install -g pm2@latest",
+      ],
+    },
+    {
+      name: "nginx",
+      commands: [
+        "cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf",
+        "cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default",
+        "systemctl start nginx",
+        "ufw allow 'Nginx HTTP'",
+        "ufw allow 'Nginx HTTPS'",
+        "ufw enable",
+      ],
+    },
+  ];
+}
 
 // Run the main function with the arguments
 // process.argv[0] is the path to the Node.js executable.
