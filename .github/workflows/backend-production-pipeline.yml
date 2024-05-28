@@ -122,7 +122,7 @@ jobs:
       #     ssh root@$(terraform -chdir=iac output -raw droplet_ip) "~/iac/retry-script.sh init-setup"
 
       - name: Deploy application
-        run: ../.github/backend-deploy-stript.sh
+        run: ../.github/backend-deploy-stript.sh $(terraform -chdir=iac output -raw droplet_ip)
 
       # chmod +x ~/iac/retry-script.sh &&
       # ... npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx

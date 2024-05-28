@@ -43,8 +43,8 @@ resource "digitalocean_droplet" "web" {
     # Update VM
     inline = [
       "export DEBIAN_FRONTEND=noninteractive",
-      "apt-get clean",
-      "apt-get install -f",
+      # "apt-get clean",
+      # "apt-get install -f",
       "apt-get update -y",
     ]
   }
