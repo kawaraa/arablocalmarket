@@ -64,6 +64,7 @@ resource "digitalocean_droplet" "web" {
         return 0 
       }
 
+      sleep 30
       export DEBIAN_FRONTEND=noninteractive
 
       retry_command 3 sudo apt-get update -y
