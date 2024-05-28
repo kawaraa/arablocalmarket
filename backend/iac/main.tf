@@ -37,55 +37,70 @@ resource "digitalocean_droplet" "web" {
     }
 
     # Update VM
-    # inline = [
-    #   "export DEBIAN_FRONTEND=noninteractive",
-    #   "apt-get update -y",
-    # ]
     inline = [
-      <<-EOF
-      #!/bin/bash
-      set -e
-      
-      retry_command() {
-        local retries=$1
-        shift
-        local count=0
-        until "$@"; do
-          count=$((count + 1))
-          if [ $count -lt $retries ]; then
-            echo 
-            echo "[!!!] >>> Waiting for the next try"
-            echo
-            sleep 20
-          else
-            return $?
-          fi
-        done
-        return 0 
-      }
-
-      sleep 30
-      export DEBIAN_FRONTEND=noninteractive
-
-      sudo apt-get update -y
-      sleep 5
-      curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-      apt-get install -y nodejs
-      sleep 5
-      apt-get install -y npm
-      sleep 5
-      npm install -g pm2@latest
-        
-      sudo apt-get install -y nginx
-      sudo systemctl start nginx
-      sudo systemctl enable nginx
-      ufw allow 'Nginx HTTP'
-      ufw allow 'Nginx HTTPS
-      ufw enable
-
-      rm -f ~/.pm2/logs/*
-      EOF
+      "sleep 30",
+      "export DEBIAN_FRONTEND=noninteractive",
+      "sudo apt-get update -y",
+      "sleep 5",
+      "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
+      "apt-get install -y nodejs",
+      "sleep 5",
+      "apt-get install -y npm",
+      "sleep 5",
+      "npm install -g pm2@latest",
+      "sudo apt-get install -y nginx",
+      "sudo systemctl start nginx",
+      "sudo systemctl enable nginx",
+      "ufw allow 'Nginx HTTP'",
+      "ufw allow 'Nginx HTTPS",
+      "ufw enable",
+      "rm -f ~/.pm2/logs/*",
     ]
+    # inline = [
+    #   <<-EOF
+    #   #!/bin/bash
+    #   set -e
+
+    #   retry_command() {
+    #     local retries=$1
+    #     shift
+    #     local count=0
+    #     until "$@"; do
+    #       count=$((count + 1))
+    #       if [ $count -lt $retries ]; then
+    #         echo 
+    #         echo "[!!!] >>> Waiting for the next try"
+    #         echo
+    #         sleep 20
+    #       else
+    #         return $?
+    #       fi
+    #     done
+    #     return 0 
+    #   }
+
+    #   sleep 30
+    #   export DEBIAN_FRONTEND=noninteractive
+
+    #   retry_command 3 sudo apt-get update -y
+    #   sleep 10
+    #   retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+    #   retry_command 3 apt-get install -y nodejs
+    #   sleep 10
+    #   retry_command 3 apt-get install -y npm
+    #   sleep 10
+    #   retry_command 3 npm install -g pm2@latest
+
+    #   retry_command 3 sudo apt-get install -y nginx
+    #   retry_command 3 sudo systemctl start nginx
+    #   retry_command 3 sudo systemctl enable nginx
+    #   ufw allow 'Nginx HTTP'
+    #   ufw allow 'Nginx HTTPS
+    #   ufw enable
+
+    #   rm -f ~/.pm2/logs/*
+    #   EOF
+    # ]
 
   }
 }
