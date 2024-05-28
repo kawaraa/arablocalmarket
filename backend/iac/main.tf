@@ -41,20 +41,6 @@ resource "digitalocean_droplet" "web" {
       "sleep 10",
       "export DEBIAN_FRONTEND=noninteractive",
       "apt-get update -y",
-      # "sleep 5",
-      # "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
-      # "export DEBIAN_FRONTEND=noninteractive apt-get install nodejs",
-      # "sleep 5",
-      # "apt-get install npm",
-      # "sleep 5",
-      # "npm install -g pm2@latest",
-      # "sudo apt-get install nginx",
-      # "sudo systemctl start nginx",
-      # "sudo systemctl enable nginx",
-      # "ufw allow 'Nginx HTTP'",
-      # "ufw allow 'Nginx HTTPS",
-      # "ufw enable",
-      # "rm -f ~/.pm2/logs/*",
     ]
     # inline = [
     #   <<-EOF
