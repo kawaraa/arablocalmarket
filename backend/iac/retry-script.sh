@@ -62,8 +62,6 @@ else
   && ufw allow 'Nginx HTTP' \
   && ufw allow 'Nginx HTTPS' \
   && ufw enable"
-  retry_command 3 cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf 
-  retry_command 3 cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default
 
   # Install and configure MySQL Server on the same server
   # check_and_install "mysql-server" \

@@ -31,12 +31,6 @@ resource "digitalocean_droplet" "web" {
   # disk     = "25"
   ssh_keys = [digitalocean_ssh_key.web.id]
   tags     = ["api", "alm"]
-  # user_data = file("${path.module}/retry-script.sh")
-  # user_data = <<-EOF
-  #           #!/bin/bash
-  #           /path/to/install_packages.sh
-  #           EOF
-  # init-setup
 
   provisioner "file" {
     connection {

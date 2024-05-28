@@ -108,10 +108,6 @@ jobs:
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
-      # - name: Get Droplet IP
-      #   id: droplet_ip
-      #   run: echo "::set-output name=droplet_ip::$(terraform -chdir=iac output -raw droplet_ip)"
-
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
         run: |
@@ -120,15 +116,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
-      # scp -i iac/id_rsa -r iac/retry-script.sh root@xxx:/root
-      # ssh -i iac/id_rsa root@xxx "~/retry-script.sh init-setup"
       - name: Deploy application
         run: |
           scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
-        # run: |
-        #   scp -r app.tar.gz root@206.189.50.55:/root
-        #   ssh root@206.189.50.55 "tar -xzf /root/app.tar.gz && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
+          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && cp ~/iac/nginx/nginx.conf /etc/nginx/nginx.conf && cp ~/iac/nginx/default-server.conf /etc/nginx/sites-available/default && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
 
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
