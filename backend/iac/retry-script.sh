@@ -9,10 +9,7 @@ retry_command() {
   until "$@"; do
     count=$((count + 1))
     if [ $count -lt $retries ]; then
-      sudo rm /var/lib/apt/lists/lock
-      sudo apt-get install -f
-      apt-get update
-      sleep 3 # Pauses the script for 3 seconds before retrying
+      sleep 20 # Pauses the script for 3 seconds before retrying
     else
       # All retries have been exhausted. ($?) holds the exit status of the last executed command within the function
       return $?
