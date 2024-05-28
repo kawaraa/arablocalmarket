@@ -10,7 +10,7 @@ retry_command() {
     count=$((count + 1))
     if [ $count -lt $retries ]; then
       echo 
-      echo "[!!!] >>> Waiting for the next try"
+      echo "[!!!] >>> Waiting for the next try: because $* failed"
       echo
       sleep 20 # Pauses the script for 3 seconds before retrying
     else
