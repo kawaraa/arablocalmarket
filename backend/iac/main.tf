@@ -32,17 +32,6 @@ resource "digitalocean_droplet" "web" {
   ssh_keys = [digitalocean_ssh_key.web.id]
   tags     = ["api", "alm"]
 
-  provisioner "file" {
-    connection {
-      host        = self.ipv4_address
-      user        = "root"
-      type        = "ssh"
-      private_key = file("${path.module}/id_rsa")
-    }
-    source      = "./retry-script.sh"
-    destination = "/tmp/script.sh"
-  }
-
   provisioner "remote-exec" {
     connection {
       host        = self.ipv4_address
@@ -51,21 +40,12 @@ resource "digitalocean_droplet" "web" {
       private_key = file("${path.module}/id_rsa")
     }
 
-    # VM setup
+    # Update VM
     inline = [
-      # "chmod +x retry-script.sh",
-      # "retry-script.sh init-setup",
       "export DEBIAN_FRONTEND=noninteractive",
       "apt-get clean",
       "apt-get install -f",
       "apt-get update -y",
-
-      # "chmod +x /tmp/script.sh",
-      # "/tmp/script.sh init-setup",
-
-      # Additional commands for application setup
-      # "rm -f ~/.pm2/logs/*",
-
     ]
   }
 }
