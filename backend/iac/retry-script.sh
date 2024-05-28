@@ -44,8 +44,6 @@ else
   sudo su -
   export DEBIAN_FRONTEND=noninteractive
 
-  tar -xzf /root/app.tar.gz
-
   # # === Install program if missing ===
 
   # Install Node.js and NPM
