@@ -34,9 +34,9 @@ check_and_install() {
 }
 
 # $* contains the args as string
-if [[ "$*" != *"init-setup"* ]]; then
-  retry_command $@
-else
+# if [[ "$*" != *"init-setup"* ]]; then
+#   retry_command $@
+# else
   echo "No arguments were passed, then will setup the server"
 
   export DEBIAN_FRONTEND=noninteractive
@@ -80,4 +80,4 @@ else
   # Additional commands for application setup
   rm -f ~/.pm2/logs/*
 
-fi
+# fi
