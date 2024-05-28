@@ -44,9 +44,9 @@ else
   sudo su -
   export DEBIAN_FRONTEND=noninteractive
 
-  retry_command 3 apt-get clean
-  retry_command 3 apt-get install -f
-  retry_command 3 apt-get update -y
+  # retry_command 3 apt-get clean
+  # retry_command 3 apt-get install -f
+  # retry_command 3 apt-get update -y
 
   # # === Install program if missing ===
 
@@ -81,5 +81,10 @@ else
 
   # Additional commands for application setup
   rm -f ~/.pm2/logs/*
+  npm i --production
+  retry_command 1 NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *"
+  retry_command 1 pm2 start server.js --name app
+  # systemctl restart nginx
+  service restart nginx
 
 fi

@@ -119,7 +119,9 @@ jobs:
       - name: Deploy application
         run: |
           scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && cp ~/iac/nginx/nginx.conf /etc/nginx/nginx.conf && cp ~/iac/nginx/default-server.conf /etc/nginx/sites-available/default && npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx"
+          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && cp ~/iac/nginx/nginx.conf /etc/nginx/nginx.conf && cp ~/iac/nginx/default-server.conf /etc/nginx/sites-available/default && ~/iac/retry-script.sh init-setup"
+
+      # ... npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx
 
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup

@@ -55,11 +55,13 @@ resource "digitalocean_droplet" "web" {
     inline = [
       # "chmod +x retry-script.sh",
       # "retry-script.sh init-setup",
-      # "apt-get clean",
-      # "apt-get install -f",
-      # "apt-get update -y",
-      "chmod +x /tmp/script.sh",
-      "/tmp/script.sh init-setup",
+      "export DEBIAN_FRONTEND=noninteractive",
+      "apt-get clean",
+      "apt-get install -f",
+      "apt-get update -y",
+
+      # "chmod +x /tmp/script.sh",
+      # "/tmp/script.sh init-setup",
 
       # Additional commands for application setup
       # "rm -f ~/.pm2/logs/*",
