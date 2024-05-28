@@ -64,8 +64,8 @@ resource "digitalocean_droplet" "web" {
 
     # VM setup
     inline = [
-      "chmod +x ./retry-script.sh",
-      "./retry-script.sh init-setup",
+      "chmod +x retry-script.sh",
+      "retry-script.sh init-setup",
 
       # Additional commands for application setup
       # "rm -f ~/.pm2/logs/*",
