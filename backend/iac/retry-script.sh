@@ -9,6 +9,7 @@ retry_command() {
   until "$@"; do
     count=$((count + 1))
     if [ $count -lt $retries ]; then
+      echo "Waiting for the next try"
       sleep 20 # Pauses the script for 3 seconds before retrying
     else
       # All retries have been exhausted. ($?) holds the exit status of the last executed command within the function
@@ -48,7 +49,7 @@ else
   # Install Node.js and NPM
   retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
   retry_command 3 export DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs | debconf-set-selections
-  retry_command 3 DEBIAN_FRONTEND=noninteractive apt-get install -y npm
+  retry_command 3 export DEBIAN_FRONTEND=noninteractive apt-get install -y npm
   # npm install -g npm@latest
   retry_command 3 npm install -g pm2@latest
 

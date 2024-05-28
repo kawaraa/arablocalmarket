@@ -32,16 +32,16 @@ resource "digitalocean_droplet" "web" {
   ssh_keys = [digitalocean_ssh_key.web.id]
   tags     = ["api", "alm"]
 
-  provisioner "file" {
-    connection {
-      host        = self.ipv4_address
-      user        = "root"
-      type        = "ssh"
-      private_key = file("${path.module}/id_rsa")
-    }
-    source      = "./retry-script.sh"
-    destination = "/tmp/retry-script.sh"
-  }
+  # provisioner "file" {
+  #   connection {
+  #     host        = self.ipv4_address
+  #     user        = "root"
+  #     type        = "ssh"
+  #     private_key = file("${path.module}/id_rsa")
+  #   }
+  #   source      = "./retry-script.sh"
+  #   destination = "/tmp/retry-script.sh"
+  # }
 
   # provisioner "file" {
   #   connection {
@@ -64,8 +64,8 @@ resource "digitalocean_droplet" "web" {
 
     # VM setup
     inline = [
-      "chmod +x /tmp/retry-script.sh",
-      "/tmp/retry-script.sh init-setup",
+      "chmod +x ./retry-script.sh",
+      "./retry-script.sh init-setup",
 
       # Additional commands for application setup
       # "rm -f ~/.pm2/logs/*",
