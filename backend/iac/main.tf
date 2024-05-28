@@ -64,7 +64,7 @@ resource "digitalocean_droplet" "web" {
 
     # VM setup
     inline = [
-      "chmod +x /tmp/script.sh",
+      "chmod +x /tmp/retry-script.sh",
       "/tmp/retry-script.sh",
       # "/tmp/retry-script.sh ${var.database_psw}", # If MySQL Server is used
 
