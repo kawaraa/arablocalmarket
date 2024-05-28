@@ -29,55 +29,46 @@ resource "digitalocean_droplet" "web" {
   image  = "ubuntu-23-10-x64"
   size   = "s-1vcpu-1gb"
   # disk     = "25"
-  ssh_keys  = [digitalocean_ssh_key.web.id]
-  tags      = ["api", "alm"]
-  user_data = file("${path.module}/retry-script.sh")
+  ssh_keys = [digitalocean_ssh_key.web.id]
+  tags     = ["api", "alm"]
+  # user_data = file("${path.module}/retry-script.sh")
   # user_data = <<-EOF
   #           #!/bin/bash
   #           /path/to/install_packages.sh
   #           EOF
   # init-setup
 
-  # provisioner "file" {
-  #   connection {
-  #     host        = self.ipv4_address
-  #     user        = "root"
-  #     type        = "ssh"
-  #     private_key = file("${path.module}/id_rsa")
-  #   }
-  #   source      = "./retry-script.sh"
-  #   destination = "/tmp/retry-script.sh"
-  # }
+  provisioner "file" {
+    connection {
+      host        = self.ipv4_address
+      user        = "root"
+      type        = "ssh"
+      private_key = file("${path.module}/id_rsa")
+    }
+    source      = "./retry-script.sh"
+    destination = "/tmp/retry-script.sh"
+  }
 
-  # provisioner "file" {
-  #   connection {
-  #     host        = self.ipv4_address
-  #     user        = "root"
-  #     type        = "ssh"
-  #     private_key = file("${path.module}/id_rsa")
-  #   }
-  #   source      = "./init-setup.js"
-  #   destination = "/tmp/init-setup.js"
-  # }
+  provisioner "remote-exec" {
+    connection {
+      host        = self.ipv4_address
+      user        = "root"
+      type        = "ssh"
+      private_key = file("${path.module}/id_rsa")
+    }
 
-  # provisioner "remote-exec" {
-  #   connection {
-  #     host        = self.ipv4_address
-  #     user        = "root"
-  #     type        = "ssh"
-  #     private_key = file("${path.module}/id_rsa")
-  #   }
+    # VM setup
+    inline = [
+      # "chmod +x retry-script.sh",
+      # "retry-script.sh init-setup",
+      "chmod +x /tmp/retry-script.sh",
+      "/tmp/retry-script.sh",
 
-  #   # VM setup
-  #   inline = [
-  #     "chmod +x retry-script.sh",
-  #     "retry-script.sh init-setup",
+      # Additional commands for application setup
+      # "rm -f ~/.pm2/logs/*",
 
-  #     # Additional commands for application setup
-  #     # "rm -f ~/.pm2/logs/*",
-
-  #   ]
-  # }
+    ]
+  }
 }
 
 resource "digitalocean_project" "alm_project" {

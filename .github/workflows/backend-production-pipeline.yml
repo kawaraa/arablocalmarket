@@ -120,6 +120,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
+      # scp -i iac/id_rsa -r iac/retry-script.sh root@xxx:/root
+      # ssh -i iac/id_rsa root@xxx "~/retry-script.sh init-setup"
       - name: Deploy application
         run: |
           scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&

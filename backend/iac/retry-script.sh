@@ -9,7 +9,9 @@ retry_command() {
   until "$@"; do
     count=$((count + 1))
     if [ $count -lt $retries ]; then
-      echo "Waiting for the next try"
+      echo 
+      echo "[!!!] >>> Waiting for the next try"
+      echo
       sleep 20 # Pauses the script for 3 seconds before retrying
     else
       # All retries have been exhausted. ($?) holds the exit status of the last executed command within the function
@@ -34,22 +36,24 @@ check_and_install() {
 }
 
 # $* contains the args as string
-# if [[ "$*" != *"init-setup"* ]]; then
-#   retry_command $@
-# else
+if [[ "$*" != *"init-setup"* ]]; then
+  retry_command $@
+else
   echo "No arguments were passed, then will setup the server"
 
+  sudo su -
   export DEBIAN_FRONTEND=noninteractive
 
-  retry_command 3 apt-get clean -y
+  retry_command 3 apt-get clean
+  retry_command 3 apt-get install -f
   retry_command 3 apt-get update -y
 
   # # === Install program if missing ===
 
   # Install Node.js and NPM
   retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-  retry_command 3 export DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs | debconf-set-selections
-  retry_command 3 export DEBIAN_FRONTEND=noninteractive apt-get install -y npm
+  retry_command 3 apt-get install -y nodejs | debconf-set-selections
+  retry_command 3 apt-get install -y npm
   # npm install -g npm@latest
   retry_command 3 npm install -g pm2@latest
 
@@ -57,9 +61,9 @@ check_and_install() {
   check_and_install "nginx" "service nginx start \
   && ufw allow 'Nginx HTTP' \
   && ufw allow 'Nginx HTTPS' \
-  && ufw enable \
-  && cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf \
-  && cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default"
+  && ufw enable"
+  retry_command 3 cp ./iac/nginx/nginx.conf /etc/nginx/nginx.conf 
+  retry_command 3 cp ./iac/nginx/default-server.conf /etc/nginx/sites-available/default
 
   # Install and configure MySQL Server on the same server
   # check_and_install "mysql-server" \
@@ -80,4 +84,4 @@ check_and_install() {
   # Additional commands for application setup
   rm -f ~/.pm2/logs/*
 
-# fi
+fi
