@@ -116,13 +116,16 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
-      # - name: Deploy application
-      #   run: |
-      #     scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-      #     ssh root@$(terraform -chdir=iac output -raw droplet_ip) "~/iac/retry-script.sh init-setup"
+      - name: Waiting for the VM to boot up
+        run: sleep 10
 
       - name: Deploy application
-        run: ../.github/backend-deploy-stript.sh $(terraform -chdir=iac output -raw droplet_ip)
+        run: |
+          scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
+          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "~/iac/retry-script.sh init-setup"
+
+      # - name: Deploy application
+      #   run: ../.github/backend-deploy-stript.sh $(terraform -chdir=iac output -raw droplet_ip)
 
       # chmod +x ~/iac/retry-script.sh &&
       # ... npm i --production && NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app && systemctl restart nginx
