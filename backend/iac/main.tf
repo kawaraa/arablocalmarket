@@ -32,17 +32,6 @@ resource "digitalocean_droplet" "web" {
   ssh_keys = [digitalocean_ssh_key.web.id]
   tags     = ["api", "alm"]
 
-  # provisioner "file" {
-  #   connection {
-  #     host        = self.ipv4_address
-  #     user        = "root"
-  #     type        = "ssh"
-  #     private_key = file("${path.module}/id_rsa")
-  #   }
-  #   source      = "./init-setup-script.sh"
-  #   destination = "/tmp/script.sh"
-  # }
-
   provisioner "file" {
     connection {
       host        = self.ipv4_address
@@ -50,9 +39,20 @@ resource "digitalocean_droplet" "web" {
       type        = "ssh"
       private_key = file("${path.module}/id_rsa")
     }
-    source      = "./init-setup.js"
-    destination = "/tmp/init-setup.js"
+    source      = "./retry-script.sh"
+    destination = "/tmp/retry-script.sh"
   }
+
+  # provisioner "file" {
+  #   connection {
+  #     host        = self.ipv4_address
+  #     user        = "root"
+  #     type        = "ssh"
+  #     private_key = file("${path.module}/id_rsa")
+  #   }
+  #   source      = "./init-setup.js"
+  #   destination = "/tmp/init-setup.js"
+  # }
 
   provisioner "remote-exec" {
     connection {
@@ -64,19 +64,13 @@ resource "digitalocean_droplet" "web" {
 
     # VM setup
     inline = [
-      # Install Node.js and NPM
-      "export DEBIAN_FRONTEND=noninteractive",
-      "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
-      "export DEBIAN_FRONTEND=noninteractive && apt-get -y install nodejs | debconf-set-selections",
-
-      "node /tmp/init-setup.js",
+      "chmod +x /tmp/script.sh",
+      "/tmp/retry-script.sh",
+      # "/tmp/retry-script.sh ${var.database_psw}", # If MySQL Server is used
 
       # Additional commands for application setup
-      "rm -f ~/.pm2/logs/*",
+      # "rm -f ~/.pm2/logs/*",
 
-      # "chmod +x /tmp/script.sh",
-      # "/tmp/script.sh"
-      # "/tmp/script.sh ${var.database_psw}", # If MySQL Server is used
     ]
   }
 }

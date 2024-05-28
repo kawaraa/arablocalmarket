@@ -27,7 +27,7 @@ const checkAndInstall = async (program) => {
       // const err = await execCommand(`dpkg -l | grep -qw ${program.name}`).catch((err) => err);
       if (err) return `${program.name} is already installed!`;
 
-      await execCommand(`export DEBIAN_FRONTEND=noninteractive && apt-get -y install ${program.name}`);
+      await execCommand(`export DEBIAN_FRONTEND=noninteractive && apt-get install ${program.name} -y`);
       console.log(`${program.name} is now installed and configured.`);
     }
 
@@ -65,8 +65,8 @@ function getCommands() {
     {
       name: "",
       commands: [
-        "export DEBIAN_FRONTEND=noninteractive && apt-get -y clean && apt-get -y update",
-        "apt-get -y install npm",
+        "export DEBIAN_FRONTEND=noninteractive && apt-get clean -y && apt-get update -y",
+        "apt-get install npm -y",
         "npm install -g pm2@latest",
       ],
     },
