@@ -66,7 +66,7 @@ resource "digitalocean_droplet" "web" {
     inline = [
       # Install Node.js and NPM
       "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
-      "DEBIAN_FRONTEND=noninteractive apt-get -y install nodejs",
+      "export DEBIAN_FRONTEND=noninteractive && apt-get -y install nodejs",
 
       "node /tmp/init-setup.js",
 
