@@ -10,10 +10,6 @@ terraform {
 variable "digitalocean_token" {
   sensitive = true
 }
-# variable "database_psw" {
-#   sensitive = true
-# }
-
 provider "digitalocean" {
   token = var.digitalocean_token
 }
