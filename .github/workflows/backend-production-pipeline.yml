@@ -122,7 +122,7 @@ jobs:
       - name: Deploy application
         run: |
           scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
-          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz ~/iac/retry-script.sh init-setup"
+          ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && /root/iac/retry-script.sh init-setup"
 
       # - name: Deploy application
       #   run: ../.github/backend-deploy-stript.sh $(terraform -chdir=iac output -raw droplet_ip)
