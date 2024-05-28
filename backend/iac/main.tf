@@ -68,9 +68,12 @@ resource "digitalocean_droplet" "web" {
       export DEBIAN_FRONTEND=noninteractive
 
       retry_command 3 sudo apt-get update -y
+      sleep 10
       retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-      retry_command 3 apt-get install -y nodejs | debconf-set-selections
+      retry_command 3 apt-get install -y nodejs
+      sleep 10
       retry_command 3 apt-get install -y npm
+      sleep 10
       retry_command 3 npm install -g pm2@latest
         
       retry_command 3 sudo apt-get install -y nginx
