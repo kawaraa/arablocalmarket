@@ -99,7 +99,7 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
-      - name: Check tfstate file
+      - name: (1) Check tfstate file
         run: ls iac
 
       # - name: Install Google Cloud SDK
@@ -130,6 +130,10 @@ jobs:
         run: terraform -chdir=iac init
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+
+      - name: (1) Check tfstate file
+        if: always()
+        run: ls iac
 
       - name: Update Terraform tfstate file
         if: always()
