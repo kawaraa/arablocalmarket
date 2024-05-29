@@ -97,7 +97,8 @@ jobs:
         run: |
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
-          echo "${{ secrets.TERRAFORM_STATE }}" > tfstate
+          length=$(expr length "${{ secrets.TERRAFORM_STATE }}")
+          echo "The length of TERRAFORM_STATE is: $length"
           echo "something" >> tfstate
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
@@ -135,7 +136,7 @@ jobs:
 
       - name: (1) Check tfstate file
         if: always()
-        run: ls iac && cat iac/terraform.tfstate
+        run: ls iac
 
       - name: Update Terraform tfstate file
         if: always()
