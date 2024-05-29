@@ -100,8 +100,7 @@ jobs:
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           DECODED_VALUE=$(echo ${{ secrets.TERRAFORM_STATE }} | base64 --decode)
-          [ "$DECODED_VALUE" = "{}" ] || echo "$DECODED_VALUE" > iac/terraform.tfstate
-          cat iac/terraform.tfstate
+          [ "$DECODED_VALUE" = "{}" ] || echo "$DECODED_VALUE" > iac/terraform.tfstate && cat iac/terraform.tfstate
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
