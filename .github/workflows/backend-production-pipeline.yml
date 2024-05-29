@@ -59,9 +59,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # - name: Set up GitHub CLI
-      #   uses: actions/setup-gh@v5
-
       - name: Download saved production build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -104,28 +101,6 @@ jobs:
           echo "The length of TERRAFORM_STATE is: $length"
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
-      - name: (1) Check tfstate file
-        run: ls iac
-
-      # - name: Install Google Cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v2
-      #   with:
-      #     version: "latest"
-      #     project_id: ${{ vars.GCP_PROJECT_ID }}
-      #     service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-
-      #  echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" > ${HOME}/gcloud.json
-
-      # - name: Install jq to prepare JSON key for gcloud
-      #   run: sudo apt-get install -y jq
-      # - name: Authenticate to Google Cloud
-      #   run: |
-      #     printf "%s" '${{ secrets.GCP_SERVICE_ACCOUNT }}' > "${HOME}/gcloud.json"
-      #     gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
-      #     gcloud config set project ${{ vars.GCP_PROJECT_ID }}
-
-      # echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" | jq '.' > "${HOME}/gcloud.json"
-
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -136,34 +111,11 @@ jobs:
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
-      - name: (1) Check tfstate file
-        if: always()
-        run: ls iac
-
       - name: Update Terraform tfstate file
         if: always()
         run: |
           echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
           gh secret set "TERRAFORM_STATE" < iac/terraform.tfstate
-
-      # - name: Update Terraform tfstate file
-      #   if: always()
-      #   env:
-      #     GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
-      #   run: |
-      #     SECRET_NAME="TERRAFORM_STATE"
-      #     NEW_SECRET_VALUE="$(cat iac/terraform.tfstate)"
-
-      #     curl -X PUT \
-      #       -H "Authorization: token $GH_PAT" \
-      #       -H "Accept: application/vnd.github.v3+json" \
-      #       https://api.github.com/repos/${{ github.repository }}/actions/secrets/$SECRET_NAME \
-      #       -d @- << EOF
-      #       {
-      #         "encrypted_value": "$(echo -n $NEW_SECRET_VALUE | openssl base64)",
-      #         "key_id": "$(curl -s -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key | jq -r .key_id)"
-      #       }
-      #       EOF
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
