@@ -59,8 +59,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up GitHub CLI
-        uses: actions/setup-gh@v5
+      # - name: Set up GitHub CLI
+      #   uses: actions/setup-gh@v5
 
       - name: Download saved production build artifacts
         uses: actions/download-artifact@v4
