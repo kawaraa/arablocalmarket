@@ -9,9 +9,9 @@ retry_command() {
   until "$@"; do
     count=$((count + 1))
     if [ $count -lt $retries ]; then
-      echo 
-      echo "[!!!] >>> Waiting for the next try: because $* failed"
-      echo
+      echo ""
+      echo "[!!!] >>> failed '$*' Waiting for the next try"
+      echo ""
       sleep 20 # Pauses the script for 3 seconds before retrying
     else
       # All retries have been exhausted. ($?) holds the exit status of the last executed command within the function
@@ -59,10 +59,10 @@ else
   retry_command 3 npm install -g pm2@latest
 
   # Install NGINX server and configure/setup the firewall
-  check_and_install "nginx" "systemctl nginx start \
-  && ufw allow 'Nginx HTTP' \
-  && ufw allow 'Nginx HTTPS' \
-  && ufw enable"
+  check_and_install "nginx" "systemctl nginx start"
+  retry_command 2 ufw allow 'Nginx HTTP' 
+  retry_command 2 ufw allow 'Nginx HTTPS'
+  retry_command 2 ufw enable
   cp ~/iac/nginx/nginx.conf /etc/nginx/nginx.conf
   cp ~/iac/nginx/default-server.conf /etc/nginx/sites-available/default
 

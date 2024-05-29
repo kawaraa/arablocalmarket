@@ -43,6 +43,7 @@ resource "digitalocean_droplet" "web" {
       "systemctl daemon-reload",
       "echo VM is ready for SSH connection",
       # "systemctl restart droplet-agent",
+      # fuser command to kill processes that are using the apt-get command or holding locks on the package manager.
       # "sudo fuser -vki /var/lib/dpkg/lock",
       # "sudo fuser -vki /var/cache/apt/archives/lock",
       # "sudo fuser -vki /var/cache/debconf/config.dat",
