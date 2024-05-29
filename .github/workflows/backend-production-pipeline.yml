@@ -98,6 +98,7 @@ jobs:
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           echo "${{ secrets.TERRAFORM_STATE }}" > tfstate
+          echo "something" >> tfstate
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
       - name: (1) Check tfstate file
