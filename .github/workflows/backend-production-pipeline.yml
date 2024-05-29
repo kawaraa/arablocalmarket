@@ -133,7 +133,7 @@ jobs:
 
       - name: (1) Check tfstate file
         if: always()
-        run: ls iac
+        run: ls iac && cat iac/terraform.tfstate
 
       - name: Update Terraform tfstate file
         if: always()
@@ -141,7 +141,7 @@ jobs:
           GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
         run: |
           SECRET_NAME="TERRAFORM_STATE"
-          NEW_SECRET_VALUE=$(cat iac/terraform.tfstate)
+          NEW_SECRET_VALUE="$(cat iac/terraform.tfstate)"
 
           curl -X PUT \
             -H "Authorization: token $GH_PAT" \
