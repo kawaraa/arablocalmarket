@@ -98,18 +98,20 @@ jobs:
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          version: "latest"
-          project_id: ${{ vars.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      # - name: Install Google Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v2
+      #   with:
+      #     version: "latest"
+      #     project_id: ${{ vars.GCP_PROJECT_ID }}
+      #     service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
-      # - name: Authenticate to Google Cloud
-      #   run: |
-      #     echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" > ${HOME}/gcloud.json
-      #     gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
-      #     gcloud config set project ${{ vars.GCP_PROJECT_ID }}
+      #  echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" > ${HOME}/gcloud.json
+
+      - name: Authenticate to Google Cloud
+        run: |
+          printf "%s" "${{ secrets.GCP_CREDENTIALS }}" > "${HOME}/gcloud.json"
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+          gcloud config set project ${{ vars.GCP_PROJECT_ID }}
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
