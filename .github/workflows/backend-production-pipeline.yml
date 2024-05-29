@@ -113,7 +113,8 @@ jobs:
         if: always()
         run: |
           echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
-          gh secret set "TERRAFORM_STATE" < iac/terraform.tfstate
+          BASE64_ENCODED_VALUE=$(base64 -i iac/terraform.tfstate)
+          gh secret set "TERRAFORM_STATE" < $BASE64_ENCODED_VALUE
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
