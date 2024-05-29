@@ -140,7 +140,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
         run: |
-          SECRET_NAME="GH_ALM_REPO_TOKEN"
+          SECRET_NAME="TERRAFORM_STATE"
           NEW_SECRET_VALUE=$(cat iac/terraform.tfstate)
 
           curl -X PUT \
