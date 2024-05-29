@@ -1,9 +1,9 @@
 terraform {
   # The state configurations
-  backend "gcs" {
-    bucket = "arablocalmarket-bucket"
-    prefix = "terraform/state"
-  }
+  # backend "gcs" {
+  #   bucket = "arablocalmarket-bucket"
+  #   prefix = "terraform/state"
+  # }
 
   required_providers {
     digitalocean = {
@@ -54,9 +54,9 @@ resource "digitalocean_ssh_key" "auth" {
 # Docs for Digitalocean Resources:
 # https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs
 resource "digitalocean_droplet" "vm" {
-  count = 1
-  name  = "alm-backend-${count.index}"
-  # name   = "alm-backend-test"
+  # count = 1
+  # name  = "alm-backend-${count.index}"
+  name   = "alm-backend-test"
   region = "fra1"
   image  = "ubuntu-23-10-x64"
   size   = "s-1vcpu-1gb"
@@ -64,7 +64,8 @@ resource "digitalocean_droplet" "vm" {
   # monitoring = true
   # private_networking = true
   ssh_keys = [digitalocean_ssh_key.auth.id]
-  tags     = ["api", "alm", digitalocean_tag.alm_db_tag.id]
+  tags     = ["api", "alm"]
+  # tags     = ["api", "alm", digitalocean_tag.alm_db_tag.id]
 
 
   provisioner "remote-exec" {
@@ -186,8 +187,8 @@ resource "digitalocean_project" "alm_project" {
   description = "This projeect represents production resources for ArabLocalMarket App."
   purpose     = "Web Application"
   environment = "Production"
-  # resources   = [digitalocean_droplet.vm.urn]
-  resources = [digitalocean_droplet.vm.*.urn, digitalocean_loadbalancer.public.urn]
+  resources   = [digitalocean_droplet.vm.urn]
+  # resources = [digitalocean_droplet.vm.*.urn, digitalocean_loadbalancer.public.urn]
   # resources   = digitalocean_droplet.vm.*.urn # if it's more then one node
 }
 

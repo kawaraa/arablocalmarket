@@ -93,10 +93,11 @@ jobs:
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
-      - name: Add SSH keys files for Terraform
+      - name: Add SSH keys and tfstate files for Terraform
         run: |
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
+          [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
       # - name: Install Google Cloud SDK
       #   uses: google-github-actions/setup-gcloud@v2
@@ -109,13 +110,14 @@ jobs:
 
       # - name: Install jq to prepare JSON key for gcloud
       #   run: sudo apt-get install -y jq
-      - name: Authenticate to Google Cloud
-        run: |
-          printf "%s" '${{ secrets.GCP_SERVICE_ACCOUNT }}' > "${HOME}/gcloud.json"
-          gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
-          gcloud config set project ${{ vars.GCP_PROJECT_ID }}
+      # - name: Authenticate to Google Cloud
+      #   run: |
+      #     printf "%s" '${{ secrets.GCP_SERVICE_ACCOUNT }}' > "${HOME}/gcloud.json"
+      #     gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+      #     gcloud config set project ${{ vars.GCP_PROJECT_ID }}
 
       # echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" | jq '.' > "${HOME}/gcloud.json"
+
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -125,6 +127,25 @@ jobs:
         run: terraform -chdir=iac init
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
+
+      - name: Update Terraform tfstate file
+        if: always()
+        env:
+          GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
+        run: |
+          SECRET_NAME="GH_ALM_REPO_TOKEN"
+          NEW_SECRET_VALUE=$(cat iac/terraform.tfstate)
+
+          curl -X PUT \
+            -H "Authorization: token $GH_PAT" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/actions/secrets/$SECRET_NAME \
+            -d @- << EOF
+            {
+              "encrypted_value": "$(echo -n $NEW_SECRET_VALUE | openssl base64)",
+              "key_id": "$(curl -s -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key | jq -r .key_id)"
+            }
+            EOF
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
@@ -146,4 +167,4 @@ jobs:
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
         if: always()
-        run: rm -f .env app.tar.gz id_rsa id_rsa.pub "${HOME}/gcloud.json"
+        run: rm -f .env app.tar.gz id_rsa id_rsa.pub iac/terraform.tfstate
