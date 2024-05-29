@@ -100,7 +100,7 @@ jobs:
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
       - name: Check tfstate file
-        rum: ls iac
+        run: ls iac
 
       # - name: Install Google Cloud SDK
       #   uses: google-github-actions/setup-gcloud@v2
