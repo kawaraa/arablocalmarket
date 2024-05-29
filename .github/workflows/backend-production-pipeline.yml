@@ -59,6 +59,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up GitHub CLI
+        uses: actions/setup-gh@v5
+
       - name: Download saved production build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -99,11 +102,10 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           length=$(expr length "${{ secrets.TERRAFORM_STATE }}")
           echo "The length of TERRAFORM_STATE is: $length"
-          echo "something" >> tfstate
           [ "${{ secrets.TERRAFORM_STATE }}" = "{}" ] || echo "${{ secrets.TERRAFORM_STATE }}" > iac/terraform.tfstate
 
       - name: (1) Check tfstate file
-        run: ls iac && cat tfstate
+        run: ls iac
 
       # - name: Install Google Cloud SDK
       #   uses: google-github-actions/setup-gcloud@v2
@@ -140,22 +142,28 @@ jobs:
 
       - name: Update Terraform tfstate file
         if: always()
-        env:
-          GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
         run: |
-          SECRET_NAME="TERRAFORM_STATE"
-          NEW_SECRET_VALUE="$(cat iac/terraform.tfstate)"
+          echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
+          gh secret set "TERRAFORM_STATE" < iac/terraform.tfstate
 
-          curl -X PUT \
-            -H "Authorization: token $GH_PAT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/actions/secrets/$SECRET_NAME \
-            -d @- << EOF
-            {
-              "encrypted_value": "$(echo -n $NEW_SECRET_VALUE | openssl base64)",
-              "key_id": "$(curl -s -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key | jq -r .key_id)"
-            }
-            EOF
+      # - name: Update Terraform tfstate file
+      #   if: always()
+      #   env:
+      #     GH_PAT: ${{ secrets.GH_ALM_REPO_TOKEN }}
+      #   run: |
+      #     SECRET_NAME="TERRAFORM_STATE"
+      #     NEW_SECRET_VALUE="$(cat iac/terraform.tfstate)"
+
+      #     curl -X PUT \
+      #       -H "Authorization: token $GH_PAT" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       https://api.github.com/repos/${{ github.repository }}/actions/secrets/$SECRET_NAME \
+      #       -d @- << EOF
+      #       {
+      #         "encrypted_value": "$(echo -n $NEW_SECRET_VALUE | openssl base64)",
+      #         "key_id": "$(curl -s -H "Authorization: token $GH_PAT" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${{ github.repository }}/actions/secrets/public-key | jq -r .key_id)"
+      #       }
+      #       EOF
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
