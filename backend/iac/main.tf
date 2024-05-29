@@ -1,10 +1,4 @@
 terraform {
-  # The state configurations
-  # backend "gcs" {
-  #   bucket = "arablocalmarket-bucket"
-  #   prefix = "terraform/state"
-  # }
-
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
