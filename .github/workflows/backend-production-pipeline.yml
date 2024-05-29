@@ -98,6 +98,12 @@ jobs:
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
 
+      - name: Authenticate to Google Cloud
+        run: |
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT }}" > "${HOME}/gcloud.json"
+          gcloud auth activate-service-account --key-file="${HOME}/gcloud.json"
+          gcloud config set project ${{ vars.GCP_PROJECT_ID }}
+
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -123,9 +129,9 @@ jobs:
         run: |
           scp -r app.tar.gz root@$(terraform -chdir=iac output -raw droplet_ip):/root &&
           ssh root@$(terraform -chdir=iac output -raw droplet_ip) "tar -xzf /root/app.tar.gz && /root/iac/retry-script.sh init-setup"
-      #  Or: chmod +x ./iac/deploy-script.sh && ./iac/deploy-script.sh
+      #  Or run a script: chmod +x ./iac/deploy-script.sh && ./iac/deploy-script.sh
       #
       # "always()" function makes sure that "Cleanup" step runs regardless of the success or failure of previous steps.
       - name: Cleanup
         if: always()
-        run: rm -f .env app.tar.gz id_rsa id_rsa.pub
+        run: rm -f .env app.tar.gz id_rsa id_rsa.pub "${HOME}/gcloud.json"
