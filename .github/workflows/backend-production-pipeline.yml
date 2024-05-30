@@ -94,19 +94,11 @@ jobs:
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
       - name: Add SSH keys and tfstate files for Terraform
-        # env:
-        #   DECODED_VALUE: $(echo ${{ secrets.TERRAFORM_STATE }} | base64 --decode)
         run: |
           echo "${{ secrets.SSH_FINGERPRINT_KEY }}" > iac/id_rsa.pub
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           DECODED_VALUE=$(echo "${{ secrets.TERRAFORM_STATE }}" | base64 --decode)
           [ "$DECODED_VALUE" = "{}" ] || echo "$DECODED_VALUE" > iac/terraform.tfstate
-
-      - name: TERRAFORM_STATE_V variable
-        if: always()
-        run: |
-          echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
-          gh variable set "TERRAFORM_STATE_V" --body "${{ secrets.TERRAFORM_STATE }}"
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
@@ -118,11 +110,11 @@ jobs:
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
-      # - name: Update Terraform tfstate file
-      #   if: always()
-      #   run: |
-      #     echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
-      #     gh secret set "TERRAFORM_STATE" --body "$(base64 -i iac/terraform.tfstate)"
+      - name: Update Terraform tfstate file
+        if: always()
+        run: |
+          echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
+          gh secret set "TERRAFORM_STATE" --body "$(base64 -i iac/terraform.tfstate)"
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
