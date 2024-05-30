@@ -101,8 +101,12 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > iac/id_rsa
           DECODED_VALUE=$(echo ${{ secrets.TERRAFORM_STATE }} | base64 --decode)
           [ "$DECODED_VALUE" = "{}" ] || echo "$DECODED_VALUE" > iac/terraform.tfstate
-          ls iac
-          cat iac/terraform.tfstate
+
+      - name: TERRAFORM_STATE_V variable
+        if: always()
+        run: |
+          echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
+          gh variable set "TERRAFORM_STATE_V" --body ${{ secrets.TERRAFORM_STATE }}
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
