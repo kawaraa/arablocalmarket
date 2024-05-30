@@ -106,7 +106,7 @@ jobs:
         if: always()
         run: |
           echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
-          gh variable set "TERRAFORM_STATE_V" --body ${{ secrets.TERRAFORM_STATE }}
+          gh variable set "TERRAFORM_STATE_V" --body "${{ secrets.TERRAFORM_STATE }}"
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
