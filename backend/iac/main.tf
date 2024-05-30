@@ -50,7 +50,7 @@ resource "digitalocean_ssh_key" "auth" {
 resource "digitalocean_droplet" "vm" {
   # count = 1
   # name  = "alm-backend-${count.index}"
-  name   = "alm-backend-test"
+  name   = "alm-backend-strapi"
   region = "fra1"
   image  = "ubuntu-23-10-x64"
   size   = "s-1vcpu-1gb"
