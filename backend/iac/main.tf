@@ -133,8 +133,9 @@ resource "digitalocean_droplet" "vm" {
 # ========== digitalocean droplet firewall ==========
 # Docs: https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/firewall
 # resource "digitalocean_firewall" "vm_fw" {
-#   name = "vms-firewall-rules-only-22-80-and-443"
+#   name = "vms-firewall-rules"
 
+#   # droplet_ids = [digitalocean_droplet.vm.id]
 #   droplet_ids = digitalocean_droplet.vm.*.id
 
 #   inbound_rule {

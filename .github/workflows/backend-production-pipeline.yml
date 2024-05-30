@@ -124,6 +124,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
+      - name: Prepare SSL certificate files
+        run: |
+          echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
+          echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
+
       - name: Waiting for the VM to boot up
         run: sleep 10
 

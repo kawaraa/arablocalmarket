@@ -61,12 +61,38 @@ else
   retry_command 3 npm install -g pm2@latest
 
   # Install NGINX server and configure/setup the firewall
-  check_and_install "nginx" "systemctl nginx start"
-  retry_command 2 ufw allow 'Nginx HTTP' 
-  retry_command 2 ufw allow 'Nginx HTTPS'
-  retry_command 2 ufw enable
+  cp ~/cloudflare.crt /etc/ssl/cloudflare/cloudflare.crt
+  cp ~/cloudflare.key /etc/ssl/cloudflare/cloudflare.key
+  sudo chmod 600 /etc/ssl/cloudflare/cloudflare.key
+  sudo chmod 644 /etc/ssl/cloudflare/cloudflare.crt
+  
+  check_and_install "nginx" "systemctl start nginx"
   cp ~/iac/nginx/nginx.conf /etc/nginx/nginx.conf
   cp ~/iac/nginx/default-server.conf /etc/nginx/sites-available/default
+  
+  # # Allow only Cloudflare IPs if cloudflare is connected:
+  # sudo ufw allow from 173.245.48.0/20
+  # sudo ufw allow from 103.21.244.0/22
+  # sudo ufw allow from 103.22.200.0/22
+  # sudo ufw allow from 103.31.4.0/22
+  # sudo ufw allow from 141.101.64.0/18
+  # sudo ufw allow from 108.162.192.0/18
+  # sudo ufw allow from 190.93.240.0/20
+  # sudo ufw allow from 188.114.96.0/20
+  # sudo ufw allow from 197.234.240.0/22
+  # sudo ufw allow from 198.41.128.0/17
+  # sudo ufw allow from 162.158.0.0/15
+  # sudo ufw allow from 104.16.0.0/13
+  # sudo ufw allow from 104.24.0.0/14
+  # sudo ufw allow from 172.64.0.0/13
+  # sudo ufw allow from 131.0.72.0/22
+
+  # # Deny all other incoming traffic:
+  # sudo ufw default deny incoming
+
+  ufw allow 'Nginx HTTP' 
+  ufw allow 'Nginx HTTPS'
+  ufw enable
 
   # Install and configure MySQL Server on the same server
   # check_and_install "mysql-server" \
