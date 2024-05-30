@@ -90,13 +90,10 @@ jobs:
           NODEMAILER_PASS=${{ secrets.NODEMAILER_PASS }}
           EOF
 
-      #  Prepare SSH fingerprint key file for Terraform
-      - name: Prepare SSH Private key for deployment
+      - name: Prepare SSL certificate files
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
+          echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
+          echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
 
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
@@ -124,10 +121,13 @@ jobs:
           echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
           gh secret set "TERRAFORM_STATE" --body "$(base64 -i iac/terraform.tfstate)"
 
-      - name: Prepare SSL certificate files
+      #  Prepare SSH fingerprint key file for Terraform
+      - name: Prepare SSH Private key for deployment
         run: |
-          echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
-          echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_host
 
       - name: Waiting for the VM to boot up
         run: sleep 10
