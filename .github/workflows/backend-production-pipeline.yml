@@ -96,7 +96,7 @@ jobs:
           echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
 
       - name: Archive production artifacts
-        run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
+        run: tar -czf ../app.tar.gz . && mv ../app.tar.gz . && rm -f cloudflare.crt cloudflare.key
 
       - name: Add SSH keys and tfstate files for Terraform
         run: |
