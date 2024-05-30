@@ -51,9 +51,11 @@ else
   # # === Install program if missing ===
 
   # Install Node.js and NPM
-  retry_command 3 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  retry_command 3 curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
   sleep 5
-  retry_command 3 apt-get install nodejs -y | debconf-set-selections
+  export DEBIAN_FRONTEND=noninteractive
+  retry_command 3 apt-get install nodejs -y
+  # retry_command 3 apt-get install nodejs -y | debconf-set-selections
   sleep 5
   retry_command 3 apt-get install npm -y
   retry_command 3 npm install -g pm2@latest
@@ -84,7 +86,7 @@ else
 
   # Additional commands for application setup
   rm -f ~/.pm2/logs/*
-  npm i --production
+  npm install --production
   NODE_ENV=production pm2 restart app --cron-restart="0 23 * * *" || pm2 start server.js --name app
   pm2 save # save the current PM2 process list to ensure that your application restarts on boot
   sudo pm2 startup # Generate Startup Script so it restarts on boot
