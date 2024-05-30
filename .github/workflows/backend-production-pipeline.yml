@@ -102,6 +102,7 @@ jobs:
           DECODED_VALUE=$(echo ${{ secrets.TERRAFORM_STATE }} | base64 --decode)
           [ "$DECODED_VALUE" = "{}" ] || echo "$DECODED_VALUE" > iac/terraform.tfstate
           ls iac
+          cat iac/terraform.tfstate
 
       # Provisioning the infrastructure and configure it
       - name: Set up Terraform
@@ -113,11 +114,11 @@ jobs:
       - name: Terraform Apply - Provision Resources
         run: terraform -chdir=iac apply -auto-approve -var "digitalocean_token=${{ secrets.DIGITALOCEAN_IAC_TOKEN }}"
 
-      - name: Update Terraform tfstate file
-        if: always()
-        run: |
-          echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
-          gh secret set "TERRAFORM_STATE" --body "$(base64 -i iac/terraform.tfstate)"
+      # - name: Update Terraform tfstate file
+      #   if: always()
+      #   run: |
+      #     echo "${{ secrets.GH_ALM_REPO_TOKEN }}" | gh auth login --with-token
+      #     gh secret set "TERRAFORM_STATE" --body "$(base64 -i iac/terraform.tfstate)"
 
       #  Prepare SSH fingerprint key file for Terraform
       - name: Prepare SSH Private key for deployment
