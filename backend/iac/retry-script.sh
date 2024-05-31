@@ -51,7 +51,7 @@ else
   # # === Install program if missing ===
 
   # Install Node.js and NPM
-  retry_command 3 curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+  node -v || curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
   sleep 5
   export DEBIAN_FRONTEND=noninteractive
   retry_command 3 apt-get install nodejs -y
