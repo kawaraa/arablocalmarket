@@ -127,7 +127,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_host
+          ssh-keyscan $(terraform -chdir=iac output -raw droplet_ip) >> ~/.ssh/known_hosts
 
       - name: Waiting for the VM to boot up
         run: sleep 10
