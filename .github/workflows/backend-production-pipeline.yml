@@ -90,13 +90,13 @@ jobs:
           NODEMAILER_PASS=${{ secrets.NODEMAILER_PASS }}
           EOF
 
-      - name: Prepare SSL certificate files
-        run: |
-          echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
-          echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
+      # - name: Prepare SSL certificate files
+      #   run: |
+      #     echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
+      #     echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
 
       - name: Archive production artifacts
-        run: tar -czf ../app.tar.gz . && mv ../app.tar.gz . && rm -f cloudflare.crt cloudflare.key
+        run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .
 
       - name: Add SSH keys and tfstate files for Terraform
         run: |
