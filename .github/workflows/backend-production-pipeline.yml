@@ -94,6 +94,7 @@ jobs:
         run: |
           echo "$(echo "${{ secrets.SSL_ORIGIN_CERTIFICATE }}" | base64 --decode)" > cloudflare.crt
           echo "$(echo "${{ secrets.SSL_PRIVATE_KEY }}" | base64 --decode)" > cloudflare.key
+          ls
 
       - name: Archive production artifacts
         run: tar -czf ../app.tar.gz . && mv ../app.tar.gz .

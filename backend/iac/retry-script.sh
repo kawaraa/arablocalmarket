@@ -61,6 +61,7 @@ else
   retry_command 3 npm install -g pm2@latest
 
   # Install NGINX server and configure/setup the firewall
+  mkdir -p /etc/ssl/cloudflare
   cp ~/cloudflare.crt /etc/ssl/cloudflare/cloudflare.crt
   cp ~/cloudflare.key /etc/ssl/cloudflare/cloudflare.key
   sudo chmod 600 /etc/ssl/cloudflare/cloudflare.key
