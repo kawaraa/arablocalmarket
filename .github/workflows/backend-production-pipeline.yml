@@ -4,10 +4,10 @@
 name: Backend Production Pipeline
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - "backend/**"
+  # push:
+  #   branches: ["main"]
+  #   paths:
+  #     - "backend/**"
   pull_request:
     branches: ["main"]
     paths:
