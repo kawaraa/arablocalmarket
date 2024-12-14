@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "description": "ALM backend application",
+  "license": "MIT",
   "author": {
     "name": "ALM developer"
   },
   "scripts": {
-    "develop": "strapi develop",
-    "start": "strapi start",
     "build": "strapi build",
+    "develop": "strapi develop",
     "prodBuild": "NODE_ENV=production npm run build",
+    "start": "strapi start",
     "strapi": "strapi"
   },
   "dependencies": {
@@ -18,7 +19,7 @@
     "@strapi/plugin-i18n": "^4.15.0",
     "@strapi/plugin-users-permissions": "^4.15.0",
     "@strapi/provider-email-nodemailer": "^4.9.0",
-    "@strapi/strapi": "^4.24.3",
+    "@strapi/strapi": "^4.25.18",
     "better-sqlite3": "^11.1.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -26,12 +27,11 @@
     "stripe": "^12.7.0",
     "styled-components": "^5.3.3"
   },
-  "strapi": {
-    "telemetryDisabled": true
-  },
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "telemetryDisabled": true
+  }
 }
