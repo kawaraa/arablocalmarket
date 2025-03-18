@@ -101,6 +101,7 @@ coverage
 license.txt
 exports
 .cache
+.strapi
 .strapi-updater.json
 
 # vercel
