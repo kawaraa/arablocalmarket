@@ -1,37 +1,31 @@
 {
-  "name": "alm-backend",
+  "name": "backend",
   "version": "0.1.0",
   "private": true,
-  "description": "ALM backend application",
-  "author": {
-    "name": "ALM developer"
-  },
+  "description": "A Strapi application",
   "scripts": {
+    "build": "strapi build",
+    "deploy": "strapi deploy",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
-    "prodBuild": "NODE_ENV=production npm run build",
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi-community/strapi-provider-upload-google-cloud-storage": "^4.6.1",
-    "@strapi/plugin-i18n": "^4.15.0",
-    "@strapi/plugin-users-permissions": "^4.15.0",
-    "@strapi/provider-email-nodemailer": "^4.9.0",
-    "@strapi/strapi": "^4.24.3",
-    "better-sqlite3": "^11.1.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^5.3.4",
-    "stripe": "^12.7.0",
-    "styled-components": "^5.3.3"
+    "@strapi/strapi": "5.11.2",
+    "@strapi/plugin-users-permissions": "5.11.2",
+    "@strapi/plugin-cloud": "5.11.2",
+    "better-sqlite3": "11.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
   },
-  "strapi": {
-    "telemetryDisabled": true
-  },
+  "devDependencies": {},
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "uuid": "dd71b15f-107e-4ba7-968a-bf128ee5b71a"
+  }
 }
