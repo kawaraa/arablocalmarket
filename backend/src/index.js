@@ -9,7 +9,7 @@ module.exports = {
    */
   //
   async register(/*{ strapi }*/) {
-    await require("../src/cron/all-tasks").restoreDatabaseBackupIfNeeded();
+    // await require("../src/cron/all-tasks").restoreDatabaseBackupIfNeeded();
   },
 
   /**

@@ -14,13 +14,14 @@ module.exports = {
   "0 0 1 * * 0" > Simple example that runs Every sunday at 1 AM. */
   "0 0 1 * * 0": async ({ strapi }) => {
     console.log("\nInvoices job cron is running...\n");
-    createInvoices(strapi);
-    deleteExpiredStores(strapi);
+    // createInvoices(strapi);
+    // deleteExpiredStores(strapi);
   },
   // This will run every */x mins
   "0 */5 * * * *": async ({ strapi }) => {
-    createDatabaseBackup();
+    // createDatabaseBackup();
   },
+
   restoreDatabaseBackupIfNeeded,
 };
 
