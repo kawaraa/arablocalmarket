@@ -2,7 +2,7 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 const proEty = "api::product.product";
 const storeEty = "api::store.store";
-const otherShopsIds = process.env.OTHER_SHOP_ID.split(",");
+const otherShopsIds = process.env.OTHER_SHOP_IDS.split(",");
 
 module.exports = createCoreController(proEty, ({ strapi }) => ({
   async create(ctx) {
