@@ -76,7 +76,7 @@ jobs:
           GCP_BUCKET_NAME=${{ vars.GCP_BUCKET_NAME }}
           GCP_UNIFORM=${{ vars.GCP_UNIFORM }}
           GCP_DATABASE_BACKUP_BUCKET=${{ vars.GCP_DATABASE_BACKUP_BUCKET }}
-          OTHER_SHOP_ID=${{ vars.OTHER_SHOP_ID }}
+          OTHER_SHOP_IDS=${{ vars.OTHER_SHOP_ID }}
           PUBLIC_URL=${{ vars.PUBLIC_URL }}
           STRIPE_CHECKOUT_REDIRECT_URL=${{ vars.STRIPE_CHECKOUT_REDIRECT_URL }}
           APP_KEYS=${{ secrets.APP_KEYS }}
